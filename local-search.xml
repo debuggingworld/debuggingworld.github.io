@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>java——jdk8新特性之Lambda 表达式</title>
+    <link href="/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <url>/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    
+    <content type="html"><![CDATA[<h3 id="1-函数式编程"><a href="#1-函数式编程" class="headerlink" title="1. 函数式编程"></a>1. 函数式编程</h3><p>函数编程特性：</p><p><strong>a. 闭包与高阶函数</strong><br>函数编程支持函数作为第一类对象，有时称为 闭包或者 仿函数（functor）对象。实质上，<br>闭包是起函数的作用并可以像对象一样操作的对象。<br>与此类似，FP 语言支持 高阶函数。高阶函数可以用另一个函数（间接地，用一个表达式）<br>作为其输入参数，在某些情况下，它甚至返回一个函数作为其输出参数。这两种结构结合在<br>一起使得可以用优雅的方式进行模块化编程，这是使用 FP 的最大好处。</p><p><strong>b. 惰性计算</strong><br>在惰性计算中，表达式不是在绑定到变量时立即计算，而是在求值程序需要产生表达式的值<br>时进行计算。延迟的计算使您可以编写可能潜在地生成无穷输出的函数。因为不会计算多于<br>程序的其余部分所需要的值，所以不需要担心由无穷计算所导致的 out-of-memory 错误。</p><p><strong>c. 没有“副作用”</strong><br>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局<br>变量的值），产生运算以外的其他结果。函数式编程强调没有”副作用”，意味着函数要保持<br>独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p><blockquote><p>综上所述，函数式编程可以简言之是： 使用不可变值和函数， 函数对一个值进行处理， 映<br>射成另一个值。这个值在面向对象语言中可以理解为对象，另外这个值还可以作为函数的输<br>入。</p></blockquote><h3 id="2-Lambda表达式"><a href="#2-Lambda表达式" class="headerlink" title="2 Lambda表达式"></a>2 Lambda表达式</h3><blockquote><p>lambda 表达式本质上是一段匿名内部类，也可以是一段可以传递的代码</p></blockquote><h4 id="2-1-语法"><a href="#2-1-语法" class="headerlink" title="2.1 语法"></a>2.1 语法</h4><p>完整的 Lambda 表达式由三部分组成：参数列表、箭头、声明语句；</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"> (Type1 param1, Type2 param2, ..., TypeN paramN) ‐&gt; &#123; statment1;<br>statment2; <span class="hljs-comment">//............. return statmentM;&#125;</span><br></code></pre></td></tr></table></figure><ol><li>绝大多数情况，编译器都可以从上下文环境中推断出lambda表达式的参数类型，所以参数可以省略：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">(param1,param2, ..., paramN) ‐&gt; &#123; statment1; statment2; <span class="hljs-comment">//............. r</span><br>eturn statmentM;&#125;<br></code></pre></td></tr></table></figure></li><li>当lambda表达式的参数个数只有一个，可以省略小括号：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">param1 ‐&gt; &#123; statment1; statment2; <span class="hljs-comment">//............. return statmentM;&#125;</span><br></code></pre></td></tr></table></figure></li><li>当lambda表达式只包含一条语句时，可以省略大括号、return和语句结尾的分号：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">param1 ‐&gt; statment<br></code></pre></td></tr></table></figure></li></ol><h4 id="2-2-函数接口"><a href="#2-2-函数接口" class="headerlink" title="2.2 函数接口"></a>2.2 函数接口</h4><p>函数接口是只有一个抽象方法的接口， 用作 Lambda 表达式的返回类型。<br>接口包路径为java.util.function，接口类上面都有@FunctionalInterface这个解。<br>这些函数接口在使用Lambda表达式时做为返回类型，JDK定义了很多现在的函数接口，实际自己也可以定义接口去做为表达式的返回，只是大多数情况下JDK定义的直接拿来就可以用了。而且这些接口在JDK8集合类使用流操作时大量被使用</p><h4 id="2-3-类型检查、类型推断"><a href="#2-3-类型检查、类型推断" class="headerlink" title="2.3 类型检查、类型推断"></a>2.3 类型检查、类型推断</h4><p>Java编译器根据 Lambda 表达式上下文信息就能推断出参数的正确类型。 程序依然要经过类型检查来保证运行的安全性， 但不用再显式声明类型罢了。 这就是所谓的类型推断。<br>Lambda 表达式中的类型推断， 实际上是 Java 7 就引入的目标类型推断的扩展有时候显式写出类型更易读，有时候去掉它们更易读。没有什么法则说哪种更好；对于如何让代码更易读，你必须做出自己的选择</p><h4 id="2-4-局部变量限制"><a href="#2-4-局部变量限制" class="headerlink" title="2.4 局部变量限制"></a>2.4 局部变量限制</h4><p>Lambda表达式也允许使用自由变量（不是参数，而是在外层作用域中定义的变量），就像匿名类一样。 它们被称作捕获Lambda。 Lambda可以没有限制地捕获（也就是在其主体中引用）实例变量和静态变量。但局部变量必须显式声明为final，或事实上是final。<br>为什么局部变量有这些限制？<br>（1）实例变量和局部变量背后的实现有一个关键不同。实例变量都存储在堆中，而局部变量则保存在栈上。如果Lambda可以直接访问局部变量，而且Lambda是在一个线程中使用的，则使用Lambda的线程，可能会在分配该变量的线程将这个变量收回之后，去访问该变量。因此， Java在访问自由局部变量时，实际上是在访问它的副本，而不是访问原始变量。如果局部变量仅仅赋值一次那就没有什么区别了——因此就有了这个限制。<br>（2）这一限制不鼓励你使用改变外部变量的典型命令式编程模式。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>java</tag>
+      
+      <tag>java8新特性</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Redis——入门</title>
     <link href="/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/"/>
     <url>/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/</url>
