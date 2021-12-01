@@ -16,21 +16,21 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="1. 重新认识接口1.1 java8之前接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getInt(">
+  <meta name="description" content="1. 定义A sequence of elements supporting sequential and parallel aggregate operations .  Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 可以支持顺序和并行的对原Stream进行汇聚的操作；   Java 8 中的 Stream 是对集合（Collection）对象功能的增强，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java——函数式编程">
-<meta property="og:url" content="http://example.com/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:title" content="java——java8新特性之Stream">
+<meta property="og:url" content="http://example.com/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 重新认识接口1.1 java8之前接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getInt(">
+<meta property="og:description" content="1. 定义A sequence of elements supporting sequential and parallel aggregate operations .  Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 可以支持顺序和并行的对原Stream进行汇聚的操作；   Java 8 中的 Stream 是对集合（Collection）对象功能的增强，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-30T15:34:42.000Z">
-<meta property="article:modified_time" content="2021-12-01T13:18:25.968Z">
+<meta property="article:published_time" content="2021-12-01T12:43:15.000Z">
+<meta property="article:modified_time" content="2021-12-01T14:00:02.751Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java8新特性">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>java——函数式编程 - Hexo</title>
+  <title>java——java8新特性之Stream - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -192,7 +192,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java——函数式编程">
+            <span class="h2" id="subtitle" title="java——java8新特性之Stream">
               
             </span>
 
@@ -202,8 +202,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-30 23:34" pubdate>
-        2021年11月30日 晚上
+      <time datetime="2021-12-01 20:43" pubdate>
+        2021年12月1日 晚上
       </time>
     </span>
   
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      4.5k 字
     </span>
   
 
@@ -222,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9 分钟
+      14 分钟
     </span>
   
 
@@ -251,119 +251,36 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">java——函数式编程</h1>
+            <h1 style="display: none">java——java8新特性之Stream</h1>
             
             <div class="markdown-body">
-              <h3 id="1-重新认识接口"><a href="#1-重新认识接口" class="headerlink" title="1. 重新认识接口"></a>1. 重新认识接口</h3><h4 id="1-1-java8之前"><a href="#1-1-java8之前" class="headerlink" title="1.1 java8之前"></a>1.1 java8之前</h4><p>接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="1-2-java8之后"><a href="#1-2-java8之后" class="headerlink" title="1.2 java8之后"></a>1.2 java8之后</h4><p>从JKD8开始，接口可以加入静态方法和默认方法<br>默认方法允许接口方法定义默认实现，而所有子类都继承该方法及实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printHello</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getString</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><strong>默认方法的优势</strong></p>
+              <h3 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h3><p><strong>A sequence of elements supporting sequential and parallel aggregate operations .</strong></p>
 <ol>
-<li>默认方法的主要优势是提供一种拓展接口的方法，而不破坏现有代码。增加新的方法，并且能保证对使用这个接口的老版本代码的兼容性。<br>在JDK8以前，如果为一个现有接口增加一个新方法，则我们必须在所有实现类中添加该方法的实现，否则编译会出现异常。<br>如果实现类比较多或者我们没有权限修改实现类源代码，这样可能就比较麻烦。<br>默认方法则解决了这个问题，它提供了一个实现，当没有显式提供其他实现时就采用这个实现，这样新添加的方法将不会破坏现有代码。</li>
-<li>另一个优势是该方法是可选，子类可以根据不同的需求Override默认实现。<br>例如，我们定义一个集合接口，其中有增、删、改等操作。如果实现类90%都是以数组保存数据，那么可以定义针对这些方法给出默认实现，而对于其他非数组集合或者有其他类似业务，可以选择性复写接口中默认方法。</li>
+<li>Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator；</li>
+<li>可以支持顺序和并行的对原Stream进行汇聚的操作；</li>
 </ol>
-<h3 id="2-函数式接口"><a href="#2-函数式接口" class="headerlink" title="2.函数式接口"></a>2.函数式接口</h3><p><strong>定义：</strong></p>
 <blockquote>
-<p>如果一个接口定义唯一一个抽象方法，那么这个接口就成为函数式接口。</p>
+<p>Java 8 中的 Stream 是对集合（Collection）对象功能的增强，它专注于对集合对象进行各种非常便利、高效的聚合操作（aggregate operation），或者大批量数据操作 (bulkdata operation)。</p>
 </blockquote>
-<p>java.lang.Runnable 就是一个函数式接口，因为它只有一个抽象方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>默认方法不是abstract的，所以一个函数式接口里可以定义任意多的默认方法。<br>为了标明函数式接口Java8引入了一个新的注解： @FunctionalInterface</p>
-<p><strong>函数接口特性</strong></p>
-<ul>
-<li>@FunctionInterface 注解只能标记在有且仅有一个抽象方法的接口上；</li>
-<li>Java8接口中的静态方法和默认方法，都不算是抽象方法；</li>
-<li>接口默认继承 java.lang.Object ,所以如果接口声明覆盖了Object中的方法，那么也不算抽象方法；</li>
-<li>注解不是必须的，如果接口符合函数式接口的定义，那么不加注解也没有影响。加上则编译器可以进行检查。如果不是函数接口而加上了注解，则编译器会报错。</li>
-</ul>
-<h3 id="3-函数式编程"><a href="#3-函数式编程" class="headerlink" title="3.  函数式编程"></a>3.  函数式编程</h3><p>函数编程特性：</p>
-<p><strong>a. 闭包与高阶函数</strong><br>函数编程支持函数作为第一类对象，有时称为 闭包或者 仿函数（functor）对象。实质上，闭包是起函数的作用并可以像对象一样操作的对象。高阶函数可以用另一个函数作为其输入参数，也可以返回一个函数作为其输出参数。</p>
-<p><strong>b. 惰性计算</strong><br>在惰性计算中，表达式不是在绑定到变量时立即计算，而是在求值程序需要产生表达式的值时进行计算。延迟的计算可以编写可能潜在地生成无穷输出的函数。因为不会计算多于程序的其余部分所需要的值，所以不需要担心由无穷计算所导致的 out-of-memory 错误。</p>
-<p><strong>c. 没有“副作用”</strong><br>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
-<blockquote>
-<p>综上所述，函数式编程可以简言之是： 使用不可变值和函数， 通过函数对一个值进行处理， 映射成另一个值。这个值在面向对象语言中可以理解为对象，另外这个值还可以作为函数的输入。</p>
-</blockquote>
-<p>Java8 中的函数式编程</p>
-<ul>
-<li>内建的函数式接口</li>
-<li>Optional API</li>
-<li>Lambda表达式</li>
-<li>Stream API</li>
-</ul>
-<h4 id="3-1-内建的函数式接口"><a href="#3-1-内建的函数式接口" class="headerlink" title="3.1 内建的函数式接口"></a>3.1 内建的函数式接口</h4><p>Java8 API包含了很多内建的函数式接口，在老Java中常用到的比如Comparator或者Runnable接口，这些接口都增加了@FunctionalInterface注解以便能用在lambda上。</p>
-<table>
-<thead>
-<tr>
-<th align="center">name</th>
-<th align="center">type</th>
-<th align="center">description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Consumer(消费者)</td>
-<td align="center">Consumer<T></td>
-<td align="center">接收 T 对象，不返回值</td>
-</tr>
-<tr>
-<td align="center">Predicate(谓词)</td>
-<td align="center">Predicate<T></td>
-<td align="center">接收 T 对象并返回boolean</td>
-</tr>
-<tr>
-<td align="center">Function(函数)</td>
-<td align="center">Function&lt;T,R&gt;</td>
-<td align="center">接收 T 对象，返回 R 对象</td>
-</tr>
-<tr>
-<td align="center">Supplier(提供者)</td>
-<td align="center">Supplier<T></td>
-<td align="center">提供T对象，不接收值</td>
-</tr>
-<tr>
-<td align="center">UnaryOperator(一元运算符)</td>
-<td align="center">UnaryOperator<T></td>
-<td align="center">接收T对象，返回T对象</td>
-</tr>
-<tr>
-<td align="center">BinaryOperator(二元操作)</td>
-<td align="center">BinaryOperator<T></td>
-<td align="center">接收两个T对象，返回T对象</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>以上四种为基本的函数接口，在此之上JDK又提供了若干扩展：</p>
+<p>Stream API 借助于 Lambda 表达式，极大的提高编程效率和程序可读性。同时提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势（使用 fork/join框架，fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值）。</p>
+<p>举个例子，统计列表中不为null的数据个数。<br>原始版本的处理<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>int i=0;<br>for(Integer item : nums){<br>if(item !=null){<br>i++;<br>}<br>}<br>基于Stream的处理<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>nums.stream().filter(it-&gt;it!=null).count();<br>// result is 4<br>Stream的通用语法<br>一条语句被三种颜色的框分割成了三个部分：<br>红色框中的语句是一个Stream的生命开始的地方，负责创建一个Stream实例；<br>绿色框中的语句是赋予Stream灵魂的地方，把一个Stream转换成另外一个Stream，<br>红框的语句生成的是一个包含所有nums变量的Stream，进过绿框的filter方法以后，<br>重新生成了一个过滤掉原nums列表所有null以后的Stream；<br>蓝色框中的语句是汇聚的地方，把Stream的里面包含的内容按照某种算法来汇聚成<br>一个值，例子中是获取Stream中包含的元素个数。<br>绿框中转换的部分如上图。<br>使用Stream的基本步骤：</p>
 <ol>
-<li>以上前三种添加了Bi的前缀：BiConsumer,BiPredicate,BiFunction,入参变为两个；</li>
-<li>对Function的扩展产生了UnaryOperator(一元运算符)，接收T返回T；</li>
-<li>对BiFunction的扩展产生了BinaryOperator(二元操作)，收两个T对象，返回T对象</li>
-<li>增加了若干具体基本类型的接口，可参见function包下具体接口说明。</li>
+<li>创建Stream；</li>
+<li>转换Stream，每次转换原有Stream对象不改变，返回一个新的Stream对象（可以有<br>多次转换）；</li>
+<li>对Stream进行聚合（Reduce）操作，获取想要的结果<br>创建 Stream<br>最常见创建Stream的方式有三种：<br>通过Stream接口的静态工厂方法<br>通过Collection接口的默认方法 stream() 把一个Collection对象转换为Stream<br>通过数组，Arrays.stream(T array) 或者 Stream.of()<br>使用Stream的静态方法来创建Stream</li>
+<li>of() 方法：有两个overload方法，一个接受变长参数，一个接口单一值；<br>Stream<Integer> integerStream = Stream.of(1,2,3,4);<br>Stream<String> stringStream = Stream.of(“zte”);</li>
+<li>generator 方法:<br>生成一个无限长度的 Stream ，其元素生成时通过给定的 Supplier 接口提供<br>Stream.generate(new Supplier<Double>(){<br>@Override<br>public Double get(){<br>return Math.random();<br>}<br>});<br>Stream.generate(()-&gt;Math.random());<br>Stream.generate(Math::random);<br>三条语句的作用都是一样的，只是使用了lambda表达式和方法引用的语法来简化代码。<br>每条语句其实都是生成一个无限长度的Stream，其中值是随机的。<br>这个无限长度Stream是懒加载</li>
+<li>iterate 方法：<br>也是生成无限长度的Stream，和generator不同的是，其元素的生成是重复对给定的种子<br>值(seed)调用用户指定函数来生成的。其中包含的元素可以认为是：seed，<br>f(seed),f(f(seed))无限循环。<br>Stream.iterate(1,it-&gt;it*2).limit(10).forEach(System.out::println);<br>这段代码就是先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。</li>
+<li>通过Collection子类获取Stream<br>Collection接口有一个stream方法，所以其所有子类都都可以获取对应的Stream对象。<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>nums.stream();<br>Set<Integer> numsSet = Sets.newHashSet(1,2,3);<br>numsSet.stream();<br>Map&lt;String,String&gt; strsMap= Maps.newHashMap();<br>strsMap.put(“1”,”one”);<br>strsMap.put(“2”,”two”);<br>strsMap.entrySet().stream();<br>strsMap.keySet().stream();<br>strsMap.values().stream();<br>转换Stream<br>转换Stream其实就是把一个Stream通过某些行为转换成一个新的Stream。<br>Stream接口中定义了几个常用的转换方法:<br>disinct<br>filter<br>map<br>flatmap<br>peek<br>limit<br>skip</li>
+<li>distinct</li>
+<li>对于Stream中包含的元素进行去重操作(依赖于元素的 equals 方法),新生成的Stream<br>中没有重复的元素。<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().distinct());</li>
+<li>filter<br>对于Stream中包含的元素使用给定的过滤函数进行过滤操作，新生成的Stream只包含符<br>合条件的元素<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().filter(i-&gt;i!=null));</li>
+<li>map<br>对于Stream中包含的元素使用给定的转换函数进行转换操作，新生成的Stream只包含转<br>换生成的元素.<br>这个方法有三个对于原始类型的变种方法，分别是：mapToInt，mapToLong和<br>mapToDouble。<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().map(i-&gt;i*2));</li>
+<li>flatMap<br>和map类似，不同的是其每个元素转换得到的是Stream对象，会把子Stream中的元素压<br>缩到父集合中</li>
+<li>peek<br>生成一个包含原Stream的所有元素的新Stream，同时会提供一个消费函数（Consumer实<br>例），新Stream每个元素被消费的时候都会执行给定的消费函数；<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().peek(System.out::println));</li>
+<li>limit<br>对一个Stream进行截断操作，获取其前N个元素，如果原Stream中包含的元素个数小于<br>N，那就获取其所有的元素；<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().limit(4));</li>
+<li>skip<br>返回一个丢弃原Stream的前N个元素后剩下元素组成的新Stream，如果原Stream中包含<br>的元素个数小于N，那么返回空Stream；<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().skip(2));<br>综合应用<br>给定一个Integer类型的List，过滤掉null，去重，每个元素乘以2，每个元素被消费的时<br>候打印自身，再跳过前两个元素，最后取前四个元素进行加和运算.<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream()<br>.filter(i-&gt;i!=null)<br>.distinct()<br>.mapToInt(i-&gt;i*2)<br>.peek(System.out::println)<br>.skip(2)<br>.limit(4)<br>.sum());<br>性能问题<br>对于一个Stream进行多次转换操作，每次都对Stream的每个元素进行转换，而且是执行<br>多次，这样时间复杂度就是一个for循环里把所有操作都做掉的N（转换的次数）倍？<br>答案是否定的：<br>转换操作都是lazy的，多个转换操作只会在汇聚操作的时候融合起来，一次循环完成。<br>可以这样简单的理解，Stream里有个操作函数的集合，每次转换操作就是把转换函数放<br>入这个集合中，在汇聚操作的时候循环Stream对应的集合，然后对每个元素执行所有的<br>函数。<br>常见错误用法<br>在一个stream 上执行一组操作，然后用其他操作以两种不同的方式处理结果stream。<br>List<Integer> ints = Lists.newArrayList(1, 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9);<br>Stream<Integer> streamInt = ints.stream().distinct();<br>System.out.println(“” + streamInt.filter(i-&gt; i%2 == 0).collect(Collectors.toList()));<br>System.out.println(“” + streamInt.filter(i-&gt; i%2 == 1).collect(Collectors.toList()));<br>java.lang.IllegalStateException: stream has already been operated upon or closed<br>stream 是有状态对象，可认为是迭代器或者指针，上述操作是对同一指针的引用。<br>第一个收集方法执行完stream的指针已经走到了尽头，所以第二个收集方式试图访问操<br>作终点的指针，是非法操作。<br>解决：<br>List<Integer> streamInt = ints.stream().distinct().collect(Collectors.toList());<br>先收集中</li>
 </ol>
-</blockquote>
-<h4 id="3-2-Optional-API"><a href="#3-2-Optional-API" class="headerlink" title="3.2 Optional API"></a>3.2 Optional API</h4><p>Java8中引入的 Optional 是一种优雅解决NPE(NullPointExcepiton)问题的方法，是通过函数式接口实现的。</p>
-<p>Optional 提供的方法：</p>
-<table>
-<thead>
-<tr>
-<th align="center">方法</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">public<U> Optional<U> map(Function&lt;? super T, ? extends U&gt; mapper)</td>
-<td align="center">如果当前 Optional 为 Optional.empty，则依旧返回 Optional.empty；否则返回一个新的 Optional，该 Optional 包含的是：函数 mapper 在以 value 作为输入时的输出值。</td>
-</tr>
-<tr>
-<td align="center">public T orElse(T other)</td>
-<td align="center">如果有值则将其返回，否则返回一个默认值</td>
-</tr>
-<tr>
-<td align="center">public T orElseGet(Supplier&lt;? extends T&gt; other)</td>
-<td align="center">如果有值则将其返回，否则返回一个由指定的Supplier接口生成的值</td>
-</tr>
-</tbody></table>
-<p>如果当前 Optional 为 Optional.empty，则依旧返回 Optional.empty；否则返回一个新的 Optional，该 Optional 包含的是：函数 mapper 在以 value 作为输入时的输出值。</p>
 
             </div>
             <hr>
@@ -400,18 +317,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">java——java8新特性之Stream</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/11/29/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/">
-                        <span class="hidden-mobile">Git——rebase命令</span>
+                      <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+                        <span class="hidden-mobile">java——函数式编程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
