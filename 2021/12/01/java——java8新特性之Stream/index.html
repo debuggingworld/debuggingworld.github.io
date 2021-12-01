@@ -23,12 +23,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 定义A sequence of elements supporting sequential and parallel aggregate operations .  Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 可以支持顺序和并行的对原Stream进行汇聚的操作；   Java 8 中的 Stream 是对集合（Collection）对象功能的增强，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg">
 <meta property="article:published_time" content="2021-12-01T12:43:15.000Z">
-<meta property="article:modified_time" content="2021-12-01T14:00:02.751Z">
+<meta property="article:modified_time" content="2021-12-01T15:03:35.466Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java8新特性">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg">
   
   <title>java——java8新特性之Stream - Hexo</title>
 
@@ -213,7 +215,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.5k 字
+      4.4k 字
     </span>
   
 
@@ -263,15 +265,53 @@
 <p>Java 8 中的 Stream 是对集合（Collection）对象功能的增强，它专注于对集合对象进行各种非常便利、高效的聚合操作（aggregate operation），或者大批量数据操作 (bulkdata operation)。</p>
 </blockquote>
 <p>Stream API 借助于 Lambda 表达式，极大的提高编程效率和程序可读性。同时提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势（使用 fork/join框架，fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值）。</p>
-<p>举个例子，统计列表中不为null的数据个数。<br>原始版本的处理<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>int i=0;<br>for(Integer item : nums){<br>if(item !=null){<br>i++;<br>}<br>}<br>基于Stream的处理<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>nums.stream().filter(it-&gt;it!=null).count();<br>// result is 4<br>Stream的通用语法<br>一条语句被三种颜色的框分割成了三个部分：<br>红色框中的语句是一个Stream的生命开始的地方，负责创建一个Stream实例；<br>绿色框中的语句是赋予Stream灵魂的地方，把一个Stream转换成另外一个Stream，<br>红框的语句生成的是一个包含所有nums变量的Stream，进过绿框的filter方法以后，<br>重新生成了一个过滤掉原nums列表所有null以后的Stream；<br>蓝色框中的语句是汇聚的地方，把Stream的里面包含的内容按照某种算法来汇聚成<br>一个值，例子中是获取Stream中包含的元素个数。<br>绿框中转换的部分如上图。<br>使用Stream的基本步骤：</p>
+<p>[例] 统计列表中不为 null 的元素个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; nums = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">6</span>);<br><br><span class="hljs-comment">//原始版本</span><br><span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (Integer item : nums) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != item) &#123;<br>        count++;<br>    &#125;<br>&#125;<br><span class="hljs-comment">// Stream 版本</span><br><span class="hljs-keyword">long</span> count1 = nums.stream().filter(Objects::nonNull).count();<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-语法"><a href="#2-语法" class="headerlink" title="2. 语法"></a>2. 语法</h3><p><img src="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg" srcset="/img/loading.gif" lazyload alt="Stream表达式"></p>
+<p>一条语句分为三部分：</p>
+<ol>
+<li>红色框中的语句是一个 Stream 的生命开始的地方，负责创建一个Stream实例；</li>
+<li>绿色框中的语句是赋予 Stream 灵魂的地方，把一个 Stream 转换成另外一个 Stream；</li>
+<li>蓝色框中的语句是汇聚的地方，把 Stream 里面包含的内容按照某种算法来汇聚成一个值。</li>
+</ol>
+<blockquote>
+<p>使用Stream的基本步骤：</p>
 <ol>
 <li>创建Stream；</li>
-<li>转换Stream，每次转换原有Stream对象不改变，返回一个新的Stream对象（可以有<br>多次转换）；</li>
-<li>对Stream进行聚合（Reduce）操作，获取想要的结果<br>创建 Stream<br>最常见创建Stream的方式有三种：<br>通过Stream接口的静态工厂方法<br>通过Collection接口的默认方法 stream() 把一个Collection对象转换为Stream<br>通过数组，Arrays.stream(T array) 或者 Stream.of()<br>使用Stream的静态方法来创建Stream</li>
-<li>of() 方法：有两个overload方法，一个接受变长参数，一个接口单一值；<br>Stream<Integer> integerStream = Stream.of(1,2,3,4);<br>Stream<String> stringStream = Stream.of(“zte”);</li>
-<li>generator 方法:<br>生成一个无限长度的 Stream ，其元素生成时通过给定的 Supplier 接口提供<br>Stream.generate(new Supplier<Double>(){<br>@Override<br>public Double get(){<br>return Math.random();<br>}<br>});<br>Stream.generate(()-&gt;Math.random());<br>Stream.generate(Math::random);<br>三条语句的作用都是一样的，只是使用了lambda表达式和方法引用的语法来简化代码。<br>每条语句其实都是生成一个无限长度的Stream，其中值是随机的。<br>这个无限长度Stream是懒加载</li>
-<li>iterate 方法：<br>也是生成无限长度的Stream，和generator不同的是，其元素的生成是重复对给定的种子<br>值(seed)调用用户指定函数来生成的。其中包含的元素可以认为是：seed，<br>f(seed),f(f(seed))无限循环。<br>Stream.iterate(1,it-&gt;it*2).limit(10).forEach(System.out::println);<br>这段代码就是先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。</li>
-<li>通过Collection子类获取Stream<br>Collection接口有一个stream方法，所以其所有子类都都可以获取对应的Stream对象。<br>List<Integer> nums = Lists.newArrayList(1,null,3,null,5,6);<br>nums.stream();<br>Set<Integer> numsSet = Sets.newHashSet(1,2,3);<br>numsSet.stream();<br>Map&lt;String,String&gt; strsMap= Maps.newHashMap();<br>strsMap.put(“1”,”one”);<br>strsMap.put(“2”,”two”);<br>strsMap.entrySet().stream();<br>strsMap.keySet().stream();<br>strsMap.values().stream();<br>转换Stream<br>转换Stream其实就是把一个Stream通过某些行为转换成一个新的Stream。<br>Stream接口中定义了几个常用的转换方法:<br>disinct<br>filter<br>map<br>flatmap<br>peek<br>limit<br>skip</li>
+<li>转换Stream，每次转换原有Stream对象不改变，返回一个新的Stream对象（可以有多次转换）；</li>
+<li>对Stream进行聚合（Reduce）操作，获取想要的结果</li>
+</ol>
+</blockquote>
+<h3 id="3-创建-Stream"><a href="#3-创建-Stream" class="headerlink" title="3. 创建 Stream"></a>3. 创建 Stream</h3><p>常见创建 Stream 的方式有三种：</p>
+<ul>
+<li>通过 Stream 接口的静态工厂方法</li>
+<li>通过 Collection 接口的默认方法 stream() 把一个 Collection 对象转换为 Stream</li>
+<li>通过数组，Arrays.stream(T array)</li>
+</ul>
+<ol>
+<li><p>of 方法：有两个 overload 方法，一个接受变长参数，一个接口单一值；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream&lt;Integer&gt; integerStream = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Stream&lt;String&gt; stringStream = Stream.of(<span class="hljs-string">&quot;abc&quot;</span>);<br></code></pre></td></tr></table></figure></li>
+<li><p>generator 方法<br>生成一个无限长度的 Stream ，其元素生成时通过给定的 Supplier 接口提供</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream.generate(<span class="hljs-keyword">new</span> Supplier&lt;Double&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> Math.random();<br>    &#125;<br>&#125;);<br>Stream.generate(()-&gt;Math.random());<br><br>Stream.generate(Math::random);<br></code></pre></td></tr></table></figure>
+<p>生成一个无限长度的Stream，其中值是随机的。这个无限长度Stream是懒加载。</p>
+<ol start="3">
+<li>iterate 方法：</li>
+</ol>
+<p>也是生成无限长度的 Stream，和 generator 不同的是，其元素的生成是重复对给定的种子值(seed)调用用户指定函数来生成的。其中包含的元素可以认为是：seed，f(seed),f(f(seed))无限循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。</span><br>      Stream.iterate(<span class="hljs-number">1</span>, item -&gt; item * <span class="hljs-number">2</span>).limit(<span class="hljs-number">10</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过 Collection 子类获取 Stream<br>Collection接口有一个stream方法，所以其所有子类都都可以获取对应的Stream对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integerList = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>integerList.stream();<br>Set&lt;Integer&gt; integerSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();<br>integerSet.stream();<br>Map&lt;String, String&gt; stringMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>stringMap.entrySet().stream();<br>stringMap.keySet().stream();<br>stringMap.values().stream();<br></code></pre></td></tr></table></figure></li>
+<li>Arrays.stream(T array)</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Arrays.stream(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;);<br></code></pre></td></tr></table></figure>
+
+
+<p>转换Stream<br>转换Stream其实就是把一个Stream通过某些行为转换成一个新的Stream。<br>Stream接口中定义了几个常用的转换方法:<br>disinct<br>filter<br>map<br>flatmap<br>peek<br>limit<br>skip</p>
+<ol>
 <li>distinct</li>
 <li>对于Stream中包含的元素进行去重操作(依赖于元素的 equals 方法),新生成的Stream<br>中没有重复的元素。<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().distinct());</li>
 <li>filter<br>对于Stream中包含的元素使用给定的过滤函数进行过滤操作，新生成的Stream只包含符<br>合条件的元素<br>List<Integer> nums = Lists.newArrayList(1,1,null,2,3,4,null,5,6,7,8,9)<br>System.out.println(“sum is : “ + nums.stream().filter(i-&gt;i!=null));</li>
