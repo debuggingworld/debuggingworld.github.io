@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg">
 <meta property="article:published_time" content="2021-12-01T12:43:15.000Z">
-<meta property="article:modified_time" content="2021-12-02T15:02:28.688Z">
+<meta property="article:modified_time" content="2021-12-04T04:45:22.636Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java8新特性">
@@ -215,7 +215,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.7k 字
+      9k 字
     </span>
   
 
@@ -224,7 +224,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      15 分钟
+      28 分钟
     </span>
   
 
@@ -345,14 +345,61 @@
 <ul>
 <li>reduce()</li>
 <li>collect()</li>
-</ul>
-<p>特定用途的汇聚操作</p>
-<ul>
-<li>sum()</li>
-<li>max()</li>
 <li>count() </li>
+<li>sum()</li>
+<li>allMatch：判断是否是全部的元素都满足给定匹配条件</li>
+<li>noneMatch：判断是否是全部的元素都不满足给定匹配条件</li>
+<li>anyMatch：判断是否至少有一个元素满足给定匹配条件</li>
+<li>findFirst：返回第一个元素</li>
+<li>max()：使用比较器（Operator），返回 Stream 中最大的元素</li>
 </ul>
 <p>注意：sum 方法不是所有的 Stream 对象都有的，只有 IntStream、LongStream 和 DoubleStream是实例才有。</p>
+<h4 id="5-1-collect"><a href="#5-1-collect" class="headerlink" title="5.1  collect"></a>5.1  collect</h4><p>把输入的元素累积到一个可变的容器中，比如 Collection 或者 StringBuilder。<br>可变汇聚对应的方法只有一个：collect，它的作用就是把Stream中的所有元素收集到一个结果容器中。</p>
+<p><strong>方法定义1：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Supplier&lt;R&gt; supplier,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, ? <span class="hljs-keyword">super</span> T&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, R&gt; combiner)</span></span><br></code></pre></td></tr></table></figure>
+<p>方法参数：</p>
+<ul>
+<li>Supplier<R> supplier：工厂函数，用来生成一个新的容器。</li>
+<li>BiConsumer&lt;R, ? super T&gt; accumulator：用来把 Stream 中的元素添加到结果容器</li>
+<li>BiConsumer&lt;R, R&gt; combiner：用来把中间状态的多个结果容器合并成一个（并发时）</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>ArrayList&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(ArrayList::<span class="hljs-keyword">new</span>, ArrayList::add, ArrayList::addAll);<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></td></tr></table></figure>
+<p><strong>方法定义2：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R, A&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-keyword">super</span> T, A, R&gt; collector)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>Collectors 已经定义了一些静态工厂方法：</p>
+<ul>
+<li>Collectors.toCollection() 收集到 Collection 中</li>
+<li>Collectors.toList() 收集到 List 中</li>
+<li>Collectors.toSet() 收集到 Set 中</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>List&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(Collectors.toList());<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></td></tr></table></figure>
+<h4 id="5-2-reduce"><a href="#5-2-reduce" class="headerlink" title="5.2 reduce"></a>5.2 reduce</h4><p><strong>方法定义1</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">reduce</span><span class="hljs-params">(BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>接受一个 BinaryOperator 类型的参数，BinaryOperator 函数有两个参数</p>
+<ul>
+<li>第一个参数是上次函数执行的返回值（中间结果）</li>
+<li>第二个参数是 Stream 中的元素</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce((sum, item) -&gt; sum + item).get();<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>方法定义2</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity, BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>和上面的类似，不同的是允许提供一个初始值，如果 Stream 为空，则直接返回初始值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">100</span>,(sum, item) -&gt; sum + item);<br>System.out.println(integer);<br><span class="hljs-comment">// 131</span><br></code></pre></td></tr></table></figure>
+<p><strong>方法定义3</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;U&gt; <span class="hljs-function">U <span class="hljs-title">reduce</span><span class="hljs-params">(U identity,</span></span><br><span class="hljs-params"><span class="hljs-function">             BiFunction&lt;U, ? <span class="hljs-keyword">super</span> T, U&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">             BinaryOperator&lt;U&gt; combiner)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>功能和上面的类似，不同的是允许用户提供一个 combiner 函数用来处理并发场景下的数据汇总。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.parallelStream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">0</span>, (sum, item) -&gt; sum + item, (result, fragment) -&gt; result + fragment);<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></td></tr></table></figure>
+<h4 id="5-3-count-方法"><a href="#5-3-count-方法" class="headerlink" title="5.3 count 方法"></a>5.3 count 方法</h4><p>统计 Stream 中的元素的个数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><span class="hljs-keyword">long</span> count = integers.parallelStream().filter(Objects::nonNull).count();<br>System.out.println(count);<br><span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
+<h3 id="6-Collectors"><a href="#6-Collectors" class="headerlink" title="6. Collectors"></a>6. Collectors</h3><p>Collector接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><br></code></pre></td></tr></table></figure>
+
+
+<p>//T 元素， A 容器类型， R 结果类型public interface Collector&lt;T, A, R&gt; {// supplier参数用于生成结果容器，容器类型为ASupplier<A> supplier();// accumulator用于消费元素，也就是归纳元素，这里的T就是元素，它会将流中的元素一个一个与结果容器A发生操作BiConsumer&lt;A, T&gt; accumulator();// combiner用于两个两个合并并行执行的线程的执行结果，将其合并为一个最终结果ABinaryOperator<A> combiner();// finisher用于将之前整合完的结果R转换成为AFunction&lt;A, R&gt; finisher();// characteristics表示当前Collector的特征值，这是个不可变SetSet<Characteristics> characteristics();}Collectors是一个工具类，是JDK预实现Collector的工具类，它内部提供了多种CollectorCollectors 除了提供了上文介绍过的收集方法外还提供了一组非常有用方法：joining连接收集的结果Collector&lt;CharSequence, ?, String&gt; joining()List<Integer> ints = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9)System.out.println(“” + ints.stream().map(String::valueOf).collect(Collectors.joining()));// 123456789以序列顺序进行join，没有分隔Collector&lt;CharSequence, ?, String&gt; joining(CharSequence delimiter)参数为分隔符举例：指定间隔符’-‘, 对序列进行joinList<Integer> ints = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9)System.out.println(“” + ints.stream().map(String::valueOf).collect(Collectors.joining(“-“)));// 1-2-3-4-5-6-7-8-9Collector&lt;CharSequence, ?, String&gt; joining(CharSequence delimiter,CharSequence prefix, CharSequence suffix)参数为：间隔符，前缀和后缀举例：指定间隔符’-‘，前缀’$’和后缀’#’ 对序列连接List<Integer> ints = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9)System.out.println(“” + ints.stream().map(String::valueOf).collect(Collectors.joining(“-“,”$”,”#”)));// $1-2-3-4-5-6-7-8-9#collectingAndThen&lt;T,A,R,RR&gt; Collector&lt;T,A,RR&gt; collectingAndThen(Collector&lt;T,A,R&gt; downstream, Function&lt;R,RR&gt; finisher是对汇聚后的结果进行再操作, 操作通过第二个参数 Function 函数提供举例，收集后逆序排列List<Integer> ints = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9);System.out.println(“” + ints.stream().map(String::valueOf).collect(Collectors.collectingAndThen(Collectors.toList(), Lists::reverse)));// [9, 8, 7, 6, 5, 4, 3, 2, 1]groupingBy这个方法是用于生成一个拥有分组功能的Collector，它也有三个重载方法// 只需一个分组参数classifier，内部自动将结果保存到一个map中，// 每个map的键为?类型（即classifier的结果类型），值为一个list，// 这个list中保存在属于这个组的元素。&lt;T, K&gt; Collector&lt;T, ?, Map&lt;K, List<T>&gt;&gt; groupingBy(Function&lt;? super T, ? extends K&gt; classifier)// 在上面方法的基础上增加了对流中元素的处理方式的Collecto</p>
 
             </div>
             <hr>
