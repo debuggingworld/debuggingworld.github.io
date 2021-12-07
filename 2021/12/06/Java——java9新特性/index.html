@@ -24,7 +24,7 @@
 <meta property="og:description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs  改进钻石操作符  限制使用单独下划线标识符  String 存储结构变更  快速创建只读集合  增强 Stream API  改进 Optional 类  多分辨率图像 API  全新 HTTP 客户端 API  智能 JAVA 编译工具  统一 JVM 日志系统  javado">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-06T14:22:37.000Z">
-<meta property="article:modified_time" content="2021-12-06T14:50:52.501Z">
+<meta property="article:modified_time" content="2021-12-07T14:38:58.133Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java9新特性">
@@ -286,9 +286,17 @@
 <p> <strong>注：JDK9 目录中不再有 jre 子目录。</strong></p>
 <h4 id="2-模块化系统"><a href="#2-模块化系统" class="headerlink" title="2. 模块化系统"></a>2. 模块化系统</h4><p>JDK9 将 JDK 分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库： root、corba、hotspot、jaxp、jaxws、jdk、langtools和nashorn </p>
 <p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及那 些包被外部使用。<br>exports：控制着那些包可以被其他模块访问到，所有不被exports的包默认都被封装在模块里面不 被外界所使用。<br>requires：指明对其他模块的依赖。 </p>
-<p>三、JSHELL</p>
-<p>JDK9新增了REPL（Read-Eval-Print Loop）工具jshell，jshell工具提供了一个交互式命令界面， 可以评估声明，语句和表达式，无需编译即可返回执行结果。无论是在初学JAVA或学习新的API时 都非常有用 1 /list //列出所有的代码 2 /methods //查看所有的方法 3 /var //所有的变量 4 /edit //打开编辑器 5 /open path //执行路径上的代码 如 /open C:\Users\wukong\Desktop\App.java </p>
-<p>四、接口的私有化方法 在JDK8中接口运行使用静态方法和默认方法后，JDK9可以在接口中使用私有方法 1 @FunctionalInterface 2 public interface TestFunctionalInterface { 3 //todo @FunctionalInterface注解会检测接口是否有且只有一个抽象方法，还可以有默 认方法和静态方法 4 public void test(); 5 //todo 默认方法 6 default String getName(){ 7 log(“getName”); 8 return “人参”; 9 } 10 //todo 默认方法 11 default String getDesc(){ 12 log(“getDesc”); 13 return “人参大补元气”; 14 } 15 private void log(String method){<br>16 System.out.println(“TestFunctionalInterface.”+method+”()被调用”); 17 } 18 //todo 静态方法 19 static String getName2(){ 20 return “鹿茸”; 21 } 22 } </p>
+<h4 id="3-JShell"><a href="#3-JShell" class="headerlink" title="3. JShell"></a>3. JShell</h4><p>JDK9 新增了 REPL（Read-Eval-Print Loop）工具 jshell，jshell 工具提供了一个交互式命令界面， 可以评估声明、语句和表达式，无需编译即可返回执行结果。</p>
+<blockquote>
+<ol>
+<li> /list   　　　　    //列出所有的代码 </li>
+<li> /methods 　　   //查看所有的方法 </li>
+<li> /var          　　   //所有的变量 </li>
+<li>/edit          　　  //打开编辑器 </li>
+<li>/open path 　　//执行路径上的代码 如 /open C:\Users\wukong\Desktop\App.java </li>
+</ol>
+</blockquote>
+<h4 id="3-接口私有化方法"><a href="#3-接口私有化方法" class="headerlink" title="3. 接口私有化方法"></a>3. 接口私有化方法</h4><p>在JDK8中接口运行使用静态方法和默认方法后，JDK9可以在接口中使用私有方法 1 @FunctionalInterface 2 public interface TestFunctionalInterface { 3 //todo @FunctionalInterface注解会检测接口是否有且只有一个抽象方法，还可以有默 认方法和静态方法 4 public void test(); 5 //todo 默认方法 6 default String getName(){ 7 log(“getName”); 8 return “人参”; 9 } 10 //todo 默认方法 11 default String getDesc(){ 12 log(“getDesc”); 13 return “人参大补元气”; 14 } 15 private void log(String method){<br>16 System.out.println(“TestFunctionalInterface.”+method+”()被调用”); 17 } 18 //todo 静态方法 19 static String getName2(){ 20 return “鹿茸”; 21 } 22 } </p>
 <p>五、改进try­with­resource JDK8中新增了try-with-resources语句，可以自动关闭需要关闭的资源文件。但是必须在try语句 后的括号中初始化需要关闭的资源。在JDK9中改进了try-with-resources语句，你可以在try外初 始化资源，然后在try后的括号中添加需要自动关的资源即可 1 public static void jdk7() { 2 FileInputStream fileInputStream = null; 34 try { 5 fileInputStream = new FileInputStream(“D:/a.txt”); 6 byte[] temp = new byte[1024]; 7 fileInputStream.read(temp); 8 System.out.println(new String(temp)); 9 } catch (Exception e) { 10 e.printStackTrace(); 11 }finally { 12 if (fileInputStream != null){ 13 try { 14 fileInputStream.close(); 15 } catch (IOException e) { 16 e.printStackTrace(); 17 } 18 } 19 } 20 } 21 public static void jdk8() { 222324 try( FileInputStream fileInputStream = new FileInputStream(“D:/a.txt”)) {2526 byte[] temp = new byte[1024]; 27 fileInputStream.read(temp);<br>28 System.out.println(new String(temp)); 29 } catch (Exception e) { 30 e.printStackTrace(); 31 } 32 } 33 public static void jdk9() throws FileNotFoundException { 3435 FileInputStream fileInputStream = new FileInputStream(“D:/a.txt”); 36 try( fileInputStream) { 37 byte[] temp = new byte[1024]; 38 fileInputStream.read(temp); 39 System.out.println(new String(temp)); 40 } catch (Exception e) { 41 e.printStackTrace(); 42 } 43 }</p>
 <p>六、改进钻石操作符 JDK9中钻石操作符可以使用匿名实现类，可以在匿名实现类中重写方法等操作 1 public static void main(String[] args) { 2 //jdk9允许 3 Comparator<Integer> comparator = new Comparator&lt;&gt;() { 4 @Override 5 public int compare(Integer o1, Integer o2) { 6 return 0; 7 } 8 }; 9 } </p>
 <p>七、限制使用单独下划线标识符 在JDK8之前可以使用“<em>”单独的下划线作为标识符，但在JDK9中将单独的下划线标识符限制使 用了 1 public static void main(String[] args) { 2 int _ = 20;//jdk9已禁止 3 System.out.println(</em>); 4 } </p>
