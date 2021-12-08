@@ -24,7 +24,7 @@
 <meta property="og:description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs  改进钻石操作符  限制使用单独下划线标识符  String 存储结构变更  快速创建只读集合  增强 Stream API  改进 Optional 类  多分辨率图像 API  全新 HTTP 客户端 API  智能 JAVA 编译工具  统一 JVM 日志系统  javado">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-06T14:22:37.000Z">
-<meta property="article:modified_time" content="2021-12-07T14:38:58.133Z">
+<meta property="article:modified_time" content="2021-12-08T15:42:07.930Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java9新特性">
@@ -213,7 +213,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.5k 字
+      7.7k 字
     </span>
   
 
@@ -222,7 +222,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23 分钟
+      24 分钟
     </span>
   
 
@@ -283,8 +283,18 @@
 <li>legal： 包含法律声明。 </li>
 <li>lib： 包含非 Windows 平台上动态链接的本地库，其子目录和文件不应由开发人员直 接编辑或使用。</li>
 </ul>
+<blockquote>
+<p>JDK8 目录结构：</p>
+<ul>
+<li>bin： 该目录存放了 JDK 的各种工具命令，即 jdk 工具的可执行二进制文件，包括编译器，调试器等，例如：java，javac</li>
+<li>db： 该目录是安装 Java DB 的路径。Java 自带数据库 Derby。</li>
+<li>include： 包含一些编译本地代码时使用的 C/C++头文件。</li>
+<li>jre： 该目录包含的是 jre 环境(Java runtime environment 即 Java 运行时环境)。</li>
+<li>lib：该目录存放的是 java 工具命令实际执行的程序包。</li>
+</ul>
+</blockquote>
 <p> <strong>注：JDK9 目录中不再有 jre 子目录。</strong></p>
-<h4 id="2-模块化系统"><a href="#2-模块化系统" class="headerlink" title="2. 模块化系统"></a>2. 模块化系统</h4><p>JDK9 将 JDK 分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库： root、corba、hotspot、jaxp、jaxws、jdk、langtools和nashorn </p>
+<h4 id="2-模块化系统"><a href="#2-模块化系统" class="headerlink" title="2. 模块化系统"></a>2. 模块化系统</h4><p>JDK9 将 JDK 分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库： root、corba、hotspot、jaxp、jaxws、jdk、langtools 和 nashorn </p>
 <p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及那 些包被外部使用。<br>exports：控制着那些包可以被其他模块访问到，所有不被exports的包默认都被封装在模块里面不 被外界所使用。<br>requires：指明对其他模块的依赖。 </p>
 <h4 id="3-JShell"><a href="#3-JShell" class="headerlink" title="3. JShell"></a>3. JShell</h4><p>JDK9 新增了 REPL（Read-Eval-Print Loop）工具 jshell，jshell 工具提供了一个交互式命令界面， 可以评估声明、语句和表达式，无需编译即可返回执行结果。</p>
 <blockquote>
