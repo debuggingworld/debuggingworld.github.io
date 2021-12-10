@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/icon2.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="1. 模式定义定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。 解决场景：⼀般是具有同类可替代的⾏为逻辑算法场景。⽐如；不同类型的交易⽅式（信⽤卡、⽀付宝、微信）、⽣成唯⼀ID策略（UUID、DB⾃增、DB+Redis、雪花算法、Leaf 算法）等，都可以使⽤策略模式进⾏⾏为包装，供给外部使⽤。  2. 示例场景：模拟在购买商品时使⽤各种类型优惠券(满减、直减、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——策略模式">
+<meta property="og:url" content="http://example.com/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 模式定义定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。 解决场景：⼀般是具有同类可替代的⾏为逻辑算法场景。⽐如；不同类型的交易⽅式（信⽤卡、⽀付宝、微信）、⽣成唯⼀ID策略（UUID、DB⾃增、DB+Redis、雪花算法、Leaf 算法）等，都可以使⽤策略模式进⾏⾏为包装，供给外部使⽤。  2. 示例场景：模拟在购买商品时使⽤各种类型优惠券(满减、直减、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-10T13:03:31.000Z">
+<meta property="article:modified_time" content="2021-12-10T14:40:30.354Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="行为型模式">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>设计模式——策略模式 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/nnfx-dark.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"/img/喜爱.png\" height=\"35\" width=\"35\" />","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/art_bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="设计模式——策略模式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-10 21:03" pubdate>
+        2021年12月10日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.1k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">设计模式——策略模式</h1>
+            
+            <div class="markdown-body">
+              <h3 id="1-模式定义"><a href="#1-模式定义" class="headerlink" title="1. 模式定义"></a>1. 模式定义</h3><p>定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。</p>
+<p>解决场景：⼀般是具有同类可替代的⾏为逻辑算法场景。⽐如；不同类型的交易⽅式（信⽤卡、⽀付宝、微信）、⽣成唯⼀ID策略（UUID、DB⾃增、DB+Redis、雪花算法、Leaf 算法）等，都可以使⽤策略模式进⾏⾏为包装，供给外部使⽤。 </p>
+<h3 id="2-示例"><a href="#2-示例" class="headerlink" title="2. 示例"></a>2. 示例</h3><p>场景：模拟在购买商品时使⽤各种类型优惠券(满减、直减、折扣、n元购)，</p>
+<h4 id="2-1-一般实现"><a href="#2-1-一般实现" class="headerlink" title="2.1 一般实现"></a>2.1 一般实现</h4><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CouponDiscountService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">disCountAmount</span><span class="hljs-params">(<span class="hljs-keyword">int</span> type, <span class="hljs-keyword">double</span> typeContent, <span class="hljs-keyword">double</span> skuPrice, <span class="hljs-keyword">double</span> typeExt)</span> </span>&#123;<br>        <span class="hljs-comment">// 直减</span><br>        <span class="hljs-keyword">if</span> (type == <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> skuPrice - typeContent;<br>        &#125;<br>        <span class="hljs-comment">// 满减</span><br>        <span class="hljs-keyword">if</span> (type == <span class="hljs-number">2</span>) &#123;<br>            <span class="hljs-keyword">return</span> skuPrice &lt; typeContent ? skuPrice : skuPrice - typeContent;<br>        &#125;<br>        <span class="hljs-comment">// 折扣</span><br>        <span class="hljs-keyword">if</span> (type == <span class="hljs-number">3</span>) &#123;<br>            <span class="hljs-keyword">return</span> skuPrice * typeContent;<br>        &#125;<br>        <span class="hljs-comment">// n 元购</span><br>        <span class="hljs-keyword">if</span> (type == <span class="hljs-number">4</span>) &#123;<br>            <span class="hljs-keyword">return</span> typeContent;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<h4 id="2-2-策略模式重构代码"><a href="#2-2-策略模式重构代码" class="headerlink" title="2.2 策略模式重构代码"></a>2.2 策略模式重构代码</h4><p><strong>优惠券接口</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CouponDiscount</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 优惠券金额计算</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> couponInfo 优惠券信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> skuPrice skuji金额</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span>   折扣金额</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function">BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(T couponInfo,BigDecimal skuPrice)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>优惠券接口实现</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MJCouponDiscount</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CouponDiscount</span>&lt;<span class="hljs-title">Map</span>&lt;<span class="hljs-title">String</span>, <span class="hljs-title">String</span>&gt;&gt; </span>&#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 满减计算</span><br><span class="hljs-comment">     * 1. 判断满⾜x元后-n元，否则不减</span><br><span class="hljs-comment">     * 2. 最低⽀付⾦额1元</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(Map&lt;String, String&gt; couponInfo, BigDecimal skuPrice)</span> </span>&#123;<br>        String condition = couponInfo.get(<span class="hljs-string">&quot;condition&quot;</span>);<br>        String amount = couponInfo.get(<span class="hljs-string">&quot;amount&quot;</span>);<br>        <span class="hljs-comment">// ⼩于商品⾦额条件的，直接返回商品原价</span><br>        <span class="hljs-keyword">if</span> (skuPrice.compareTo(<span class="hljs-keyword">new</span> BigDecimal(condition)) &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> skuPrice;<br>        <span class="hljs-comment">// 减去优惠⾦额判断</span><br>        BigDecimal discountAmount = skuPrice.subtract(<span class="hljs-keyword">new</span> BigDecimal(amount));<br>        <span class="hljs-keyword">if</span> (discountAmount.compareTo(BigDecimal.ZERO) &lt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span><br>                BigDecimal.ONE;<br>        <span class="hljs-keyword">return</span> discountAmount;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ZJCouponDiscount</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CouponDiscount</span>&lt;<span class="hljs-title">Double</span>&gt; </span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 直减计算</span><br><span class="hljs-comment">     * 1. 使用商品价格减去优惠价格</span><br><span class="hljs-comment">     * 2. 最低⽀付⾦额1元</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(Double couponInfo, BigDecimal skuPrice)</span> </span>&#123;<br>        BigDecimal discountAmount = skuPrice.subtract(<span class="hljs-keyword">new</span> BigDecimal(couponInfo));<br><br>        <span class="hljs-keyword">if</span> (discountAmount.compareTo(BigDecimal.ONE) &lt; <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> BigDecimal.ONE;<br>        &#125;<br>        <span class="hljs-keyword">return</span> discountAmount;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ZKCouponDiscount</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CouponDiscount</span>&lt;<span class="hljs-title">Double</span>&gt; </span>&#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 折扣计算</span><br><span class="hljs-comment">     * 1. 使⽤商品价格乘以折扣⽐例，为最后⽀付⾦额</span><br><span class="hljs-comment">     * 2. 保留两位⼩数</span><br><span class="hljs-comment">     * 3. 最低⽀付⾦额1元</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(Double couponInfo, BigDecimal skuPrice)</span> </span>&#123;<br><br>        BigDecimal discountAmount = skuPrice.multiply(<span class="hljs-keyword">new</span> BigDecimal(couponInfo)).<br>                setScale(<span class="hljs-number">2</span>, BigDecimal.ROUND_HALF_UP);<br>        <span class="hljs-keyword">if</span> (discountAmount.compareTo(BigDecimal.ONE) &lt; <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">return</span> BigDecimal.ONE;<br>        &#125;<br>        <span class="hljs-keyword">return</span> discountAmount;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NYGCouponDiscount</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CouponDiscount</span>&lt;<span class="hljs-title">Double</span>&gt; </span>&#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * n 元购购买</span><br><span class="hljs-comment">     * 1. ⽆论原价多少钱都固定⾦额购买</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(Double couponInfo, BigDecimal skuPrice)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BigDecimal(couponInfo);<br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+
+<p><strong>策略控制类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Context</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-keyword">private</span> CouponDiscount&lt;T&gt; couponDiscount;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Context</span><span class="hljs-params">(CouponDiscount&lt;T&gt; couponDiscount)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.couponDiscount = couponDiscount;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> BigDecimal <span class="hljs-title">discountAmount</span><span class="hljs-params">(T couponInfo, BigDecimal skuPrice)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> couponDiscount.discountAmount(couponInfo, skuPrice);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><strong>测试验证</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ContextTest</span> </span>&#123;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">discountAmount</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>        <span class="hljs-comment">// 直减；100-10，商品100元</span><br>        Context&lt;Double&gt; context = <span class="hljs-keyword">new</span> Context&lt;Double&gt;(<span class="hljs-keyword">new</span> ZJCouponDiscount());<br>        BigDecimal discountAmount = context.discountAmount(<span class="hljs-number">10D</span>, <span class="hljs-keyword">new</span> BigDecimal(<span class="hljs-number">100</span>));<br>        Assert.assertTrue(discountAmount.equals(<span class="hljs-keyword">new</span> BigDecimal(<span class="hljs-number">90</span>)));<br><br>        <span class="hljs-comment">// 满100减10，商品100元</span><br>        Context&lt;Map&lt;String, String&gt;&gt; context1 = <span class="hljs-keyword">new</span> Context&lt;Map&lt;String, String&gt;&gt;(<span class="hljs-keyword">new</span> MJCouponDiscount());<br>        Map&lt;String, String&gt; mapReq = <span class="hljs-keyword">new</span> HashMap&lt;String, String&gt;();<br>        mapReq.put(<span class="hljs-string">&quot;condition&quot;</span>, <span class="hljs-string">&quot;100&quot;</span>);<br>        mapReq.put(<span class="hljs-string">&quot;amount&quot;</span>, <span class="hljs-string">&quot;10&quot;</span>);<br>        BigDecimal discountAmount1 = context1.discountAmount(mapReq, <span class="hljs-keyword">new</span> BigDecimal(<span class="hljs-number">90</span>));<br>        Assert.assertTrue(discountAmount1.equals(<span class="hljs-keyword">new</span> BigDecimal(<span class="hljs-number">90</span>)));<br><br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>通过策略设计模式的使⽤可以把⽅法中的 if 语句优化掉，⼤量的 if 语句使⽤会让代码难以扩展，也不好维护，同时在后期遇到各种问题也很难维护。在使⽤这样的设计模式后可以很好的满⾜隔离性与和扩展性，对于不断新增的需求也⾮常⽅便承接。</p>
+<h3 id="3-JDK中的应用"><a href="#3-JDK中的应用" class="headerlink" title="3. JDK中的应用"></a>3. JDK中的应用</h3><p>排序时通过实现排序接口生成不同的排序类，达到按不同的属性排序</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ComparatorTest</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Person[] people = <span class="hljs-keyword">new</span> Person[]&#123;<span class="hljs-keyword">new</span> Person(<span class="hljs-number">10</span>,<span class="hljs-number">111</span>),<span class="hljs-keyword">new</span> Person(<span class="hljs-number">18</span>,<span class="hljs-number">99</span>),<span class="hljs-keyword">new</span> Person(<span class="hljs-number">15</span>,<span class="hljs-number">122</span>)&#125;;<br><br>        System.out.println(Arrays.toString(people));<br>        Arrays.sort(people,<span class="hljs-keyword">new</span> SortByAge());<br>        System.out.println(Arrays.toString(people));<br>        Arrays.sort(people,<span class="hljs-keyword">new</span> SortByHeight());<br>        System.out.println(Arrays.toString(people));<br><br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         *  [Person&#123;age=10, height=111&#125;, Person&#123;age=18, height=99&#125;, Person&#123;age=15, height=122&#125;]</span><br><span class="hljs-comment">            [Person&#123;age=10, height=111&#125;, Person&#123;age=15, height=122&#125;, Person&#123;age=18, height=99&#125;]</span><br><span class="hljs-comment">            [Person&#123;age=15, height=122&#125;, Person&#123;age=10, height=111&#125;, Person&#123;age=18, height=99&#125;]</span><br><span class="hljs-comment">         */</span><br>    &#125;<br><br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SortByHeight</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">Person</span>&gt;</span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Person o1, Person o2)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span>  o1.getHeight()-o2.getHeight();<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SortByAge</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">Person</span>&gt;</span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Person o1, Person o2)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> o1.getAge()-o2.getAge();<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span></span>&#123;<br>    <span class="hljs-keyword">int</span> age;<br>    <span class="hljs-keyword">int</span> height;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age, <span class="hljs-keyword">int</span> height)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.age = age;<br>        <span class="hljs-keyword">this</span>.height = height;<br>    &#125;<br>    <br>    <span class="hljs-comment">/* getter setter  toString */</span><br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">行为型模式</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/09/java%E2%80%94%E2%80%94%E6%B3%9B%E5%9E%8B/">
+                        <span class="hidden-mobile">java——泛型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
