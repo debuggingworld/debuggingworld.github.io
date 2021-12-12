@@ -23,12 +23,16 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs  改进钻石操作符  限制使用单独下划线标识符  String 存储结构变更  快速创建只读集合  增强 Stream API  改进 Optional 类  多分辨率图像 API  全新 HTTP 客户端 API  智能 JAVA 编译工具  统一 JVM 日志系统  javado">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212225847.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212230559.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212231645.png">
 <meta property="article:published_time" content="2021-12-06T14:22:37.000Z">
-<meta property="article:modified_time" content="2021-12-08T15:42:07.930Z">
+<meta property="article:modified_time" content="2021-12-12T15:17:12.704Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java9新特性">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212225847.png">
   
   <title>java——java9新特性 - Hexo</title>
 
@@ -213,7 +217,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.7k 字
+      8k 字
     </span>
   
 
@@ -222,7 +226,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      24 分钟
+      25 分钟
     </span>
   
 
@@ -295,7 +299,17 @@
 </blockquote>
 <p> <strong>注：JDK9 目录中不再有 jre 子目录。</strong></p>
 <h4 id="2-模块化系统"><a href="#2-模块化系统" class="headerlink" title="2. 模块化系统"></a>2. 模块化系统</h4><p>JDK9 将 JDK 分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库： root、corba、hotspot、jaxp、jaxws、jdk、langtools 和 nashorn </p>
-<p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及那 些包被外部使用。<br>exports：控制着那些包可以被其他模块访问到，所有不被exports的包默认都被封装在模块里面不 被外界所使用。<br>requires：指明对其他模块的依赖。 </p>
+<blockquote>
+<p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及哪些包被外部使用。<br>exports：控制哪些包可以被其他模块访问，所有不被 exports 的包默认都被封装在模块里面不 被外界所使用。<br>requires：指明对其他模块的依赖。 </p>
+</blockquote>
+<p><strong>示例:</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212225847.png" srcset="/img/loading.gif" lazyload></p>
+<p>有两个模块 jdk9 和 jdk9module1，在 jdk9 中引用 jdk9module1 的内容。</p>
+<p>jdk9  module-info 内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9 &#123;<br>    <span class="hljs-keyword">requires</span> jdk9module1;<br>    <span class="hljs-keyword">requires</span> jdk.incubator.httpclient;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>jdk9module1  module-info 内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9module1 &#123;<br>    <span class="hljs-keyword">exports</span> com.zth.bean;<br>    <span class="hljs-comment">//exports com.zth.common;</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212230559.png" srcset="/img/loading.gif" lazyload><br>可以看到如果没有引用 common 包，将如法使用 Util 类。</p>
 <h4 id="3-JShell"><a href="#3-JShell" class="headerlink" title="3. JShell"></a>3. JShell</h4><p>JDK9 新增了 REPL（Read-Eval-Print Loop）工具 jshell，jshell 工具提供了一个交互式命令界面， 可以评估声明、语句和表达式，无需编译即可返回执行结果。</p>
 <blockquote>
 <ol>
@@ -306,6 +320,7 @@
 <li>/open path 　　//执行路径上的代码 如 /open C:\Users\wukong\Desktop\App.java </li>
 </ol>
 </blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211212231645.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="3-接口私有化方法"><a href="#3-接口私有化方法" class="headerlink" title="3. 接口私有化方法"></a>3. 接口私有化方法</h4><p>在JDK8中接口运行使用静态方法和默认方法后，JDK9可以在接口中使用私有方法 1 @FunctionalInterface 2 public interface TestFunctionalInterface { 3 //todo @FunctionalInterface注解会检测接口是否有且只有一个抽象方法，还可以有默 认方法和静态方法 4 public void test(); 5 //todo 默认方法 6 default String getName(){ 7 log(“getName”); 8 return “人参”; 9 } 10 //todo 默认方法 11 default String getDesc(){ 12 log(“getDesc”); 13 return “人参大补元气”; 14 } 15 private void log(String method){<br>16 System.out.println(“TestFunctionalInterface.”+method+”()被调用”); 17 } 18 //todo 静态方法 19 static String getName2(){ 20 return “鹿茸”; 21 } 22 } </p>
 <p>五、改进try­with­resource JDK8中新增了try-with-resources语句，可以自动关闭需要关闭的资源文件。但是必须在try语句 后的括号中初始化需要关闭的资源。在JDK9中改进了try-with-resources语句，你可以在try外初 始化资源，然后在try后的括号中添加需要自动关的资源即可 1 public static void jdk7() { 2 FileInputStream fileInputStream = null; 34 try { 5 fileInputStream = new FileInputStream(“D:/a.txt”); 6 byte[] temp = new byte[1024]; 7 fileInputStream.read(temp); 8 System.out.println(new String(temp)); 9 } catch (Exception e) { 10 e.printStackTrace(); 11 }finally { 12 if (fileInputStream != null){ 13 try { 14 fileInputStream.close(); 15 } catch (IOException e) { 16 e.printStackTrace(); 17 } 18 } 19 } 20 } 21 public static void jdk8() { 222324 try( FileInputStream fileInputStream = new FileInputStream(“D:/a.txt”)) {2526 byte[] temp = new byte[1024]; 27 fileInputStream.read(temp);<br>28 System.out.println(new String(temp)); 29 } catch (Exception e) { 30 e.printStackTrace(); 31 } 32 } 33 public static void jdk9() throws FileNotFoundException { 3435 FileInputStream fileInputStream = new FileInputStream(“D:/a.txt”); 36 try( fileInputStream) { 37 byte[] temp = new byte[1024]; 38 fileInputStream.read(temp); 39 System.out.println(new String(temp)); 40 } catch (Exception e) { 41 e.printStackTrace(); 42 } 43 }</p>
 <p>六、改进钻石操作符 JDK9中钻石操作符可以使用匿名实现类，可以在匿名实现类中重写方法等操作 1 public static void main(String[] args) { 2 //jdk9允许 3 Comparator<Integer> comparator = new Comparator&lt;&gt;() { 4 @Override 5 public int compare(Integer o1, Integer o2) { 6 return 0; 7 } 8 }; 9 } </p>
