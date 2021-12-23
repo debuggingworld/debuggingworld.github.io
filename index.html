@@ -217,14 +217,21 @@
           
             
           
-          1. 引入创建目录并初始化：
-12$ mkdir -p testify &amp;&amp; cd testify$ go mod init github.com/darjun/go-daily-lib/testify
-安装 testify 库：
+          1. 引入安装 testify 库：
 1$ go get -u github.com/stretchr/testify
 
 
 如果 go  get 失败：
-12$ go env -w GO11
+12$ go env -w GO111MODULE=on$ go env -w GOPROXY=https://goproxy.cn,direct
+estify 模块：
+
+assert
+http
+mock
+require
+suite
+
+2. as
         </a>
       </p>
 
