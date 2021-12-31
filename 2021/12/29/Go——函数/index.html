@@ -23,11 +23,18 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 函数基本语法：func   函数名（形参列表) [ 返回值类型列表 ] { 　　执行语句..　　return　返回值列表} 123func add(num1 int, num2 int) (int) &amp;#123; &#x2F;&#x2F; 如果返回值类型只有一个，那么()是可以省略不写	return num1 + num2&amp;#125;   函数名   驼峰命名   首字母不能是数字 首字母大写该函数可以被本包文">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230161703.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230162839.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230163246.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230174442.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230174547.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230195731.png">
 <meta property="article:published_time" content="2021-12-29T15:32:01.000Z">
-<meta property="article:modified_time" content="2021-12-30T07:17:29.549Z">
+<meta property="article:modified_time" content="2021-12-30T12:32:36.456Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230161703.png">
   
   <title>Go——函数 - Hexo</title>
 
@@ -212,7 +219,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      7.1k 字
     </span>
   
 
@@ -221,7 +228,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5 分钟
+      22 分钟
     </span>
   
 
@@ -298,6 +305,156 @@
 <li>支持对函数返回值命名</li>
 </ol>
 <figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">test</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	sum := num1 + num2<br>	sub := num1 - num2<br>	<span class="hljs-keyword">return</span> sum, sub<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">test2</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(sum <span class="hljs-keyword">int</span>, sub <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	sum = num1 + num2<br>	sub = num1 - num2<br>	<span class="hljs-keyword">return</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="2-包"><a href="#2-包" class="headerlink" title="2. 包"></a>2. 包</h3><ol>
+<li><p>package 进行包的声明<br>建议：包的声明和所在的文件夹同名</p>
+</li>
+<li><p>main 包是程序的入口包<br>main 函数一定要放在 main 包下，否则不能编译执行</p>
+</li>
+<li><p>包的引入<br>语法：import  “包的路径”<br>包名是从 $GOPATH/src/ 后开始的，使用 / 进行路径分隔。<br>【注：未开启 go modules 的情况下】</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230161703.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>包名和文件夹的名字，可以不一样，建议一致</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230162839.png" srcset="/img/loading.gif" lazyload> </p>
+</li>
+<li><p>一个目录下只能声明一个 package，所以一个目录下不能有重复的函数</p>
+</li>
+<li><p>可以给包取别名，取别名后，原来的包名就不能使用了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230163246.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="3-init函数"><a href="#3-init函数" class="headerlink" title="3. init函数"></a>3. init函数</h3><p> 初始化函数，可以用来进行一些初始化的操作</p>
+<p>每一个源文件都可以包含一个 init 函数，该函数会在 main 函数执行前，被 Go 运行框架调用。</p>
+<p>全局变量定义，init 函数，main 函数的执行流程：</p>
+<p>全局变量 –&gt; init 函数 –&gt; main 函数</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">var</span> global <span class="hljs-keyword">int</span> = get()<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;get....&quot;</span>)<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">100</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;init....&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;main......&quot;</span>)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>执行结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230174442.png" srcset="/img/loading.gif" lazyload></p>
+<p>多个源文件都有init函数的时候，如何执行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230174547.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="4-匿名函数"><a href="#4-匿名函数" class="headerlink" title="4. 匿名函数"></a>4. 匿名函数</h4><p>匿名函数使用方式：</p>
+<ol>
+<li>在定义匿名函数时就直接调用，这种方式匿名函数只能调用一次</li>
+</ol>
+ <figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>		<span class="hljs-keyword">return</span> num1 + num2<br>	&#125;(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)<br><br>	fmt.Println(result)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<ol start="2">
+<li>将匿名函数赋给一个变量，再通过该变量来调用匿名函数</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	add := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>		<span class="hljs-keyword">return</span> num1 + num2<br>	&#125;<br>	fmt.Println(add(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>))<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="5-闭包"><a href="#5-闭包" class="headerlink" title="5. 闭包"></a>5. 闭包</h4><p>闭包就是一个函数和与其相关的引用环境组合的一个整体</p>
+<p>闭包的本质：闭包本质依旧是一个匿名函数，只是这个函数引入外界的变量/参数<br>匿名函数 + 引用的变量/参数 = 闭包</p>
+<p>（ 当一个函数的返回值是另外一个函数，而返回的这个函数如果调用了其父函数内部的变量，且返回的这个函数在外部被执行，就产生了闭包。闭包是一个环境，具体指的就是外部函数–高阶函数。）</p>
+<p>特点：</p>
+<ol>
+<li>返回的是一个匿名函数，但是这个匿名函数引用到函数外的变量/参数 ,因此这个匿名函数就和变量/参数形成一个整体，构成闭包。</li>
+<li>闭包中使用的变量/参数会一直保存在内存中</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSum</span><span class="hljs-params">()</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">var</span> sum <span class="hljs-keyword">int</span> = <span class="hljs-number">0</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(num <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>		sum = sum + num<br>		<span class="hljs-keyword">return</span> sum<br>	&#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	f := getSum()<br>	fmt.Println(f(<span class="hljs-number">1</span>)) <span class="hljs-comment">// 1</span><br>	fmt.Println(f(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 3</span><br>	fmt.Println(f(<span class="hljs-number">3</span>)) <span class="hljs-comment">// 6</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+
+<p>用处：</p>
+<ol>
+<li>读取函数内部的变量</li>
+<li>这些变量的值始终保持在内存中，不会在外层函数调用后被自动清除</li>
+</ol>
+<p>优点：</p>
+<ol>
+<li>变量长期驻扎在内存中</li>
+<li>避免全局变量的污染</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>常驻内存 会增大内存的使用量</li>
+</ol>
+<h3 id="5-defer关键字"><a href="#5-defer关键字" class="headerlink" title="5. defer关键字"></a>5. defer关键字</h3><p>defer提供延迟机制，会将要延迟执行的方法“压栈”，当 defer 被触发时，将所有“压栈”的方法“出栈”并执行。</p>
+<p>defer 的执行时机：</p>
+<ol>
+<li>包裹 defer 的函数返回时</li>
+<li>包裹 defer 的函数执行到末尾时</li>
+<li>所在的 goroutine 发生 panic 时</li>
+</ol>
+<p>【注】调用 os.Exit() 方法退出程序时，不会执行</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getSum</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br><br>	<span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;num1：&quot;</span>, num1)<br>	<span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;num2：&quot;</span>, num2)<br><br>	sum := num1 + num2<br>	fmt.Println(<span class="hljs-string">&quot;sum：&quot;</span>, sum)<br>	<br>	<span class="hljs-keyword">return</span> sum<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	getSum(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="6-系统函数"><a href="#6-系统函数" class="headerlink" title="6. 系统函数"></a>6. 系统函数</h3><h4 id="6-1-内置函数"><a href="#6-1-内置函数" class="headerlink" title="6.1 内置函数"></a>6.1 内置函数</h4><p>new 函数：<br>分配内存，主要用来分配值类型（int系列, float系列, bool, string、数组和结构体 struct）</p>
+<p>func new(Type) *Type<br>其第一个实参为类型，而非值。其返回值为指向该类型的新分配的零值的指针。</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	num := <span class="hljs-built_in">new</span>(<span class="hljs-keyword">int</span>)<br>	fmt.Printf(<span class="hljs-string">&quot;num 的类型：%T，num 的值：%v，num 的地址：%v， num 指针指向的值: %v&quot;</span>, num, num, &amp;num, *num)<br>	<span class="hljs-comment">//num 的类型：*int，num 的值：0xc0000a6058，num 的地址：0xc0000d2018， num 指针指向的值: 0</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>make函数:<br>func make(Type, size IntegerType) Type</p>
+<p>make分配并初始化一个类型为切片、映射、或通道的对象。其第一个实参为类型，而非值。make的返回类型与其参数相同，而非指向它的指针。</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	demo := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">10</span>)<br>	fmt.Println( demo)<br>	<span class="hljs-comment">// [0 0 0 0 0 0 0 0 0 0]</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+
+
+<h4 id="6-1-字符串相关函数"><a href="#6-1-字符串相关函数" class="headerlink" title="6.1 字符串相关函数"></a>6.1 字符串相关函数</h4><ol>
+<li><p>字符串转整数<br>n, err := strconv.Atoi(“66”)</p>
+</li>
+<li><p>整数转字符串<br>str := strconv.Itoa(6887)</p>
+</li>
+<li><p>不区分大小写比较字符串是否相同<br>func EqualFold(s, t string) bool</p>
+</li>
+<li><p>判断 s 是否有前缀字符串 prefix<br>func HasPrefix(s, prefix string) bool</p>
+</li>
+<li><p>判断 s 是否有后缀字符串 suffix<br>func HasSuffix(s, suffix string) bool</p>
+</li>
+<li><p>判断字符串 s 是否包含子串 substr<br>func Contains(s, substr string) bool</p>
+</li>
+<li><p>返回字符串 s 中有几个不重复的 sep 子串<br>func Count(s, sep string) int</p>
+</li>
+<li><p>子串 sep 在字符串s中第一次出现的位置，不存在则返回-1<br>func Index(s, sep string) int</p>
+</li>
+<li><p>子串 sep 在字符串 s 中最后一次出现的位置，不存在则返回-1<br>func LastIndex(s, sep string) int</p>
+</li>
+<li><p>将所有字母都转为对应的小写<br>func ToLower(s string) string</p>
+</li>
+<li><p>将所有字母都转为对应的大写<br>func ToUpper(s string) string</p>
+</li>
+<li><p>返回 count 个 s 串联的字符串。<br>func Repeat(s string, count int) string</p>
+</li>
+<li><p>将 s 中前 n 个不重叠 old 子串都替换为 new 的新字符串<br>func Replace(s, old, new string, n int) string</p>
+</li>
+<li><p>将 s 前后端所有 cutset  去掉<br>func Trim(s string, cutset string) string</p>
+</li>
+<li><p>将 s 前后端所有空白都去掉<br>func TrimSpace(s string) string</p>
+</li>
+<li><p>用去掉 s 中出现的 sep 的方式进行分割，返回生成的所有片段组成的切片<br>func Split(s, sep string) []string<br>每一个 sep 都会进行一次切割，即使两个 sep 相邻，也会进行两次切割。</p>
+</li>
+</ol>
+<h4 id="6-2-时间相关函数"><a href="#6-2-时间相关函数" class="headerlink" title="6.2 时间相关函数"></a>6.2 时间相关函数</h4><p>时间和日期的函数在 time 包，time.Now() 返回当前时间。</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	now := time.Now()<br>	fmt.Printf(<span class="hljs-string">&quot;%v ~~~ 对应的类型为：%T\n&quot;</span>, now, now)<br>	<span class="hljs-comment">// 2021-12-30 19:36:01.1827252 +0800 CST m=+0.003000101 ~~~ 对应的类型为：time.Time</span><br><br>	<span class="hljs-comment">// 当前时间戳</span><br>	fmt.Println(now.Unix())<br>	<span class="hljs-comment">// 纳秒级时间戳</span><br>	fmt.Println(now.UnixNano())<br>	<span class="hljs-comment">// 时间戳小数部分 单位：纳秒</span><br>	fmt.Println(now.Nanosecond())<br><br>	<span class="hljs-comment">//调用结构体中的方法：</span><br>	fmt.Printf(<span class="hljs-string">&quot;年：%v \n&quot;</span>, now.Year())<br>	fmt.Printf(<span class="hljs-string">&quot;月：%v \n&quot;</span>, now.Month())      <span class="hljs-comment">//月：February</span><br>	fmt.Printf(<span class="hljs-string">&quot;月：%v \n&quot;</span>, <span class="hljs-keyword">int</span>(now.Month())) <span class="hljs-comment">//月：2</span><br>	fmt.Printf(<span class="hljs-string">&quot;日：%v \n&quot;</span>, now.Day())<br>	fmt.Printf(<span class="hljs-string">&quot;时：%v \n&quot;</span>, now.Hour())<br>	fmt.Printf(<span class="hljs-string">&quot;分：%v \n&quot;</span>, now.Minute())<br>	fmt.Printf(<span class="hljs-string">&quot;秒：%v \n&quot;</span>, now.Second())<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>根据指定时间返回 time.Time</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	now := time.Now()<br>	layout := <span class="hljs-string">&quot;2006-01-02 15:04:05&quot;</span><br>	<br>	<span class="hljs-comment">//根据指定时间返回 time.Time 类型</span><br>	<span class="hljs-comment">//分别指定年，月，日，时，分，秒，纳秒，时区</span><br>	t := time.Date(<span class="hljs-number">2011</span>, time.Month(<span class="hljs-number">3</span>), <span class="hljs-number">12</span>, <span class="hljs-number">15</span>, <span class="hljs-number">30</span>, <span class="hljs-number">20</span>, <span class="hljs-number">0</span>, now.Location())<br>	fmt.Println(t.Format(layout))<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>日期字符串解析成 time.Time</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	t, _ := time.ParseInLocation(<span class="hljs-string">&quot;2006-01-02 15:04:05&quot;</span>, time.Now().Format(<span class="hljs-string">&quot;2006-01-02 15:04:05&quot;</span>), time.Local)<br>	fmt.Println(t)<br>	<span class="hljs-comment">// 2021-12-30 19:54:31 +0800 CST</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211230195731.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>日期的格式化</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	now := time.Now()<br><br>	fmt.Println( now.Format(<span class="hljs-string">&quot;2006/01/02 15/04/05&quot;</span>))<br>	<span class="hljs-comment">// 2021/12/30 19/46/44</span><br><br>	fmt.Println(now.Format(<span class="hljs-string">&quot;2006 15:04&quot;</span>))<br>	<span class="hljs-comment">//2021 19:46</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>计算、比较日期</strong></p>
+<p>0-24小时之内的时间计算:</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	now := time.Now()<br><br>	<span class="hljs-comment">// 1小时1分1s之后</span><br>	t1, _ := time.ParseDuration(<span class="hljs-string">&quot;1h1m1s&quot;</span>)<br>	m1 := now.Add(t1)<br>	fmt.Println(m1)<br><br>	<span class="hljs-comment">// 1小时1分1s之前</span><br>	t2, _ := time.ParseDuration(<span class="hljs-string">&quot;-1h1m1s&quot;</span>)<br>	m2 := now.Add(t2)<br>	fmt.Println(m2)<br><br>	<span class="hljs-comment">// 3小时之前</span><br>	t3, _ := time.ParseDuration(<span class="hljs-string">&quot;-1h&quot;</span>)<br>	m3 := now.Add(t3 * <span class="hljs-number">3</span>)<br>	fmt.Println(m3)<br><br>	<span class="hljs-comment">// 10 分钟之后</span><br>	t4, _ := time.ParseDuration(<span class="hljs-string">&quot;10m&quot;</span>)<br>	m4 := now.Add(t4)<br>	fmt.Println(m4)<br><br>	<span class="hljs-comment">// Sub 计算两个时间差</span><br>	sub1 := now.Sub(m3)<br>	fmt.Println(sub1.Hours())   <span class="hljs-comment">// 相差小时数</span><br>	fmt.Println(sub1.Minutes()) <span class="hljs-comment">// 相差分钟数</span><br><br><br><br>	<span class="hljs-comment">// 返回当前时间与 t 的时间差，返回值是 Duration</span><br>	<span class="hljs-comment">// time.Since(t Time) Duration</span><br><br>	<span class="hljs-comment">// 返回 t 与当前时间的时间差，返回值是 Duration</span><br>	<span class="hljs-comment">// time.Until(t Time) Duration</span><br>	<br><br>	t5, _ := time.ParseDuration(<span class="hljs-string">&quot;-1h&quot;</span>)<br>	m5 := now.Add(t5)<br><br>	fmt.Println(time.Since(m5))<br>	fmt.Println(time.Until(m5))<br>&#125;<br><br><br></code></pre></div></td></tr></table></figure>
+
+<p>1-24小时之外的时间计算</p>
+<p>func (t Time) AddDate(years int, months int, days int) Time</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	now := time.Now()<br>	fmt.Println(now)<br>	<span class="hljs-comment">// 一年一个月零一天 </span><br>	m1 := now.AddDate(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>	fmt.Println(m1)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>日期比较</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	now := time.Now()<br><br>	<span class="hljs-comment">// 1小时之后</span><br>	t1, _ := time.ParseDuration(<span class="hljs-string">&quot;1h&quot;</span>)<br>	m1 := now.Add(t1)<br><br>	fmt.Println(m1.After(now))  <span class="hljs-comment">// true</span><br>	fmt.Println(now.Before(m1))	<span class="hljs-comment">// true</span><br>	fmt.Println(now.Equal(m1))	<span class="hljs-comment">// false</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
             <hr>
             <div>
@@ -330,6 +487,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/12/30/Go%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go——异常处理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

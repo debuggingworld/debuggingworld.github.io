@@ -206,6 +206,59 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/12/30/Go%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_blank">
+          Go——异常处理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/12/30/Go%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_blank">
+          
+          
+            
+          
+          1. defer+recover 机制处理错误
+func recover() interface{}
+
+内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defe r的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-30 23:19" pubdate>
+              2021-12-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Golang/">Golang</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Golang/">Golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/12/29/Go%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0/" target="_blank">
           Go——函数
         </a>
@@ -741,61 +794,6 @@ gopher 是一种生活在加拿大的小动物，中文名叫做囊地鼠。
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Golang/">Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——策略模式
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" target="_blank">
-          
-          
-            
-          
-          1. 模式定义定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。
-
-解决场景：一般是具有同类可替代的行为逻辑算法场景。比如；不同类型的交易方式（信用卡、支付宝、微信）、生成唯一 ID 策略（UUID、DB自增、DB+Redis、雪花算法、Leaf 算法）等，都可以使用策略模式进行行为包装，供给外部使用。 
-2. 示例场景：模拟在购买商品时使用各种类型优惠券(满减、
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-10 21:03" pubdate>
-              2021-12-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-            
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">行为型模式</a>
             
           </div>
         
