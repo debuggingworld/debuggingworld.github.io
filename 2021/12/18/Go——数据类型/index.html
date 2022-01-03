@@ -18,7 +18,7 @@
   <meta name="keywords" content="">
   <meta name="description" content="1. 变量1.1 变量的声明 指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。  申明变量没有初始化就为零值  数值类型为 0 布尔类型为 false 字符串为 “”（空字符串） 复杂类型为 nil（指针、切片、map 等）   1234567891011func main()">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go——变量与数据类型">
+<meta property="og:title" content="Go——变量、常量与数据类型">
 <meta property="og:url" content="http://example.com/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 变量1.1 变量的声明 指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。  申明变量没有初始化就为零值  数值类型为 0 布尔类型为 false 字符串为 “”（空字符串） 复杂类型为 nil（指针、切片、map 等）   1234567891011func main()">
@@ -29,13 +29,13 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211228140047.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211228142655.png">
 <meta property="article:published_time" content="2021-12-18T15:29:33.000Z">
-<meta property="article:modified_time" content="2021-12-28T14:01:43.702Z">
+<meta property="article:modified_time" content="2022-01-03T14:21:52.263Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211228130016.png">
   
-  <title>Go——变量与数据类型 - Hexo</title>
+  <title>Go——变量、常量与数据类型 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -197,7 +197,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Go——变量与数据类型">
+            <span class="h2" id="subtitle" title="Go——变量、常量与数据类型">
               
             </span>
 
@@ -218,7 +218,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.1k 字
+      6.6k 字
     </span>
   
 
@@ -227,7 +227,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19 分钟
+      21 分钟
     </span>
   
 
@@ -256,7 +256,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go——变量与数据类型</h1>
+            <h1 style="display: none">Go——变量、常量与数据类型</h1>
             
             <div class="markdown-body">
               <h3 id="1-变量"><a href="#1-变量" class="headerlink" title="1. 变量"></a>1. 变量</h3><h4 id="1-1-变量的声明"><a href="#1-1-变量的声明" class="headerlink" title="1.1 变量的声明"></a>1.1 变量的声明</h4><ol>
@@ -278,7 +278,14 @@
 
 <h4 id="1-2-多变量声明"><a href="#1-2-多变量声明" class="headerlink" title="1.2 多变量声明"></a>1.2 多变量声明</h4><figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">var</span> x, y <span class="hljs-keyword">int</span><br><span class="hljs-keyword">var</span> (<br>	<span class="hljs-comment">// 这种写法一般用于声明全局变量</span><br>	a , z <span class="hljs-keyword">int</span><br>	b <span class="hljs-keyword">bool</span><br>)<br><br><span class="hljs-keyword">var</span> c, d <span class="hljs-keyword">int</span> = <span class="hljs-number">1</span>, <span class="hljs-number">2</span><br><span class="hljs-keyword">var</span> e, f = <span class="hljs-number">123</span>, <span class="hljs-string">&quot;hello&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	g, h := <span class="hljs-number">123</span>, <span class="hljs-string">&quot;hello&quot;</span><br>	<span class="hljs-built_in">println</span>(x, y, a, b, c, d, e, f, g, h)<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
-<h3 id="2-数据类型"><a href="#2-数据类型" class="headerlink" title="2. 数据类型"></a>2. 数据类型</h3><h4 id="2-1-基本数据类型"><a href="#2-1-基本数据类型" class="headerlink" title="2.1 基本数据类型"></a>2.1 基本数据类型</h4><h5 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h5><table>
+<h3 id="2-常量"><a href="#2-常量" class="headerlink" title="2. 常量"></a>2. 常量</h3><p>常量的声明和变量声明非常类似，只是把 var 换成了 const，常量在定义的时候必须赋值。</p>
+<p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">const</span> pi = <span class="hljs-number">3.1415</span><br><span class="hljs-keyword">const</span> e = <span class="hljs-number">2.7182</span><br><br><span class="hljs-keyword">const</span> (<br>	a = <span class="hljs-number">1</span><br>	b = <span class="hljs-number">2</span><br>)<br><br><span class="hljs-keyword">const</span> (<br>	n1 = <span class="hljs-number">100</span><br>	n2<br>	n3<br>)<br><br>fmt.Println(n3) <span class="hljs-comment">// 100</span><br></code></pre></div></td></tr></table></figure>
+<h4 id="2-1-iota"><a href="#2-1-iota" class="headerlink" title="2.1 iota"></a>2.1 iota</h4><p>iota  是 go 语言的常量计数器，只能在常量的表达式中使用。</p>
+<p>iota 在 const 关键字出现时将被重置为 0。const 中每新增一行常量声明将使 iota 计数一次( iota 可理解为 const 语句块中的行索引)。 使用 iota 能简化定义，在定义枚举时很有用。</p>
+<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>	n1 = <span class="hljs-literal">iota</span> <span class="hljs-comment">// 0</span><br>	n2        <span class="hljs-comment">// 1</span><br>	n3        <span class="hljs-comment">// 2</span><br>	n4        <span class="hljs-comment">// 3</span><br>)<br><br><span class="hljs-comment">// 使用_跳过某些值</span><br><span class="hljs-keyword">const</span> (<br>	n5 = <span class="hljs-literal">iota</span> <span class="hljs-comment">// 0</span><br>	n6        <span class="hljs-comment">// 1</span><br>	_<br>	n7 <span class="hljs-comment">// 3</span><br>)<br><br><span class="hljs-comment">// iota声明中间插队</span><br><span class="hljs-keyword">const</span> (<br>	n8  = <span class="hljs-literal">iota</span> <span class="hljs-comment">// 0</span><br>	n9  = <span class="hljs-number">100</span>  <span class="hljs-comment">// 100</span><br>	n10 = <span class="hljs-literal">iota</span> <span class="hljs-comment">// 2</span><br>	n11        <span class="hljs-comment">// 3</span><br>)<br><br><span class="hljs-comment">// 多个 iota 定义在一行</span><br><span class="hljs-keyword">const</span> (<br>	a, b = <span class="hljs-literal">iota</span> + <span class="hljs-number">1</span>, <span class="hljs-literal">iota</span> + <span class="hljs-number">2</span> <span class="hljs-comment">// 1,2</span><br>	c, d                      <span class="hljs-comment">// 2,3</span><br>	e, f                      <span class="hljs-comment">// 3,4</span><br>)<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="3-数据类型"><a href="#3-数据类型" class="headerlink" title="3. 数据类型"></a>3. 数据类型</h3><h4 id="3-1-基本数据类型"><a href="#3-1-基本数据类型" class="headerlink" title="3.1 基本数据类型"></a>3.1 基本数据类型</h4><h5 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h5><table>
 <thead>
 <tr>
 <th align="center">类型</th>
@@ -431,7 +438,7 @@
 <p>注意：string向基本数据类型转换的时候，一定要确保 string 类型能够转成有效的数据类型，否则最后得到的结果就是按照对应类型的默认值输出</p>
 <figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">//string--&gt;bool</span><br>	<span class="hljs-keyword">var</span> s1 <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;true&quot;</span><br>	<span class="hljs-comment">//ParseBool这个函数的返回值有两个：(value bool, err error)</span><br>	b, _ := strconv.ParseBool(s1)<br>	fmt.Printf(<span class="hljs-string">&quot;b的类型是：%T,b=%v \n&quot;</span>, b, b)<br><br>	<span class="hljs-comment">//string---》int</span><br>	<span class="hljs-keyword">var</span> s2 <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;-19&quot;</span><br>	num1, _ := strconv.ParseInt(s2, <span class="hljs-number">10</span>, <span class="hljs-number">64</span>)<br>	fmt.Printf(<span class="hljs-string">&quot;num1的类型是：%T,num1=%v \n&quot;</span>, num1, num1)<br><br>	<span class="hljs-comment">//string--&gt;float32/float64</span><br>	<span class="hljs-keyword">var</span> s3 <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;3.14&quot;</span><br>	f1, _ := strconv.ParseFloat(s3, <span class="hljs-number">64</span>)<br>	fmt.Printf(<span class="hljs-string">&quot;f1的类型是：%T,f1=%v \n&quot;</span>, f1, f1)<br>	<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
-<h4 id="2-2-复杂数据类型"><a href="#2-2-复杂数据类型" class="headerlink" title="2.2 复杂数据类型"></a>2.2 复杂数据类型</h4><h5 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h5><p>基本数据类型都有对应的指针类型，形式为 *数据类型</p>
+<h4 id="3-2-复杂数据类型"><a href="#3-2-复杂数据类型" class="headerlink" title="3.2 复杂数据类型"></a>3.2 复杂数据类型</h4><h5 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h5><p>基本数据类型都有对应的指针类型，形式为 *数据类型</p>
 <p>基本数据类型和指针：</p>
 <figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> age <span class="hljs-keyword">int</span> = <span class="hljs-number">18</span><br>	<span class="hljs-comment">//&amp;符号+变量 就可以获取这个变量内存的地址</span><br>	fmt.Println(&amp;age) <span class="hljs-comment">//0xc0000a2058</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>指针变量：</p>
