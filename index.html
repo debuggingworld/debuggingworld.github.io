@@ -218,7 +218,11 @@
             
           
           Golang 面向对象编程非常简洁，去掉了传统 OOP 语言的方法重载、构造函数和析构函数、隐藏的this指针等等
-1. 结构体创建123456789101112131415161718192021222324252627282930313233343536373839func main() &#123;	// 方法一	var stu Student	fmt.Println(stu)	// &#1
+1. 结构体1.1 结构体的定义使用type和struct关键字来定义结构体，具体代码格式如下：
+
+type　类型名　struct {　字段名　字段类型　字段名　字段类型　…}
+
+123456789101112type Student struct &#123;	ID   strin
         </a>
       </p>
 
@@ -437,7 +441,7 @@ var　variable_name　[SIZE]variable_type
           1. defer+recover 机制处理错误
 func recover() interface{}
 
-内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defe r的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌
+内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌
         </a>
       </p>
 
