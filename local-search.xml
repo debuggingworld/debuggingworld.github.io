@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Go——接口</title>
+    <link href="/2022/01/06/Go%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/"/>
+    <url>/2022/01/06/Go%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/</url>
+    
+    <content type="html"><![CDATA[<p>接口（interface）定义了一个对象的行为规范，只定义规范不实现，由具体的对象来实现规范的细节。</p><p>接口<br>interface（接口）是一种较为常见的特性，很多语言都有接口特性。 Go语言的 interface 是非侵入式的，不像 Java 的 interface 实现需要显示的声明。</p><p>Go语言提倡面向接口编程。</p><p>接口类型<br>在Go语言中接口（interface）是一种类型，一种抽象的类型。</p><p>interface是一组method的集合，接口做的事情就像是定义一个协议（规则），不关心对方是什么类型，只关心对方能做什么。这是duck-type programming的一种体现，只要一个物体能像鸭子一样叫那我们就可以称它为鸭子；只要一个软件能存储和查询数据我们就可以称它为数据库；只要一台机器有洗衣服和甩干的功能我们就可以称它为洗衣机。</p><p>为了保护你的Go语言职业生涯，请牢记接口（interface）是一种类型。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Golang</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Golang</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Go——结构体</title>
     <link href="/2022/01/02/Go%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/"/>
     <url>/2022/01/02/Go%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/</url>
