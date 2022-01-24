@@ -16,22 +16,31 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点：  统一的代码库(git) 统一的依赖包管理(nexus) 测试自动化 构建全自动化(maven) 部署自动">
+  <meta name="description" content="1. debug 　1. 以 Debug 模式启动服务。　2. 断点：在左边行号栏单击左键，或者快捷键Ctrl+F8 打上&#x2F;取消断点。　3. Debug窗口：访问请求到达第一个断点后，会自动激活Debug窗口。如果没有自动激活，可以去设置里设置。　4. 调试按钮：在菜单栏 Run 里可以找到同样的对应的功能。　5. 服务按钮：可以在这里关闭&#x2F;启动服务，设置断点等。　6. 方法调用栈：这里显示了该线">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jenkins——核心功能">
-<meta property="og:url" content="http://example.com/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:title" content="idea 使用技巧">
+<meta property="og:url" content="http://example.com/2022/01/23/idea-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点：  统一的代码库(git) 统一的依赖包管理(nexus) 测试自动化 构建全自动化(maven) 部署自动">
+<meta property="og:description" content="1. debug 　1. 以 Debug 模式启动服务。　2. 断点：在左边行号栏单击左键，或者快捷键Ctrl+F8 打上&#x2F;取消断点。　3. Debug窗口：访问请求到达第一个断点后，会自动激活Debug窗口。如果没有自动激活，可以去设置里设置。　4. 调试按钮：在菜单栏 Run 里可以找到同样的对应的功能。　5. 服务按钮：可以在这里关闭&#x2F;启动服务，设置断点等。　6. 方法调用栈：这里显示了该线">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/CI.png">
-<meta property="article:published_time" content="2022-01-20T13:48:04.000Z">
-<meta property="article:modified_time" content="2022-01-22T15:50:49.365Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123122508.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123203210.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123205203.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/%E6%97%A0%E6%A0%87%E9%A2%98.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123214359.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123214720.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123222025.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123221924.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123224600.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123225011.png">
+<meta property="article:published_time" content="2022-01-23T03:51:23.000Z">
+<meta property="article:modified_time" content="2022-01-23T14:50:56.893Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="jenkins">
+<meta property="article:tag" content="idea">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/CI.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123122508.png">
   
-  <title>jenkins——核心功能 - Hexo</title>
+  <title>idea 使用技巧 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -193,7 +202,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="jenkins——核心功能">
+            <span class="h2" id="subtitle" title="idea 使用技巧">
               
             </span>
 
@@ -203,8 +212,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-20 21:48" pubdate>
-        2022年1月20日 晚上
+      <time datetime="2022-01-23 11:51" pubdate>
+        2022年1月23日 中午
       </time>
     </span>
   
@@ -214,7 +223,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2k 字
     </span>
   
 
@@ -223,7 +232,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      6 分钟
     </span>
   
 
@@ -252,72 +261,64 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">jenkins——核心功能</h1>
+            <h1 style="display: none">idea 使用技巧</h1>
             
             <div class="markdown-body">
-              <h3 id="1-概述与环境配置"><a href="#1-概述与环境配置" class="headerlink" title="1. 概述与环境配置"></a>1. 概述与环境配置</h3><h4 id="1-1-持续化集成"><a href="#1-1-持续化集成" class="headerlink" title="1.1 持续化集成"></a>1.1 持续化集成</h4><p>持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/CI.png" srcset="/img/loading.gif" lazyload></p>
-<p>持续集成要点：</p>
+              <h3 id="1-debug"><a href="#1-debug" class="headerlink" title="1. debug"></a>1. debug</h3><p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123122508.png" srcset="/img/loading.gif" lazyload></p>
+<p>　1. 以 Debug 模式启动服务。<br>　2. 断点：在左边行号栏单击左键，或者快捷键Ctrl+F8 打上/取消断点。<br>　3. Debug窗口：访问请求到达第一个断点后，会自动激活Debug窗口。如果没有自动激活，可以去设置里设置。<br>　4. 调试按钮：在菜单栏 Run 里可以找到同样的对应的功能。<br>　5. 服务按钮：可以在这里关闭/启动服务，设置断点等。<br>　6. 方法调用栈：这里显示了该线程调试所经过的所有方法，勾选右上角的 [Show All Frames] 按钮，就不会显示其它类库的方法了。<br>　7. Variables：在变量区可以查看当前断点之前的当前方法内的变量。<br>　8. Watches：查看变量，可以将Variables区中的变量拖到Watches中查看 </p>
+<h3 id="2-基本用法-amp-快捷键"><a href="#2-基本用法-amp-快捷键" class="headerlink" title="2. 基本用法&amp;快捷键"></a>2. 基本用法&amp;快捷键</h3><p>Debug 调试的功能主要对应上图中 4 和 5 两组按钮：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123203210.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>Show Execution Point (Alt + F10)：如果你的光标在其它行或其它页面，点击这个按钮可跳转到当前代码执行的行。</li>
+<li>Step Over (F8)：步过，一行一行地往下走，如果这一行上有方法不会进入方法。</li>
+<li>Step Into (F7)：步入，如果当前行有方法，可以进入方法内部，一般用于进入自定义方法内。</li>
+<li>Force Step Into (Alt + Shift + F7)：强制步入，能进入任何方法，查看底层源码的时候可以用这个进入官方类库的方法。</li>
+<li>Step Out (Shift + F8)：步出，从步入的方法内退出到方法调用处，此时方法已执行完毕，只是还没有完成赋值。</li>
+<li>Drop Frame (默认无)：回退断点，回到上一层该方法调用处或指定方法的调用处（断点回退只能重新走一下流程，之前的某些参数/数据的状态已经改变了的是无法回退到之前的状态的，如对象、集合、更新了数据库数据等等）</li>
+<li>Run to Cursor (Alt + F9)：运行到光标处。</li>
+<li> Evaluate Expression (Alt + F8)：计算表达式。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123205203.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>Rerun ‘xxxx’：重新运行程序，会关闭服务后重新启动程序。</li>
+<li>Update ‘tech’ application (Ctrl + F5)：更新程序，一般在代码有改动后可执行这个功能。</li>
+<li>Resume Program (F9)：执行到下一个断。</li>
+<li>Pause Program：暂停程序，启用Debug。</li>
+<li>Stop ‘xxx’ (Ctrl + F2)：连续按两下，关闭程序。</li>
+<li>View Breakpoints (Ctrl + Shift + F8)：查看所有断点。</li>
+<li>Mute Breakpoints：哑的断点，选择这个后，所有断点变为灰色，断点失效，按F9则可以直接运行完程序。再次点击，断点变为红色，有效。如果只想使某一个断点失效，可以在断点上右键取消Enabled。</li>
+</ol>
+<h4 id="2-1-智能步入"><a href="#2-1-智能步入" class="headerlink" title="2.1 智能步入"></a>2.1 智能步入</h4><p> 一行代码里有好几个方法，怎么只选择某一个方法进入。使用 Step Into (Alt + F7) 或者 Force Step Into (Alt + Shift + F7) 进入到方法内部，但这两个操作会根据方法调用顺序依次进入。那么智能步入就很方便了，这个功能在 Run 里可以看到，Smart Step Into (Shift + F7)。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/%E6%97%A0%E6%A0%87%E9%A2%98.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2-2-断点条件设置"><a href="#2-2-断点条件设置" class="headerlink" title="2.2 断点条件设置"></a>2.2 断点条件设置</h4><p>通过设置断点条件，在满足条件时，才停在断点处，否则直接运行。</p>
+<p>通常，当我们在遍历一个比较大的集合或数组时，在循环内设置了一个断点，难道我们要一个一个去看变量的值？那肯定很累，说不定你还错过这个值得重新来一次。</p>
+<ol>
+<li>在断点上右键直接设置当前断点的条件</li>
+</ol>
+<p> <img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123214359.png" srcset="/img/loading.gif" lazyload><br>  当 exis t为 true 时断点才生效。</p>
+<ol start="2">
+<li>点击 View Breakpoints (Ctrl + Shift + F8)，查看所有断点。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123214720.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
-<li>统一的代码库(git)</li>
-<li>统一的依赖包管理(nexus)</li>
-<li>测试自动化</li>
-<li>构建全自动化(maven)</li>
-<li>部署自动化</li>
-<li>可追踪的集成记录</li>
+<li>. Java Line Breakpoints 显示了所有的断点，在右边勾选Condition，设置断点的条件。</li>
+<li>. 勾选 Log message to console，则会将当前断点行输出到控制台。</li>
+<li>. 勾选 Evaluate and log，可以在执行这行代码时计算表达式的值，并将结果输出到控制台。</li>
+<li>. Instance filters：实例过滤，输入实例ID。</li>
+<li>. Class filters：类过滤，根据类名过滤。</li>
+<li>. Pass count：用于循环中，如果断点在循环中，可以设置该值，循环多少次后停在断点处，之后的循环都会停在断点处。</li>
 </ul>
-<h4 id="1-2-jenkins-概述"><a href="#1-2-jenkins-概述" class="headerlink" title="1.2 jenkins 概述"></a>1.2 jenkins 概述</h4><p>jenkins 就是为了满足持续集成的要点而设计的一款工具，其主体框架采用 JAVA 开发，实质内部功能都是由各种插件实现，极大提高了系统的扩展性。其不仅可以满足 JAVA 系统的集成，也可以实现 PHP 等语言的集成发布。通过其 pipeline 插件，用户可以随自己需要定制集成流程。</p>
-<h4 id="1-3-安装-jenkins"><a href="#1-3-安装-jenkins" class="headerlink" title="1.3 安装 jenkins"></a>1.3 安装 jenkins</h4><ol>
-<li><p>下载：jenkins 支持Docker、yum、msi 等安装，推荐通过 WAR 包进行安装。<a target="_blank" rel="noopener" href="https://jenkins.io/download/">https://jenkins.io/download/</a></p>
-</li>
-<li><p>启动：下载完成之后直接可通过 jar -jar 命令启动</p>
-</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">java -jar jenkins.war --httpPort=8080<br></code></pre></div></td></tr></table></figure>
-<p>也可以将其放至到 servlet 容器（tomcat\jetty\jboss）中直接启动，无需过多的配置。</p>
-<ol start="3">
-<li>配置：下载完成之后进入启动页 (<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080/</a>) 会有一个 验证过程，验证码存储在 ${user_home}.jenkins\secrets\initialAdminPassword 中，接着就是进入安装插件页，选择默认即可。</li>
-</ol>
-<h4 id="1-4-基础环境配置与常用插件下载"><a href="#1-4-基础环境配置与常用插件下载" class="headerlink" title="1.4 基础环境配置与常用插件下载"></a>1.4 基础环境配置与常用插件下载</h4><p>在集成的时候，jenkins 用到了 Maven 、Git。所以服务器中必须提前安装好这些环境。</p>
-<p>Manage Jenkins  –&gt;  Manage Plugins –&gt; Advanced –&gt; 升级站点：</p>
-<p><a target="_blank" rel="noopener" href="https://updates.jenkins.io/update-center.json">https://updates.jenkins.io/update-center.json</a>   改为 <a target="_blank" rel="noopener" href="http://mirror.esuni.jp/jenkins/updates/update-center.json">http://mirror.esuni.jp/jenkins/updates/update-center.json</a></p>
-<p>镜像源查询：<a target="_blank" rel="noopener" href="http://mirrors.jenkins-ci.org/status.html">http://mirrors.jenkins-ci.org/status.html</a></p>
-<p>基本插件列表：</p>
-<table>
-<thead>
-<tr>
-<th>插件名称</th>
-<th>插件描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Maven Integration</td>
-<td>maven 管理插件</td>
-</tr>
-<tr>
-<td>Deploy to container</td>
-<td>容器部署插件</td>
-</tr>
-<tr>
-<td>Pipeline</td>
-<td>管道集成插件</td>
-</tr>
-<tr>
-<td>Email Extension</td>
-<td>邮件通知插件</td>
-</tr>
-<tr>
-<td>SSH</td>
-<td>用于ssh 通信</td>
-</tr>
-</tbody></table>
-<h3 id="2-基于-jenkins-实现可持续化集成"><a href="#2-基于-jenkins-实现可持续化集成" class="headerlink" title="2. 基于 jenkins 实现可持续化集成"></a>2. 基于 jenkins 实现可持续化集成</h3><h4 id="2-1-持续化集成完成的目标"><a href="#2-1-持续化集成完成的目标" class="headerlink" title="2.1 持续化集成完成的目标"></a>2.1 持续化集成完成的目标</h4><ol>
-<li>自动基于分支构建项目</li>
-<li>构建好的项目自动部署至 Tomcat 容器</li>
-<li>构建好的项目自动上传至 Nexus 私服存档</li>
-<li>保存构建历史记录，并可以下载历史记录</li>
-</ol>
-
+<h4 id="2-3-异常断点"><a href="#2-3-异常断点" class="headerlink" title="2.3 异常断点"></a>2.3 异常断点</h4><p>通过设置异常断点，在程序中出现需要拦截的异常时，会自动定位到异常行。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123222025.png" srcset="/img/loading.gif" lazyload></p>
+<p>点击 + 号添加 Java Exception Breakpoints，添加异常断点。然后输入需要断点的异常类（如 NullPointerException）。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123221924.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2-4-中断Debug"><a href="#2-4-中断Debug" class="headerlink" title="2.4 中断Debug"></a>2.4 中断Debug</h4><p>想要在 Debug 的时候，中断请求，不要再走剩余的流程了？</p>
+<p>有些时候，我们看到传入的参数有误后，不想走后面的流程了，怎么中断这次请求呢(后面的流程要删除数据库数据呢….)，难道要关闭服务重新启动程序？</p>
+<p>可以通过 Force Return，即强制返回来避免后续的流程。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123224600.png" srcset="/img/loading.gif" lazyload></p>
+<p>点击 Force Return，弹出Return Value的窗口。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220123225011.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-断点调试"><a href="#1-断点调试" class="headerlink" title="1. 断点调试"></a>1. 断点调试</h3><h4 id="1-1-行断点"><a href="#1-1-行断点" class="headerlink" title="1.1 行断点"></a>1.1 行断点</h4>
             </div>
             <hr>
             <div>
@@ -326,7 +327,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/jenkins/">jenkins</a>
+                      <a class="hover-with-bg" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
                     
                   </div>
                 
@@ -334,7 +335,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/jenkins/">jenkins</a>
+                      <a class="hover-with-bg" href="/tags/idea/">idea</a>
                     
                   </div>
                 
@@ -351,18 +352,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/23/idea-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">idea 使用技巧</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/17/Go%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
-                        <span class="hidden-mobile">Go——socket 编程</span>
+                      <a href="/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/">
+                        <span class="hidden-mobile">jenkins——核心功能</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
