@@ -25,8 +25,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/07c78b7d376f4c8793b53a43f0a2a7fa.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220213233336.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220214232219.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220214232236.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220215233958.png">
 <meta property="article:published_time" content="2022-02-13T15:11:19.000Z">
-<meta property="article:modified_time" content="2022-02-16T14:29:40.366Z">
+<meta property="article:modified_time" content="2022-02-16T15:47:19.351Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
@@ -215,7 +218,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      8.7k 字
+      9k 字
     </span>
   
 
@@ -224,7 +227,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      27 分钟
+      28 分钟
     </span>
   
 
@@ -283,166 +286,122 @@
 </li>
 </ul>
 </blockquote>
-<h3 id="1-创建版本库"><a href="#1-创建版本库" class="headerlink" title="1. 创建版本库"></a>1. 创建版本库</h3><h4 id="1-1-git-init-初始化仓库"><a href="#1-1-git-init-初始化仓库" class="headerlink" title="1.1  git init 初始化仓库"></a>1.1  git init 初始化仓库</h4><figure class="highlight sh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sh">$ git init<br>Initialized empty Git repository <span class="hljs-keyword">in</span> G:/learngit/.git/<br></code></pre></div></td></tr></table></figure>
+<h3 id="2-创建版本库"><a href="#2-创建版本库" class="headerlink" title="2. 创建版本库"></a>2. 创建版本库</h3><h4 id="2-1-git-init-初始化仓库"><a href="#2-1-git-init-初始化仓库" class="headerlink" title="2.1  git init 初始化仓库"></a>2.1  git init 初始化仓库</h4><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git init<br>Initialized empty Git repository <span class="hljs-keyword">in</span> G:/learngit/.git/<br></code></pre></div></td></tr></table></figure>
 
-<h4 id="1-2-git-add-跟踪文件"><a href="#1-2-git-add-跟踪文件" class="headerlink" title="1.2 git add 跟踪文件"></a>1.2 git add 跟踪文件</h4><p>git  add .            跟踪所有改动过的文件<br>git  add  <file>   跟踪指定文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sh">$ git add README.md<br></code></pre></div></td></tr></table></figure>
-<h4 id="1-3-git-commit-提交到仓库"><a href="#1-3-git-commit-提交到仓库" class="headerlink" title="1.3 git commit 提交到仓库"></a>1.3 git commit 提交到仓库</h4><figure class="highlight sh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sh">$ git commit -m <span class="hljs-string">&quot;wrote a readme file&quot;</span><br>[master (root-commit) 8438389] wrote a readme file<br> 1 file changed, 2 insertions(+)<br> create mode 100644 README.md<br></code></pre></div></td></tr></table></figure>
+<h4 id="2-2-git-add-跟踪文件"><a href="#2-2-git-add-跟踪文件" class="headerlink" title="2.2 git add 跟踪文件"></a>2.2 git add 跟踪文件</h4><p>git  add .            跟踪所有改动过的文件<br>git  add  &lt;file&gt;   跟踪指定文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git add README.md<br></code></pre></div></td></tr></table></figure>
+<h4 id="2-3-git-commit-提交到仓库"><a href="#2-3-git-commit-提交到仓库" class="headerlink" title="2.3 git commit 提交到仓库"></a>2.3 git commit 提交到仓库</h4><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git commit -m <span class="hljs-string">&quot;wrote a readme file&quot;</span><br>[master (root-commit) 8438389] wrote a readme file<br> 1 file changed, 2 insertions(+)<br> create mode 100644 README.md<br></code></pre></div></td></tr></table></figure>
 
-<h4 id="1-4-git-status-查看-git-状态"><a href="#1-4-git-status-查看-git-状态" class="headerlink" title="1.4 git status 查看 git 状态"></a>1.4 git status 查看 git 状态</h4><figure class="highlight sh"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sh">$ git status<br>On branch master<br>nothing to commit, working directory clean<br></code></pre></div></td></tr></table></figure>
+<h4 id="2-4-git-status-查看-git-状态"><a href="#2-4-git-status-查看-git-状态" class="headerlink" title="2.4 git status 查看 git 状态"></a>2.4 git status 查看 git 状态</h4><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git status<br>On branch master<br>nothing to commit, working directory clean<br></code></pre></div></td></tr></table></figure>
 
-<ol start="2">
-<li>版本管理</li>
-<li>1 git diff 查看修改内容<br>$ git diff README.md<br>diff –git a/README.md b/README.md<br>index d8036c1..013b5bc 100644</li>
-</ol>
-<p>— a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br>-Git is a version control system.<br>+Git is a distributed version control system.<br> Git is free software.<br>\ No newline at end of file</p>
-<p>2.2 git reset 回退到上一版本<br>$ git reset –hard HEAD^<br>HEAD is now at 8438389 wrote a readme file</p>
-<p>在Git中，用 HEAD 表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
-<p>2.3 回到回退之前版本<br>Git 提供了一个命令 git reflog 用来记录你的每一次命令。</p>
-<p>$ git reflog<br>8438389 HEAD@{0}: reset: moving to HEAD^<br>43597ec HEAD@{1}: commit: add distributed<br>8438389 HEAD@{2}: commit (initial): wrote a readme file</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset –hard 43597ec<br>HEAD is now at 43597ec add distributed</p>
-<p>2.4 撤销工作区修改<br>命令：git checkout  –  file</p>
+<h3 id="3-版本管理"><a href="#3-版本管理" class="headerlink" title="3. 版本管理"></a>3. 版本管理</h3><h4 id="3-1-git-diff-查看修改内容"><a href="#3-1-git-diff-查看修改内容" class="headerlink" title="3.1 git diff 查看修改内容"></a>3.1 git diff 查看修改内容</h4><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git diff README.md<br>diff --git a/README.md b/README.md<br>index d8036c1..013b5bc 100644<br>--- a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br>-Git is a version control system.<br>+Git is a distributed version control system.<br> Git is free software.<br>\ No newline at end of file<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="3-2-git-reset-回退到上一版本"><a href="#3-2-git-reset-回退到上一版本" class="headerlink" title="3.2 git reset 回退到上一版本"></a>3.2 git reset 回退到上一版本</h4><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git reset --hard HEAD^<br>HEAD is now at 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+
+<p>在 Git 中，用 HEAD 表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
+<h4 id="3-3-回到回退之前版本"><a href="#3-3-回到回退之前版本" class="headerlink" title="3.3 回到回退之前版本"></a>3.3 回到回退之前版本</h4><p>Git 提供了一个命令 git reflog 用来记录你的每一次命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git reflog<br>8438389 HEAD@&#123;0&#125;: reset: moving to HEAD^<br>43597ec HEAD@&#123;1&#125;: commit: add distributed<br>8438389 HEAD@&#123;2&#125;: commit (initial): wrote a readme file<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset --hard 43597ec<br>HEAD is now at 43597ec add distributed<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="3-4-撤销工作区修改"><a href="#3-4-撤销工作区修改" class="headerlink" title="3.4 撤销工作区修改"></a>3.4 撤销工作区修改</h4><p>命令：**<font color="red">git checkout  –  file</font>**</p>
 <p>作用：撤销工作区的全部修改，这里有两种情况：</p>
 <p>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
 <p>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
 <p>总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
-<p>2.5 撤销暂存区修改<br>命令：git  reset  HEAD  <file></p>
+<h4 id="3-5-撤销暂存区修改"><a href="#3-5-撤销暂存区修改" class="headerlink" title="3.5 撤销暂存区修改"></a>3.5 撤销暂存区修改</h4><p>命令： git  reset  HEAD  &lt;file&gt; </p>
 <p>作用：把暂存区的修改回退到工作区。HEAD 表示最新的版本。</p>
-<p>$ git reset HEAD README.md<br>Unstaged changes after reset:<br>M       README.md</p>
-<p>2.6 删除文件<br>先手动删除文件，然后使用 git add<file> 的效果和 git rm <file> 是一样的。</p>
-<p>$ git rm test.txt<br>rm ‘test.txt’</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use “git reset HEAD <file>…” to unstage)</p>
-<div class="hljs code-wrapper"><pre><code>    deleted:    test.txt
-</code></pre></div>
-<ol start="3">
-<li>远程仓库</li>
-<li>1 添加远程仓库<br>命令：git  remote  add  origin <URL></li>
-</ol>
-<p>$  git remote add origin <a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#109;">&#103;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#x6f;&#109;</a>:Zhangtao153/learngit.git</p>
-<p>3.2 推送本地库内容到远程库<br>命令：git push origin <branch-name></p>
-<p>$ git push -u origin master<br>Warning: Permanently added the RSA host key for IP address ‘192.30.255.112’ to the list of known hosts.<br>Counting objects: 10, done.<br>Delta compression using up to 4 threads.<br>Compressing objects: 100% (7/7), done.<br>Writing objects: 100% (10/10), 855 bytes | 0 bytes/s, done.<br>Total 10 (delta 1), reused 0 (delta 0)<br>remote: Resolving deltas: 100% (1/1), done.<br>To <a href="mailto:&#x67;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#x67;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a>:Zhangtao153/learngit.git</p>
-<ul>
-<li>[new branch]      master -&gt; master<br>Branch master set up to track remote branch master from origin.</li>
-</ul>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git reset HEAD README.md<br>Unstaged changes after reset:<br>M       README.md<br></code></pre></div></td></tr></table></figure>
+<h4 id="3-6-删除文件"><a href="#3-6-删除文件" class="headerlink" title="3.6 删除文件"></a>3.6 删除文件</h4><p>先手动删除文件，然后使用 git add &lt;file&gt; 的效果和 git rm &lt;file&gt; 是一样的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git rm test.txt<br>rm <span class="hljs-string">&#x27;test.txt&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage)<br><br>        deleted:    test.txt<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="4-远程仓库"><a href="#4-远程仓库" class="headerlink" title="4. 远程仓库"></a>4. 远程仓库</h3><h4 id="4-1-添加远程仓库"><a href="#4-1-添加远程仓库" class="headerlink" title="4.1 添加远程仓库"></a>4.1 添加远程仓库</h4><p>命令：git  remote  add  origin &lt;URL&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$  git remote add origin git@github.com:Zhangtao153/learngit.git<br></code></pre></div></td></tr></table></figure>
+<h4 id="4-2-推送本地库内容到远程库"><a href="#4-2-推送本地库内容到远程库" class="headerlink" title="4.2 推送本地库内容到远程库"></a>4.2 推送本地库内容到远程库</h4><p>命令：git push origin &lt;branch-name&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git push -u origin master<br>Warning: Permanently added the RSA host key <span class="hljs-keyword">for</span> IP address <span class="hljs-string">&#x27;192.30.255.112&#x27;</span> to the list of known hosts.<br>Counting objects: 10, <span class="hljs-keyword">done</span>.<br>Delta compression using up to 4 threads.<br>Compressing objects: 100% (7/7), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (10/10), 855 bytes | 0 bytes/s, <span class="hljs-keyword">done</span>.<br>Total 10 (delta 1), reused 0 (delta 0)<br>remote: Resolving deltas: 100% (1/1), <span class="hljs-keyword">done</span>.<br>To git@github.com:Zhangtao153/learngit.git<br> * [new branch]      master -&gt; master<br>Branch master <span class="hljs-built_in">set</span> up to track remote branch master from origin.<br></code></pre></div></td></tr></table></figure>
 <p>当前分支 master推送到远程</p>
-<p>3.3 查看远程仓库<br>git  remote  -v</p>
-<p>$ git remote<br>origin</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git remote -v<br>origin  <a href="mailto:&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;</a>:Zhangtao153/learngit.git (fetch)<br>origin  <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#x6d;</a>:Zhangtao153/learngit.git (push)</p>
-<p>$ git remote show<br>origin</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git remote show origin</p>
-<ul>
-<li>remote origin<br>Fetch URL: <a href="mailto:&#103;&#105;&#116;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#99;&#111;&#x6d;">&#103;&#105;&#116;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#99;&#111;&#x6d;</a>:Zhangtao153/learngit.git<br>Push  URL: <a href="mailto:&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#46;&#99;&#x6f;&#x6d;">&#103;&#105;&#116;&#x40;&#x67;&#105;&#x74;&#x68;&#x75;&#x62;&#46;&#99;&#x6f;&#x6d;</a>:Zhangtao153/learngit.git<br>HEAD branch: master<br>Remote branch:<br>  master tracked<br>Local branch configured for ‘git pull’:<br>  master merges with remote master<br>Local ref configured for ‘git push’:<br>  master pushes to master (up to date)</li>
-</ul>
-<p>3.4 从远程库克隆<br>git clone <url></p>
-<p>$ git clone <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#x6d;</a>:Zhangtao153/learngit.git<br>Cloning into ‘learngit’…<br>remote: Enumerating objects: 10, done.<br>remote: Counting objects: 100% (10/10), done.<br>remote: Compressing objects: 100% (6/6), done.<br>remote: Total 10 (delta 1), reused 10 (delta 1), pack-reused 0<br>Receiving objects: 100% (10/10), done.<br>Resolving deltas: 100% (1/1), done.<br>Checking connectivity… done.</p>
-<p>3.5 本地创建和远程分支对应的分支<br>从远程clone的代码库默认只有master分支。</p>
-<p>命令：git  checkout  -b  dev  origin/dev </p>
-<p>$ git checkout -b dev origin/dev<br>Switched to a new branch ‘dev’<br>Branch ‘dev’ set up to track remote branch ‘dev’ from ‘origin’.</p>
-<p>3.6 修改远程仓库<br>方法一：</p>
-<p>git remote set-url origin <url></p>
+<h4 id="4-3-查看远程仓库"><a href="#4-3-查看远程仓库" class="headerlink" title="4.3 查看远程仓库"></a>4.3 查看远程仓库</h4><p>git  remote  -v</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git remote<br>origin<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git remote -v<br>origin  git@github.com:Zhangtao153/learngit.git (fetch)<br>origin  git@github.com:Zhangtao153/learngit.git (push)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git remote show<br>origin<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git remote show origin<br>* remote origin<br>  Fetch URL: git@github.com:Zhangtao153/learngit.git<br>  Push  URL: git@github.com:Zhangtao153/learngit.git<br>  HEAD branch: master<br>  Remote branch:<br>    master tracked<br>  Local branch configured <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;git pull&#x27;</span>:<br>    master merges with remote master<br>  Local ref configured <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;git push&#x27;</span>:<br>    master pushes to master (up to date)<br></code></pre></div></td></tr></table></figure>
+<h4 id="4-4-从远程库克隆"><a href="#4-4-从远程库克隆" class="headerlink" title="4.4 从远程库克隆"></a>4.4 从远程库克隆</h4><p>git clone &lt;url&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> git@github.com:Zhangtao153/learngit.git<br>Cloning into <span class="hljs-string">&#x27;learngit&#x27;</span>...<br>remote: Enumerating objects: 10, <span class="hljs-keyword">done</span>.<br>remote: Counting objects: 100% (10/10), <span class="hljs-keyword">done</span>.<br>remote: Compressing objects: 100% (6/6), <span class="hljs-keyword">done</span>.<br>remote: Total 10 (delta 1), reused 10 (delta 1), pack-reused 0<br>Receiving objects: 100% (10/10), <span class="hljs-keyword">done</span>.<br>Resolving deltas: 100% (1/1), <span class="hljs-keyword">done</span>.<br>Checking connectivity... <span class="hljs-keyword">done</span>.<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="4-5-本地创建和远程分支对应的分支"><a href="#4-5-本地创建和远程分支对应的分支" class="headerlink" title="4.5 本地创建和远程分支对应的分支"></a>4.5 本地创建和远程分支对应的分支</h4><p>从远程 clone 的代码库默认只有 master 分支。</p>
+<p>命令：**<font color="red">git  checkout  -b  dev  origin/dev</font>** </p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git checkout -b dev origin/dev<br>Switched to a new branch <span class="hljs-string">&#x27;dev&#x27;</span><br>Branch <span class="hljs-string">&#x27;dev&#x27;</span> <span class="hljs-built_in">set</span> up to track remote branch <span class="hljs-string">&#x27;dev&#x27;</span> from <span class="hljs-string">&#x27;origin&#x27;</span>.<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="4-6-修改远程仓库"><a href="#4-6-修改远程仓库" class="headerlink" title="4.6 修改远程仓库"></a>4.6 修改远程仓库</h4><p>方法一：</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">git remote set-url origin &lt;url&gt;<br></code></pre></div></td></tr></table></figure>
 <p>方法二：</p>
-<p>git remote rm origin<br>git remote add origin [url]</p>
-<ol start="4">
-<li>分支管理</li>
-<li>1 创建切换分支<br>命令：git checkout  -b  dev 或  git switch -c dev</li>
-</ol>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">git remote rm origin<br>git remote add origin [url]<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="5-分支管理"><a href="#5-分支管理" class="headerlink" title="5. 分支管理"></a>5. 分支管理</h3><h4 id="5-1-创建切换分支"><a href="#5-1-创建切换分支" class="headerlink" title="5.1 创建切换分支"></a>5.1 创建切换分支</h4><p>命令：**<font color="red">git checkout  -b  dev 或  git switch -c dev</font>**</p>
 <p>作用：创建并切换分支</p>
+<blockquote>
 <p>git checkout 命令加上 -b 参数表示创建并切换，相当于以下两条命令：</p>
 <p>$ git  branch  dev<br>$ git  checkout  dev</p>
-<p>$ git checkout -b dev<br>Switched to a new branch ‘dev’</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git branch</p>
-<ul>
-<li>dev<br>master</li>
-</ul>
-<p>4.2 合并分支<br>命令：git  merge <branch></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git checkout -b dev<br>Switched to a new branch <span class="hljs-string">&#x27;dev&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git branch<br>* dev<br>  master<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="5-2-合并分支"><a href="#5-2-合并分支" class="headerlink" title="5.2 合并分支"></a>5.2 合并分支</h4><p>命令：git  merge &lt;branch&gt;</p>
 <p>作用：合并指定分支到当前分支</p>
-<p>$ git merge dev<br>Updating 35bc9a6..83ef1fc<br>Fast-forward<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git merge dev<br>Updating 35bc9a6..83ef1fc<br>Fast-forward<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)<br></code></pre></div></td></tr></table></figure>
+<blockquote>
 <p>Fast-forward “快进模式”，就是直接把 master 指向 dev 的当前提交，所以合并速度非常快。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220214232219.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
 <p>通常合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
 <p>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
-<p>$ git merge –no-ff -m “merge with no-ff” zth<br>Merge made by the ‘recursive’ strategy.<br> README.md | 2 +-<br> 1 file changed, 1 insertion(+), 1 deletion(-)</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git log –graph –pretty=oneline –abbrev-commit</p>
-<ul>
-<li>  c5df1ca (HEAD -&gt; master) merge with no-ff<br>|<br>| * 5db3e3d (zth) delete merge<br>|/</li>
-<li>6707c86 add merge</li>
-<li>7e760b4 add on zth branch</li>
-<li>  650cdbc clear on master</li>
-</ul>
-<p>4.3 删除分支<br>命令：git   branch  -d   <branch></p>
-<p>$ git branch -d dev<br>Deleted branch dev (was 83ef1fc).</p>
-<p>4.4 查看分支合并情况<br>命令：git log –graph –pretty=oneline –abbrev-commit</p>
-<p> 或：git log –graph –oneline</p>
-<p>$ git log –graph –pretty=oneline –abbrev-commit</p>
-<ul>
-<li>  8e7b6c4 conflict fixed<br>|<br>| * e920442 update on dev</li>
-<li>| e15ba0e update on master<br>|/</li>
-<li>83ef1fc add on dev</li>
-<li>35bc9a6 delete test.txt</li>
-<li>fd68a6a add file test.txt</li>
-<li>a8d2e0d 手动删除</li>
-<li>1d243ca add test file</li>
-<li>8438389 wrote a readme file</li>
-</ul>
-<p>4.5 保存现场<br>在创建一个新的分支用来修改 bug 时，当前分支的工作还没提交，可以通过 stash 功能把当前工作现场“储藏”起来，等以后恢复现场后继续工作。</p>
-<p>原因：所有分支共享工作区和暂存区</p>
-<p>$ git stash<br>Saved working directory and index state WIP on issue-004: c5df1ca merge with no-ff</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220214232236.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git merge --no-ff -m <span class="hljs-string">&quot;merge with no-ff&quot;</span> zth<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> README.md | 2 +-<br> 1 file changed, 1 insertion(+), 1 deletion(-)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --graph --pretty=oneline --abbrev-commit<br>*   c5df1ca (HEAD -&gt; master) merge with no-ff<br>|\<br>| * 5db3e3d (zth) delete merge<br>|/<br>* 6707c86 add merge<br>* 7e760b4 add on zth branch<br>*   650cdbc clear on master<br></code></pre></div></td></tr></table></figure>
+<h4 id="5-3-删除分支"><a href="#5-3-删除分支" class="headerlink" title="5.3 删除分支"></a>5.3 删除分支</h4><p>命令：git   branch  -d   &lt;branch&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git branch -d dev<br>Deleted branch dev (was 83ef1fc).<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="5-4-查看分支合并情况"><a href="#5-4-查看分支合并情况" class="headerlink" title="5.4 查看分支合并情况"></a>5.4 查看分支合并情况</h4><p>命令：<font color="red"> git log –graph –pretty=oneline –abbrev-commit<br> 或：git log –graph –oneline </font></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git <span class="hljs-built_in">log</span> --graph --pretty=oneline --abbrev-commit<br>*   8e7b6c4 conflict fixed<br>|\<br>| * e920442 update on dev<br>* | e15ba0e update on master<br>|/<br>* 83ef1fc add on dev<br>* 35bc9a6 delete test.txt<br>* fd68a6a add file test.txt<br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+<h4 id="5-5-保存现场"><a href="#5-5-保存现场" class="headerlink" title="5.5 保存现场"></a>5.5 保存现场</h4><p>在创建一个新的分支用来修改 bug 时，当前分支的工作还没提交，可以通过 stash 功能把当前工作现场“储藏”起来，等以后恢复现场后继续工作。</p>
+<p>原因：<font color="red">所有分支共享工作区和暂存区</font></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git stash<br>Saved working directory and index state WIP on issue-004: c5df1ca merge with no-ff<br></code></pre></div></td></tr></table></figure>
 <p>git  stash  list</p>
-<p>$ git stash list<br>stash@{0}: WIP on issue-004: c5df1ca merge with no-ff<br>stash@{1}: WIP on dev: c5df1ca merge with no-ff</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git stash list<br>stash@&#123;0&#125;: WIP on issue-004: c5df1ca merge with no-ff<br>stash@&#123;1&#125;: WIP on dev: c5df1ca merge with no-ff<br></code></pre></div></td></tr></table></figure>
 <p>恢复现场方法：</p>
 <p>一： git stash apply 恢复，但是恢复后，stash内容并不删除，需要用git stash drop来删除；</p>
 <p>二： git stash pop，恢复的同时把stash内容也删了：</p>
-<p>$ git stash pop<br>On branch issue-004<br>Changes not staged for commit:<br>  (use “git add <file>…” to update what will be committed)<br>  (use “git restore <file>…” to discard changes in working directory)<br>        modified:   README.md</p>
-<p>no changes added to commit (use “git add” and/or “git commit -a”)<br>Dropped refs/stash@{0} (020a507cf2c1cd55460d17081db6671b7e075ed6)</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issue-004)<br>$ git stash list<br>stash@{0}: WIP on dev: c5df1ca merge with no-ff</p>
-<p>$ git stash apply stash@{0}</p>
-<p>4.6 git cherry-pick<br>作用：合并不同分支的若干个 commit 到当前分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git stash pop<br>On branch issue-004<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   README.md<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br>Dropped refs/stash@&#123;0&#125; (020a507cf2c1cd55460d17081db6671b7e075ed6)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issue-004)<br>$ git stash list<br>stash@&#123;0&#125;: WIP on dev: c5df1ca merge with no-ff<br></code></pre></div></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git stash apply stash@&#123;0&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h4 id="5-6-git-cherry-pick"><a href="#5-6-git-cherry-pick" class="headerlink" title="5.6 git cherry-pick"></a>5.6 git cherry-pick</h4><p>作用：合并不同分支的若干个 commit 到当前分支</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220215233958.png" srcset="/img/loading.gif" lazyload></p>
 <p>语法： </p>
-<p>git cherry-pick <C commit-id> <D commit-id> <E commit-id></p>
-<p>5. 多人协作工作模式<br>首先，可以试图用 git push origin <branch-name> 推送自己的修改；</p>
+<p> git cherry-pick &lt;C commit-id&gt; &lt;D commit-id&gt; &lt;E commit-id&gt; </p>
+<h3 id="6-多人协作工作模式"><a href="#6-多人协作工作模式" class="headerlink" title="6. 多人协作工作模式"></a>6. 多人协作工作模式</h3><p>首先，可以试图用 git push origin  &lt;branch-name&gt; 推送自己的修改；</p>
 <p>如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；</p>
 <p>如果合并有冲突，则解决冲突，并在本地提交；</p>
-<p>没有冲突或者解决掉冲突后，再用 git push origin <branch-name> 推送就能成功！</p>
-<p>如果 git pull 提示 no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令 git branch –set-upstream-to <branch-name> origin/<branch-name>。</p>
-<ol start="6">
-<li>标签管理</li>
-<li>1 创建标签<br>命令：git  tag  <name>  [commit]</li>
-</ol>
+<p>没有冲突或者解决掉冲突后，再用 git push origin &lt;branch-name&gt; 推送就能成功！</p>
+<p>如果 git pull 提示 no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令 git branch –set-upstream-to &lt;branch-name&gt; origin/&lt;branch-name&gt;。</p>
+<h3 id="7-标签管理"><a href="#7-标签管理" class="headerlink" title="7. 标签管理"></a>7. 标签管理</h3><h4 id="7-1-创建标签"><a href="#7-1-创建标签" class="headerlink" title="7.1 创建标签"></a>7.1 创建标签</h4><p>命令：git  tag  &lt;name&gt;  [commit]</p>
 <p>-a 指定标签名，-m 指定说明文字</p>
 <p>首先选择分支，默认在最新提交的 commit 上。</p>
-<p>$ git tag v1.0</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git tag v0.9 add2dbd</p>
-<p>6.2 查看所有标签<br>git  tag</p>
-<p>$ git tag<br>v0.9<br>v1.0</p>
-<p>6.3 查看标签信息<br>git  show  <tagname></p>
-<p>$ git tag -a v0.8 -m “version 0.8 release” 94b83a0</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git show v0.8<br>tag v0.8<br>Tagger: Zhangtao153 <a href="mailto:&#x31;&#x33;&#x32;&#x38;&#x39;&#x32;&#x36;&#53;&#57;&#x37;&#x39;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;">&#x31;&#x33;&#x32;&#x38;&#x39;&#x32;&#x36;&#53;&#57;&#x37;&#x39;&#x40;&#49;&#x36;&#51;&#46;&#x63;&#111;&#x6d;</a><br>Date:   Wed Oct 21 23:51:54 2020 +0800</p>
-<p>version 0.8 release</p>
-<p>commit 94b83a06c04b8b3a5ca5af4443dda614bc3b1441 (tag: v0.8)<br>Author: Zhangtao153 <a href="mailto:&#x31;&#51;&#50;&#56;&#57;&#x32;&#x36;&#x35;&#57;&#x37;&#x39;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;">&#x31;&#51;&#50;&#56;&#57;&#x32;&#x36;&#x35;&#57;&#x37;&#x39;&#x40;&#x31;&#x36;&#51;&#x2e;&#x63;&#x6f;&#x6d;</a><br>Date:   Wed Oct 21 21:32:49 2020 +0800</p>
-<div class="hljs code-wrapper"><pre><code>commit on issue-005
-</code></pre></div>
-<p>diff –git a/README.md b/README.md<br>index 25ed040..af0e009 100644<br>— a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br> Git is a version control system.<br>-Git is free software.哈哈zth  delete and update<br>+Git is free software.哈哈zth  delete and update on issue-005</p>
-<p>6.4 删除标签<br>删除本地标签： </p>
-<p>git   tag   -d  <tagname></p>
-<p>$ git tag -d v0.9<br>Deleted tag ‘v0.9’ (was add2dbd)</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git tag v1.0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git tag v0.9 add2dbd<br></code></pre></div></td></tr></table></figure>
+<h4 id="7-2-查看所有标签"><a href="#7-2-查看所有标签" class="headerlink" title="7.2 查看所有标签"></a>7.2 查看所有标签</h4><p>git  tag</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git tag<br>v0.9<br>v1.0<br></code></pre></div></td></tr></table></figure>
+<h4 id="7-3-查看标签信息"><a href="#7-3-查看标签信息" class="headerlink" title="7.3 查看标签信息"></a>7.3 查看标签信息</h4><p>git  show  &lt;tagname&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git tag -a v0.8 -m <span class="hljs-string">&quot;version 0.8 release&quot;</span> 94b83a0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git show v0.8<br>tag v0.8<br>Tagger: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Oct 21 23:51:54 2020 +0800<br><br>version 0.8 release<br><br>commit 94b83a06c04b8b3a5ca5af4443dda614bc3b1441 (tag: v0.8)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Oct 21 21:32:49 2020 +0800<br><br>    commit on issue-005<br><br>diff --git a/README.md b/README.md<br>index 25ed040..af0e009 100644<br>--- a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br> Git is a version control system.<br>-Git is free software.哈哈zth  delete and update<br>+Git is free software.哈哈zth  delete and update on issue-005<br></code></pre></div></td></tr></table></figure>
+<h4 id="7-4-删除标签"><a href="#7-4-删除标签" class="headerlink" title="7.4 删除标签"></a>7.4 删除标签</h4><p>删除本地标签： </p>
+<p>git   tag   -d  &lt;tagname&gt;</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git tag -d v0.9<br>Deleted tag <span class="hljs-string">&#x27;v0.9&#x27;</span> (was add2dbd)<br></code></pre></div></td></tr></table></figure>
+
 <p>删除远程标签（先删除本地，再删除远程）：</p>
-<p>$ git tag -d v0.8<br>Deleted tag ‘v0.8’ (was 120a8d2)</p>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin  :refs/tags/v0.8<br>To github.com:Zhangtao153/learngit.git</p>
-<ul>
-<li>[deleted]         v0.8</li>
-</ul>
-<p>6.5 推送标签到远程<br> 推送指定标签：</p>
-<p>git push origin <tagname></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git tag -d v0.8<br>Deleted tag <span class="hljs-string">&#x27;v0.8&#x27;</span> (was 120a8d2)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin  :refs/tags/v0.8<br>To github.com:Zhangtao153/learngit.git<br> - [deleted]         v0.8<br></code></pre></div></td></tr></table></figure>
+<h4 id="7-5-推送标签到远程"><a href="#7-5-推送标签到远程" class="headerlink" title="7.5 推送标签到远程"></a>7.5 推送标签到远程</h4><p> 推送指定标签：</p>
+<p>git push origin &lt;tagname&gt;</p>
 <p>推送全部尚未推送到远程的本地标签：</p>
 <p>git push origin –tags</p>
-<p>$ git push origin v1.0<br>Enumerating objects: 28, done.<br>Counting objects: 100% (28/28), done.<br>Delta compression using up to 4 threads<br>Compressing objects: 100% (18/18), done.<br>Writing objects: 100% (26/26), 1.95 KiB | 667.00 KiB/s, done.<br>Total 26 (delta 12), reused 0 (delta 0), pack-reused 0<br>remote: Resolving deltas: 100% (12/12), done.<br>To github.com:Zhangtao153/learngit.git</p>
-<ul>
-<li>[new tag]         v1.0 -&gt; v1.0</li>
-</ul>
-<p>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin –tags<br>Enumerating objects: 1, done.<br>Counting objects: 100% (1/1), done.<br>Writing objects: 100% (1/1), 167 bytes | 167.00 KiB/s, done.<br>Total 1 (delta 0), reused 0 (delta 0), pack-reused 0<br>To github.com:Zhangtao153/learngit.git</p>
-<ul>
-<li>[new tag]         v0.8 -&gt; v0.8</li>
-</ul>
-<p>​</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git push origin v1.0<br>Enumerating objects: 28, <span class="hljs-keyword">done</span>.<br>Counting objects: 100% (28/28), <span class="hljs-keyword">done</span>.<br>Delta compression using up to 4 threads<br>Compressing objects: 100% (18/18), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (26/26), 1.95 KiB | 667.00 KiB/s, <span class="hljs-keyword">done</span>.<br>Total 26 (delta 12), reused 0 (delta 0), pack-reused 0<br>remote: Resolving deltas: 100% (12/12), <span class="hljs-keyword">done</span>.<br>To github.com:Zhangtao153/learngit.git<br> * [new tag]         v1.0 -&gt; v1.0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin --tags<br>Enumerating objects: 1, <span class="hljs-keyword">done</span>.<br>Counting objects: 100% (1/1), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (1/1), 167 bytes | 167.00 KiB/s, <span class="hljs-keyword">done</span>.<br>Total 1 (delta 0), reused 0 (delta 0), pack-reused 0<br>To github.com:Zhangtao153/learngit.git<br> * [new tag]         v0.8 -&gt; v0.8<br></code></pre></div></td></tr></table></figure>
+
+
+
 
             </div>
             <hr>
