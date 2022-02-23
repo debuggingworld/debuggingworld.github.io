@@ -16,21 +16,29 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="1. 重新认识接口1.1 java8之前接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getInt(">
+  <meta name="description" content="1. GIT 存储对像Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。 git 键值库中插入数据： 12echo &quot;hello debuggingWorld&quot; | git hash-object -w --stdincfd6e024dbae18ef">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java——函数式编程">
-<meta property="og:url" content="http://example.com/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:title" content="Git——底层原理">
+<meta property="og:url" content="http://example.com/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 重新认识接口1.1 java8之前接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getInt(">
+<meta property="og:description" content="1. GIT 存储对像Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。 git 键值库中插入数据： 12echo &quot;hello debuggingWorld&quot; | git hash-object -w --stdincfd6e024dbae18ef">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-30T15:34:42.000Z">
-<meta property="article:modified_time" content="2021-12-26T02:41:13.997Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220222727.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220223413.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220234038.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000048.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000853.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000348.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000508.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221001122.png">
+<meta property="article:published_time" content="2022-02-20T14:14:58.000Z">
+<meta property="article:modified_time" content="2022-02-20T16:12:12.601Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="java">
-<meta property="article:tag" content="java8新特性">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220222727.png">
   
-  <title>java——函数式编程 - Hexo</title>
+  <title>Git——底层原理 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -192,7 +200,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java——函数式编程">
+            <span class="h2" id="subtitle" title="Git——底层原理">
               
             </span>
 
@@ -202,8 +210,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-11-30 23:34" pubdate>
-        2021年11月30日 晚上
+      <time datetime="2022-02-20 22:14" pubdate>
+        2022年2月20日 晚上
       </time>
     </span>
   
@@ -213,7 +221,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      1.1k 字
     </span>
   
 
@@ -222,7 +230,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9 分钟
+      3 分钟
     </span>
   
 
@@ -251,119 +259,41 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">java——函数式编程</h1>
+            <h1 style="display: none">Git——底层原理</h1>
             
             <div class="markdown-body">
-              <h3 id="1-重新认识接口"><a href="#1-重新认识接口" class="headerlink" title="1. 重新认识接口"></a>1. 重新认识接口</h3><h4 id="1-1-java8之前"><a href="#1-1-java8之前" class="headerlink" title="1.1 java8之前"></a>1.1 java8之前</h4><p>接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<h4 id="1-2-java8之后"><a href="#1-2-java8之后" class="headerlink" title="1.2 java8之后"></a>1.2 java8之后</h4><p>从JDK8开始，接口可以加入静态方法和默认方法<br>默认方法允许接口方法定义默认实现，而所有子类都继承该方法及实现</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printHello</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getString</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p><strong>默认方法的优势</strong></p>
-<ol>
-<li>默认方法的主要优势是提供一种拓展接口的方法，而不破坏现有代码。增加新的方法，并且能保证对使用这个接口的老版本代码的兼容性。<br>在JDK8以前，如果为一个现有接口增加一个新方法，则我们必须在所有实现类中添加该方法的实现，否则编译会出现异常。<br>如果实现类比较多或者我们没有权限修改实现类源代码，这样可能就比较麻烦。<br>默认方法则解决了这个问题，它提供了一个实现，当没有显式提供其他实现时就采用这个实现，这样新添加的方法将不会破坏现有代码。</li>
-<li>另一个优势是该方法是可选，子类可以根据不同的需求Override默认实现。<br>例如，我们定义一个集合接口，其中有增、删、改等操作。如果实现类90%都是以数组保存数据，那么可以定义针对这些方法给出默认实现，而对于其他非数组集合或者有其他类似业务，可以选择性复写接口中默认方法。</li>
-</ol>
-<h3 id="2-函数式接口"><a href="#2-函数式接口" class="headerlink" title="2.函数式接口"></a>2.函数式接口</h3><p><strong>定义：</strong></p>
-<blockquote>
-<p>如果一个接口定义唯一一个抽象方法，那么这个接口就成为函数式接口。</p>
-</blockquote>
-<p>java.lang.Runnable 就是一个函数式接口，因为它只有一个抽象方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+              <h3 id="1-GIT-存储对像"><a href="#1-GIT-存储对像" class="headerlink" title="1. GIT 存储对像"></a>1. GIT 存储对像</h3><p>Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。</p>
+<p>git 键值库中插入数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello debuggingWorld&quot;</span> | git hash-object -w --stdin<br>cfd6e024dbae18ef2b3231ddd0374286bd2fe650<br></code></pre></div></td></tr></table></figure>
+<p>git 基于键获取指定内容:</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git cat-file -p cfd6e024dbae18ef2b3231ddd0374286bd2fe650<br>hello debuggingWorld<br></code></pre></div></td></tr></table></figure>
 
-<p>默认方法不是abstract的，所以一个函数式接口里可以定义任意多的默认方法。<br>为了标明函数式接口Java8引入了一个新的注解： @FunctionalInterface</p>
-<p><strong>函数接口特性</strong></p>
+<p>Git 基于该功能 把每个文件的版本中内容都保存在数据库中，当要进行版本回滚的时候就通过其中一个键将期取回并替换。</p>
+<p>所以平常用的 git add 其实就是把修改之后的内容插入到键值库中。当执行 git add README.md 等同于执行了 git hash-object -w README.md 把文件写到数据库中。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220222727.png" srcset="/img/loading.gif" lazyload></p>
+<p>【问题】解决了存储的问题，但其只能存储内容同并没有存储文件名，如果要进行回滚怎么知道哪个内容对应哪个文件呢？树对象解决的就是文件名存储的问题 。</p>
+<h3 id="2-树对像"><a href="#2-树对像" class="headerlink" title="2. 树对像"></a>2. 树对像</h3><p>树对像解决了文件名的问题，它的目的将多个文件名组织在一起，其内包含多个文件名称与其对应的Key和其它树对像的用引用。可以理解成操作系统当中的文件夹，一个文件夹包含多个文件和多个其它文件夹。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220223413.png" srcset="/img/loading.gif" lazyload></p>
+<p>每一个分支当中都关联了一个树对像，存储了当前分支下所有的文件名及对应的 key。</p>
+<p>#查看分支树<br> git cat-file -p master^{tree}[或 commitId]</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220220234038.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-git-提交对象"><a href="#3-git-提交对象" class="headerlink" title="3. git 提交对象"></a>3. git 提交对象</h3><p> 一次提交即为当前版本的一个快照，该快照就是通过提交对像保存，其存储的内容为：一个顶级树对象、上一次提交的对像啥希、提交者用户名及邮箱、提交时间戳、提交评论。</p>
+<p> <img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000048.png" srcset="/img/loading.gif" lazyload></p>
+<p> 通过上面的知识，可以推测出从修改一个文件到提交的过程总共生成了三个对像：<br>一个内容对象 ==&gt; 存储了文件内容<br>一个树对像 ==&gt; 存储了文件名及内容对像的key<br>一个提交对像 ==&gt; 存储了树对像的key 及提交评论。 </p>
+<h4 id="4-git-引用"><a href="#4-git-引用" class="headerlink" title="4.git 引用"></a>4.git 引用</h4><p>git 总共 有三种类型的引用：</p>
 <ul>
-<li>@FunctionInterface 注解只能标记在有且仅有一个抽象方法的接口上；</li>
-<li>Java8接口中的静态方法和默认方法，都不算是抽象方法；</li>
-<li>接口默认继承 java.lang.Object ,所以如果接口声明覆盖了Object中的方法，那么也不算抽象方法；</li>
-<li>注解不是必须的，如果接口符合函数式接口的定义，那么不加注解也没有影响。加上则编译器可以进行检查。如果不是函数接口而加上了注解，则编译器会报错。</li>
+<li>分支引用</li>
+<li>远程分支引用</li>
+<li>标签引用</li>
 </ul>
-<h3 id="3-函数式编程"><a href="#3-函数式编程" class="headerlink" title="3.  函数式编程"></a>3.  函数式编程</h3><p>函数编程特性：</p>
-<p><strong>a. 闭包与高阶函数</strong><br>函数编程支持函数作为第一类对象，有时称为 闭包或者 仿函数（functor）对象。实质上，闭包是起函数的作用并可以像对象一样操作的对象。高阶函数可以用另一个函数作为其输入参数，也可以返回一个函数作为其输出参数。</p>
-<p><strong>b. 惰性计算</strong><br>在惰性计算中，表达式不是在绑定到变量时立即计算，而是在求值程序需要产生表达式的值时进行计算。延迟的计算可以编写可能潜在地生成无穷输出的函数。因为不会计算多于程序的其余部分所需要的值，所以不需要担心由无穷计算所导致的 out-of-memory 错误。</p>
-<p><strong>c. 没有“副作用”</strong><br>所谓”副作用”（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。函数式编程强调没有”副作用”，意味着函数要保持独立，所有功能返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</p>
-<blockquote>
-<p>综上所述，函数式编程可以简言之是： 使用不可变值和函数， 通过函数对一个值进行处理， 映射成另一个值。这个值在面向对象语言中可以理解为对象，另外这个值还可以作为函数的输入。</p>
-</blockquote>
-<p>Java8 中的函数式编程</p>
-<ul>
-<li>内建的函数式接口</li>
-<li>Optional API</li>
-<li>Lambda表达式</li>
-<li>Stream API</li>
-</ul>
-<h4 id="3-1-内建的函数式接口"><a href="#3-1-内建的函数式接口" class="headerlink" title="3.1 内建的函数式接口"></a>3.1 内建的函数式接口</h4><p>Java8 API包含了很多内建的函数式接口，在老Java中常用到的比如Comparator或者Runnable接口，这些接口都增加了@FunctionalInterface注解以便能用在lambda上。</p>
-<table>
-<thead>
-<tr>
-<th align="center">name</th>
-<th align="center">type</th>
-<th align="center">description</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Consumer(消费者)</td>
-<td align="center">Consumer<T></td>
-<td align="center">接收 T 对象，不返回值</td>
-</tr>
-<tr>
-<td align="center">Predicate(谓词)</td>
-<td align="center">Predicate<T></td>
-<td align="center">接收 T 对象并返回boolean</td>
-</tr>
-<tr>
-<td align="center">Function(函数)</td>
-<td align="center">Function&lt;T,R&gt;</td>
-<td align="center">接收 T 对象，返回 R 对象</td>
-</tr>
-<tr>
-<td align="center">Supplier(提供者)</td>
-<td align="center">Supplier<T></td>
-<td align="center">提供T对象，不接收值</td>
-</tr>
-<tr>
-<td align="center">UnaryOperator(一元运算符)</td>
-<td align="center">UnaryOperator<T></td>
-<td align="center">接收T对象，返回T对象</td>
-</tr>
-<tr>
-<td align="center">BinaryOperator(二元操作)</td>
-<td align="center">BinaryOperator<T></td>
-<td align="center">接收两个T对象，返回T对象</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>以上四种为基本的函数接口，在此之上JDK又提供了若干扩展：</p>
-<ol>
-<li>以上前三种添加了Bi的前缀：BiConsumer,BiPredicate,BiFunction,入参变为两个；</li>
-<li>对Function的扩展产生了UnaryOperator(一元运算符)，接收T返回T；</li>
-<li>对BiFunction的扩展产生了BinaryOperator(二元操作)，收两个T对象，返回T对象</li>
-<li>增加了若干具体基本类型的接口，可参见function包下具体接口说明。</li>
-</ol>
-</blockquote>
-<h4 id="3-2-Optional-API"><a href="#3-2-Optional-API" class="headerlink" title="3.2 Optional API"></a>3.2 Optional API</h4><p>Java8中引入的 Optional 是一种优雅解决NPE(NullPointExcepiton)问题的方法，是通过函数式接口实现的。</p>
-<p>Optional 提供的方法：</p>
-<table>
-<thead>
-<tr>
-<th align="center">方法</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">public<U> Optional<U> map(Function&lt;? super T, ? extends U&gt; mapper)</td>
-<td align="center">如果当前 Optional 为 Optional.empty，则依旧返回 Optional.empty；否则返回一个新的 Optional，该 Optional 包含的是：函数 mapper 在以 value 作为输入时的输出值。</td>
-</tr>
-<tr>
-<td align="center">public T orElse(T other)</td>
-<td align="center">如果有值则将其返回，否则返回一个默认值</td>
-</tr>
-<tr>
-<td align="center">public T orElseGet(Supplier&lt;? extends T&gt; other)</td>
-<td align="center">如果有值则将其返回，否则返回一个由指定的Supplier接口生成的值</td>
-</tr>
-</tbody></table>
-<p>如果当前 Optional 为 Optional.empty，则依旧返回 Optional.empty；否则返回一个新的 Optional，该 Optional 包含的是：函数 mapper 在以 value 作为输入时的输出值。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000853.png" srcset="/img/loading.gif" lazyload></p>
+<p>当执行 git branch {branchName} 时创建了一个分支，其本质就是 git 基于指定提交创建了一个引用文件，保存在 .git\refs\heads\ 下。</p>
+<p>如 .git/refs/heads/master 文件保存的是 master 分支的引用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000348.png" srcset="/img/loading.gif" lazyload></p>
+<p>创建 dev 分支：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221000508.png" srcset="/img/loading.gif" lazyload></p>
+<p>/.git/refs/tags 保存的是标签引用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220221001122.png" srcset="/img/loading.gif" lazyload></p>
 
             </div>
             <hr>
@@ -373,7 +303,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                      <a class="hover-with-bg" href="/categories/Git/">Git</a>
                     
                   </div>
                 
@@ -381,9 +311,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/java/">java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
                     
                   </div>
                 
@@ -400,9 +328,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/">
+                      <a href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">java——java8新特性之Stream</span>
+                        <span class="hidden-mobile">Git——reset的三种模式</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -410,8 +338,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
-                        <span class="hidden-mobile">java——java8新特性之Lambda 表达式</span>
+                      <a href="/2022/02/17/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/">
+                        <span class="hidden-mobile">Git——rebase命令</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
