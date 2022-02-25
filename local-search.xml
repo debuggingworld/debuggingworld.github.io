@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>maven——基本概念与核心配置</title>
+    <link href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/"/>
+    <url>/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/</url>
+    
+    <content type="html"><![CDATA[<h3 id="1-maven-安装与核心概念"><a href="#1-maven-安装与核心概念" class="headerlink" title="1. maven  安装与核心概念"></a>1. maven  安装与核心概念</h3><p>maven 的功能：编译、打包、测试、依赖管理</p><h4 id="1-1-安装"><a href="#1-1-安装" class="headerlink" title="1.1 安装"></a>1.1 安装</h4><ol><li>官网下载 Maven （<a href="http://maven.apache.org/download.cgi%EF%BC%89">http://maven.apache.org/download.cgi）</a></li><li>解压指定目录</li><li>配置环境变量</li><li>检查安装是否成功 （mvn -version）</li></ol><p><a href="https://blog.csdn.net/weixin_43811057/article/details/108235117">安装参考</a></p><h4 id="1-2-maven-编译"><a href="#1-2-maven-编译" class="headerlink" title="1.2 maven 编译"></a>1.2 maven 编译</h4><ul><li>创建 maven 项目</li><li>创建 src 文件</li><li>编写  pom 文件</li><li>执行编译命令</li></ul><p><project xmlns="http://maven.apache.org/POM/4.0.0"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                      http://maven.apache.org/xsd/maven-4.0.0.xsd"><br>  <modelVersion>4.0.0</modelVersion><br> <br>  <groupId>org.codehaus.mojo</groupId><br>  <artifactId>my-project</artifactId><br>  <version>1.0.SNAPSHOT</version><br></project></p><p>#mvn 编译命令<br>mvn compile</p><hr><p>[INFO] No sources to compile<br>[INFO] —————————————————————<br>[INFO] BUILD SUCCESS<br>[INFO] —————————————————————<br>[INFO] Total time: 0.473 s<br>[INFO] Finished at: 2018-08-05T15:55:44+08:00<br>[INFO] Final Memory: 6M/153M<br>[INFO] —————————————————————</p><p>请注意，在上述配置和命令当中，我们并没有指定源码文件在哪里？最后编译到哪里去？在这里<br>maven 采用了约定的方式从指项目结构中获取源码与资源文件进行编译打包。<br>a.主源码文件：${project}/src/main/java<br>b.主资源文件：${project}/src/main/resources<br>c.测试源码文件：${project}/src/test/java<br>d.测试资源文件：${project}/src/test/resources<br>将java 文件移至 src/main/java 目录，重新执行编译.<br>mv src/hello.java /src/main/java/hello.java<br>mvn compile;</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>maven</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>maven</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Git——搭建私有Git服务</title>
     <link href="/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/"/>
     <url>/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/</url>
