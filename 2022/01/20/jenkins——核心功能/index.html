@@ -24,8 +24,23 @@
 <meta property="og:description" content="1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点：  统一的代码库(git) 统一的依赖包管理(nexus) 测试自动化 构建全自动化(maven) 部署自动">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/CI.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305154059.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305155309.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305162615.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305170148.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305193106.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305193334.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305233105.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305233742.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306000108.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306000043.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306004515.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306005949.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306011723.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306013006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306012633.png">
 <meta property="article:published_time" content="2022-01-20T13:48:04.000Z">
-<meta property="article:modified_time" content="2022-01-22T15:50:49.365Z">
+<meta property="article:modified_time" content="2022-03-05T17:31:50.113Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="jenkins">
 <meta name="twitter:card" content="summary_large_image">
@@ -214,7 +229,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      3.7k 字
     </span>
   
 
@@ -223,7 +238,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      12 分钟
     </span>
   
 
@@ -317,6 +332,69 @@
 <li>构建好的项目自动上传至 Nexus 私服存档</li>
 <li>保存构建历史记录，并可以下载历史记录</li>
 </ol>
+<h4 id="2-2-持续化集成配置"><a href="#2-2-持续化集成配置" class="headerlink" title="2.2 持续化集成配置"></a>2.2 持续化集成配置</h4><ol>
+<li> 新建 maven job</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305154059.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>配置checkout 源码</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305155309.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>编写 maven 构建命令</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305162615.png" srcset="/img/loading.gif" lazyload></p>
+<p>构建结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305170148.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="4">
+<li>自动部署至 Tomcat 配置</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305193106.png" srcset="/img/loading.gif" lazyload></p>
+<p>构建后访问：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305193334.png" srcset="/img/loading.gif" lazyload></p>
+<p>自动部署的前提条件：<br>1.需要下载 Deploy to container 插件<br>2.设置Tomcat manager 用户和密码，以下配置加入至 Tomcat conf/tomcat-users.xml 中<br>3.tomcat webapp  中必须保留 manager 项目</p>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;admin-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;manager-gui,manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin-gui,manager-gui&quot;</span>/&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33965305/article/details/93610207">远程无法管理 tomcat 问题</a></p>
+<ol start="5">
+<li>存档配置<br>构建后发布到 nexus 私服</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305233105.png" srcset="/img/loading.gif" lazyload></p>
+<p>配置 setting.xml 获取上传至 nexus 的权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-release<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+<p>构建结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220305233742.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2-3-集成实现原理"><a href="#2-3-集成实现原理" class="headerlink" title="2.3 集成实现原理"></a>2.3 集成实现原理</h4><p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306000108.png" srcset="/img/loading.gif" lazyload></p>
+<p>工作空间目录：~/.jenkins/workspace/</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306000043.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="3-jenkins-pipeline-核心应用"><a href="#3-jenkins-pipeline-核心应用" class="headerlink" title="3. jenkins pipeline 核心应用"></a>3. jenkins pipeline 核心应用</h3><h4 id="3-1-pipeline-概要"><a href="#3-1-pipeline-概要" class="headerlink" title="3.1 pipeline 概要"></a>3.1 pipeline 概要</h4><p>使用 maven 来进行自动化构建，其流程分别是：构建环境准备 ——&gt; 源码下载——&gt;构建——&gt;存档——&gt;部署，这是一种固化的构建流程，如果需要多个项目进行依赖构建，这种复杂的构建场景 时该怎么办？jenkins pipeline 可以做到这一点。<br>Jenkins 从根本上讲是一种支持多种自动化模式的自动化引擎。Pipeline 在 Jenkins 上添加了一套强大的自动化工具，支持从简单的连续集成到全面的连续输送 Pipeline 的用例。用户可以基于他实现更为复杂的建模场景。</p>
+<h4 id="3-2-pipeline-基础语法"><a href="#3-2-pipeline-基础语法" class="headerlink" title="3.2 pipeline 基础语法"></a>3.2 pipeline 基础语法</h4><figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;Build&#x27;) &#123; <br>            steps &#123; <br>                sh &#x27;make&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Test&#x27;)&#123;<br>            steps &#123;<br>                sh &#x27;make check&#x27;<br>                junit &#x27;reports<span class="hljs-comment">/**/</span>*.xml&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Deploy&#x27;) &#123;<br>            steps &#123;<br>                sh &#x27;make publish&#x27;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<ul>
+<li>agent  表示 Jenkins 应该为 Pipeline 的这一部分分配一个执行者和工作区。</li>
+<li>stage  描述了这条 Pipeline 的一个阶段。</li>
+<li>steps  描述了要在其中运行的步骤</li>
+<li>sh      执行给定的 shell 命令</li>
+<li>junit   是由 JUnit 插件提供的，用于聚合测试报告的 Pipeline 步骤。</li>
+</ul>
+<h4 id="3-3-pipeline-示例"><a href="#3-3-pipeline-示例" class="headerlink" title="3.3 pipeline 示例"></a>3.3 pipeline 示例</h4><p>前提条件：</p>
+<ol>
+<li>Jenkins 2.x 或更高版本</li>
+<li>Pipeline插件</li>
+</ol>
+<p>可以通过以下任一方式创建基本 Pipeline：</p>
+<ol>
+<li>直接在 Jenkins 网页界面中输入脚本。</li>
+<li>通过创建一个 Jenkinsfile 可以检入项目的源代码管理库。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306004515.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Pipeline-script-方式"><a href="#Pipeline-script-方式" class="headerlink" title="Pipeline script 方式"></a>Pipeline script 方式</h5><p>点击”流水线语法“查看语法帮助：<br><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306005949.png" srcset="/img/loading.gif" lazyload></p>
+<p>pipeline script：</p>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;checkout&#x27;) &#123; <br>            steps &#123; <br>                echo &#x27;checkout&#x27; <br>                checkout([$class: &#x27;GitSCM&#x27;, branches: [[name: &#x27;*/master&#x27;]], extensions: [], userRemoteConfigs: [[credentialsId: &#x27;<span class="hljs-number">3</span>c819818-d272<span class="hljs-number">-4155</span><span class="hljs-number">-91</span>d5<span class="hljs-number">-3</span>d59158e2823&#x27;, url: &#x27;http:<span class="hljs-comment">//192.168.60.10:3000/root/hello-debuggingWorld.git&#x27;]]])</span><br>            &#125;<br>        &#125;<br>        stage(&#x27;build&#x27;)&#123;<br>            steps &#123;<br>                 echo &#x27;build&#x27;<br>                 sh &#x27;mvn clean install&#x27;<br>            &#125;<br>        &#125;<br>        stage(&#x27;save&#x27;) &#123;<br>            steps &#123;<br>               echo &#x27;save&#x27;<br>               archiveArtifacts artifacts: &#x27;target<span class="hljs-comment">/*.war&#x27;, followSymlinks: false</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br></code></pre></div></td></tr></table></figure>
+<p>构建结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306011723.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="Jenkinsfile-方式"><a href="#Jenkinsfile-方式" class="headerlink" title="Jenkinsfile 方式"></a>Jenkinsfile 方式</h4><p>项目中添加 Jenkinsfile（内容同上）：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306013006.png" srcset="/img/loading.gif" lazyload></p>
+<p>配置流水线：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20220306012633.png" srcset="/img/loading.gif" lazyload></p>
 
             </div>
             <hr>
