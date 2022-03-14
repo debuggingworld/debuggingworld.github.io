@@ -17,14 +17,14 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/page/4/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/5/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>归档 - Hexo</title>
+  <title>Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -58,7 +58,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -166,18 +166,22 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/%E5%BD%92%E6%A1%A3.jpg') no-repeat center center;
+         style="background: url('/img/default_bg.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="飞机飞过天空，天空之城">
               
             </span>
 
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
           
         </div>
       </div>
@@ -188,90 +192,180 @@
     
       <div class="container nopadding-x-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 43 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2021</p>
     
-    <a href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——测试</span>
-      <time style="float: right;">12-20</time>
-    </a>
-  
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_blank">
+          java——函数式编程
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_blank">
+          
+          
+            
+          
+          1. 重新认识接口1.1 java8之前接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。
+1234public interface TestInterface &#123;    Integer age = 18;    int getInt(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-30 23:34" pubdate>
+              2021-11-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
     
-    <a href="/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——变量、常量与数据类型</span>
-      <time style="float: right;">12-18</time>
-    </a>
-  
     
-    <a href="/2021/12/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">设计模式——模板模式</span>
-      <time style="float: right;">12-17</time>
-    </a>
-  
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
+          java——java8新特性之Lambda 表达式
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
+          
+          
+            
+          
+          Lambda表达式lambda 表达式本质上是一段匿名内部类，也可以是一段可以传递的代码
+1. 语法完整的 Lambda 表达式由三部分组成：参数列表、箭头、声明语句；
+12 (Type1 param1, Type2 param2, ..., TypeN paramN) ‐&gt; &#123; statment1;statment2; //............. return statmen
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-28 22:58" pubdate>
+              2021-11-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
     
-    <a href="/2021/12/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">设计模式——责任链模式</span>
-      <time style="float: right;">12-15</time>
-    </a>
-  
     
-    <a href="/2021/12/13/GO%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">GO——入门</span>
-      <time style="float: right;">12-13</time>
-    </a>
-  
-    
-    <a href="/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">设计模式——策略模式</span>
-      <time style="float: right;">12-10</time>
-    </a>
-  
-    
-    <a href="/2021/12/09/java%E2%80%94%E2%80%94%E6%B3%9B%E5%9E%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java——泛型</span>
-      <time style="float: right;">12-09</time>
-    </a>
-  
-    
-    <a href="/2021/12/06/Java%E2%80%94%E2%80%94java9%E6%96%B0%E7%89%B9%E6%80%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java——java9新特性</span>
-      <time style="float: right;">12-06</time>
-    </a>
-  
-    
-    <a href="/2021/12/03/Java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BOptional/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java——java8新特性之Optional</span>
-      <time style="float: right;">12-03</time>
-    </a>
-  
-    
-    <a href="/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">java——java8新特性之Stream</span>
-      <time style="float: right;">12-01</time>
-    </a>
-  
-</div>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
+          Redis——入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
+          
+          
+            
+          
+          1.  NoSQL介绍NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。
+2. 为什么需要NoSQL主要应对以下问题时，传统关系型数据库力不从心
+  高并发读写  海量数据的高效率存储和访
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-28 00:02" pubdate>
+              2021-11-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis/">Redis</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/redis/">redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/#board">2</a><a class="page-number" href="/archives/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/#board">5</a><a class="extend next" rel="next" href="/archives/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span>
     </span>
   </nav>
-
 
 
 
@@ -400,7 +494,34 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+      jQuery.ajax({
+        type: 'GET',
+        url: 'https://v1.hitokoto.cn/',
+        headers: {},
+        dataType: 'json',
+        success: function (result) {
+          var text;
+          if (result) {
+            var keys = 'hitokoto'.split('.')
+            if (result instanceof Array) {
+              result = result[0]
+            }
+            for (const k of keys) {
+              var value = result[k]
+              if (typeof value === 'string') {
+                text = value
+                break
+              } else if (value instanceof Object) {
+                result = value
+              }
+            }
+          }
+          text ? typing(text) : typing(title);
+        },
+        error: function () {
+          typing(title)
+        }
+      })
       
     })(window, document);
   </script>
