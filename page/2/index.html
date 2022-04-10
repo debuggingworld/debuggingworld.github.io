@@ -206,6 +206,117 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+          jenkins——构建持续集成环境
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+          
+          
+            
+          
+          更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。
+1. 手动拉取拉取更新流程：
+
+上述流程由 deploy.sh 脚本实现：
+123456789101112#!/bin/bash -ecd &quot;`dirname $0`&quot;. ./pom.sh#1. download war, ready envecho &q
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-08 23:32" pubdate>
+              2022-03-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/jenkins/">jenkins</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/jenkins/">jenkins</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+          maven——nexus私服搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+          
+          
+            
+          
+          1. 私服使用场景
+公司不能连接公网，可以用一个私服务来统一连接
+公司内部 jar 组件的共享
+
+2. nexus 下载安装nexus 下载地址：https://sonatype-download.global.ssl.fastly.net/nexus/oss/nexus-2.14.5-02-bundle.tar.gz
+解压并设置环境变量
+解压：
+1tar -zxvf nexus-2.14.5-0
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-28 22:19" pubdate>
+              2022-02-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/maven/">maven</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/maven/">maven</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
           maven——生命周期与自定义插件开发
         </a>
@@ -653,115 +764,6 @@ git 键值库中插入数据：
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/idea/">idea</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/23/idea%E2%80%94%E2%80%94debug%E6%8A%80%E5%B7%A7/" target="_blank">
-          idea——debug 技巧
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/23/idea%E2%80%94%E2%80%94debug%E6%8A%80%E5%B7%A7/" target="_blank">
-          
-          
-            
-          
-          1. debug
-　1. 以 Debug 模式启动服务。　2. 断点：在左边行号栏单击左键，或者快捷键Ctrl+F8 打上/取消断点。　3. Debug窗口：访问请求到达第一个断点后，会自动激活Debug窗口。如果没有自动激活，可以去设置里设置。　4. 调试按钮：在菜单栏 Run 里可以找到同样的对应的功能。　5. 服务按钮：可以在这里关闭/启动服务，设置断点等。　6. 方法调用栈：这里显示了该线
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-23 11:51" pubdate>
-              2022-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/idea/">idea</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/" target="_blank">
-          jenkins——核心功能
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/" target="_blank">
-          
-          
-            
-          
-          1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。
-
-持续集成要点：
-
-统一的代码库(git)
-统一的依赖包管理(nexus)
-测试自动化
-构建全自动化(maven)
-部署自动
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-20 21:48" pubdate>
-              2022-01-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/jenkins/">jenkins</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/jenkins/">jenkins</a>
             
           </div>
         
