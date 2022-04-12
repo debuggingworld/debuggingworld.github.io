@@ -17,14 +17,14 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/page/3/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/6/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
-  <title>归档 - Hexo</title>
+  <title>Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -58,7 +58,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -166,18 +166,22 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/%E5%BD%92%E6%A1%A3.jpg') no-repeat center center;
+         style="background: url('/img/default_bg.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="飞机飞过天空，天空之城">
               
             </span>
 
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
           
         </div>
       </div>
@@ -188,90 +192,73 @@
     
       <div class="container nopadding-x-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 51 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2022</p>
     
-    <a href="/2022/02/04/idea%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">idea——使用技巧</span>
-      <time style="float: right;">02-04</time>
-    </a>
-  
-    
-    <a href="/2022/01/23/idea%E2%80%94%E2%80%94debug%E6%8A%80%E5%B7%A7/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">idea——debug 技巧</span>
-      <time style="float: right;">01-23</time>
-    </a>
-  
-    
-    <a href="/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">jenkins——核心功能</span>
-      <time style="float: right;">01-20</time>
-    </a>
-  
-    
-    <a href="/2022/01/17/Go%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——socket 编程</span>
-      <time style="float: right;">01-17</time>
-    </a>
-  
-    
-    <a href="/2022/01/16/Go%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——文件操作</span>
-      <time style="float: right;">01-16</time>
-    </a>
-  
-    
-    <a href="/2022/01/13/Go%E2%80%94%E2%80%94%E5%B9%B6%E5%8F%91/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——并发</span>
-      <time style="float: right;">01-13</time>
-    </a>
-  
-    
-    <a href="/2022/01/11/Go%E2%80%94%E2%80%94%E5%8F%8D%E5%B0%84/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——反射</span>
-      <time style="float: right;">01-11</time>
-    </a>
-  
-    
-    <a href="/2022/01/09/Go%E2%80%94%E2%80%94%E6%8E%92%E5%BA%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——排序</span>
-      <time style="float: right;">01-09</time>
-    </a>
-  
-    
-    <a href="/2022/01/06/Go%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——接口</span>
-      <time style="float: right;">01-06</time>
-    </a>
-  
-    
-    <a href="/2022/01/02/Go%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go——结构体</span>
-      <time style="float: right;">01-02</time>
-    </a>
-  
-</div>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
+          Redis——入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
+          
+          
+            
+          
+          1.  NoSQL介绍NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。
+2. 为什么需要NoSQL主要应对以下问题时，传统关系型数据库力不从心
+  高并发读写  海量数据的高效率存储和访
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-28 00:02" pubdate>
+              2021-11-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis/">Redis</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/redis/">redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/archives/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/#board">4</a><a class="page-number" href="/archives/page/5/#board">5</a><a class="page-number" href="/archives/page/6/#board">6</a><a class="extend next" rel="next" href="/archives/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span>
     </span>
   </nav>
-
 
 
 
@@ -400,7 +387,34 @@
       var typing = Fluid.plugins.typing;
       var title = document.getElementById('subtitle').title;
       
-      typing(title)
+      jQuery.ajax({
+        type: 'GET',
+        url: 'https://v1.hitokoto.cn/',
+        headers: {},
+        dataType: 'json',
+        success: function (result) {
+          var text;
+          if (result) {
+            var keys = 'hitokoto'.split('.')
+            if (result instanceof Array) {
+              result = result[0]
+            }
+            for (const k of keys) {
+              var value = result[k]
+              if (typeof value === 'string') {
+                text = value
+                break
+              } else if (value instanceof Object) {
+                result = value
+              }
+            }
+          }
+          text ? typing(text) : typing(title);
+        },
+        error: function () {
+          typing(title)
+        }
+      })
       
     })(window, document);
   </script>
