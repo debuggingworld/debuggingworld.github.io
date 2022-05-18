@@ -7,16 +7,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/icon2.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="1. 定义A sequence of elements supporting sequential and parallel aggregate operations .  Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 可以支持顺序和并行的对原Stream进行汇聚的操作；   Java 8 中的 Stream 是对集合（Collection）对象功能的增强，">
+  
+    <meta name="description" content="1. 定义A sequence of elements supporting sequential and parallel aggregate operations .  Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 可以支持顺序和并行的对原Stream进行汇聚的操作；   Java 8 中的 Stream 是对集合（Collection）对象功能的增强，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java——java8新特性之Stream">
 <meta property="og:url" content="http://example.com/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/index.html">
@@ -25,37 +25,35 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg">
 <meta property="article:published_time" content="2021-12-01T12:43:15.000Z">
-<meta property="article:modified_time" content="2021-12-04T15:55:36.685Z">
+<meta property="article:modified_time" content="2022-05-17T15:45:02.989Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java8新特性">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>java——java8新特性之Stream - Hexo</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/nnfx-dark.min.css" />
-    
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -64,7 +62,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="/css/iconfont.css">
@@ -73,16 +77,29 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"/img/喜爱.png\" height=\"35\" width=\"35\" />","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>猫和少年</strong>
@@ -176,6 +193,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -188,57 +206,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/art_bg.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java——java8新特性之Stream">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-12-01 20:43" pubdate>
-        2021年12月1日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      12k 字
-    </span>
   
 
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      38 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="java——java8新特性之Stream"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-01 20:43" pubdate>
+          2021年12月1日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -247,15 +279,20 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">java——java8新特性之Stream</h1>
             
             <div class="markdown-body">
+              
               <h3 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h3><p><strong>A sequence of elements supporting sequential and parallel aggregate operations .</strong></p>
 <ol>
 <li>Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator；</li>
@@ -266,7 +303,7 @@
 </blockquote>
 <p>Stream API 借助于 Lambda 表达式，极大的提高编程效率和程序可读性。同时提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势（使用 fork/join框架，fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值）。</p>
 <p>[例] 统计列表中不为 null 的元素个数。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; nums = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">6</span>);<br><br><span class="hljs-comment">//原始版本</span><br><span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (Integer item : nums) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != item) &#123;<br>        count++;<br>    &#125;<br>&#125;<br><span class="hljs-comment">// Stream 版本</span><br><span class="hljs-keyword">long</span> count1 = nums.stream().filter(Objects::nonNull).count();<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; nums = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">6</span>);<br><br><span class="hljs-comment">//原始版本</span><br><span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (Integer item : nums) &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != item) &#123;<br>        count++;<br>    &#125;<br>&#125;<br><span class="hljs-comment">// Stream 版本</span><br><span class="hljs-keyword">long</span> count1 = nums.stream().filter(Objects::nonNull).count();<br></code></pre></td></tr></table></figure>
 
 <h3 id="2-语法"><a href="#2-语法" class="headerlink" title="2. 语法"></a>2. 语法</h3><p><img src="https://user-images.githubusercontent.com/45761474/144250337-a744591a-f7ef-4877-8876-c01a7ede3661.jpg" srcset="/img/loading.gif" lazyload alt="Stream表达式"></p>
 <p>一条语句分为三部分：</p>
@@ -291,23 +328,23 @@
 </ul>
 <ol>
 <li><p>of 方法：有两个 overload 方法，一个接受变长参数，一个接口单一值；</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Stream&lt;Integer&gt; integerStream = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Stream&lt;String&gt; stringStream = Stream.of(<span class="hljs-string">&quot;abc&quot;</span>);<br></code></pre></div></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream&lt;Integer&gt; integerStream = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br>Stream&lt;String&gt; stringStream = Stream.of(<span class="hljs-string">&quot;abc&quot;</span>);<br></code></pre></td></tr></table></figure></li>
 <li><p>generator 方法<br>生成一个无限长度的 Stream ，其元素生成时通过给定的 Supplier 接口提供</p>
 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Stream.generate(<span class="hljs-keyword">new</span> Supplier&lt;Double&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> Math.random();<br>    &#125;<br>&#125;);<br>Stream.generate(()-&gt;Math.random());<br><br>Stream.generate(Math::random);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream.generate(<span class="hljs-keyword">new</span> Supplier&lt;Double&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> Math.random();<br>    &#125;<br>&#125;);<br>Stream.generate(()-&gt;Math.random());<br><br>Stream.generate(Math::random);<br></code></pre></td></tr></table></figure>
 <p>生成一个无限长度的Stream，其中值是随机的。这个无限长度Stream是懒加载。</p>
 <ol start="3">
 <li>iterate 方法：</li>
 </ol>
 <p>也是生成无限长度的 Stream，和 generator 不同的是，其元素的生成是重复对给定的种子值(seed)调用用户指定函数来生成的。其中包含的元素可以认为是：seed，f(seed),f(f(seed))无限循环。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// 先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。</span><br>      Stream.iterate(<span class="hljs-number">1</span>, item -&gt; item * <span class="hljs-number">2</span>).limit(<span class="hljs-number">10</span>).forEach(System.out::println);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 先获取一个无限长度的正整数集合的Stream，然后取出前10个打印。</span><br>      Stream.iterate(<span class="hljs-number">1</span>, item -&gt; item * <span class="hljs-number">2</span>).limit(<span class="hljs-number">10</span>).forEach(System.out::println);<br></code></pre></td></tr></table></figure>
 
 <ol start="4">
-<li>通过 Collection 子类获取 Stream<br>Collection接口有一个stream方法，所以其所有子类都都可以获取对应的Stream对象。<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integerList = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>integerList.stream();<br>Set&lt;Integer&gt; integerSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();<br>integerSet.stream();<br>Map&lt;String, String&gt; stringMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>stringMap.entrySet().stream();<br>stringMap.keySet().stream();<br>stringMap.values().stream();<br></code></pre></div></td></tr></table></figure></li>
+<li>通过 Collection 子类获取 Stream<br>Collection接口有一个stream方法，所以其所有子类都都可以获取对应的Stream对象。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integerList = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">3</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>);<br>integerList.stream();<br>Set&lt;Integer&gt; integerSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();<br>integerSet.stream();<br>Map&lt;String, String&gt; stringMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br>stringMap.entrySet().stream();<br>stringMap.keySet().stream();<br>stringMap.values().stream();<br></code></pre></td></tr></table></figure></li>
 <li>Arrays.stream(T array)</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Arrays.stream(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;);<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Arrays.stream(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;);<br></code></pre></td></tr></table></figure>
 <h3 id="4-转换Stream"><a href="#4-转换Stream" class="headerlink" title="4. 转换Stream"></a>4. 转换Stream</h3><p>转换Stream就是把一个 Stream 通过某些行为转换成一个新的 Stream。</p>
 <p>Stream 接口中几个常用的转换方法:</p>
 <ul>
@@ -320,23 +357,23 @@
 <li>skip</li>
 </ul>
 <h4 id="4-1-distinct"><a href="#4-1-distinct" class="headerlink" title="4.1 distinct"></a>4.1 distinct</h4><p>对于 Stream 中包含的元素进行去重操作(依赖于元素的 equals 方法)，新生成的Stream 中没有重复的元素。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>    list.stream().distinct().forEach(item -&gt; System.out.print(item+ <span class="hljs-string">&quot;  &quot;</span>));<br>    <span class="hljs-comment">// 1  null  2  3  4  5  6  7  8  9 </span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>    list.stream().distinct().forEach(item -&gt; System.out.print(item+ <span class="hljs-string">&quot;  &quot;</span>));<br>    <span class="hljs-comment">// 1  null  2  3  4  5  6  7  8  9 </span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="4-2-filter"><a href="#4-2-filter" class="headerlink" title="4.2 filter"></a>4.2 filter</h4><p>对于 Stream 中包含的元素使用给定的过滤函数进行过滤，新生成的 Stream 只包含符合条件的元素</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>list.stream().distinct().filter(Objects::nonNull).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 1  2  3  4  5  6  7  8  9  </span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>list.stream().distinct().filter(Objects::nonNull).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 1  2  3  4  5  6  7  8  9  </span><br></code></pre></td></tr></table></figure>
 <h4 id="4-3-map"><a href="#4-3-map" class="headerlink" title="4.3 map"></a>4.3 map</h4><p>对于 Stream 中包含的元素使用给定的转换函数进行转换操作，新生成的 Stream 只包含转换生成的元素。这个方法有三个对于原始类型的变种方法，分别是：mapToInt，mapToLong 和 mapToDouble。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>list.stream().distinct().filter(Objects::nonNull).map(i -&gt; i * <span class="hljs-number">2</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 2  4  6  8  10  12  14  16  18 </span><br><br>DoubleStream stream = DoubleStream.of(<span class="hljs-number">23.0</span>, <span class="hljs-number">25.4</span>, <span class="hljs-number">32.5</span>, <span class="hljs-number">45.9</span>);<br>stream.mapToInt(item -&gt; (<span class="hljs-keyword">int</span>) item).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 23  25  32  45          </span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>list.stream().distinct().filter(Objects::nonNull).map(i -&gt; i * <span class="hljs-number">2</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 2  4  6  8  10  12  14  16  18 </span><br><br>DoubleStream stream = DoubleStream.of(<span class="hljs-number">23.0</span>, <span class="hljs-number">25.4</span>, <span class="hljs-number">32.5</span>, <span class="hljs-number">45.9</span>);<br>stream.mapToInt(item -&gt; (<span class="hljs-keyword">int</span>) item).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br><span class="hljs-comment">// 23  25  32  45          </span><br></code></pre></td></tr></table></figure>
 
 <h4 id="4-4-flatMap"><a href="#4-4-flatMap" class="headerlink" title="4.4 flatMap"></a>4.4 flatMap</h4><p>和map类似，不同的是其每个元素转换得到的是Stream对象，会把子Stream中的元素压缩到父集合中</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;String&gt; teamIndia = Arrays.asList(<span class="hljs-string">&quot;Virat&quot;</span>, <span class="hljs-string">&quot;Dhoni&quot;</span>, <span class="hljs-string">&quot;Jadeja&quot;</span>);<br>List&lt;String&gt; teamAustralia = Arrays.asList(<span class="hljs-string">&quot;Warner&quot;</span>, <span class="hljs-string">&quot;Watson&quot;</span>, <span class="hljs-string">&quot;Smith&quot;</span>);<br>List&lt;List&lt;String&gt;&gt; players = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>players.add(teamIndia);<br>players.add(teamAustralia);<br>players.stream().flatMap(Collection::stream).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; teamIndia = Arrays.asList(<span class="hljs-string">&quot;Virat&quot;</span>, <span class="hljs-string">&quot;Dhoni&quot;</span>, <span class="hljs-string">&quot;Jadeja&quot;</span>);<br>List&lt;String&gt; teamAustralia = Arrays.asList(<span class="hljs-string">&quot;Warner&quot;</span>, <span class="hljs-string">&quot;Watson&quot;</span>, <span class="hljs-string">&quot;Smith&quot;</span>);<br>List&lt;List&lt;String&gt;&gt; players = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>players.add(teamIndia);<br>players.add(teamAustralia);<br>players.stream().flatMap(Collection::stream).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;  &quot;</span>));<br></code></pre></td></tr></table></figure>
 
 <h4 id="4-5-peek"><a href="#4-5-peek" class="headerlink" title="4.5. peek"></a>4.5. peek</h4><p>生成一个包含原 Stream 的所有元素的新 Stream，同时会提供一个消费函数（Consumer实例），新 Stream 每个元素被消费的时候都会执行给定的消费函数；</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>System.out.println(<span class="hljs-string">&quot;\n&quot;</span>+integers.stream().peek(System.out::print).count());<br><span class="hljs-comment">//16789</span><br><span class="hljs-comment">//5</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>System.out.println(<span class="hljs-string">&quot;\n&quot;</span>+integers.stream().peek(System.out::print).count());<br><span class="hljs-comment">//16789</span><br><span class="hljs-comment">//5</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="4-6-limit"><a href="#4-6-limit" class="headerlink" title="4.6 limit"></a>4.6 limit</h4><p>对一个 Stream 进行截断操作，获取其前N个元素，如果原 Stream 中包含的元素个数小于N，则获取其所有的元素</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>integers.stream().limit(<span class="hljs-number">3</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;   &quot;</span>));<br><span class="hljs-comment">// 1   6   7</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>integers.stream().limit(<span class="hljs-number">3</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;   &quot;</span>));<br><span class="hljs-comment">// 1   6   7</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="4-7-skip"><a href="#4-7-skip" class="headerlink" title="4.7 skip"></a>4.7 skip</h4><p>返回一个丢弃原 Stream 的前 N 个元素后剩下元素组成的新 Stream，如果原Stream中包含的元素个数小于N，那么返回空 Stream</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>integers.stream().skip(<span class="hljs-number">2</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;   &quot;</span>));<br><span class="hljs-comment">// 7   8   9  </span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>integers.stream().skip(<span class="hljs-number">2</span>).forEach(item -&gt; System.out.print(item + <span class="hljs-string">&quot;   &quot;</span>));<br><span class="hljs-comment">// 7   8   9  </span><br></code></pre></td></tr></table></figure>
 
 <p>  <strong>转换操作都是 lazy 的，多个转换操作只会在汇聚操作的时候融合起来，一次循环完成。可以这样简单的理解，Stream 里有个操作函数的集合，每次转换操作就是把转换函数放入这个集合中，在汇聚操作的时候循环 Stream 对应的集合，然后对每个元素执行所有的函数。</strong></p>
 <h3 id="5-汇聚（reduce）Stream"><a href="#5-汇聚（reduce）Stream" class="headerlink" title="5. 汇聚（reduce）Stream"></a>5. 汇聚（reduce）Stream</h3><p>Reduce 操作接受一个元素序列为输入，反复使用某个合并操作，把序列中的元素合并成一个汇总的结果。</p>
@@ -356,7 +393,7 @@
 <p>注意：sum 方法不是所有的 Stream 对象都有的，只有 IntStream、LongStream 和 DoubleStream是实例才有。</p>
 <h4 id="5-1-collect"><a href="#5-1-collect" class="headerlink" title="5.1  collect"></a>5.1  collect</h4><p>把输入的元素累积到一个可变的容器中，比如 Collection 或者 StringBuilder。<br>可变汇聚对应的方法只有一个：collect，它的作用就是把Stream中的所有元素收集到一个结果容器中。</p>
 <p><strong>方法定义1：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">&lt;R&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Supplier&lt;R&gt; supplier,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, ? <span class="hljs-keyword">super</span> T&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, R&gt; combiner)</span></span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Supplier&lt;R&gt; supplier,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, ? <span class="hljs-keyword">super</span> T&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">              BiConsumer&lt;R, R&gt; combiner)</span></span><br></code></pre></td></tr></table></figure>
 <p>方法参数：</p>
 <ul>
 <li>Supplier<R> supplier：工厂函数，用来生成一个新的容器。</li>
@@ -364,9 +401,9 @@
 <li>BiConsumer&lt;R, R&gt; combiner：用来把中间状态的多个结果容器合并成一个（并发时）</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>ArrayList&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(ArrayList::<span class="hljs-keyword">new</span>, ArrayList::add, ArrayList::addAll);<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>ArrayList&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(ArrayList::<span class="hljs-keyword">new</span>, ArrayList::add, ArrayList::addAll);<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></td></tr></table></figure>
 <p><strong>方法定义2：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">&lt;R, A&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-keyword">super</span> T, A, R&gt; collector)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;R, A&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-keyword">super</span> T, A, R&gt; collector)</span></span>;<br></code></pre></td></tr></table></figure>
 <p>Collectors 已经定义了一些静态工厂方法：</p>
 <ul>
 <li>Collectors.toCollection() 收集到 Collection 中</li>
@@ -374,96 +411,149 @@
 <li>Collectors.toSet() 收集到 Set 中</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>List&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(Collectors.toList());<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>List&lt;Integer&gt; collect = integers.stream().filter(Objects::nonNull)<br>        .collect(Collectors.toList());<br>System.out.println(collect.toString());<br><span class="hljs-comment">// [1, 6, 7, 8, 9]</span><br></code></pre></td></tr></table></figure>
 <h4 id="5-2-reduce"><a href="#5-2-reduce" class="headerlink" title="5.2 reduce"></a>5.2 reduce</h4><p><strong>方法定义1</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">reduce</span><span class="hljs-params">(BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">reduce</span><span class="hljs-params">(BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></td></tr></table></figure>
 <p>接受一个 BinaryOperator 类型的参数，BinaryOperator 函数有两个参数</p>
 <ul>
 <li>第一个参数是上次函数执行的返回值（中间结果）</li>
 <li>第二个参数是 Stream 中的元素</li>
 </ul>
 <p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce((sum, item) -&gt; sum + item).get();<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce((sum, item) -&gt; sum + item).get();<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>方法定义2</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function">T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity, BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity, BinaryOperator&lt;T&gt; accumulator)</span></span>;<br></code></pre></td></tr></table></figure>
 <p>和上面的类似，不同的是允许提供一个初始值，如果 Stream 为空，则直接返回初始值。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">100</span>,(sum, item) -&gt; sum + item);<br>System.out.println(integer);<br><span class="hljs-comment">// 131</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.stream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">100</span>,(sum, item) -&gt; sum + item);<br>System.out.println(integer);<br><span class="hljs-comment">// 131</span><br></code></pre></td></tr></table></figure>
 <p><strong>方法定义3</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">&lt;U&gt; <span class="hljs-function">U <span class="hljs-title">reduce</span><span class="hljs-params">(U identity,</span></span><br><span class="hljs-params"><span class="hljs-function">             BiFunction&lt;U, ? <span class="hljs-keyword">super</span> T, U&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">             BinaryOperator&lt;U&gt; combiner)</span></span>;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;U&gt; <span class="hljs-function">U <span class="hljs-title">reduce</span><span class="hljs-params">(U identity,</span></span><br><span class="hljs-params"><span class="hljs-function">             BiFunction&lt;U, ? <span class="hljs-keyword">super</span> T, U&gt; accumulator,</span></span><br><span class="hljs-params"><span class="hljs-function">             BinaryOperator&lt;U&gt; combiner)</span></span>;<br></code></pre></td></tr></table></figure>
 <p>功能和上面的类似，不同的是允许用户提供一个 combiner 函数用来处理并发场景下的数据汇总。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.parallelStream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">0</span>, (sum, item) -&gt; sum + item, (result, fragment) -&gt; result + fragment);<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Integer integer = integers.parallelStream().filter(Objects::nonNull).<br>        reduce(<span class="hljs-number">0</span>, (sum, item) -&gt; sum + item, (result, fragment) -&gt; result + fragment);<br>System.out.println(integer);<br><span class="hljs-comment">// 31</span><br></code></pre></td></tr></table></figure>
 <h4 id="5-3-count-方法"><a href="#5-3-count-方法" class="headerlink" title="5.3 count 方法"></a>5.3 count 方法</h4><p>统计 Stream 中的元素的个数</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><span class="hljs-keyword">long</span> count = integers.parallelStream().filter(Objects::nonNull).count();<br>System.out.println(count);<br><span class="hljs-comment">// 5</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">7</span>, <span class="hljs-keyword">null</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><span class="hljs-keyword">long</span> count = integers.parallelStream().filter(Objects::nonNull).count();<br>System.out.println(count);<br><span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
 <h3 id="6-Collectors"><a href="#6-Collectors" class="headerlink" title="6. Collectors"></a>6. Collectors</h3><p>Collector接口：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Collector</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">A</span>, <span class="hljs-title">R</span>&gt; </span>&#123;<br>	 <span class="hljs-comment">// 用于生成和返回一个结果容器</span><br>    <span class="hljs-function">Supplier&lt;A&gt; <span class="hljs-title">supplier</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// 将元素 T 归纳到容器A</span><br>    <span class="hljs-function">BiConsumer&lt;A, T&gt; <span class="hljs-title">accumulator</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// 将两个结果合并并返回</span><br>    <span class="hljs-function">BinaryOperator&lt;A&gt; <span class="hljs-title">combiner</span><span class="hljs-params">()</span></span>;<br>	<br>	 <span class="hljs-comment">// 将中间结果R 转换为A</span><br>    <span class="hljs-function">Function&lt;A, R&gt; <span class="hljs-title">finisher</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// characteristics 表示当前 collector的特征值，返回 Collector 特征值的 Set</span><br>    <span class="hljs-function">Set&lt;Characteristics&gt; <span class="hljs-title">characteristics</span><span class="hljs-params">()</span></span>;<br><br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Collector</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">A</span>, <span class="hljs-title">R</span>&gt; </span>&#123;<br>	 <span class="hljs-comment">// 用于生成和返回一个结果容器</span><br>    <span class="hljs-function">Supplier&lt;A&gt; <span class="hljs-title">supplier</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// 将元素 T 归纳到容器A</span><br>    <span class="hljs-function">BiConsumer&lt;A, T&gt; <span class="hljs-title">accumulator</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// 将两个结果合并并返回</span><br>    <span class="hljs-function">BinaryOperator&lt;A&gt; <span class="hljs-title">combiner</span><span class="hljs-params">()</span></span>;<br>	<br>	 <span class="hljs-comment">// 将中间结果R 转换为A</span><br>    <span class="hljs-function">Function&lt;A, R&gt; <span class="hljs-title">finisher</span><span class="hljs-params">()</span></span>;<br><br>	 <span class="hljs-comment">// characteristics 表示当前 collector的特征值，返回 Collector 特征值的 Set</span><br>    <span class="hljs-function">Set&lt;Characteristics&gt; <span class="hljs-title">characteristics</span><span class="hljs-params">()</span></span>;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>Collectors 是一个工具类，是 JDK 预实现 Collector 的工具类，它内部提供了多种 Collector。</p>
 <p>Collectors 除了提供了上文介绍过的收集方法外还提供了一组非常有用方法。</p>
 <h4 id="6-1-joining"><a href="#6-1-joining" class="headerlink" title="6.1 joining"></a>6.1 joining</h4><p>连接收集的结果</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>String value = integers.stream().map(String::valueOf).collect(Collectors.joining());<br><span class="hljs-comment">// 16789</span><br><br><span class="hljs-comment">// 指定间隔符</span><br>String value1 = integers.stream().map(String::valueOf).collect(Collectors.joining(<span class="hljs-string">&quot;-&quot;</span>));<br><span class="hljs-comment">// 1-6-7-8-9</span><br><br><br><span class="hljs-comment">// 指定间隔符、前缀、后缀</span><br>String value2 = integers.stream().map(String::valueOf).collect(Collectors.joining(<span class="hljs-string">&quot;-&quot;</span>,<span class="hljs-string">&quot;$&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>));<br><span class="hljs-comment">// $1-6-7-8-9#</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>String value = integers.stream().map(String::valueOf).collect(Collectors.joining());<br><span class="hljs-comment">// 16789</span><br><br><span class="hljs-comment">// 指定间隔符</span><br>String value1 = integers.stream().map(String::valueOf).collect(Collectors.joining(<span class="hljs-string">&quot;-&quot;</span>));<br><span class="hljs-comment">// 1-6-7-8-9</span><br><br><br><span class="hljs-comment">// 指定间隔符、前缀、后缀</span><br>String value2 = integers.stream().map(String::valueOf).collect(Collectors.joining(<span class="hljs-string">&quot;-&quot;</span>,<span class="hljs-string">&quot;$&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>));<br><span class="hljs-comment">// $1-6-7-8-9#</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="6-2-collectingAndThen"><a href="#6-2-collectingAndThen" class="headerlink" title="6.2 collectingAndThen"></a>6.2 collectingAndThen</h4><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>&lt;T,A,R,RR&gt; Collector&lt;T,A,RR&gt; <span class="hljs-title">collectingAndThen</span><span class="hljs-params">(Collector&lt;T,A,R&gt; downstream,</span></span><br><span class="hljs-params"><span class="hljs-function">                                                            Function&lt;R,RR&gt; finisher)</span></span><br></code></pre></div></td></tr></table></figure>
+<h4 id="6-2-collectingAndThen"><a href="#6-2-collectingAndThen" class="headerlink" title="6.2 collectingAndThen"></a>6.2 collectingAndThen</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>&lt;T,A,R,RR&gt; Collector&lt;T,A,RR&gt; <span class="hljs-title">collectingAndThen</span><span class="hljs-params">(Collector&lt;T,A,R&gt; downstream,</span></span><br><span class="hljs-params"><span class="hljs-function">                                                            Function&lt;R,RR&gt; finisher)</span></span><br></code></pre></td></tr></table></figure>
 <p>通过第二个参数 Function 函数对汇聚后的结果进行再操作</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// 收集后逆序排序</span><br>      List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>      List&lt;String&gt; collect = integers.stream().map(String::valueOf).<br>              collect(Collectors.collectingAndThen(Collectors.toList(), Lists::reverse));<br>      <span class="hljs-comment">// [9, 8, 7, 6, 1]</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 收集后逆序排序</span><br>      List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>      List&lt;String&gt; collect = integers.stream().map(String::valueOf).<br>              collect(Collectors.collectingAndThen(Collectors.toList(), Lists::reverse));<br>      <span class="hljs-comment">// [9, 8, 7, 6, 1]</span><br></code></pre></td></tr></table></figure>
 <h4 id="6-3-groupingBy"><a href="#6-3-groupingBy" class="headerlink" title="6.3 groupingBy"></a>6.3 groupingBy</h4><p>用于生成一个拥有分组功能的 Collector，它也有三个重载方法</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// 只需一个分组参数 classifier，内部自动将结果保存到一个 map 中</span><br><span class="hljs-comment">// 每个 map 的键为 ？ 类型（即 classifier 的结果类型），值为 list（保存这个组中的元素）</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K&gt; Collector&lt;T, ?, Map&lt;K, List&lt;T&gt;&gt;&gt;<br>    groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier)<br><br><span class="hljs-comment">// 在上面方法的基础上增加了对流元素的处理方式的Collector，比如上面的默认处理方法是 Collectors.toList()</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, A, D&gt;<br>    Collector&lt;T, ?, Map&lt;K, D&gt;&gt; groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier,<br>                                          Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br><span class="hljs-comment">// 在第二个方法的基础上增加了结果 Map 的生成方式</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, D, A, M extends Map&lt;K, D&gt;&gt;<br>    Collector&lt;T, ?, M&gt; groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier,<br>                                  Supplier&lt;M&gt; mapFactory,<br>                                  Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 只需一个分组参数 classifier，内部自动将结果保存到一个 map 中</span><br><span class="hljs-comment">// 每个 map 的键为 ？ 类型（即 classifier 的结果类型），值为 list（保存这个组中的元素）</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K&gt; Collector&lt;T, ?, Map&lt;K, List&lt;T&gt;&gt;&gt;<br>    groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier)<br><br><span class="hljs-comment">// 在上面方法的基础上增加了对流元素的处理方式的Collector，比如上面的默认处理方法是 Collectors.toList()</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, A, D&gt;<br>    Collector&lt;T, ?, Map&lt;K, D&gt;&gt; groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier,<br>                                          Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br><span class="hljs-comment">// 在第二个方法的基础上增加了结果 Map 的生成方式</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, K, D, A, M extends Map&lt;K, D&gt;&gt;<br>    Collector&lt;T, ?, M&gt; groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends K&gt; classifier,<br>                                  Supplier&lt;M&gt; mapFactory,<br>                                  Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br></code></pre></td></tr></table></figure>
 
 <p><strong>示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Map&lt;Integer, List&lt;Integer&gt;&gt; collect = integers.stream().collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br><br>Map&lt;Integer, Set&lt;Integer&gt;&gt; collect1 = integers.stream().collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br><br><br>Map&lt;Integer, Set&lt;Integer&gt;&gt; collect2 = integers.stream()<br>        .collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>,HashMap::<span class="hljs-keyword">new</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br>Map&lt;Integer, List&lt;Integer&gt;&gt; collect = integers.stream().collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br><br>Map&lt;Integer, Set&lt;Integer&gt;&gt; collect1 = integers.stream().collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br><br><br>Map&lt;Integer, Set&lt;Integer&gt;&gt; collect2 = integers.stream()<br>        .collect(Collectors.groupingBy(item -&gt; item % <span class="hljs-number">3</span>,HashMap::<span class="hljs-keyword">new</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;0=[3, 6, 9], 1=[1, 4, 7], 2=[2, 5, 8]&#125;</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="6-4-partitioningBy"><a href="#6-4-partitioningBy" class="headerlink" title="6.4 partitioningBy"></a>6.4 partitioningBy</h4><p>将流中的元素按照给定的校验规则分为两部分，放到一个 map 中返回，map 的键是 boolean 类型，值为元素的列表 list。</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// 只需要一个校验参数 predicate</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt;<br>   Collector&lt;T, ?, Map&lt;Boolean, List&lt;T&gt;&gt;&gt; partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br><span class="hljs-comment">// 在上面的基础上增加了对流中元素的处理方式的 Collector，默认 Collector.toList()</span><br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, D, A&gt;<br>   Collector&lt;T, ?, Map&lt;Boolean, D&gt;&gt; partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate,<br>                                                   Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 只需要一个校验参数 predicate</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T&gt;<br>   Collector&lt;T, ?, Map&lt;Boolean, List&lt;T&gt;&gt;&gt; partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br><span class="hljs-comment">// 在上面的基础上增加了对流中元素的处理方式的 Collector，默认 Collector.toList()</span><br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;T, D, A&gt;<br>   Collector&lt;T, ?, Map&lt;Boolean, D&gt;&gt; partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate,<br>                                                   Collector&lt;? <span class="hljs-keyword">super</span> T, A, D&gt; downstream)<br><br></code></pre></td></tr></table></figure>
 
 <p>示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br><span class="hljs-comment">// 对序列进行奇偶分区</span><br>Map&lt;Boolean, List&lt;Integer&gt;&gt; collect = integers.stream().collect(Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>));<br><span class="hljs-comment">// &#123;false=[1, 1, 3, 5, 7, 9], true=[2, 4, 6, 8]&#125;</span><br><br>Map&lt;Boolean, Set&lt;Integer&gt;&gt; collect1 = integers.stream().<br>        collect(Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;false=[1, 3, 5, 7, 9], true=[2, 4, 6, 8]&#125;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br><span class="hljs-comment">// 对序列进行奇偶分区</span><br>Map&lt;Boolean, List&lt;Integer&gt;&gt; collect = integers.stream().collect(Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>));<br><span class="hljs-comment">// &#123;false=[1, 1, 3, 5, 7, 9], true=[2, 4, 6, 8]&#125;</span><br><br>Map&lt;Boolean, Set&lt;Integer&gt;&gt; collect1 = integers.stream().<br>        collect(Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>, Collectors.toSet()));<br><span class="hljs-comment">// &#123;false=[1, 3, 5, 7, 9], true=[2, 4, 6, 8]&#125;</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="6-4-reducing"><a href="#6-4-reducing" class="headerlink" title="6.4 reducing"></a>6.4 reducing</h4><p><strong>方法定义</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">// 无初始值，返回一个可以生成 Optional 结果的  Collector</span><br>&lt;T&gt; Collector&lt;T, ?, T&gt;   reducing(T identity, BinaryOperator&lt;T&gt; op)<br><br><span class="hljs-comment">// 有初始值，返回一个可以直接生成结果的  Collector</span><br>&lt;T&gt; Collector&lt;T, ?, T&gt;  reducing(T identity, BinaryOperator&lt;T&gt; op)<br><br><span class="hljs-comment">// 有初始值，元素在执行操作之前先执行 mapper 进行元素转换</span><br> &lt;T, U&gt; Collector&lt;T, ?, U&gt; reducing(U identity,<br>                                Function&lt;? <span class="hljs-keyword">super</span> T, ? extends U&gt; mapper,<br>                                BinaryOperator&lt;U&gt; op)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 无初始值，返回一个可以生成 Optional 结果的  Collector</span><br>&lt;T&gt; Collector&lt;T, ?, T&gt;   reducing(T identity, BinaryOperator&lt;T&gt; op)<br><br><span class="hljs-comment">// 有初始值，返回一个可以直接生成结果的  Collector</span><br>&lt;T&gt; Collector&lt;T, ?, T&gt;  reducing(T identity, BinaryOperator&lt;T&gt; op)<br><br><span class="hljs-comment">// 有初始值，元素在执行操作之前先执行 mapper 进行元素转换</span><br> &lt;T, U&gt; Collector&lt;T, ?, U&gt; reducing(U identity,<br>                                Function&lt;? <span class="hljs-keyword">super</span> T, ? extends U&gt; mapper,<br>                                BinaryOperator&lt;U&gt; op)<br></code></pre></td></tr></table></figure>
 <p><strong>示例</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>Optional&lt;Integer&gt; integerOptional = integers.stream().collect(Collectors.reducing(Integer::sum));<br><span class="hljs-comment">// 等价于 integers.stream().reduce(Integer::sum);</span><br>System.out.println(integerOptional.get());<br><span class="hljs-comment">// 46</span><br><br>Integer collect = integers.stream().collect(Collectors.reducing(<span class="hljs-number">10</span>, Integer::sum));<br><span class="hljs-comment">// 等价于 integers.stream().reduce(10, Integer::sum);</span><br><span class="hljs-comment">// 56</span><br><br>String s = integers.stream().collect(Collectors.reducing(<span class="hljs-string">&quot;@&quot;</span>, String::valueOf, String::concat));<br><span class="hljs-comment">// 等价于 integers.stream().map(String::valueOf).reduce(&quot;@&quot;, String::concat);</span><br><span class="hljs-comment">// @1123456789</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>Optional&lt;Integer&gt; integerOptional = integers.stream().collect(Collectors.reducing(Integer::sum));<br><span class="hljs-comment">// 等价于 integers.stream().reduce(Integer::sum);</span><br>System.out.println(integerOptional.get());<br><span class="hljs-comment">// 46</span><br><br>Integer collect = integers.stream().collect(Collectors.reducing(<span class="hljs-number">10</span>, Integer::sum));<br><span class="hljs-comment">// 等价于 integers.stream().reduce(10, Integer::sum);</span><br><span class="hljs-comment">// 56</span><br><br>String s = integers.stream().collect(Collectors.reducing(<span class="hljs-string">&quot;@&quot;</span>, String::valueOf, String::concat));<br><span class="hljs-comment">// 等价于 integers.stream().map(String::valueOf).reduce(&quot;@&quot;, String::concat);</span><br><span class="hljs-comment">// @1123456789</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="6-5-综合应用"><a href="#6-5-综合应用" class="headerlink" title="6.5 综合应用"></a>6.5 综合应用</h4><p>将列表按奇偶分组，然后每组里面找最大值（两种实现）</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>Map&lt;Boolean, Optional&lt;Integer&gt;&gt; collect = integers.stream().collect(<br>        Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>,<br>                Collectors.maxBy(Comparator.comparing(Integer::valueOf))));<br><br>Map&lt;Boolean, Optional&lt;Integer&gt;&gt; collect1 = integers.stream().collect(<br>        Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>,<br>                Collectors.reducing(BinaryOperator.maxBy(Comparator.comparing(Integer::valueOf)))));<br><br><span class="hljs-comment">// &#123;false=Optional[9], true=Optional[8]&#125;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; integers = Arrays.asList(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>);<br><br>Map&lt;Boolean, Optional&lt;Integer&gt;&gt; collect = integers.stream().collect(<br>        Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>,<br>                Collectors.maxBy(Comparator.comparing(Integer::valueOf))));<br><br>Map&lt;Boolean, Optional&lt;Integer&gt;&gt; collect1 = integers.stream().collect(<br>        Collectors.partitioningBy(item -&gt; item % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>,<br>                Collectors.reducing(BinaryOperator.maxBy(Comparator.comparing(Integer::valueOf)))));<br><br><span class="hljs-comment">// &#123;false=Optional[9], true=Optional[8]&#125;</span><br></code></pre></td></tr></table></figure>
 
 
 <h3 id="7-Stream-的关闭"><a href="#7-Stream-的关闭" class="headerlink" title="7 Stream 的关闭"></a>7 Stream 的关闭</h3><p>Steam 继承了 AutoCloseable 接口，在大多数场景下都是无需手动关闭的，仅在流的资源是 IO 通道（例如：Files.lines(Path ,Charset )）时需要调用 Stream.close() 方法关闭流，以保证 IO 资源的释放。也可以使用 try-with-resources 语法关闭 Stream。</p>
 
+              
             </div>
-            <hr>
+            <hr/>
             <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/java/">java</a>
-                    
-                      <a class="hover-with-bg" href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
-                    
-                  </div>
-                
-              </div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/java/">#java</a>
+      
+        <a href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">#java8新特性</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>java——java8新特性之Stream</div>
+      <div>http://example.com/2021/12/01/java——java8新特性之Stream/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/12/03/Java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BOptional/">
+                      <a href="/2021/12/03/Java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BOptional/" title="java——java8新特性之Optional">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">java——java8新特性之Optional</span>
                         <span class="visible-mobile">上一篇</span>
@@ -473,7 +563,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+                      <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="java——函数式编程">
                         <span class="hidden-mobile">java——函数式编程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -485,12 +575,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
       var light = 'github-light';
@@ -518,25 +604,56 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
 
 
     
@@ -561,59 +678,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -624,55 +743,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-      typing(title)
+        typing(text);
       
     })(window, document);
   </script>
@@ -682,10 +769,147 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
@@ -695,9 +919,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

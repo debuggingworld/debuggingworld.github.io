@@ -7,16 +7,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/icon2.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta property="og:type" content="website">
+  
+    <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="Hexo">
@@ -24,15 +24,22 @@
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>Hexo</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
 
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -41,7 +48,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="/css/iconfont.css">
@@ -50,16 +63,29 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"/img/喜爱.png\" height=\"35\" width=\"35\" />","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>猫和少年</strong>
@@ -153,6 +179,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -165,34 +192,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default_bg.png') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="飞机飞过天空，天空之城">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/default_bg.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="飞机飞过天空，天空之城"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -211,30 +244,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. 模式定义定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。
-
-使用场景：
-
-事件多级触发场景
-跨系统的消息交换场景，如消息队列、事件总线的处理机制
-
-优点：
-
-解除耦合，让耦合的双方都依赖于抽象（符合开闭原则）
-可以在运行时建立对象之间的关系
-
-缺点：
-
-耗时：注册较多的观察者的时候，通知比较耗时
-如果在被观察者之间有
-        </a>
-      </p>
+          1. 模式定义定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。  使用场景：  事件多级触发场景 跨系统的消息交换场景，如消息队列、事件总线的处理机制  优点：  解除耦合，让耦合的双方都依赖于抽象（符合开闭原则） 可以在运行时建立对象之间的关系  缺点：  耗时：注册较多的观察者的时候，通知比较耗时 如果在被观察者之间有
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -246,20 +261,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
             
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">行为型模式</a>
+              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#行为型模式</a>
             
           </div>
         
@@ -278,18 +307,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. 什么是 KubernetesKubernetes(K8S)是由 Google 开源的生产级容器编排系统，是 Google 多年大规模容器管理技术 Borg 的开源版本
-Kurbernets的本质是一组服务器集群，它可以在集群的每个节点上运行特定的程序，来对节点中的容器进行管理。它的目的就是实现资源管理的自动化，主要提供了如下的主要功能：
-
-自我修复：一旦某一个容器崩溃，能够在1秒钟左右迅速启
-        </a>
-      </p>
+          1. 什么是 KubernetesKubernetes(K8S)是由 Google 开源的生产级容器编排系统，是 Google 多年大规模容器管理技术 Borg 的开源版本 Kurbernets的本质是一组服务器集群，它可以在集群的每个节点上运行特定的程序，来对节点中的容器进行管理。它的目的就是实现资源管理的自动化，主要提供了如下的主要功能：  自我修复：一旦某一个容器崩溃，能够在1秒钟左右迅速启
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -301,18 +324,32 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Kubernetes/">Kubernetes</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Kubernetes/" class="category-chain-item">Kubernetes</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Kubernetes/">Kubernetes</a>
+              <a href="/tags/Kubernetes/">#Kubernetes</a>
             
           </div>
         
@@ -331,19 +368,12 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+        <div>
           
-          
-            
-          
-          更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。
-1. 手动拉取拉取更新流程：
-
-上述流程由 deploy.sh 脚本实现：
-123456789101112#!/bin/bash -ecd &quot;`dirname $0`&quot;. ./pom.sh#1. download war, ready envecho &q
-        </a>
-      </p>
+          更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;q
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -355,18 +385,32 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/jenkins/">jenkins</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/jenkins/" class="category-chain-item">jenkins</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/jenkins/">jenkins</a>
+              <a href="/tags/jenkins/">#jenkins</a>
             
           </div>
         
@@ -385,22 +429,12 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. 私服使用场景
-公司不能连接公网，可以用一个私服务来统一连接
-公司内部 jar 组件的共享
-
-2. nexus 下载安装nexus 下载地址：https://sonatype-download.global.ssl.fastly.net/nexus/oss/nexus-2.14.5-02-bundle.tar.gz
-解压并设置环境变量
-解压：
-1tar -zxvf nexus-2.14.5-0
-        </a>
-      </p>
+          1. 私服使用场景 公司不能连接公网，可以用一个私服务来统一连接 公司内部 jar 组件的共享  2. nexus 下载安装nexus 下载地址：https:&#x2F;&#x2F;sonatype-download.global.ssl.fastly.net&#x2F;nexus&#x2F;oss&#x2F;nexus-2.14.5-02-bundle.tar.gz 解压并设置环境变量 解压： 1tar -zxvf nexus-2.14.5-0
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -412,18 +446,32 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/maven/">maven</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">maven</a>
+              <a href="/tags/maven/">#maven</a>
             
           </div>
         
@@ -442,20 +490,12 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. 生命周期1.1 生命周期的概念与意义在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：
-
-每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。
-规范统一了 maven 的执行路径。
-
-可以通过命令 mvn ${phase 
-        </a>
-      </p>
+          1. 生命周期1.1 生命周期的概念与意义在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：  每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 规范统一了 maven 的执行路径。  可以通过命令 mvn ${phase
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -467,18 +507,32 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/maven/">maven</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">maven</a>
+              <a href="/tags/maven/">#maven</a>
             
           </div>
         
@@ -497,29 +551,12 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. maven  安装与核心概念maven 的功能：编译、打包、测试、依赖管理
-1.1 安装
-官网下载 Maven （http://maven.apache.org/download.cgi）
-解压指定目录
-配置环境变量
-检查安装是否成功 （mvn -version）
-
-安装参考
-1.2 maven 编译
-创建 maven 项目
-创建 src 文件
-编写  pom 文件
-执行编译命令
-
-1234
-        </a>
-      </p>
+          1. maven  安装与核心概念maven 的功能：编译、打包、测试、依赖管理 1.1 安装 官网下载 Maven （http:&#x2F;&#x2F;maven.apache.org&#x2F;download.cgi） 解压指定目录 配置环境变量 检查安装是否成功 （mvn -version）  安装参考 1.2 maven 编译 创建 maven 项目 创建 src 文件 编写  pom 文件 执行编译命令  1234
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -531,18 +568,32 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/maven/">maven</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">maven</a>
+              <a href="/tags/maven/">#maven</a>
             
           </div>
         
@@ -561,24 +612,12 @@ Kurbernets的本质是一组服务器集群，它可以在集群的每个节点�
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. git 支持的四种通信协议
-Local(本地协议)
-ssh
-http(Dumb、Smart)
-git
-
-1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问.
-优点：简单，直接使用了现有的文件权限和网络访问权限。缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。适应场景：小团队，小项目临时搭建版本服务。
-
-从本地 f/git/atals
-        </a>
-      </p>
+          1. git 支持的四种通信协议 Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;atals
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -590,18 +629,32 @@ git
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Git/">Git</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Git/">Git</a>
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -620,24 +673,12 @@ git
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. reset 的三种模式
-–hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。
-
-–soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。
-
-–mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。
-
-
-
-2. res
-        </a>
-      </p>
+          1. reset 的三种模式 –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。  –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。  –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2. res
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -649,18 +690,32 @@ git
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Git/">Git</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Git/">Git</a>
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -679,17 +734,12 @@ git
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. GIT 存储对像Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。
-git 键值库中插入数据：
-12echo &quot;hello debuggingWorld&quot; | git hash-object -w --stdincfd6e024dbae18ef
-        </a>
-      </p>
+          1. GIT 存储对像Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。 git 键值库中插入数据： 12echo &quot;hello debuggingWorld&quot; | git hash-object -w --stdincfd6e024dbae18ef
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -701,18 +751,32 @@ git 键值库中插入数据：
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Git/">Git</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Git/">Git</a>
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -731,23 +795,12 @@ git 键值库中插入数据：
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/02/17/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/17/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/" target="_blank">
+        <div>
           
-          
-            
-          
-          1. 应用场景
-合并多次提交记录
-分支合并
-对一个分支做『变基』操作
-
-2. 合并多次提交记录合并最近两次 commit:
-1git rebase -i HEAD~2
-执行命令后会自动进入 vi 编辑模式：
-1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7f3
-        </a>
-      </p>
+          1. 应用场景 合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7f3
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -759,18 +812,32 @@ git 键值库中插入数据：
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Git/">Git</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Git/">Git</a>
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -815,59 +882,61 @@ git 键值库中插入数据：
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -878,69 +947,53 @@ git 键值库中插入数据：
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-      jQuery.ajax({
-        type: 'GET',
-        url: 'https://v1.hitokoto.cn/',
-        headers: {},
-        dataType: 'json',
-        success: function (result) {
-          var text;
-          if (result) {
-            var keys = 'hitokoto'.split('.')
-            if (result instanceof Array) {
-              result = result[0]
-            }
-            for (const k of keys) {
-              var value = result[k]
-              if (typeof value === 'string') {
-                text = value
-                break
-              } else if (value instanceof Object) {
-                result = value
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
               }
             }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
           }
-          text ? typing(text) : typing(title);
-        },
-        error: function () {
-          typing(title)
-        }
-      })
+        })
       
     })(window, document);
   </script>
@@ -950,10 +1003,16 @@ git 键值库中插入数据：
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
@@ -963,9 +1022,15 @@ git 键值库中插入数据：
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

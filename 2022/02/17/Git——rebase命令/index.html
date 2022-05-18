@@ -7,16 +7,16 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/icon2.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="1. 应用场景 合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7f3">
+  
+    <meta name="description" content="1. 应用场景 合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7f3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——rebase命令">
 <meta property="og:url" content="http://example.com/2022/02/17/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/index.html">
@@ -24,35 +24,33 @@
 <meta property="og:description" content="1. 应用场景 合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7f3">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-17T14:56:22.000Z">
-<meta property="article:modified_time" content="2022-02-22T13:44:46.952Z">
+<meta property="article:modified_time" content="2022-05-17T15:45:02.673Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>Git——rebase命令 - Hexo</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/nnfx-dark.min.css" />
-    
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -61,7 +59,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="/css/iconfont.css">
@@ -70,16 +74,29 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"/img/喜爱.png\" height=\"35\" width=\"35\" />","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>猫和少年</strong>
@@ -173,6 +190,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -185,57 +203,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/art_bg.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Git——rebase命令">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-17 22:56" pubdate>
-        2022年2月17日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      6.9k 字
-    </span>
   
 
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      22 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Git——rebase命令"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-02-17 22:56" pubdate>
+          2022年2月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -244,24 +276,29 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Git——rebase命令</h1>
             
             <div class="markdown-body">
+              
               <h3 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1. 应用场景"></a>1. 应用场景</h3><ul>
 <li>合并多次提交记录</li>
 <li>分支合并</li>
 <li>对一个分支做『变基』操作</li>
 </ul>
 <h3 id="2-合并多次提交记录"><a href="#2-合并多次提交记录" class="headerlink" title="2. 合并多次提交记录"></a>2. 合并多次提交记录</h3><p>合并最近两次 commit:</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">git rebase -i HEAD~2<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git rebase -i HEAD~2<br></code></pre></td></tr></table></figure>
 <p>执行命令后会自动进入 vi 编辑模式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">pick 6935383 rename冲突<br>pick 23b1a51 debug<br><br><span class="hljs-comment"># Rebase eb7f366..23b1a51 onto eb7f366 (2 commands)</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Commands:</span><br><span class="hljs-comment"># p, pick &lt;commit&gt; = use commit</span><br><span class="hljs-comment"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span><br><span class="hljs-comment"># e, edit &lt;commit&gt; = use commit, but stop for amending</span><br><span class="hljs-comment"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span><br><span class="hljs-comment"># f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="hljs-comment"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span><br><span class="hljs-comment"># b, break = stop here (continue rebase later with &#x27;git rebase --continue&#x27;)</span><br><span class="hljs-comment"># d, drop &lt;commit&gt; = remove commit</span><br><span class="hljs-comment"># l, label &lt;label&gt; = label current HEAD with a name</span><br><span class="hljs-comment"># t, reset &lt;label&gt; = reset HEAD to a label</span><br><span class="hljs-comment"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span><br><span class="hljs-comment"># .       create a merge commit using the original merge commit&#x27;s</span><br><span class="hljs-comment"># .       message (or the oneline, if no original merge commit was</span><br><span class="hljs-comment"># .       specified). Use -c &lt;commit&gt; to reword the commit message.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># These lines can be re-ordered; they are executed from top to bottom.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># However, if you remove everything, the rebase will be aborted.</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">pick 6935383 rename冲突<br>pick 23b1a51 debug<br><br><span class="hljs-comment"># Rebase eb7f366..23b1a51 onto eb7f366 (2 commands)</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Commands:</span><br><span class="hljs-comment"># p, pick &lt;commit&gt; = use commit</span><br><span class="hljs-comment"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span><br><span class="hljs-comment"># e, edit &lt;commit&gt; = use commit, but stop for amending</span><br><span class="hljs-comment"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span><br><span class="hljs-comment"># f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="hljs-comment"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span><br><span class="hljs-comment"># b, break = stop here (continue rebase later with &#x27;git rebase --continue&#x27;)</span><br><span class="hljs-comment"># d, drop &lt;commit&gt; = remove commit</span><br><span class="hljs-comment"># l, label &lt;label&gt; = label current HEAD with a name</span><br><span class="hljs-comment"># t, reset &lt;label&gt; = reset HEAD to a label</span><br><span class="hljs-comment"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span><br><span class="hljs-comment"># .       create a merge commit using the original merge commit&#x27;s</span><br><span class="hljs-comment"># .       message (or the oneline, if no original merge commit was</span><br><span class="hljs-comment"># .       specified). Use -c &lt;commit&gt; to reword the commit message.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># These lines can be re-ordered; they are executed from top to bottom.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># However, if you remove everything, the rebase will be aborted.</span><br></code></pre></td></tr></table></figure>
 <blockquote>
 <ul>
 <li>【注】</li>
@@ -275,10 +312,10 @@
 </ul>
 </blockquote>
 <p>修改提交纪录并保存退出。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">pick 6935383 rename冲突<br>s 23b1a51 debug<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">pick 6935383 rename冲突<br>s 23b1a51 debug<br></code></pre></td></tr></table></figure>
 
 <p>保存后到注释修改界面。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># This is a combination of 2 commits.</span><br><span class="hljs-comment"># This is the 1st commit message:</span><br><br>rename冲突<br><br><span class="hljs-comment"># This is the commit message #2:</span><br><br>debug<br><br><span class="hljs-comment"># Please enter the commit message for your changes. Lines starting</span><br><span class="hljs-comment"># with &#x27;#&#x27; will be ignored, and an empty message aborts the commit.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Date:      Tue Nov 24 22:56:02 2020 +0800</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># interactive rebase in progress; onto eb7f366</span><br><span class="hljs-comment"># Last commands done (2 commands done):</span><br><span class="hljs-comment">#    pick 6935383 rename冲突</span><br><span class="hljs-comment">#    squash 23b1a51 debug</span><br><span class="hljs-comment"># No commands remaining.</span><br><span class="hljs-comment"># You are currently rebasing branch &#x27;maseter&#x27; on &#x27;eb7f366&#x27;.</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># This is a combination of 2 commits.</span><br><span class="hljs-comment"># This is the 1st commit message:</span><br><br>rename冲突<br><br><span class="hljs-comment"># This is the commit message #2:</span><br><br>debug<br><br><span class="hljs-comment"># Please enter the commit message for your changes. Lines starting</span><br><span class="hljs-comment"># with &#x27;#&#x27; will be ignored, and an empty message aborts the commit.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Date:      Tue Nov 24 22:56:02 2020 +0800</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># interactive rebase in progress; onto eb7f366</span><br><span class="hljs-comment"># Last commands done (2 commands done):</span><br><span class="hljs-comment">#    pick 6935383 rename冲突</span><br><span class="hljs-comment">#    squash 23b1a51 debug</span><br><span class="hljs-comment"># No commands remaining.</span><br><span class="hljs-comment"># You are currently rebasing branch &#x27;maseter&#x27; on &#x27;eb7f366&#x27;.</span><br></code></pre></td></tr></table></figure>
 
 <p>（非编辑状态输入dd删除一行）</p>
 <p>保存后即合并完成。</p>
@@ -286,71 +323,124 @@
 <p> 异常情况：</p>
 <p> 1、不要合并已提交远程分支的纪录</p>
 <p> 如果这样做，可能出现push rejected。 解决方式当然是先拉下远程的代码，进行冲突处理，再进行提交。</p>
-<p> 2、git rebase -i 异常操作导致退出了vim编辑页面，会提示：<br> <figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"> $ git rebase -i head~2<br> error: could not apply 040bd4b... commit on issue-005<br> Resolve all conflicts manually, mark them as resolved with<br><span class="hljs-string">&quot;git add/rm &lt;conflicted_files&gt;&quot;</span>, <span class="hljs-keyword">then</span> run <span class="hljs-string">&quot;git rebase --continue&quot;</span>.<br>You can instead skip this commit: run <span class="hljs-string">&quot;git rebase --skip&quot;</span>.<br>To abort and get back to the state before <span class="hljs-string">&quot;git rebase&quot;</span>, run <span class="hljs-string">&quot;git rebase --abort&quot;</span>.<br>Could not apply 040bd4b... commit on issue-005<br>Auto-merging README.md<br>CONFLICT (content): Merge conflict <span class="hljs-keyword">in</span> README.md<br></code></pre></div></td></tr></table></figure><br>使用 git rebase –edit-todo 会再次进入刚才编辑错误退出前的vim状态，这时候可以修改你的编辑。</p>
+<p> 2、git rebase -i 异常操作导致退出了vim编辑页面，会提示：<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"> $ git rebase -i head~2<br> error: could not apply 040bd4b... commit on issue-005<br> Resolve all conflicts manually, mark them as resolved with<br><span class="hljs-string">&quot;git add/rm &lt;conflicted_files&gt;&quot;</span>, <span class="hljs-keyword">then</span> run <span class="hljs-string">&quot;git rebase --continue&quot;</span>.<br>You can instead skip this commit: run <span class="hljs-string">&quot;git rebase --skip&quot;</span>.<br>To abort and get back to the state before <span class="hljs-string">&quot;git rebase&quot;</span>, run <span class="hljs-string">&quot;git rebase --abort&quot;</span>.<br>Could not apply 040bd4b... commit on issue-005<br>Auto-merging README.md<br>CONFLICT (content): Merge conflict <span class="hljs-keyword">in</span> README.md<br></code></pre></td></tr></table></figure><br>使用 git rebase –edit-todo 会再次进入刚才编辑错误退出前的vim状态，这时候可以修改你的编辑。</p>
 <p>使用git rebase –abort  表明退出当前的合并请求( 又回到原来的2个commit的状态)</p>
 </blockquote>
 <h3 id="3-变基"><a href="#3-变基" class="headerlink" title="3. 变基"></a>3. 变基</h3><p><font color="red">使用场景：本地与远端同一分支提交历史不一致</font></p>
 <p>多个人在同一个分支上协作时，比如由我和A一同开发。我在修复了一个bug以后准备提交。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git commit -m <span class="hljs-string">&quot;debug the world&quot;</span><br>[master a40d43c] debug the world<br> 1 file changed, 0 insertions(+), 0 deletions(-)<br> create mode 100644 aa.txt<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git push origin master<br>To github.com:Zhangtao153/learngit.git<br> ! [rejected]        master -&gt; master (non-fast-forward)<br>error: failed to push some refs to <span class="hljs-string">&#x27;github.com:Zhangtao153/learngit.git&#x27;</span><br>hint: Updates were rejected because the tip of your current branch is behind<br>hint: its remote counterpart. Integrate the remote changes (e.g.<br>hint: <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.<br>hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git commit -m <span class="hljs-string">&quot;debug the world&quot;</span><br>[master a40d43c] debug the world<br> 1 file changed, 0 insertions(+), 0 deletions(-)<br> create mode 100644 aa.txt<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git push origin master<br>To github.com:Zhangtao153/learngit.git<br> ! [rejected]        master -&gt; master (non-fast-forward)<br>error: failed to push some refs to <span class="hljs-string">&#x27;github.com:Zhangtao153/learngit.git&#x27;</span><br>hint: Updates were rejected because the tip of your current branch is behind<br>hint: its remote counterpart. Integrate the remote changes (e.g.<br>hint: <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.<br>hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.<br></code></pre></td></tr></table></figure>
 <p>push失败了，说明A在我之前已经提交了，我本地master分支的提交历史已经落后远端了，需要先pull一下，与远端同步后才能push</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git pull<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   912bb85 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;master&#x27;</span> of github.com:Zhangtao153/learngit into master<br>|\<br>| * 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* | a40d43c debug the world<br>|/<br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git pull<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   912bb85 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;master&#x27;</span> of github.com:Zhangtao153/learngit into master<br>|\<br>| * 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* | a40d43c debug the world<br>|/<br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
 <p>竟然分叉了！由于我本地master的提交历史和远端的master分支的提交历史不一致，所以git为我进行了自动合并，然后生成了一个新的提交历史。</p>
 <p>这个时候就可以用 git rebase 解决分叉的问题。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git rebase<br>Successfully rebased and updated refs/heads/master.<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 4178b6e (HEAD -&gt; master) debug the world<br>* 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git rebase<br>Successfully rebased and updated refs/heads/master.<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 4178b6e (HEAD -&gt; master) debug the world<br>* 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
 <p>然后再push，将本地修改同步到远端。</p>
 <p><font color="red">git pull –rebase </font> 和上面的效果一致。</p>
 <h3 id="4-合并分支"><a href="#4-合并分支" class="headerlink" title="4. 合并分支"></a>4. 合并分支</h3><p>先创建一个分支用于解决bug</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">$ git checkout -b issues-001<br>Switched to a new branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout -b issues-001<br>Switched to a new branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br></code></pre></td></tr></table></figure>
 <p>接下解决bug，然后保存提交</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git commit -m <span class="hljs-string">&quot;issues-001&quot;</span><br>[issues-001 7a55a26] issues-001<br> 1 file changed, 1 insertion(+)<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git commit -m <span class="hljs-string">&quot;issues-001&quot;</span><br>[issues-001 7a55a26] issues-001<br> 1 file changed, 1 insertion(+)<br></code></pre></td></tr></table></figure>
 <p>先尝试通过 <font color="red">merge</font> 合并：</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   ae02ea0 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;issues-001&#x27;</span> into master<br>|\<br>| * 7a55a26 (issues-001) issues-001<br>* | d36d166 commit on master<br>|/<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   ae02ea0 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;issues-001&#x27;</span> into master<br>|\<br>| * 7a55a26 (issues-001) issues-001<br>* | d36d166 commit on master<br>|/<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
 <p>虽然合并成功，但是Master已经保存了合并历史，出现开叉了！</p>
 <p>通过 <font color="red">rebase</font> 合并分支</p>
 <p>先将代码回退到merge之前</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset --hard HEAD^<br>HEAD is now at d36d166 commit on master<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset --hard HEAD^<br>HEAD is now at d36d166 commit on master<br></code></pre></td></tr></table></figure>
 <p>先切换回issues-001分支，在issues-001分支上执行: git rebase master</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git switch issues-001<br>Switched to branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git rebase master<br>Successfully rebased and updated refs/heads/issues-001.<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git switch issues-001<br>Switched to branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git rebase master<br>Successfully rebased and updated refs/heads/issues-001.<br></code></pre></td></tr></table></figure>
 <p>【注】如果rebase出现冲突，先解决冲突，然后通过add添加，之前的rebase其实只是完成了一半，由于出现冲突而终止，冲突解决之后，可以通过 <font color="red">git rebase —continue</font> 继续完成之前的 rebase 操作。</p>
 <p>切换到主分支master，将issues-001分支上的提交合并过来。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Updating d36d166..43823d4<br>Fast-forward<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 43823d4 (HEAD -&gt; master, issues-001) issues-001<br>* d36d166 commit on master<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Updating d36d166..43823d4<br>Fast-forward<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 43823d4 (HEAD -&gt; master, issues-001) issues-001<br>* d36d166 commit on master<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
 <p>master是一条直线了。最后删除掉issues-001分支。</p>
-<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git branch -d issues-001<br>Deleted branch issues-001 (was 43823d4).<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git branch -d issues-001<br>Deleted branch issues-001 (was 43823d4).<br></code></pre></td></tr></table></figure>
 
+              
             </div>
-            <hr>
+            <hr/>
             <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Git/">Git</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
-                    
-                  </div>
-                
-              </div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Git/">#Git</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Git——rebase命令</div>
+      <div>http://example.com/2022/02/17/Git——rebase命令/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年2月17日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/">
+                      <a href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" title="Git——底层原理">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Git——底层原理</span>
                         <span class="visible-mobile">上一篇</span>
@@ -360,7 +450,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/13/Git%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+                      <a href="/2022/02/13/Git%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="Git——核心概念与基本操作">
                         <span class="hidden-mobile">Git——核心概念与基本操作</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -372,12 +462,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
       var light = 'github-light';
@@ -405,25 +491,56 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
 
 
     
@@ -448,59 +565,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -511,55 +630,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-      typing(title)
+        typing(text);
       
     })(window, document);
   </script>
@@ -569,10 +656,147 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
@@ -582,9 +806,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

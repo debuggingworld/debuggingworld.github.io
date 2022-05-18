@@ -7,57 +7,55 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/icon2.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入安装 testify 库： 1$ go get -u github.com&#x2F;stretchr&#x2F;testify   如果 go  get 失败： 12$ go env -w GO111MODULE&#x3D;on$ go env -w GOPROXY&#x3D;ht">
+  
+    <meta name="description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入安装 testify 库： 1$ go get -u github.com&#x2F;stretchr&#x2F;testify   如果 go  get 失败： 12$ go env -w GO111MODULE&#x3D;on$ go env -w GOPROXY&#x3D;ht">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——testify">
 <meta property="og:url" content="http://example.com/2021/12/22/Go%E2%80%94%E2%80%94testify/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入安装 testify 库： 1$ go get -u github.com&#x2F;stretchr&#x2F;testify   如果 go  get 失败： 12$ go env -w GO111MODULE&#x3D;on$ go env -w GOPROXY&#x3D;ht">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225233426.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225235248.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225235641.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211226005128.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235248.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235641.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226005128.png">
 <meta property="article:published_time" content="2021-12-22T15:39:00.000Z">
-<meta property="article:modified_time" content="2021-12-25T17:15:18.087Z">
+<meta property="article:modified_time" content="2022-05-17T15:45:02.787Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225233426.png">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
   
   <title>Go——testify - Hexo</title>
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
-  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  
-    
-    
-      
-      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/nnfx-dark.min.css" />
-    
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
-  
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
-  
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -66,7 +64,13 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
   
 <link rel="stylesheet" href="/css/iconfont.css">
@@ -75,16 +79,29 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"/img/喜爱.png\" height=\"35\" width=\"35\" />","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+
+  
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-  <header style="height: 70vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>猫和少年</strong>
@@ -178,6 +195,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -190,57 +208,71 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/art_bg.jpg') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Go——testify">
-              
-            </span>
-
-            
-              <div class="mt-3">
-  
-  
-    <span class="post-meta">
-      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-12-22 23:39" pubdate>
-        2021年12月22日 晚上
-      </time>
-    </span>
-  
-</div>
-
-<div class="mt-1">
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-chart"></i>
-      10k 字
-    </span>
   
 
-  
-    <span class="post-meta mr-2">
-      <i class="iconfont icon-clock-fill"></i>
-      
-      
-      33 分钟
-    </span>
-  
-
-  
-  
-</div>
-
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Go——testify"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-12-22 23:39" pubdate>
+          2021年12月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
@@ -249,22 +281,27 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
     <div class="col-lg-8 nopadding-x-md">
       <div class="container nopadding-x-md" id="board-ctn">
-        <div class="py-5" id="board">
+        <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Go——testify</h1>
             
             <div class="markdown-body">
+              
               <p>testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！</p>
 <h3 id="1-引入"><a href="#1-引入" class="headerlink" title="1. 引入"></a>1. 引入</h3><p>安装 testify 库：</p>
-<figure class="highlight vim"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs vim">$ <span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> -<span class="hljs-keyword">u</span> github.<span class="hljs-keyword">com</span>/stretchr/testify<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">$ <span class="hljs-keyword">go</span> <span class="hljs-built_in">get</span> -<span class="hljs-keyword">u</span> github.<span class="hljs-keyword">com</span>/stretchr/testify<br></code></pre></td></tr></table></figure>
 
 
 <p>如果 go  get 失败：</p>
-<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">$ go env -w GO111MODULE=on<br>$ go env -w GOPROXY=https:<span class="hljs-comment">//goproxy.cn,direct</span><br></code></pre></div></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">$ go env -w GO111MODULE=on<br>$ go env -w GOPROXY=https:<span class="hljs-comment">//goproxy.cn,direct</span><br></code></pre></td></tr></table></figure>
 <p>estify 模块：</p>
 <ul>
 <li>assert</li>
@@ -273,57 +310,57 @@
 <li>require</li>
 <li>suite</li>
 </ul>
-<h3 id="2-assert"><a href="#2-assert" class="headerlink" title="2. assert"></a>2. assert</h3><figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Equal</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotEqual</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Nil</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotNil</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">/* 断言object是空，根据object中存储的实际类型，空的含义不同：</span><br><span class="hljs-comment">   指针：nil；</span><br><span class="hljs-comment">   整数：0；</span><br><span class="hljs-comment">   浮点数：0.0；</span><br><span class="hljs-comment">   字符串：空串&quot;&quot;；</span><br><span class="hljs-comment">   布尔：false；</span><br><span class="hljs-comment">   切片或 channel：长度为 0。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Empty</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotEmpty</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NoError</span><span class="hljs-params">(t TestingT, err error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err不为nil</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Error</span><span class="hljs-params">(t TestingT, err error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err表示的 error 链中至少有一个和target匹配</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ErrorAs</span><span class="hljs-params">(t TestingT, err error, target <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err的 error 链中有target</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ErrorIs</span><span class="hljs-params">(t TestingT, err, target error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Zero</span><span class="hljs-params">(t TestingT, i <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotZero</span><span class="hljs-params">(t TestingT, i <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">True</span><span class="hljs-params">(t TestingT, value <span class="hljs-keyword">bool</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">False</span><span class="hljs-params">(t TestingT, value <span class="hljs-keyword">bool</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Len</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, length <span class="hljs-keyword">int</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言 s 包含 contains。其中 s 可以是字符串，数组/切片，map。相应地，contains为子串，数组/切片元素，map 的键。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Contains</span><span class="hljs-params">(t TestingT, s, contains <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotContains</span><span class="hljs-params">(t TestingT, s, contains <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Subset</span><span class="hljs-params">(t TestingT, list, subset <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-params">(ok <span class="hljs-keyword">bool</span>)</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotSubset</span><span class="hljs-params">(t TestingT, list, subset <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-params">(ok <span class="hljs-keyword">bool</span>)</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FileExists</span><span class="hljs-params">(t TestingT, path <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言路径 path 是一个目录，如果 path 不存在或者是一个文件，断言失败。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DirExists</span><span class="hljs-params">(t TestingT, path <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><br><span class="hljs-comment">// 断言 listA 和 listB 包含相同的元素，忽略元素出现的顺序。listA/listB 必须是数组或切片。如果有重复元素，重复元素出现的次数也必须相等。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ElementsMatch</span><span class="hljs-params">(t TestingT, listA, listB <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言theError.Error()的返回值与errString相等。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">EqualError</span><span class="hljs-params">(t TestingT, theError error, errString <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言expected与actual相等，或者可以转换为相同的类型，并且相等</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">EqualValues</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br></code></pre></div></td></tr></table></figure>
+<h3 id="2-assert"><a href="#2-assert" class="headerlink" title="2. assert"></a>2. assert</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Equal</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotEqual</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Nil</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotNil</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">/* 断言object是空，根据object中存储的实际类型，空的含义不同：</span><br><span class="hljs-comment">   指针：nil；</span><br><span class="hljs-comment">   整数：0；</span><br><span class="hljs-comment">   浮点数：0.0；</span><br><span class="hljs-comment">   字符串：空串&quot;&quot;；</span><br><span class="hljs-comment">   布尔：false；</span><br><span class="hljs-comment">   切片或 channel：长度为 0。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Empty</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotEmpty</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NoError</span><span class="hljs-params">(t TestingT, err error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err不为nil</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Error</span><span class="hljs-params">(t TestingT, err error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err表示的 error 链中至少有一个和target匹配</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ErrorAs</span><span class="hljs-params">(t TestingT, err error, target <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言err的 error 链中有target</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ErrorIs</span><span class="hljs-params">(t TestingT, err, target error, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Zero</span><span class="hljs-params">(t TestingT, i <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotZero</span><span class="hljs-params">(t TestingT, i <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">True</span><span class="hljs-params">(t TestingT, value <span class="hljs-keyword">bool</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">False</span><span class="hljs-params">(t TestingT, value <span class="hljs-keyword">bool</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Len</span><span class="hljs-params">(t TestingT, object <span class="hljs-keyword">interface</span>&#123;&#125;, length <span class="hljs-keyword">int</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言 s 包含 contains。其中 s 可以是字符串，数组/切片，map。相应地，contains为子串，数组/切片元素，map 的键。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Contains</span><span class="hljs-params">(t TestingT, s, contains <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotContains</span><span class="hljs-params">(t TestingT, s, contains <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Subset</span><span class="hljs-params">(t TestingT, list, subset <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-params">(ok <span class="hljs-keyword">bool</span>)</span></span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NotSubset</span><span class="hljs-params">(t TestingT, list, subset <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-params">(ok <span class="hljs-keyword">bool</span>)</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FileExists</span><span class="hljs-params">(t TestingT, path <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><span class="hljs-comment">// 断言路径 path 是一个目录，如果 path 不存在或者是一个文件，断言失败。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">DirExists</span><span class="hljs-params">(t TestingT, path <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><br><span class="hljs-comment">// 断言 listA 和 listB 包含相同的元素，忽略元素出现的顺序。listA/listB 必须是数组或切片。如果有重复元素，重复元素出现的次数也必须相等。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ElementsMatch</span><span class="hljs-params">(t TestingT, listA, listB <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言theError.Error()的返回值与errString相等。</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">EqualError</span><span class="hljs-params">(t TestingT, theError error, errString <span class="hljs-keyword">string</span>, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br><span class="hljs-comment">// 断言expected与actual相等，或者可以转换为相同的类型，并且相等</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">EqualValues</span><span class="hljs-params">(t TestingT, expected, actual <span class="hljs-keyword">interface</span>&#123;&#125;, msgAndArgs ...<span class="hljs-keyword">interface</span>&#123;&#125;)</span> <span class="hljs-title">bool</span></span><br><br></code></pre></td></tr></table></figure>
 <p><strong>示例:</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestSomething</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br><br>	<span class="hljs-comment">//断言相等</span><br>	assert.Equal(t, <span class="hljs-number">123</span>, <span class="hljs-number">123</span>, <span class="hljs-string">&quot;they should be equal&quot;</span>)<br>	<span class="hljs-comment">//断言不相等</span><br>	assert.NotEqual(t, <span class="hljs-number">123</span>, <span class="hljs-number">456</span>, <span class="hljs-string">&quot;they should not be equal&quot;</span>)<br><br>	<span class="hljs-comment">//对于nil的断言</span><br>	assert.Nil(t, <span class="hljs-literal">nil</span>)<br>	<span class="hljs-keyword">var</span> object = <span class="hljs-string">&quot;hello&quot;</span><br>	<span class="hljs-comment">//对于非nil的断言</span><br>	<span class="hljs-keyword">if</span> assert.NotNil(t, object) &#123;<br>		assert.Equal(t, <span class="hljs-string">&quot;hello&quot;</span>, object)<br><br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestSomething</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br><br>	<span class="hljs-comment">//断言相等</span><br>	assert.Equal(t, <span class="hljs-number">123</span>, <span class="hljs-number">123</span>, <span class="hljs-string">&quot;they should be equal&quot;</span>)<br>	<span class="hljs-comment">//断言不相等</span><br>	assert.NotEqual(t, <span class="hljs-number">123</span>, <span class="hljs-number">456</span>, <span class="hljs-string">&quot;they should not be equal&quot;</span>)<br><br>	<span class="hljs-comment">//对于nil的断言</span><br>	assert.Nil(t, <span class="hljs-literal">nil</span>)<br>	<span class="hljs-keyword">var</span> object = <span class="hljs-string">&quot;hello&quot;</span><br>	<span class="hljs-comment">//对于非nil的断言</span><br>	<span class="hljs-keyword">if</span> assert.NotNil(t, object) &#123;<br>		assert.Equal(t, <span class="hljs-string">&quot;hello&quot;</span>, object)<br><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>Assertions 对象</strong></p>
 <p>上面的断言都是以 TestingT 为第一个参数，需要大量使用时比较麻烦。testify 提供了一种方便的方式。先以 * testing.T创建一个* Assertions 对象，Assertions 定义了前面所有的断言方法，只是不需要再传入TestingT参数了。</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestEqual</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>  assertions := assert.New(t)<br>  assertion.Equal(a, b, <span class="hljs-string">&quot;&quot;</span>)<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestEqual</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>  assertions := assert.New(t)<br>  assertion.Equal(a, b, <span class="hljs-string">&quot;&quot;</span>)<br>  <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="3-require"><a href="#3-require" class="headerlink" title="3. require"></a>3. require</h3><p>require提供了和assert同样的接口，但是遇到错误时，require直接终止测试，而assert返回false。</p>
 <h3 id="4-mock"><a href="#4-mock" class="headerlink" title="4. mock"></a>4. mock</h3><p>testify 提供了对 Mock 的简单支持。Mock 简单来说就是构造一个仿对象，仿对象提供和原对象一样的接口，在测试中用仿对象来替换原对象。</p>
 <p>待测试代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">type User struct &#123;<br>	Name string<br>	Age  <span class="hljs-keyword">int</span><br>&#125;<br><br>type ICrawler <span class="hljs-class"><span class="hljs-keyword">interface</span> </span>&#123;<br>	GetUserList() ([]*User, error)<br>&#125;<br><br>type MyCrawler struct &#123;<br>	url string<br>&#125;<br><br>func (c *MyCrawler) GetUserList() ([]*User, error) &#123;<br>	resp, err := http.Get(c.url)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	defer resp.Body.Close()<br>	data, err := ioutil.ReadAll(resp.Body)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	<span class="hljs-keyword">var</span> userList []*User<br>	err = json.Unmarshal(data, &amp;userList)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> userList, nil<br>&#125;<br><br><span class="hljs-function">func <span class="hljs-title">GetAndPrintUsers</span><span class="hljs-params">(crawler ICrawler)</span> </span>&#123;<br>	users, err := crawler.GetUserList()<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">for</span> _, u := range users &#123;<br>		fmt.Println(u)<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java">type User struct &#123;<br>	Name string<br>	Age  <span class="hljs-keyword">int</span><br>&#125;<br><br>type ICrawler <span class="hljs-class"><span class="hljs-keyword">interface</span> </span>&#123;<br>	GetUserList() ([]*User, error)<br>&#125;<br><br>type MyCrawler struct &#123;<br>	url string<br>&#125;<br><br>func (c *MyCrawler) GetUserList() ([]*User, error) &#123;<br>	resp, err := http.Get(c.url)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	defer resp.Body.Close()<br>	data, err := ioutil.ReadAll(resp.Body)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	<span class="hljs-keyword">var</span> userList []*User<br>	err = json.Unmarshal(data, &amp;userList)<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span> nil, err<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> userList, nil<br>&#125;<br><br><span class="hljs-function">func <span class="hljs-title">GetAndPrintUsers</span><span class="hljs-params">(crawler ICrawler)</span> </span>&#123;<br>	users, err := crawler.GetUserList()<br>	<span class="hljs-keyword">if</span> err != nil &#123;<br>		<span class="hljs-keyword">return</span><br>	&#125;<br><br>	<span class="hljs-keyword">for</span> _, u := range users &#123;<br>		fmt.Println(u)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试代码：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MockCrawler <span class="hljs-keyword">struct</span> &#123;<br>	mock.Mock<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *MockCrawler)</span> <span class="hljs-title">GetUserList</span><span class="hljs-params">()</span> <span class="hljs-params">([]*User, error)</span></span> &#123;<br>	args := m.Called()<br>	<span class="hljs-keyword">return</span> args.Get(<span class="hljs-number">0</span>).([]*User), args.Error(<span class="hljs-number">1</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> (<br>	MockUsers []*User<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> &#123;<br>	MockUsers = <span class="hljs-built_in">append</span>(MockUsers, &amp;User&#123;<span class="hljs-string">&quot;dj&quot;</span>, <span class="hljs-number">18</span>&#125;)<br>	MockUsers = <span class="hljs-built_in">append</span>(MockUsers, &amp;User&#123;<span class="hljs-string">&quot;zhangsan&quot;</span>, <span class="hljs-number">20</span>&#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGetUserList</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	crawler := <span class="hljs-built_in">new</span>(MockCrawler)<br>	crawler.On(<span class="hljs-string">&quot;GetUserList&quot;</span>).Return(MockUsers, <span class="hljs-literal">nil</span>)<br><br>	GetAndPrintUsers(crawler)<br><br>	crawler.AssertExpectations(t)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MockCrawler <span class="hljs-keyword">struct</span> &#123;<br>	mock.Mock<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *MockCrawler)</span> <span class="hljs-title">GetUserList</span><span class="hljs-params">()</span> <span class="hljs-params">([]*User, error)</span></span> &#123;<br>	args := m.Called()<br>	<span class="hljs-keyword">return</span> args.Get(<span class="hljs-number">0</span>).([]*User), args.Error(<span class="hljs-number">1</span>)<br>&#125;<br><br><span class="hljs-keyword">var</span> (<br>	MockUsers []*User<br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> &#123;<br>	MockUsers = <span class="hljs-built_in">append</span>(MockUsers, &amp;User&#123;<span class="hljs-string">&quot;dj&quot;</span>, <span class="hljs-number">18</span>&#125;)<br>	MockUsers = <span class="hljs-built_in">append</span>(MockUsers, &amp;User&#123;<span class="hljs-string">&quot;zhangsan&quot;</span>, <span class="hljs-number">20</span>&#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGetUserList</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	crawler := <span class="hljs-built_in">new</span>(MockCrawler)<br>	crawler.On(<span class="hljs-string">&quot;GetUserList&quot;</span>).Return(MockUsers, <span class="hljs-literal">nil</span>)<br><br>	GetAndPrintUsers(crawler)<br><br>	crawler.AssertExpectations(t)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>实现 GetUserList() 方法时，需要调用 Mock.Called() 方法，传入参数。Called() 会返回一个 mock.Arguments 对象，该对象中保存着返回的值。它提供了对基本类型和 error 的获取方法 Int()/String()/Bool()/Error()，和通用的获取方法 Get()，通用方法返回 interface{}，需要类型断言为具体类型，它们都接受一个表示索引的参数。</p>
 <p>crawler.On(“GetUserList”).Return(MockUsers, nil) 是 Mock 发挥魔法的地方，这里指示调用 GetUserList() 方法的返回值分别 为MockUsers 和 nil，返回值在上面的 GetUserList() 方法中被 Arguments.Get(0) 和 Arguments.Error(1) 获取。</p>
 <p>最后 crawler.AssertExpectations(t)对 Mock 对象做断言。</p>
 <p>执行结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225233426.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 <p>使用 Mock，可以精确断言某方法以特定参数的调用次数，Times(n int)，它有两个便捷函数Once()/Twice()。下面我们要求函数Hello(n int)要以参数 1 调用 1次，参数 2 调用两次，参数 3 调用 3 次：</p>
 <p>待测试方法:</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> IExample <span class="hljs-keyword">interface</span> &#123;<br>	Hello(n <span class="hljs-keyword">int</span>) <span class="hljs-keyword">int</span><br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span>  <span class="hljs-title">Hello</span><span class="hljs-params">(n <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;Hello with %d\n&quot;</span>, n)<br>	<span class="hljs-keyword">return</span> n<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ExampleFunc</span><span class="hljs-params">(e IExample)</span></span> &#123;<br>	<span class="hljs-keyword">for</span> n := <span class="hljs-number">1</span>; n &lt;= <span class="hljs-number">3</span>; n++ &#123;<br>		<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt;= n; i++ &#123;<br>			e.Hello(n)<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> IExample <span class="hljs-keyword">interface</span> &#123;<br>	Hello(n <span class="hljs-keyword">int</span>) <span class="hljs-keyword">int</span><br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span>  <span class="hljs-title">Hello</span><span class="hljs-params">(n <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;Hello with %d\n&quot;</span>, n)<br>	<span class="hljs-keyword">return</span> n<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ExampleFunc</span><span class="hljs-params">(e IExample)</span></span> &#123;<br>	<span class="hljs-keyword">for</span> n := <span class="hljs-number">1</span>; n &lt;= <span class="hljs-number">3</span>; n++ &#123;<br>		<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt;= n; i++ &#123;<br>			e.Hello(n)<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试方法：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MockExample <span class="hljs-keyword">struct</span> &#123;<br>	mock.Mock<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *MockExample)</span> <span class="hljs-title">Hello</span><span class="hljs-params">(n <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	args := e.Mock.Called(n)<br>	<span class="hljs-keyword">return</span> args.Int(<span class="hljs-number">0</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestExample</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	e := <span class="hljs-built_in">new</span>(MockExample)<br><br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">1</span>).Return(<span class="hljs-number">1</span>).Times(<span class="hljs-number">1</span>)<br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">2</span>).Return(<span class="hljs-number">2</span>).Times(<span class="hljs-number">2</span>)<br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">3</span>).Return(<span class="hljs-number">3</span>).Times(<span class="hljs-number">3</span>)<br><br>	ExampleFunc(e)<br><br>	e.AssertExpectations(t)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MockExample <span class="hljs-keyword">struct</span> &#123;<br>	mock.Mock<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *MockExample)</span> <span class="hljs-title">Hello</span><span class="hljs-params">(n <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br>	args := e.Mock.Called(n)<br>	<span class="hljs-keyword">return</span> args.Int(<span class="hljs-number">0</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestExample</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	e := <span class="hljs-built_in">new</span>(MockExample)<br><br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">1</span>).Return(<span class="hljs-number">1</span>).Times(<span class="hljs-number">1</span>)<br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">2</span>).Return(<span class="hljs-number">2</span>).Times(<span class="hljs-number">2</span>)<br>	e.On(<span class="hljs-string">&quot;Hello&quot;</span>, <span class="hljs-number">3</span>).Return(<span class="hljs-number">3</span>).Times(<span class="hljs-number">3</span>)<br><br>	ExampleFunc(e)<br><br>	e.AssertExpectations(t)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>执行结果</p>
-<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225235248.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235248.png" srcset="/img/loading.gif" lazyload></p>
 <p>修改 ExampleFunc 将 for i := 0; i &lt;= n; i++  改为 for i := 0; i &lt; n; i++ </p>
 <p>执行结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211225235641.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235641.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="5-suite"><a href="#5-suite" class="headerlink" title="5. suite"></a>5. suite</h3><p>testify提供了测试套件的功能（TestSuite），testify测试套件只是一个结构体，内嵌一个匿名的 suite.Suite 结构。测试套件中可以包含多个测试，它们可以共享状态，还可以定义钩子方法执行初始化和清理操作。钩子都是通过接口来定义的，实现了这些接口的测试套件结构在运行到指定节点时会调用对应的方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> SetupAllSuite <span class="hljs-keyword">interface</span> &#123;<br>  SetupSuite()<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> SetupAllSuite <span class="hljs-keyword">interface</span> &#123;<br>  SetupSuite()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果定义了SetupSuite()方法（即实现了SetupAllSuite接口），在套件中所有测试开始运行前调用这个方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TearDownAllSuite <span class="hljs-keyword">interface</span> &#123;<br>  TearDownSuite()<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TearDownAllSuite <span class="hljs-keyword">interface</span> &#123;<br>  TearDownSuite()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果定义了TearDonwSuite()方法（即实现了TearDownSuite接口），在套件中所有测试运行完成后调用这个方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> SetupTestSuite <span class="hljs-keyword">interface</span> &#123;<br>  SetupTest()<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> SetupTestSuite <span class="hljs-keyword">interface</span> &#123;<br>  SetupTest()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果定义了SetupTest()方法（即实现了SetupTestSuite接口），在套件中每个测试执行前都会调用这个方法。</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TearDownTestSuite <span class="hljs-keyword">interface</span> &#123;<br>  TearDownTest()<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> TearDownTestSuite <span class="hljs-keyword">interface</span> &#123;<br>  TearDownTest()<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>如果定义了TearDownTest()方法（即实现了TearDownTest接口），在套件中每个测试执行后都会调用这个方法。</p>
 <p>还有一对接口BeforeTest/AfterTest，它们分别在每个测试运行前/后调用，接受套件名和测试名作为参数。</p>
 <p><strong>示例</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyTestSuit <span class="hljs-keyword">struct</span> &#123;<br>	suite.Suite<br>	testCount <span class="hljs-keyword">uint32</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">SetupSuite</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;SetupSuite&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TearDownSuite</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TearDownSuite&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">SetupTest</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;SetupTest test count:%d\n&quot;</span>, s.testCount)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TearDownTest</span><span class="hljs-params">()</span></span> &#123;<br>	s.testCount++<br>	fmt.Printf(<span class="hljs-string">&quot;TearDownTest test count:%d\n&quot;</span>, s.testCount)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">BeforeTest</span><span class="hljs-params">(suiteName, testName <span class="hljs-keyword">string</span>)</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;BeforeTest suite:%s test:%s\n&quot;</span>, suiteName, testName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">AfterTest</span><span class="hljs-params">(suiteName, testName <span class="hljs-keyword">string</span>)</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;AfterTest suite:%s test:%s\n&quot;</span>, suiteName, testName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TestExample</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TestExample1111&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TestExample2</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TestExample2222&quot;</span>)<br>&#125;<br><br><br><span class="hljs-comment">// 为了用 go test 运行测试</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestExample</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	suite.Run(t, <span class="hljs-built_in">new</span>(MyTestSuit))<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyTestSuit <span class="hljs-keyword">struct</span> &#123;<br>	suite.Suite<br>	testCount <span class="hljs-keyword">uint32</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">SetupSuite</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;SetupSuite&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TearDownSuite</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TearDownSuite&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">SetupTest</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;SetupTest test count:%d\n&quot;</span>, s.testCount)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TearDownTest</span><span class="hljs-params">()</span></span> &#123;<br>	s.testCount++<br>	fmt.Printf(<span class="hljs-string">&quot;TearDownTest test count:%d\n&quot;</span>, s.testCount)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">BeforeTest</span><span class="hljs-params">(suiteName, testName <span class="hljs-keyword">string</span>)</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;BeforeTest suite:%s test:%s\n&quot;</span>, suiteName, testName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">AfterTest</span><span class="hljs-params">(suiteName, testName <span class="hljs-keyword">string</span>)</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;AfterTest suite:%s test:%s\n&quot;</span>, suiteName, testName)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TestExample</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TestExample1111&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MyTestSuit)</span> <span class="hljs-title">TestExample2</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;TestExample2222&quot;</span>)<br>&#125;<br><br><br><span class="hljs-comment">// 为了用 go test 运行测试</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestExample</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	suite.Run(t, <span class="hljs-built_in">new</span>(MyTestSuit))<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>执行结果：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/debuggingworld/tuchuang/20211226005128.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226005128.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="6-HTTP-测试"><a href="#6-HTTP-测试" class="headerlink" title="6. HTTP 测试"></a>6. HTTP 测试</h3><p>httptest提供了一个ResponseRecorder类型，它实现了http.ResponseWriter接口，但是它只是记录写入的状态码和响应内容，不会发送响应给客户端</p>
 <p>一个简单的 http 服务器：</p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">index</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>  fmt.Fprintln(w, <span class="hljs-string">&quot;Hello World&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">greeting</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>  fmt.Fprintf(w, <span class="hljs-string">&quot;welcome, %s&quot;</span>, r.URL.Query().Get(<span class="hljs-string">&quot;name&quot;</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  mux := http.NewServeMux()<br>  mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>  mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>  server := &amp;http.Server&#123;<br>    Addr:    <span class="hljs-string">&quot;:8080&quot;</span>,<br>    Handler: mux,<br>  &#125;<br><br>  <span class="hljs-keyword">if</span> err := server.ListenAndServe(); err != <span class="hljs-literal">nil</span> &#123;<br>    log.Fatal(err)<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">index</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>  fmt.Fprintln(w, <span class="hljs-string">&quot;Hello World&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">greeting</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>  fmt.Fprintf(w, <span class="hljs-string">&quot;welcome, %s&quot;</span>, r.URL.Query().Get(<span class="hljs-string">&quot;name&quot;</span>))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>  mux := http.NewServeMux()<br>  mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>  mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>  server := &amp;http.Server&#123;<br>    Addr:    <span class="hljs-string">&quot;:8080&quot;</span>,<br>    Handler: mux,<br>  &#125;<br><br>  <span class="hljs-keyword">if</span> err := server.ListenAndServe(); err != <span class="hljs-literal">nil</span> &#123;<br>    log.Fatal(err)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>测试1</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestIndex</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	recorder := httptest.NewRecorder()<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-literal">nil</span>)<br>	mux := http.NewServeMux()<br>	mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>	mux.ServeHTTP(recorder, request)<br><br>	assert.Equal(t, recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;get index error&quot;</span>)<br>	assert.Contains(t, recorder.Body.String(), <span class="hljs-string">&quot;Hello World&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGreeting</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	recorder := httptest.NewRecorder()<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/greeting&quot;</span>, <span class="hljs-literal">nil</span>)<br>	request.URL.RawQuery = <span class="hljs-string">&quot;name=dj&quot;</span><br>	mux := http.NewServeMux()<br>	mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>	mux.ServeHTTP(recorder, request)<br><br>	assert.Equal(t, recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;greeting error&quot;</span>)<br>	assert.Contains(t, recorder.Body.String(), <span class="hljs-string">&quot;welcome, dj&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestIndex</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	recorder := httptest.NewRecorder()<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-literal">nil</span>)<br>	mux := http.NewServeMux()<br>	mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>	mux.ServeHTTP(recorder, request)<br><br>	assert.Equal(t, recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;get index error&quot;</span>)<br>	assert.Contains(t, recorder.Body.String(), <span class="hljs-string">&quot;Hello World&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestGreeting</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	recorder := httptest.NewRecorder()<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/greeting&quot;</span>, <span class="hljs-literal">nil</span>)<br>	request.URL.RawQuery = <span class="hljs-string">&quot;name=dj&quot;</span><br>	mux := http.NewServeMux()<br>	mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br><br>	mux.ServeHTTP(recorder, request)<br><br>	assert.Equal(t, recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;greeting error&quot;</span>)<br>	assert.Contains(t, recorder.Body.String(), <span class="hljs-string">&quot;welcome, dj&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>可以使用 suite，消除 recorder/mux 等对象的创建，处理器函数的注册。</p>
 <p><strong>测试2</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MySuite <span class="hljs-keyword">struct</span> &#123;<br>	suite.Suite<br>	recorder *httptest.ResponseRecorder<br>	mux      *http.ServeMux<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">SetupSuite</span><span class="hljs-params">()</span></span> &#123;<br>	s.recorder = httptest.NewRecorder()<br>	s.mux = http.NewServeMux()<br>	s.mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	s.mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">TestIndex</span><span class="hljs-params">()</span></span> &#123;<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-literal">nil</span>)<br>	s.mux.ServeHTTP(s.recorder, request)<br><br>	s.Assert().Equal(s.recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;get index error&quot;</span>)<br>	s.Assert().Contains(s.recorder.Body.String(), <span class="hljs-string">&quot;Hello World&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">TestGreeting</span><span class="hljs-params">()</span></span> &#123;<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/greeting&quot;</span>, <span class="hljs-literal">nil</span>)<br>	request.URL.RawQuery = <span class="hljs-string">&quot;name=dj&quot;</span><br><br>	s.mux.ServeHTTP(s.recorder, request)<br><br>	s.Assert().Equal(s.recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;greeting error&quot;</span>)<br>	s.Assert().Contains(s.recorder.Body.String(), <span class="hljs-string">&quot;welcome, dj&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">// 测试驱动</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestHTTP</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	suite.Run(t, <span class="hljs-built_in">new</span>(MySuite))<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MySuite <span class="hljs-keyword">struct</span> &#123;<br>	suite.Suite<br>	recorder *httptest.ResponseRecorder<br>	mux      *http.ServeMux<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">SetupSuite</span><span class="hljs-params">()</span></span> &#123;<br>	s.recorder = httptest.NewRecorder()<br>	s.mux = http.NewServeMux()<br>	s.mux.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, index)<br>	s.mux.HandleFunc(<span class="hljs-string">&quot;/greeting&quot;</span>, greeting)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">TestIndex</span><span class="hljs-params">()</span></span> &#123;<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-literal">nil</span>)<br>	s.mux.ServeHTTP(s.recorder, request)<br><br>	s.Assert().Equal(s.recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;get index error&quot;</span>)<br>	s.Assert().Contains(s.recorder.Body.String(), <span class="hljs-string">&quot;Hello World&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MySuite)</span> <span class="hljs-title">TestGreeting</span><span class="hljs-params">()</span></span> &#123;<br>	request, _ := http.NewRequest(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/greeting&quot;</span>, <span class="hljs-literal">nil</span>)<br>	request.URL.RawQuery = <span class="hljs-string">&quot;name=dj&quot;</span><br><br>	s.mux.ServeHTTP(s.recorder, request)<br><br>	s.Assert().Equal(s.recorder.Code, <span class="hljs-number">200</span>, <span class="hljs-string">&quot;greeting error&quot;</span>)<br>	s.Assert().Contains(s.recorder.Body.String(), <span class="hljs-string">&quot;welcome, dj&quot;</span>, <span class="hljs-string">&quot;body error&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">// 测试驱动</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TestHTTP</span><span class="hljs-params">(t *testing.T)</span></span> &#123;<br>	suite.Run(t, <span class="hljs-built_in">new</span>(MySuite))<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
@@ -333,40 +370,93 @@
 
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267341653">拓展</a></p>
 
+              
             </div>
-            <hr>
+            <hr/>
             <div>
-              <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/Golang/">Golang</a>
-                    
-                  </div>
-                
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/Golang/">Golang</a>
-                    
-                  </div>
-                
-              </div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Golang/">#Golang</a>
+      
+    </div>
+  
+</div>
+
+
               
-                <p class="note note-warning">
-                  
-                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
-                  
-                </p>
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Go——testify</div>
+      <div>http://example.com/2021/12/22/Go——testify/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年12月22日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
               
-              
-                <div class="post-prevnext">
+                <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/">
+                      <a href="/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/" title="Go——运算符">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Go——运算符</span>
                         <span class="visible-mobile">上一篇</span>
@@ -376,7 +466,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/">
+                      <a href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" title="Go——测试">
                         <span class="hidden-mobile">Go——测试</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -388,12 +478,8 @@
             </div>
 
             
-              <!-- Comments -->
-              <article class="comments" id="comments" lazyload>
-                
-                  
-                
-                
+  <article id="comments" lazyload>
+    
   <script type="text/javascript">
     Fluid.utils.loadComments('#comments', function() {
       var light = 'github-light';
@@ -421,25 +507,56 @@
   <noscript>Please enable JavaScript to view the comments</noscript>
 
 
-              </article>
-            
+  </article>
+
+
           </article>
         </div>
       </div>
     </div>
-    
-      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
-        <div id="toc">
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
   <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
   <div class="toc-body" id="toc-body"></div>
 </div>
 
-      </div>
-    
+
+
+  </aside>
+
+
+    </div>
   </div>
 </div>
 
-<!-- Custom -->
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
 
 
     
@@ -464,59 +581,61 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <img src="/img/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-  <div class="statistics">
-    
-    
-
-    
-      
-        <!-- 不蒜子统计PV -->
-        <span id="busuanzi_container_site_pv" style="display: none">
-            总访问量 
-            <span id="busuanzi_value_site_pv"></span>
-             次
-          </span>
-      
-      
-        <!-- 不蒜子统计UV -->
-        <span id="busuanzi_container_site_uv" style="display: none">
-            总访客数 
-            <span id="busuanzi_value_site_uv"></span>
-             人
-          </span>
-      
-    
-  </div>
-
-
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
   
 
   
-</footer>
-
-
-  <!-- SCRIPTS -->
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
   
-  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
   <script>
     NProgress.configure({"showSpinner":false,"trickleSpeed":100})
@@ -527,55 +646,23 @@
   </script>
 
 
-<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
-<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-  
-
-
-
-  
-    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
-  
-  
-    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
-  
-  
-    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
-  
-
-
-
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
   <script>
     (function (window, document) {
       var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
       
-      typing(title)
+        typing(text);
       
     })(window, document);
   </script>
@@ -585,10 +672,147 @@
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
@@ -598,9 +822,15 @@
 
 
 
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
