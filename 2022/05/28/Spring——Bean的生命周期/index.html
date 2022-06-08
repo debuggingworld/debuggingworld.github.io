@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220603202638.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220603232841.png">
 <meta property="article:published_time" content="2022-05-28T00:51:26.000Z">
-<meta property="article:modified_time" content="2022-06-07T15:42:37.230Z">
+<meta property="article:modified_time" content="2022-06-08T14:23:00.376Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
@@ -476,30 +476,29 @@
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">DestructionAwareBeanPostProcessor</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BeanPostProcessor</span> </span>&#123;<br><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeforeDestruction</span><span class="hljs-params">(Object bean, String beanName)</span> <span class="hljs-keyword">throws</span> BeansException</span>;<br><br>	<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">requiresDestruction</span><span class="hljs-params">(Object bean)</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-
 <p>在 Spring 容器关闭过程是：</p>
 <ol>
 <li>首先发布 ContextClosedEvent 事件</li>
 <li>调用 lifecycleProcessor 的 onCloese() 方法</li>
-<li>销毁单例Bean<ol>
-<li>遍历disposableBeans<ol>
-<li>把每个disposableBean从单例池中移除</li>
-<li>调用disposableBean的destroy()</li>
-<li>如果这个disposableBean还被其他Bean依赖了，那么也得销毁其他Bean</li>
-<li>如果这个disposableBean还包含了inner beans，将这些Bean从单例池中移除掉 (inner bean参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-inner-beans">https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-inner-beans</a>)</li>
+<li>销毁单例 Bean<ol>
+<li>遍历 disposableBeans<ul>
+<li> 把每个 disposableBean 从单例池中移除</li>
+<li> 如果这个 disposableBean 还被其他 Bean 依赖了，那么也得销毁其他 Bean</li>
+<li> 调用 disposableBean 的 destroy()</li>
+<li> 如果这个 disposableBean 还包含了 inner beans，将这些 Bean 从单例池中移除掉 (inner bean参考<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-inner-beans">https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-inner-beans</a>)</li>
+<li> 清空 containedBeanMap</li>
+<li> 清空 dependentBeanMap</li>
+<li> 清空 dependenciesForBeanMap</li>
+</ul>
+</li>
+<li>清空 manualSingletonNames，是一个 Set，存的是用户手动注册的单例 Bean 的 beanName</li>
+<li>清空 allBeanNamesByType，是一个 Map，key 是 bean 类型，value 是该类型所有的 beanName 数组</li>
+<li>清空 singletonBeanNamesByType，和 allBeanNamesByType 类似，只不过只存了单例 Bean</li>
 </ol>
 </li>
-<li>清空manualSingletonNames，是一个Set，存的是用户手动注册的单例Bean的beanName</li>
-<li>清空allBeanNamesByType，是一个Map，key是bean类型，value是该类型所有的beanName数组</li>
-<li>清空singletonBeanNamesByType，和allBeanNamesByType类似，只不过只存了单例Bean</li>
 </ol>
-</li>
-</ol>
-<p>这里涉及到一个设计模式：<strong>适配器模式</strong></p>
-<p>在销毁时，Spring会找出实现了DisposableBean接口的Bean。</p>
-<p>但是我们在定义一个Bean时，如果这个Bean实现了DisposableBean接口，或者实现了AutoCloseable接口，或者在BeanDefinition中指定了destroyMethodName，那么这个Bean都属于“DisposableBean”，这些Bean在容器关闭时都要调用相应的销毁方法。</p>
-<p>所以，这里就需要进行适配，将实现了DisposableBean接口、或者AutoCloseable接口等适配成实现了DisposableBean接口，所以就用到了DisposableBeanAdapter。</p>
-<p>会把实现了AutoCloseable接口的类封装成DisposableBeanAdapter，而DisposableBeanAdapter实现了DisposableBean接口。</p>
+<p>这里涉及到一个设计模式：<strong>适配器模式</strong><br>将实现了 DisposableBean 接口、或者 AutoCloseable 接口等适配成实现了 DisposableBean 接口，所以就用到了 DisposableBeanAdapter。</p>
+<p>在销毁时，Spring 会找出实现了 DisposableBean 接口的 Bean。</p>
 
               
             </div>
