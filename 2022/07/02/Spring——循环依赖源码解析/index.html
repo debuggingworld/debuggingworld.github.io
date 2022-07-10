@@ -16,18 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 什么是循环依赖？就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？ 如果不考虑 Spring，循环依赖并不是问题，因为对象之间相互依赖是很正常的事情。 比如 12345A a &#x3D; new A();B">
+    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b 1. 什么是循环依赖？就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？ 如果不考">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring——循环依赖源码解析">
 <meta property="og:url" content="http://example.com/2022/07/02/Spring%E2%80%94%E2%80%94%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 什么是循环依赖？就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？ 如果不考虑 Spring，循环依赖并不是问题，因为对象之间相互依赖是很正常的事情。 比如 12345A a &#x3D; new A();B">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b 1. 什么是循环依赖？就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？ 如果不考">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220702154710.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220702154827.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220702165327.png">
 <meta property="article:published_time" content="2022-07-02T06:34:43.000Z">
-<meta property="article:modified_time" content="2022-07-02T15:50:50.006Z">
+<meta property="article:modified_time" content="2022-07-10T12:26:17.397Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
@@ -241,7 +241,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.2k 字
+          6.7k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
           <!-- compatible with older versions-->
-          20 分钟
+          21 分钟
         
       </span>
     
@@ -295,7 +295,8 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-什么是循环依赖？"><a href="#1-什么是循环依赖？" class="headerlink" title="1. 什么是循环依赖？"></a>1. 什么是循环依赖？</h2><p>就是A对象依赖了B对象，B对象依赖了A对象。</p>
+              <p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/629e0d260791293c9388933b">https://www.processon.com/view/link/629e0d260791293c9388933b</a></p>
+<h2 id="1-什么是循环依赖？"><a href="#1-什么是循环依赖？" class="headerlink" title="1. 什么是循环依赖？"></a>1. 什么是循环依赖？</h2><p>就是A对象依赖了B对象，B对象依赖了A对象。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// A依赖了B</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span>&#123;<br>	<span class="hljs-keyword">public</span> B b;<br>&#125;<br><br><span class="hljs-comment">// B依赖了A</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span></span>&#123;<br>	<span class="hljs-keyword">public</span> A a;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>那么循环依赖是个问题吗？</p>
 <p>如果不考虑 Spring，循环依赖并不是问题，因为对象之间相互依赖是很正常的事情。</p>
@@ -366,6 +367,13 @@
 <li>其实还要一个缓存，就是 <strong>earlyProxyReferences</strong>，它用来记录某个原始对象是否进行过 AOP 了。</li>
 </ol>
 <p>Spring 所用的 singletonFactories，为了调和不同的情况，在 singletonFactories 中存的是lambda 表达式，这样的话，只有在出现了循环依赖的情况，才会执行 lambda 表达式，才会进行 AOP，也就说只有在出现了循环依赖的情况下才会打破 Bean 生命周期的设计，如果一个 Bean 没有出现循环依赖，那么它还是遵守了 Bean 的生命周期的设计的。</p>
+<ul>
+<li>原型 Bean 循环依赖无法解决，如果其中一个为单例则可以解决</li>
+<li>循环依赖中先加载的 Bean（后加载的不会出现） 中使用 @Async 注解（AsyncAnnotationBeanPostProcessor)，会修改 AOP 生成的代理对象，导致循环依赖失败（否则单例池中的对象和循环依赖中引用的对象不是同一个对象）。可通过在使用 @Async 注解的 Bean 中通过 @Lazy 修饰需要依赖注入的 Bean 来解决。</li>
+<li>使用 @Transactional 注解，循环依赖不会失败。因为 @Transactional 不会向容器中添加 BeanPostProcessor，而是 BeanFactoryTransactionAttributeSourceAdvisor。</li>
+<li>通过构造方法注入的循环依赖将注入失败（无法拿到半成品 Bean），可以通过在构造方法上使用 @Lazy 注解（生成代理对象）来解决。</li>
+<li>自己注入自己也属于循环依赖，Spring 也可以自己解决。</li>
+</ul>
 
               
             </div>
@@ -454,6 +462,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/07/08/Spring%E2%80%94%E2%80%94%E6%8E%A8%E6%96%AD%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" title="Spring——推断构造方法源码解析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring——推断构造方法源码解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
