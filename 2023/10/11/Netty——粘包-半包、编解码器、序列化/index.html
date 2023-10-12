@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112339961.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112357687.png">
 <meta property="article:published_time" content="2023-10-11T14:34:57.000Z">
-<meta property="article:modified_time" content="2023-10-11T16:23:39.119Z">
+<meta property="article:modified_time" content="2023-10-12T16:22:53.362Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Netty">
 <meta name="twitter:card" content="summary_large_image">
@@ -241,7 +241,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          4.6k 字
+          5.3k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
           <!-- compatible with older versions-->
-          15 分钟
+          17 分钟
         
       </span>
     
@@ -341,13 +341,19 @@
 
 
 
-<p>（2）消息定长，例如每个报文的大小为固定长度200字节，如果不够，空位补空格；</p>
-<p>参见cn.tuling.nettybasic.splicing.fixed下的代码</p>
-<p>（3）将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用int32来表示消息的总长度，使用LengthFieldBasedFrameDecoder，后面会有详细说明和使用。</p>
-<p><strong>辨析channelRead和channelReadComplete</strong></p>
-<p>两者的区别：</p>
-<p>Netty是在读到完整的业务请求报文后才调用一次业务ChannelHandler的 channelRead方法，无论这条报文底层经过了几次SocketChannel的 read调用。</p>
-<p>但是 channelReadComplete方法并不是在业务语义上的读取消息完成后被触发的，而是在每次从SocketChannel 成功读到消息后，由系统触发，也就是说如果一个业务消息被TCP协议栈发送了N次，则服务端的channelReadComplete方法就会被调用N次。</p>
+<h5 id="2-消息定长"><a href="#2-消息定长" class="headerlink" title="2. 消息定长"></a>2. 消息定长</h5><p>例如每个报文的大小为固定长度 200 字节，如果不够，空位补空格；</p>
+<p>　　使用 FixedLengthFrameDecoder 解码器。</p>
+<p>发送数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelActive</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;<br>        ByteBuf byteBuf = Unpooled.buffer(REQUEST_Length);<br>        byteBuf.writeBytes(REQUEST.getBytes());<br>        ctx.writeAndFlush(byteBuf);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　接受数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">bootstrap.group(eventLoopGroup)<br>        .channel(NioSocketChannel.class)<br>        .remoteAddress(<span class="hljs-keyword">new</span> InetSocketAddress(host, port))<span class="hljs-comment">/*指定服务器的IP地址和端口*/</span><br>        .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                ch.pipeline().addLast(<span class="hljs-keyword">new</span> FixedLengthFrameDecoder(REQUEST_Length));<br>                ch.pipeline().addLast(<span class="hljs-keyword">new</span> EchoStickyHalfClientHandler());<br>            &#125;<br>        &#125;);<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-指定长度"><a href="#3-指定长度" class="headerlink" title="3. 指定长度"></a>3. 指定长度</h5><p>　　将消息分为消息头和消息体，消息头中包含表示消息总长度（或者消息体长度）的字段，通常设计思路为消息头的第一个字段使用 int32 来表示消息的总长度，使用 LengthFieldBasedFrameDecoder。</p>
+<h4 id="1-4-辨析channelRead和channelReadComplete"><a href="#1-4-辨析channelRead和channelReadComplete" class="headerlink" title="1.4 辨析channelRead和channelReadComplete"></a>1.4 辨析channelRead和channelReadComplete</h4><p>两者的区别：</p>
+<p>　　Netty 是在读到完整的业务请求报文后才调用一次业务 ChannelHandler 的 channelRead 方法，无论这条报文底层经过了几次 SocketChannel 的 read 调用（一包业务数据调用一次，不管分了多少包）。</p>
+<p>　　但是 channelReadComplete 方法并不是在业务语义上的读取消息完成后被触发的，而是在每次从 SocketChannel 成功读到消息后，由系统触发，也就是说如果一个业务消息被 TCP 协议栈发送了 N 次，则服务端的 channelReadComplete 方法就会被调用 N 次（也就是读取 ByteBuf 的次数）。</p>
+<p>1-09-38</p>
 
               
             </div>
