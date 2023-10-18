@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Debug GO</title>
+    <link href="/2023/10/18/Debug-GO/"/>
+    <url>/2023/10/18/Debug-GO/</url>
+    
+    <content type="html"><![CDATA[<p>面试题汇总：</p><p><a href="https://zhuanlan.zhihu.com/p/519979757">https://zhuanlan.zhihu.com/p/519979757</a></p><h3 id="1-Golang-调度器设计思想、GMP-协程调度模型详解"><a href="#1-Golang-调度器设计思想、GMP-协程调度模型详解" class="headerlink" title="1. Golang 调度器设计思想、GMP 协程调度模型详解"></a>1. Golang 调度器设计思想、GMP 协程调度模型详解</h3><p><a href="https://zhuanlan.zhihu.com/p/617420622">https://zhuanlan.zhihu.com/p/617420622</a></p><ol><li>GM</li><li>GMP</li><li>work stealing 机制和 hand off 机制</li><li>抢占式调度</li></ol><center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310182358164.png" style="zoom:50%;" /></center><center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190006013.png" style="zoom:50%;" /></center><h3 id="2-Go内存管理和分配策略"><a href="#2-Go内存管理和分配策略" class="headerlink" title="2. Go内存管理和分配策略"></a>2. Go内存管理和分配策略</h3><p><a href="https://zhuanlan.zhihu.com/p/619865411">https://zhuanlan.zhihu.com/p/619865411</a></p><ol><li>TCMalloc：Thread Cache Malloc</li><li>Mspan、mcache、mcentral、mheap</li></ol><center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190018997.png" style="zoom:50%;" /></center><p>内存对齐：</p><p><a href="https://zhuanlan.zhihu.com/p/621129832">https://zhuanlan.zhihu.com/p/621129832</a></p><h3 id="3-GO-GC分析"><a href="#3-GO-GC分析" class="headerlink" title="3. GO GC分析"></a>3. GO GC分析</h3><p>GC触发机制：</p><p>主要分为主动触发和被动触发</p><ul><li>主动触发：runtime GC，阻塞式等待当前GC调用完成</li><li>被动触发：</li><li>系统监控，超过2分钟没有引用就强制GC</li><li>步调(Pacing算法)，控制内存增长的比例</li></ul><p>GO使用的GC算法：</p><ul><li>GO 1.3 mark and sweep</li><li>GO 1.5 三色并发标记法</li><li>GO 1.8混合写屏障</li></ul><p><a href="https://zhuanlan.zhihu.com/p/356930881">https://zhuanlan.zhihu.com/p/356930881</a></p><p><a href="https://blog.51cto.com/u_10983441/5357639">https://blog.51cto.com/u_10983441/5357639</a></p><h3 id="4-Golang-的-goroutine-是如何实现的？"><a href="#4-Golang-的-goroutine-是如何实现的？" class="headerlink" title="4. Golang 的 goroutine 是如何实现的？"></a>4. Golang 的 goroutine 是如何实现的？</h3><ul><li>GMP</li><li>调度</li><li>内存分配</li><li>GC</li></ul><p><a href="https://www.zhihu.com/question/20862617/answer/921061289">https://www.zhihu.com/question/20862617/answer/921061289</a></p><h3 id="5-深入分析Golang的Mutex"><a href="#5-深入分析Golang的Mutex" class="headerlink" title="5. 深入分析Golang的Mutex"></a>5. 深入分析Golang的Mutex</h3><p><a href="https://zhuanlan.zhihu.com/p/501972241">https://zhuanlan.zhihu.com/p/501972241</a></p><ol><li>state<code>和</code>sema</li><li><code>state</code>字段为<code>int32</code>类型，其低三位分别代表了锁的一些状态：<ul><li><code>mutexLocked</code>是<code>state</code>中的<code>低1位</code>，用二进制表示为<code>0001</code>（为了方便，这里只描述后4位），它代表该互斥锁是否被加锁。</li><li><code>mutexWoken</code>是<code>低2位</code>，用二进制表示为<code>0010</code>，它代表互斥锁上是否有被唤醒的goroutine。</li><li><code>mutexStarving</code>是<code>低3位</code>，用二进制表示为<code>0100</code>，它代表当前互斥锁是否处于饥饿模式。</li><li><code>state</code>剩下的29位用于统计在互斥锁上的等待队列中<code>goroutine</code>数目（<code>waiter</code>）。</li></ul></li></ol><h3 id="6-切片"><a href="#6-切片" class="headerlink" title="6. 切片"></a>6. 切片</h3><ol><li>结构</li><li>扩容</li><li>作为函数参数传参</li></ol><p><a href="https://zhuanlan.zhihu.com/p/598973739">https://zhuanlan.zhihu.com/p/598973739</a></p><p>Map  </p><p>channel  </p><p><a href="https://zhuanlan.zhihu.com/p/604907917">https://zhuanlan.zhihu.com/p/604907917</a></p><p><a href="https://zhuanlan.zhihu.com/p/605991429">https://zhuanlan.zhihu.com/p/605991429</a></p><p>select</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>interview</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>interview</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Netty——粘包/半包、编解码器、序列化</title>
     <link href="/2023/10/11/Netty%E2%80%94%E2%80%94%E7%B2%98%E5%8C%85-%E5%8D%8A%E5%8C%85%E3%80%81%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E3%80%81%E5%BA%8F%E5%88%97%E5%8C%96/"/>
     <url>/2023/10/11/Netty%E2%80%94%E2%80%94%E7%B2%98%E5%8C%85-%E5%8D%8A%E5%8C%85%E3%80%81%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E3%80%81%E5%BA%8F%E5%88%97%E5%8C%96/</url>
@@ -420,7 +445,7 @@
   
   
   <entry>
-    <title>java面经</title>
+    <title>Debug Java</title>
     <link href="/2023/03/10/%E9%9D%A2%E8%AF%95/"/>
     <url>/2023/03/10/%E9%9D%A2%E8%AF%95/</url>
     
@@ -429,14 +454,14 @@
     
     <categories>
       
-      <category>面试</category>
+      <category>interview</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>面试</tag>
+      <tag>interview</tag>
       
     </tags>
     
