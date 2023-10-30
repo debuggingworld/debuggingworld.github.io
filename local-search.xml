@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Debug 算法</title>
+    <link href="/2023/10/31/Debug-%E7%AE%97%E6%B3%95/"/>
+    <url>/2023/10/31/Debug-%E7%AE%97%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h3 id="1-数组的最大连续子数组之和——kadane算法"><a href="#1-数组的最大连续子数组之和——kadane算法" class="headerlink" title="1. 数组的最大连续子数组之和——kadane算法"></a>1. 数组的最大连续子数组之和——kadane算法</h3><p><a href="https://zhuanlan.zhihu.com/p/85188269">https://zhuanlan.zhihu.com/p/85188269</a></p><h3 id="2-另一棵树的子树"><a href="#2-另一棵树的子树" class="headerlink" title="2. 另一棵树的子树"></a>2. <a href="https://leetcode.cn/problems/subtree-of-another-tree/">另一棵树的子树</a></h3><h3 id="3-买卖股票的最佳时机"><a href="#3-买卖股票的最佳时机" class="headerlink" title="3. 买卖股票的最佳时机"></a>3. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">买卖股票的最佳时机</a></h3><h3 id="4-买卖股票的最佳时机-II"><a href="#4-买卖股票的最佳时机-II" class="headerlink" title="4. 买卖股票的最佳时机 II"></a>4. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/">买卖股票的最佳时机 II</a></h3><h3 id="5-买卖股票的最佳时机-III"><a href="#5-买卖股票的最佳时机-III" class="headerlink" title="5. 买卖股票的最佳时机 III"></a>5. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/">买卖股票的最佳时机 III</a></h3><h3 id="6-寻找峰值"><a href="#6-寻找峰值" class="headerlink" title="6. 寻找峰值"></a>6. <a href="https://leetcode.cn/problems/find-peak-element/">寻找峰值</a></h3><h3 id="7-最小路径和"><a href="#7-最小路径和" class="headerlink" title="7. 最小路径和"></a>7. <a href="https://leetcode.cn/problems/minimum-path-sum/">最小路径和</a></h3><h3 id="8-最长递增子序列"><a href="#8-最长递增子序列" class="headerlink" title="8. 最长递增子序列"></a>8. <a href="https://leetcode.cn/problems/longest-increasing-subsequence/">最长递增子序列</a></h3><h3 id="9-寻找明星"><a href="#9-寻找明星" class="headerlink" title="9. 寻找明星"></a>9. 寻找明星</h3><p><a href="https://www.cnblogs.com/bvac/p/6382761.html">https://www.cnblogs.com/bvac/p/6382761.html</a></p><p>红黑树</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>interview</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>interview</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Debug web</title>
     <link href="/2023/10/24/Debug-web/"/>
     <url>/2023/10/24/Debug-web/</url>
