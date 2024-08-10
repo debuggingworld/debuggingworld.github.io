@@ -1,0 +1,902 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="不管是服务导出还是服务引入，都发生在应用启动过程中。在启动类上加上 @EnableDubbo 时，该注解上有一个 @DubboComponentScan 注解，@DubboComponentScan 注解 Import 了一个 DubboComponentScanRegistrar，DubboComponentScanRegistrar 中会调用 DubboSpringInitializer.in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo——服务导出和服务引入">
+<meta property="og:url" content="http://example.com/2023/06/15/Dubbo%E2%80%94%E2%80%94%E6%9C%8D%E5%8A%A1%E5%AF%BC%E5%87%BA%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%BC%95%E5%85%A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="不管是服务导出还是服务引入，都发生在应用启动过程中。在启动类上加上 @EnableDubbo 时，该注解上有一个 @DubboComponentScan 注解，@DubboComponentScan 注解 Import 了一个 DubboComponentScanRegistrar，DubboComponentScanRegistrar 中会调用 DubboSpringInitializer.in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306210156440.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306210239652.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306300014867.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292103819.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292122160.png">
+<meta property="article:published_time" content="2023-06-15T14:28:09.000Z">
+<meta property="article:modified_time" content="2024-08-10T02:34:14.803Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="Dubbo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306210156440.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Dubbo——服务导出和服务引入 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Dubbo——服务导出和服务引入"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-15 22:28" pubdate>
+          2023年6月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Dubbo——服务导出和服务引入</h1>
+            
+            <div class="markdown-body">
+              
+              <p>不管是服务导出还是服务引入，都发生在应用启动过程中。在启动类上加上 @EnableDubbo 时，该注解上有一个 @DubboComponentScan 注解，@DubboComponentScan 注解 Import 了一个 DubboComponentScanRegistrar，DubboComponentScanRegistrar 中会调用 DubboSpringInitializer.initialize()，该方法中会注册一个 DubboDeployApplicationListener，而 DubboDeployApplicationListener 会监听 Spring 容器启动完成事件 ContextRefreshedEvent，一旦接收到这个事件后，就会开始 Dubbo 的启动流程，就会执行 DefaultModuleDeployer 的 start() 进行<strong>服务导出</strong>与<strong>服务引入</strong>。</p>
+<p>Dubbo3.0源码：<a target="_blank" rel="noopener" href="https://gitee.com/archguide/dubbo-dubbo-3.0.7">https://gitee.com/archguide/dubbo-dubbo-3.0.7</a></p>
+<p>服务导出和引入整体流程：<a target="_blank" rel="noopener" href="https://www.processon.com/view/link/62c441e80791293dccaebded">https://www.processon.com/view/link/62c441e80791293dccaebded</a></p>
+<p>在启动过程中，在做完<strong>服务导出</strong>与<strong>服务引入</strong>后，还会做几件非常重要的事情：</p>
+<ol>
+<li>导出一个应用元数据服务（就是一个 MetadataService 服务，这个服务也会注册到注册中心），或者将应用元数据注册到元数据中心。</li>
+<li>生成当前应用的实例信息对象 ServiceInstance，比如应用名、实例 ip、实例 port，并将实例信息注册到注册中心，也就是应用级注册。</li>
+</ol>
+<h3 id="1-服务导出"><a href="#1-服务导出" class="headerlink" title="1. 服务导出"></a>1. 服务导出</h3><p>在<strong>某个接口的实现类</strong>上加上 <strong>@DubboService</strong> 后，就表示定义了一个 Dubbo 服务，应用启动时 Dubbo 只要扫描到了 @DubboService，就会解析对应的类，得到服务相关的配置信息，比如：</p>
+<ol>
+<li>服务的类型，也就是接口，接口名就是服务名</li>
+<li>服务的具体实现类，也就是当前类</li>
+<li>服务的 version、timeout 等信息，就是 @DubboService 中所定义的各种配置</li>
+</ol>
+<p>解析完服务的配置信息后，就会把这些配置信息封装成为一个 ServiceConfig 对象，并调用其 export() 进行服务导出，此时一个 ServiceConfig 对象就表示一个 Dubbo 服务。</p>
+<p>而所谓的服务导出，主要就是完成三件事情：</p>
+<ol>
+<li>确定服务的最终参数配置</li>
+<li>按不同协议启动对应的 Server（<strong>服务暴露</strong>）</li>
+<li>将服务注册到注册中心（<strong>服务注册</strong>）</li>
+</ol>
+<h4 id="1-1-确定服务参数"><a href="#1-1-确定服务参数" class="headerlink" title="1.1 确定服务参数"></a>1.1 确定服务参数</h4><p>一个 Dubbo 服务，除开服务的名字，也就是接口名，还会有很多其他的属性，比如超时时间、版本号、服务所属应用名、所支持的协议及绑定的端口等众多信息。</p>
+<p>但是，通常这些信息并不会全部在 @DubboService 中进行定义，比如，一个 Dubbo 服务肯定是属于某个应用的，而一个应用下可以有多个 Dubbo 服务，所以我们可以在应用级别定义一些通用的配置，比如协议。</p>
+<p>我们在 application.yml 中定义：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>  <span class="hljs-attr">protocol:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">20880</span><br></code></pre></td></tr></table></figure>
+
+<p>表示当前应用下所有的 Dubbo 服务都支持通过 tri 协议进行访问，并且访问端口为 20880，所以在进行<strong>某个服务</strong>的服务导出时，就需要将应用中的这些配置信息合并到当前服务的配置信息中。</p>
+<h4 id="1-2-服务注册"><a href="#1-2-服务注册" class="headerlink" title="1.2 服务注册"></a>1.2 服务注册</h4><p>当确定好了最终的服务配置后，Dubbo 就会根据这些配置信息生成对应的<strong>服务 URL</strong>，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tri://192.168.110.140:50051/com.debuggingWorld.mall.service.OrderService?anyhost=true&amp;application=order-application<br></code></pre></td></tr></table></figure>
+
+<p>这个 URL 就表示了一个 Dubbo 服务，服务消费者只要能获得到这个服务 URL，就知道了关于这个 Dubbo 服务的全部信息，包括服务名、支持的协议、ip、port、各种配置。</p>
+<p>确定了服务 URL 之后，服务注册要做的事情就是把这个服务 URL 存到注册中心（比如 Zookeeper）中去，说的再简单一点，就是把这个字符串存到 Zookeeper 中去，这个步骤其实是非常简单的，实现这个功能的源码在 RegistryProtocol 中的 export() 方法中，最终服务 URL 存在了 Zookeeper 的  <strong>/dubbo/ 接口名 /providers</strong> 目录下。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306210156440.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是服务注册并不仅仅就这么简单，既然上面的这个 URL 表示一个服务，并且还包括了服务的一些配置信息，那这些配置信息如果改变了呢？比如利用 Dubbo 管理台中的动态配置功能（注意，并不是配置中心）来修改服务配置，动态配置可以应用运行过程中动态的修改服务的配置，并实时生效。</p>
+<p>如果利用动态配置功能修改了服务的参数，那此时就要重新生成服务 URL 并重新注册到注册中心，这样服务消费者就能及时的获取到服务配置信息。</p>
+<p>而对于服务提供者而言，在服务注册过程中，还需要能监听到动态配置的变化，一旦发生了变化，就根据最新的配置重新生成服务 URL，并重新注册到中心。</p>
+<h4 id="1-3-应用级注册"><a href="#1-3-应用级注册" class="headerlink" title="1.3 应用级注册"></a>1.3 应用级注册</h4><p>在 Dubbo3.0 之前，Dubbo 是接口级注册，服务注册就是把接口名以及服务配置信息注册到注册中心中，注册中心存储的数据格式大概为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">接口名1：tri://192.168.110.140:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.140:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.140:50051/接口名3?application=应用名<br></code></pre></td></tr></table></figure>
+
+<p>key 是接口名，value 就是服务 URL，上面的内容就表示现在有一个应用，该应用下有 3 个接口，应用实例部署在 192.168.110.140，此时，如果给该应用增加一个实例，实例 ip 为 192.168.110.141，那么新的实例也需要进行服务注册，会向注册中心新增 3 条数据：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">接口名1：tri://192.168.110.140:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.140:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.140:50051/接口名3?application=应用名<br><br>接口名1：tri://192.168.110.141:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.141:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.141:50051/接口名3?application=应用名<br></code></pre></td></tr></table></figure>
+
+<p>可以发现，如果一个应用中有 3 个 Dubbo 服务，那么每增加一个实例，就会向注册中心增加 3 条记录，那如果一个应用中有 10 个 Dubbo 服务，那么每增加一个实例，就会向注册中心增加 10 条记录，注册中心的压力会随着应用实例的增加而剧烈增加。</p>
+<p>反过来，如果一个应用有 3 个 Dubbo 服务，5 个实例，那么注册中心就有 15 条记录，此时增加一个 Dubbo 服务，那么注册中心就会新增 5 条记录，注册中心的压力也会剧烈增加。</p>
+<p>注册中心的数据越多，数据就变化的越频繁，比如修改服务的 timeout，那么对于注册中心和应用都需要消耗资源用来处理数据变化。</p>
+<p>所以为了降低注册中心的压力，Dubbo3.0 支持了应用级注册，同时也兼容接口级注册，用户可以逐步迁移成应用级注册，而一旦采用应用级注册，最终注册中心的数据存储就变成为：</p>
+<blockquote>
+<p>应用名：192.168.110.140:20880<br>应用名：192.168.110.141:20880</p>
+</blockquote>
+<p>表示在注册中心中，只记录应用所对应的实例信息（IP+绑定的端口），这样只有一个应用的实例增加了，那么注册中心的数据才会增加，而不关心一个应用中到底有多少个 Dubbo 服务。</p>
+<p>这样带来的好处就是，注册中心存储的数据变少了，注册中心中数据的变化频率变小了，并且使用应用级注册，使得 Dubbo3 能实现与异构微服务体系如 Spring Cloud、Kubernetes Service 等在地址发现层面更容易互通， 为连通 Dubbo 与其他微服务体系提供可行方案。</p>
+<p>应用级注册带来了好处，但是对于 Dubbo 来说又出现了一些新的问题，比如：原本，服务消费者可以直接从注册中心就知道某个 Dubbo 服务的所有服务提供者以及相关的协议、ip、port、配置等信息，那现在注册中心上只有 ip、port，那对于服务消费者而言：<strong>服务消费者怎么知道现在它要用的某个 Dubbo 服务，也就是某个接口对应的应用是哪个呢？</strong></p>
+<p>对于这个问题，在进行服务导出的过程中，会在 Zookeeper 中存一个映射关系，在服务导出的最后一步，在 ServiceConfig 的 exported() 方法中，会保存这个映射关系：</p>
+<blockquote>
+<p>接口名：应用名</p>
+</blockquote>
+<p>这个映射关系存在 Zookeeper 的  <strong>/dubbo/mapping 目录</strong>下，存了这个信息后，消费者就能根据接口名找到所对应的应用名了。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306210239652.png" srcset="/img/loading.gif" lazyload></p>
+<p>消费者知道了要使用的 Dubbo 服务在哪个应用，那也就能从注册中心中根据应用名查到应用的所有实例信息（ip+port），也就是可以发送方法调用请求了，但是在真正发送请求之前，还得知道服务的配置信息，对于消费者而言，它得知道当前要调用的这个Dubbo服务支持什么协议、timeout是多少，<strong>那服务的配置信息从哪里获取呢？</strong></p>
+<p>之前的服务配置信息是直接从注册中心就可以获取到的，就是服务 URL 后面，但是现在不行了，现在需要从服务提供者的元数据服务获取，前面提到过，在应用启动过程中会进行服务导出和服务引入，然后就会暴露一个<strong>应用元数据服务</strong>，其实这个应用元数据服务就是一个 Dubbo 服务（Dubbo框架内置的，自己实现的），消费者可以调用这个服务来获取某个应用中所提供的所有 Dubbo 服务以及服务配置信息，这样也就能知道服务的配置信息了。</p>
+<h5 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h5><p>首先，可以通过配置 <strong>dubbo.application.register-mode</strong> 来控制：</p>
+<ol>
+<li>instance：表示只进行应用级注册</li>
+<li>interface：表示只进行接口级注册</li>
+<li>all：表示应用级注册和接口级注册都进行，默认</li>
+</ol>
+<p>不管是什么注册，都需要存数据到注册中心，而 Dubbo3 的源码实现中会根据所配置的注册中心生成两个 URL（不是服务 URL，可以理解为注册中心 URL，用来访问注册中心的）:</p>
+<blockquote>
+<ol>
+<li>service-discovery-registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application=order-application&amp;dubbo=2.0.2&amp;pid=13072&amp;qos.enable=false®istry=zookeeper×tamp=1651755501660</li>
+<li>registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application=order-application&amp;dubbo=2.0.2&amp;pid=13072&amp;qos.enable=false®istry=zookeeper×tamp=1651755501660</li>
+</ol>
+</blockquote>
+<p>这两个 URL 只有 schema 不一样，一个是 service-discovery-registry，一个是 registry，而 registry 是 Dubbo3 之前就存在的，也就代表接口级服务注册，而 service-discovery-registry 就表示应用级服务注册。</p>
+<p>在服务注册相关的源码中，当调用 RegistryProtocol 的 export() 方法处理 registry:// 时，会利用 ZookeeperRegistry 把服务 URL 注册到 Zookeeper 中去，这就是接口级注册。</p>
+<p>而类似，当调用 RegistryProtocol 的 export() 方法处理 service-discovery-registry:// 时，会利用 ServiceDiscoveryRegistry 来进行相关逻辑的处理，那是不是就是在这里把应用信息注册到注册中心去呢？并没有这么简单。</p>
+<ol>
+<li>首先，不可能每导出一个服务就进行一次应用注册，太浪费了，应用注册只要做一次就行了</li>
+<li>另外，如果一个应用支持了多个端口，那么应用注册时只要挑选其中一个端口作为实例端口就可以了（该端口只要能接收到数据就行）</li>
+<li>前面提到，应用启动过程中要暴露应用元数据服务，所以在此处也还是要收集当前所暴露的服务配置信息，以提供给应用元数据服务</li>
+</ol>
+<p>所以 ServiceDiscoveryRegistry 在注册一个服务 URL 时，并不会往注册中心存数据，而只是把服务 URL 存到到一个 MetadataInfo 对象中，MetadataInfo 对象中就保存了当前应用中所有的 Dubbo 服务信息（服务名、支持的协议、绑定的端口、timeout 等）</p>
+<p>前面提到过，在应用启动的最后，才会进行应用级注册，而应用级注册就是当前的应用实例上相关的信息存入注册中心，包括：</p>
+<ol>
+<li>应用的名字</li>
+<li>获取应用元数据的方式</li>
+<li>当前实例的 ip 和 port</li>
+<li>当前实例支持哪些协议以及对应的 port</li>
+</ol>
+<p>例如：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306300014867.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>	<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>	<span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;192.168.110.140:50051&quot;</span>,<br>	<span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;192.168.110.140&quot;</span>,<br>	<span class="hljs-attr">&quot;port&quot;</span>: <span class="hljs-number">50051</span>,<br>	<span class="hljs-attr">&quot;sslPort&quot;</span>: <span class="hljs-literal">null</span>,<br>	<span class="hljs-attr">&quot;payload&quot;</span>: &#123;<br>		<span class="hljs-attr">&quot;@class&quot;</span>: <span class="hljs-string">&quot;org.apache.dubbo.registry.zookeeper.ZookeeperInstance&quot;</span>,<br>		<span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;192.168.110.140:50051&quot;</span>,<br>		<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>		<span class="hljs-attr">&quot;metadata&quot;</span>: &#123;<br>			<span class="hljs-attr">&quot;dubbo.endpoints&quot;</span>: <span class="hljs-string">&quot;[&#123;\&quot;port\&quot;:50051,\&quot;protocol\&quot;:\&quot;tri\&quot;&#125;]&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata-service.url-params&quot;</span>: <span class="hljs-string">&quot;&#123;\&quot;connections\&quot;:\&quot;1\&quot;,\&quot;version\&quot;:\&quot;1.0.0\&quot;,\&quot;dubbo\&quot;:\&quot;2.0.2\&quot;,\&quot;release\&quot;:\&quot;3.1.9\&quot;,\&quot;side\&quot;:\&quot;provider\&quot;,\&quot;ipv6\&quot;:\&quot;2408:8270:1038:5f20:0:0:0:e7d9\&quot;,\&quot;port\&quot;:\&quot;50052\&quot;,\&quot;protocol\&quot;:\&quot;tri\&quot;&#125;&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata.revision&quot;</span>: <span class="hljs-string">&quot;0b944e47ab5cd306cd6ffa9ba20633b4&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata.storage-type&quot;</span>: <span class="hljs-string">&quot;local&quot;</span>,<br>			<span class="hljs-attr">&quot;ipv6&quot;</span>: <span class="hljs-string">&quot;2408:8270:1038:5f20:0:0:0:e7d9&quot;</span>,<br>			<span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;1687276820990&quot;</span><br>		&#125;<br>	&#125;,<br>	<span class="hljs-attr">&quot;registrationTimeUTC&quot;</span>: <span class="hljs-number">1687276823174</span>,<br>	<span class="hljs-attr">&quot;serviceType&quot;</span>: <span class="hljs-string">&quot;DYNAMIC&quot;</span>,<br>	<span class="hljs-attr">&quot;uriSpec&quot;</span>: <span class="hljs-literal">null</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一个实例上可能支持多个协议以及多个端口，<strong>那如何确定实例的 ip 和端口呢？</strong></p>
+<p>答案是：获取 MetadataInfo 对象中保存的所有服务URL，优先取 dubbo 协议对应 ip 和 port，没有 dubbo 协议则所有服务 URL 中的第一个 URL 的 ip 和 port。</p>
+<p>另外一个协议一般只会对应一个端口，但是如果就是对应了多个，比如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>  <span class="hljs-attr">protocols:</span><br>    <span class="hljs-attr">p1:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">20881</span><br>    <span class="hljs-attr">p2:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">20882</span><br>    <span class="hljs-attr">p3:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">50051</span><br></code></pre></td></tr></table></figure>
+
+<p>如果是这样，最终存入 endpoint 中的会保证一个协议只对应一个端口，另外那个将被忽略，最终服务消费者在进行服务引入时将会用到这个 endpoint 信息。</p>
+<p>确定好实例信息后之后，就进行最终的应用注册了，就把实例信息存入注册中心的 <strong>/services/ 应用名目录</strong>下：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292103819.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看出 services 节点下存的是应用名，应用名的节点下存的是实例 ip 和实例 port，而 ip 和 port 这个节点中的内容就是实例的一些基本信息。</p>
+<p>另外，可以配置 dubbo.metadata.storage-type，默认是 local，可以通过配置改为 remote：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>    <span class="hljs-attr">metadata-type:</span> <span class="hljs-string">remote</span><br></code></pre></td></tr></table></figure>
+
+<p>这个配置其实跟应用元数据服务（MetadataService 服务，用于返回 metadata）有关系：</p>
+<ol>
+<li>如果为 local，那就会启用<strong>应用元数据服务</strong>，最终服务消费者就会调用元数据服务获取到应用元数据信息（接口注册的方式调用，将接口注册到注册中心）</li>
+<li>如果为 remote，那就不会暴露应用元数据服务，那么服务消费者从<strong>元数据中心</strong>获取应用元数据呢？ </li>
+</ol>
+<p>在 Dubbo2.7 中就有了元数据中心，它其实就是用来减轻注册中心的压力的，Dubbo 会把服务信息完整的存一份到元数据中心，元数据中心也可以用 Zookeeper 来实现，在暴露完元数据服务之后，在注册实例信息到注册中心之前，就会把 MetadataInfo 存入元数据中心，比如：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292122160.png" srcset="/img/loading.gif" lazyload></p>
+<p>节点内容为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>	<span class="hljs-attr">&quot;app&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>	<span class="hljs-attr">&quot;revision&quot;</span>: <span class="hljs-string">&quot;3ea21c46ac0131239cf39512bc691907&quot;</span>,<br>	<span class="hljs-attr">&quot;services&quot;</span>: &#123;<br>		<span class="hljs-attr">&quot;com.debuggingWorld.mall.service.OrderService:tri&quot;</span>: &#123;<br>			<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>			<span class="hljs-attr">&quot;params&quot;</span>: &#123;<br>				<span class="hljs-attr">&quot;side&quot;</span>: <span class="hljs-string">&quot;provider&quot;</span>,<br>				<span class="hljs-attr">&quot;release&quot;</span>: <span class="hljs-string">&quot;3.1.9&quot;</span>,<br>				<span class="hljs-attr">&quot;methods&quot;</span>: <span class="hljs-string">&quot;getOrderByUserId&quot;</span>,<br>				<span class="hljs-attr">&quot;deprecated&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;dubbo&quot;</span>: <span class="hljs-string">&quot;2.0.2&quot;</span>,<br>				<span class="hljs-attr">&quot;interface&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>				<span class="hljs-attr">&quot;service-name-mapping&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br>				<span class="hljs-attr">&quot;generic&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;metadata-type&quot;</span>: <span class="hljs-string">&quot;remote&quot;</span>,<br>				<span class="hljs-attr">&quot;application&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>				<span class="hljs-attr">&quot;background&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;dynamic&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br>				<span class="hljs-attr">&quot;anyhost&quot;</span>: <span class="hljs-string">&quot;true&quot;</span><br>			&#125;,<br>			<span class="hljs-attr">&quot;path&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>			<span class="hljs-attr">&quot;port&quot;</span>: <span class="hljs-number">50051</span>,<br>			<span class="hljs-attr">&quot;protocol&quot;</span>: <span class="hljs-string">&quot;tri&quot;</span><br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里面就记录了当前实例上提供了哪些服务以及对应的协议，注意并没有保存对应的端口，所以后面服务消费者得利用实例信息中的 endpoint，因为 endpoint中记录了协议对应的端口。</p>
+<p>其实元数据中心和元数据服务提供的功能是一样的，都可以用来获取某个实例的 MetadataInfo，上面中的 UUID 表示实例编号，只不过元数据中心是<strong>集中</strong>式的，元数据服务式<strong>分散</strong>在各个提供者实例中的，如果整个微服务集群压力不大，那么效果差不多，如果微服务集群压力大，那么元数据中心的压力就大，此时单个元数据服务就更适合，所以默认也是采用的元数据服务。</p>
+<p>注册中心和元数据中心也可以分别设置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>    <span class="hljs-attr">metadata-type:</span> <span class="hljs-string">remote</span><br>    <span class="hljs-attr">register-mode:</span> <span class="hljs-string">instance</span><br>  <span class="hljs-attr">protocol:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>  <span class="hljs-attr">registry:</span><br>    <span class="hljs-attr">address:</span> <span class="hljs-string">zookeeper://127.0.0.1:2181</span><br>  <span class="hljs-attr">metadata-report:</span><br>    <span class="hljs-attr">address:</span> <span class="hljs-string">zookeeper://127.0.0.1:2182</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>至此，应用级服务注册的原理就分析完了，总结一下：</p>
+<ol>
+<li>在导出某个 Dubbo 服务URL时，会把服务 URL 存入 MetadataInfo 中</li>
+<li>导出完某个 Dubbo 服务后，就会把<strong>服务接口名:应用名</strong>存入元数据中心（可以用 Zookeeper 实现）</li>
+<li>导出所有服务后，完成服务引入后</li>
+<li>判断要不要启动元数据服务，如果要就进行导出，固定使用 Dubbo 协议</li>
+<li>将 MetadataInfo 存入元数据中心</li>
+<li>确定当前实例信息（应用名、ip、port、endpoint）</li>
+<li>将实例信息存入注册中心，完成应用注册</li>
+</ol>
+<p>应用注册查找过程：</p>
+<p>OrderService —&gt; mapping —&gt; 应用名—-&gt;实例1—&gt;实例ip + port —&gt; 实例元数据  —&gt; endpoints —&gt;OrderService:tri —-&gt;tri协议端口  —&gt; tri://示例端口：tri协议端口/OrderService —&gt; TripleInvoker</p>
+<p>OrderService —&gt; mapping —&gt; 应用名—-&gt;实例2—&gt;实例ip + port  —&gt;实例元数据  —&gt; endpoints —&gt; OrderService:dubbo —-&gt;dubbo协议端口  —&gt; dubbo://示例端口：dubbo协议端口/OrderService —&gt; DubboInvoker</p>
+<p>ClusterInvoker —&gt; OrderService 代理对象</p>
+<p>ClusterInvoker .invoke(Invovation) —&gt; TripleInvoker.invoke() —&gt; tri —&gt; 实例ip：tri协议端口</p>
+<h4 id="1-4-服务暴露"><a href="#1-4-服务暴露" class="headerlink" title="1.4 服务暴露"></a>1.4 服务暴露</h4><p>服务暴露就是根据不同的协议启动不同的 Server，比如 dubbo 和 tri 协议启动的都是 Netty，像 Dubbo2.7 中的 http 协议启动的就是 Tomcat，这块在服务调用的时候再来分析。</p>
+<p>1：10：00</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Dubbo/" class="category-chain-item">Dubbo</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Dubbo/">#Dubbo</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Dubbo——服务导出和服务引入</div>
+      <div>http://example.com/2023/06/15/Dubbo——服务导出和服务引入/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月15日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/03/Netty%E2%80%94%E2%80%94BIO%E3%80%81NIO/" title="Netty——BIO、NIO">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty——BIO、NIO</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/01/Dubbo%E2%80%94%E2%80%94Dubbo3-0%E6%96%B0%E7%89%B9%E6%80%A7/" title="Dubbo——Dubbo3.0新特性">
+                        <span class="hidden-mobile">Dubbo——Dubbo3.0新特性</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

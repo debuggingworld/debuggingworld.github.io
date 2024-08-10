@@ -1,0 +1,912 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 什么是 DubboApache Dubbo 是一款 RPC 服务开发框架，用于解决微服务架构下的服务治理与通信问题，官方提供了 Java、Golang 等多语言 SDK 实现。使用 Dubbo 开发的微服务原生具备相互之间的远程地址发现与通信能力， 利用 Dubbo 提供的丰富服务治理特性，可以实现诸如服务发现、负载均衡、流量调度等服务治理诉求。Dubbo 被设计为高度可扩展，用户可以方便的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dubbo——Dubbo3.0新特性">
+<meta property="og:url" content="http://example.com/2023/06/01/Dubbo%E2%80%94%E2%80%94Dubbo3-0%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 什么是 DubboApache Dubbo 是一款 RPC 服务开发框架，用于解决微服务架构下的服务治理与通信问题，官方提供了 Java、Golang 等多语言 SDK 实现。使用 Dubbo 开发的微服务原生具备相互之间的远程地址发现与通信能力， 利用 Dubbo 提供的丰富服务治理特性，可以实现诸如服务发现、负载均衡、流量调度等服务治理诉求。Dubbo 被设计为高度可扩展，用户可以方便的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012143825.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012153165.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012212007.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020027164.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020224620.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020238672.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306132230080.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306140029900.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306140030133.png">
+<meta property="article:published_time" content="2023-05-31T17:51:32.000Z">
+<meta property="article:modified_time" content="2024-08-10T02:34:14.803Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="Dubbo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012143825.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Dubbo——Dubbo3.0新特性 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Dubbo——Dubbo3.0新特性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-01 01:51" pubdate>
+          2023年6月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Dubbo——Dubbo3.0新特性</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="1-什么是-Dubbo"><a href="#1-什么是-Dubbo" class="headerlink" title="1. 什么是 Dubbo"></a>1. 什么是 Dubbo</h3><p>Apache Dubbo 是一款 RPC 服务开发框架，用于解决微服务架构下的服务治理与通信问题，官方提供了 Java、Golang 等多语言 SDK 实现。使用 Dubbo 开发的微服务原生具备相互之间的远程地址发现与通信能力， 利用 Dubbo 提供的丰富服务治理特性，可以实现诸如服务发现、负载均衡、流量调度等服务治理诉求。Dubbo 被设计为高度可扩展，用户可以方便的实现流量拦截、选址的各种定制逻辑</p>
+<p>官网地址：<a target="_blank" rel="noopener" href="http://dubbo.apache.org/zh/">http://dubbo.apache.org/zh/</a></p>
+<h3 id="2-快速开始"><a href="#2-快速开始" class="headerlink" title="2. 快速开始"></a>2. 快速开始</h3><ol>
+<li>添加 dubbo 核心依赖</li>
+<li>添加要使用的注册中心依赖</li>
+<li>添加要使用的协议的依赖</li>
+<li>配置 dubbo 相关的基本信息</li>
+<li>配置注册中心地址</li>
+<li>配置所使用的协议</li>
+</ol>
+<h4 id="2-1-添加依赖"><a href="#2-1-添加依赖" class="headerlink" title="2.1 添加依赖"></a>2.1 添加依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-rpc-dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-registry-nacos<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-2-公共服务"><a href="#2-2-公共服务" class="headerlink" title="2.2 公共服务"></a>2.2 公共服务</h4><p>OrderService 接口在服务提供者和服务调用方都使用到了，所以提取为公共服务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">OrderService</span> </span>&#123;<br>    <span class="hljs-function">ResponseEntity <span class="hljs-title">getOrderByUserId</span><span class="hljs-params">(Integer userId)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012143825.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="2-3-provider"><a href="#2-3-provider" class="headerlink" title="2.3 provider"></a>2.3 provider</h4><ol>
+<li><p><font color="red"><strong>@DubboService</strong> </font>标注该类为  Dubbo Service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@DubboService</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OrderServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OrderService</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">getOrderByUserId</span><span class="hljs-params">(Integer userId)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResponseEntity();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p><font color="red"><strong>@EnableDubbo</strong> </font>开启 Dubbo</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableDubbo(scanBasePackages = &quot;com.debuggingWorld.service&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Application</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(Application.class);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>配置文件</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">dubbo.application.name</span>=<span class="hljs-string">order-application</span><br><span class="hljs-meta">dubbo.protocol.name</span>=<span class="hljs-string">dubbo</span><br><span class="hljs-meta">dubbo.protocol.port</span>=<span class="hljs-string">20880</span><br><span class="hljs-comment">#dubbo.registry.address=zookeeper://127.0.0.1:2181</span><br><span class="hljs-meta">dubbo.registry.address</span>=<span class="hljs-string">nacos://192.168.60.10:8848</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012153165.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>兼容</p>
+<p>但是在开发过程中，很有可能有其他多个应用在调用 provider 应用，对于 provider 应用要做到，既要能支持 dubbo 协议调用，也要能支持 http 调用（和 controller 效果一样），所以，要么仍然保留 SpringMVC 那一套，如果不想保留那一套，就可以开启 dubbo 中的 rest 协议。</p>
+<p><strong>添加依赖：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-rpc-rest<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>修改配置：</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">dubbo.application.name</span>=<span class="hljs-string">order-application</span><br><br><span class="hljs-meta">dubbo.protocols.p1.name</span>=<span class="hljs-string">dubbo</span><br><span class="hljs-meta">dubbo.protocols.p1.port</span>=<span class="hljs-string">20880</span><br><br><span class="hljs-meta">dubbo.protocols.p2.name</span>=<span class="hljs-string">rest</span><br><span class="hljs-meta">dubbo.protocols.p2.port</span>=<span class="hljs-string">8082</span><br><br><span class="hljs-meta">dubbo.registry.address</span>=<span class="hljs-string">nacos://192.168.60.10:8848</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>改造接口实现：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@DubboService</span><br><span class="hljs-meta">@Path(&quot;/user&quot;)</span><br><span class="hljs-meta">@Produces</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OrderServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OrderService</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-meta">@GET</span><br>    <span class="hljs-meta">@Path(&quot;/&#123;userId&#125;&quot;)</span><br>    <span class="hljs-meta">@Produces(MediaType.APPLICATION_JSON)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">getOrderByUserId</span><span class="hljs-params">(<span class="hljs-meta">@PathParam(&quot;userId&quot;)</span> Integer userId)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResponseEntity();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>测试：</strong></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306012212007.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h4 id="2-4-consumer"><a href="#2-4-consumer" class="headerlink" title="2.4 consumer"></a>2.4 consumer</h4><ol>
+<li><p>引入服务</p>
+<p>通过 <font color="red">@DubboReference </font>注解来引入一个 Dubbo 服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br><br>    <span class="hljs-meta">@DubboReference</span><br>    OrderService orderService;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">getUser</span><span class="hljs-params">(Integer userId)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> orderService.getOrderByUserId(userId);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>配置文件</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">server.port</span>=<span class="hljs-string">8081</span><br><span class="hljs-meta">dubbo.application.name</span>=<span class="hljs-string">user-application</span><br><span class="hljs-meta">dubbo.registry.address</span> =<span class="hljs-string">nacos://192.168.60.10:8848</span><br></code></pre></td></tr></table></figure></li>
+<li><p>开启 Dubbo</p>
+<p>启动类添加 @EnableDubbo</p>
+</li>
+</ol>
+<h3 id="3-Dubbo3-0-新特性介绍"><a href="#3-Dubbo3-0-新特性介绍" class="headerlink" title="3. Dubbo3.0 新特性介绍"></a>3. Dubbo3.0 新特性介绍</h3><h4 id="3-1-注册模型的改变"><a href="#3-1-注册模型的改变" class="headerlink" title="3.1 注册模型的改变"></a>3.1 注册模型的改变</h4><p> 　　在服务注册领域，有两种模型，一种是应用级注册，一种是接口级注册，在Spring Cloud中，一个应用是一个微服务，而在 Dubbo2.7 中，一个接口是一个微服务。</p>
+<p>　　Spring Cloud 在进行服务注册时，是把应用名以及应用所在服务器的 IP 地址和应用所绑定的端口注册到注册中心，相当于 key 是应用名，value 是 ip+port，而在 Dubbo2.7 中，是把接口名以及对应应用的 IP 地址和所绑定的端口注册到注册中心，相当于 key 是接口名，value 是 ip+port。所以在 Dubbo2.7 中，一个应用如果提供了 10 个 Dubbo 服务，那么注册中心中就会存储 10 对 keyvalue，而 Spring Cloud 就只会存一对 keyvalue，所以以 Spring Cloud 为首的应用级注册是更加适合的。</p>
+<p>　　所以 Dubbo3.0 中将注册模型也改为了应用级注册，提升效率节省资源的同时，通过统一注册模型，也为各个微服务框架的互通打下了基础。</p>
+<h4 id="3-2-Triple-协议"><a href="#3-2-Triple-协议" class="headerlink" title="3.2 Triple 协议"></a>3.2 Triple 协议</h4><ol>
+<li>HTTP1.x 协议中，多余无用的字符太多了，比如回车符、换行符，这些字符占用了网络带宽，降低了网络 IO 的效率。</li>
+<li>HTTP1.x 协议中，一条 Socket 连接，一次只能发送一个 HTTP 请求，因为如果连续发送两个 HTTP 请求，然后收到了一个响应，那怎么知道这个响应对应的是哪个请求呢，这样导致 Socket 连接的利用低，并发、吞吐量低。</li>
+</ol>
+<p>　　dubbo 协议相比于 http1.x 协议，性能会更好，因为请求中没有多余的无用的字节，都是必要的字节，并且每个 Dubbo 请求和响应中都有一个请求 ID，这样可以基于一个 Socket 连接同时发送多个 Dubbo 请求，不用担心请求和响应对不上，所以 dubbo 协议成为了 Dubbo 框架中的默认协议。</p>
+<p>dubbo 协议格式：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020027164.png" srcset="/img/loading.gif" lazyload></p>
+<p>　　但是 dubbo 协议一旦涉及到跨 RPC 框架，比如一个 Dubbo 服务要调用 gPRC 服务，就比较麻烦了，因为发一个 dubbo 协议的请求给一个 gPRC 服务，gPRC 服务只会按照 gRPC 的格式来解析字节流，最终肯定会解析不成功的。dubbo 协议虽好，但是不够通用，所以这就出现了 Triple 协议。</p>
+<p>　　Triple 协议是基于 HTTP2，没有性能问题，另外 HTTP 协议非常通用，全世界都认它，兼容起来也比较简单，而且还有很多额外的功能，比如流式调用。</p>
+<p>triple、dubbo、rest 协议对比：</p>
+<ul>
+<li>triple 协议基于的是 HTTP2，rest 协议目前基于的是 HTTP1，都可以做到跨语言。</li>
+<li>triple 协议兼容了 gPRC（Triple 服务可以直接调用 gRPC 服务，反过来也可以），rest 协议不行</li>
+<li>triple 协议支持流式调用，rest 协议不行</li>
+<li>rest 协议更方便浏览器、客户端直接调用，triple 协议不行（原理上支持，当得对 triple 协议的底层实现比较熟悉才行，得知道具体的请求头、请求体是怎么生成的）</li>
+<li>dubbo 协议是 Dubbo3.0 之前的默认协议，triple 协议是 Dubbo3.0 之后的默认协议，优先用 Triple 协议</li>
+<li>dubbo 协议不是基于的 HTTP，不够通用，triple 协议底层基于 HTTP 所以更通用（比如跨语言、跨异构系统实现起来比较方便）</li>
+<li>dubbo 协议不支持流式调用</li>
+</ul>
+<p><strong>Triple 协议的使用：</strong></p>
+<ol>
+<li><p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-rpc-triple<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>修改配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">dubbo.protocol.name</span>=<span class="hljs-string">tri</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="3-3-Triple-协议的流式调用"><a href="#3-3-Triple-协议的流式调用" class="headerlink" title="3.3 Triple 协议的流式调用"></a>3.3 Triple 协议的流式调用</h4><p>StreamObserver 在 dubbo-common 模块下，所以添加  dubbo-common 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>公共服务中的接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">HelloService</span> </span>&#123;<br>    <span class="hljs-comment">// UNARY</span><br>    <span class="hljs-function">String <span class="hljs-title">sayHello</span><span class="hljs-params">(String name)</span></span>;<br><br>    <span class="hljs-comment">// SERVER_STREAM</span><br>    <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sayHelloServerStream</span><span class="hljs-params">(String name, StreamObserver&lt;String&gt; response)</span> </span>&#123;<br>    &#125;<br><br>    <span class="hljs-comment">// CLIENT_STREAM / BI_STREAM</span><br>    <span class="hljs-function"><span class="hljs-keyword">default</span> StreamObserver&lt;String&gt; <span class="hljs-title">sayHelloStream</span><span class="hljs-params">(StreamObserver&lt;String&gt; response)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> response;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="1-UNARY"><a href="#1-UNARY" class="headerlink" title="1. UNARY"></a>1. UNARY</h5><p>就是正常的调用方法</p>
+<p>服务实现类对应的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">sayHello</span><span class="hljs-params">(String name)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello &quot;</span> + name;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>服务消费者调用方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">String result = helloService.sayHello(<span class="hljs-string">&quot;debuggingWorld&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-SERVER-STREAM"><a href="#2-SERVER-STREAM" class="headerlink" title="2. SERVER_STREAM"></a>2. SERVER_STREAM</h5><p>服务实现类对应的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sayHelloServerStream</span><span class="hljs-params">(String name, StreamObserver&lt;String&gt; response)</span> </span>&#123;<br>    response.onNext(<span class="hljs-string">&quot;hello:&quot;</span> + name);<br>    response.onNext(<span class="hljs-string">&quot;bye:&quot;</span> + name);<br>    response.onCompleted();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>服务消费者调用方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java">helloService.sayHelloServerStream(<span class="hljs-string">&quot;debuggingWorld&quot;</span>, <span class="hljs-keyword">new</span> StreamObserver&lt;String&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onNext</span><span class="hljs-params">(String data)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;收到结果：&quot;</span>+data);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable throwable)</span> </span>&#123;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCompleted</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;接收结束&quot;</span>);<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-CLIENT-STREAM"><a href="#3-CLIENT-STREAM" class="headerlink" title="3. CLIENT_STREAM"></a>3. CLIENT_STREAM</h5><p>也叫双端流</p>
+<p>服务实现类对应的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> StreamObserver&lt;String&gt; <span class="hljs-title">sayHelloStream</span><span class="hljs-params">(StreamObserver&lt;String&gt; response)</span> </span>&#123;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> StreamObserver&lt;String&gt;() &#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onNext</span><span class="hljs-params">(String data)</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;服务端接收：&quot;</span>+data);<br>            <span class="hljs-comment">// 服务端响应</span><br>            response.onNext(<span class="hljs-string">&quot;hello &quot;</span>+ data);<br>        &#125;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable throwable)</span> </span>&#123;<br>        &#125;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCompleted</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;服务端接收结束&quot;</span>);<br>            response.onCompleted();<br>        &#125;<br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>服务消费者调用方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java">StreamObserver&lt;String&gt; streamObserver = helloService.sayHelloStream(<span class="hljs-keyword">new</span> StreamObserver&lt;String&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onNext</span><span class="hljs-params">(String data)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;客户端收到：&quot;</span>+data);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable throwable)</span> </span>&#123;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCompleted</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;客户端接收结束&quot;</span>);<br><br>    &#125;<br>&#125;);<br>streamObserver.onNext(<span class="hljs-string">&quot;debugging&quot;</span>);<br>streamObserver.onNext(<span class="hljs-string">&quot;world&quot;</span>);<br>streamObserver.onCompleted();<br></code></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020224620.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306020238672.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="4-BI-STREAM"><a href="#4-BI-STREAM" class="headerlink" title="4 BI_STREAM"></a>4 BI_STREAM</h5><p>和 CLIENT_STREAM 一样</p>
+<h3 id="4-Dubbo3-0-跨语言调用"><a href="#4-Dubbo3-0-跨语言调用" class="headerlink" title="4. Dubbo3.0 跨语言调用"></a>4. Dubbo3.0 跨语言调用</h3><p>Dubbo 一开始是用 Java 语言实现的，那现在就需要一个 go 语言实现的 Dubbo 框架，也就是现在的 dubbo-go，然后在 go 项目中引入 dubbo-go，从而可以在 go 项目中使用 dubbo，比如使用 go 语言去暴露和使用 Dubbo 服务。</p>
+<p>在使用 Java 语言开发一个 Dubbo 服务时，会把服务接口和相关类，单独抽象成为一个 Maven 项目，实际上就相当于一个单独的 jar 包，这个 jar 能被 Java 项目所使用，但不能被 go 项目所使用，所以 go 项目中该如何使用 Java 语言所定义的接口呢？直接用是不太可能的，只能通过间接的方式来解决这个问题，除开 Java 语言之外，那有没有其他技术也能定义接口呢？并且该技术也是 Java 和 go 都支持，这就是 protobuf。</p>
+<h4 id="4-1-protobuf"><a href="#4-1-protobuf" class="headerlink" title="4.1 protobuf"></a>4.1 protobuf</h4><p>我们可以通过 protobuf 来定义接口，然后通过 protobuf 的编译器将接口编译为特定语言的实现。</p>
+<p>在 provider 项目中定义一个 orderservice.proto 文件，路径为 src/main/proto/userservorderservicece.proto</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs protobuf">syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br><span class="hljs-keyword">package</span> api;<br><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;./;api&quot;</span>;<br><span class="hljs-keyword">option</span> java_multiple_files = <span class="hljs-literal">true</span>;<br><span class="hljs-keyword">option</span> java_package = <span class="hljs-string">&quot;com.debuggingWorld&quot;</span>;<br><span class="hljs-keyword">option</span> java_outer_classname = <span class="hljs-string">&quot;OrderServiceProto&quot;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">OrderService</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> GetOrderByUserId (OrderRequest ) <span class="hljs-keyword">returns</span> (OrderResponse) </span>&#123;&#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">OrderRequest</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> userId = <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">OrderResponse</span> </span>&#123;<br>  <span class="hljs-built_in">int32</span> code = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> msg = <span class="hljs-number">2</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>定义 OrderService 服务，并且定义了一个 GetOrderByUserId 方法，接收 OrderRequest 类型的参数，返回 OrderResponse 类型的对象。</p>
+<h4 id="4-2-编译成-Java"><a href="#4-2-编译成-Java" class="headerlink" title="4.2 编译成 Java"></a>4.2 编译成 Java</h4><p>在 provider 项目中的 pom 文件中添加相关 maven 插件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">extensions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">extension</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>kr.motd.maven<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>os-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.6.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">extension</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">extensions</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.7.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">target</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.xolstice.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>protobuf-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.6.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">protocArtifact</span>&gt;</span>com.google.protobuf:protoc:3.7.1:exe:$&#123;os.detected.classifier&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">protocArtifact</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">outputDirectory</span>&gt;</span>build/generated/source/proto/main/java<span class="hljs-tag">&lt;/<span class="hljs-name">outputDirectory</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">clearOutputDirectory</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">clearOutputDirectory</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">protocPlugins</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">protocPlugin</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.dubbo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>dubbo-compiler<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">mainClass</span>&gt;</span>org.apache.dubbo.gen.dubbo.Dubbo3Generator<span class="hljs-tag">&lt;/<span class="hljs-name">mainClass</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">protocPlugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">protocPlugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>compile<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>test-compile<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.codehaus.mojo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>build-helper-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>generate-sources<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>add-source<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">sources</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">source</span>&gt;</span>build/generated/source/proto/main/java<span class="hljs-tag">&lt;/<span class="hljs-name">source</span>&gt;</span><br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">sources</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>并且把 common 依赖去掉，然后运行 provider 中 lifecycle 的 compile，就会进行编译了。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306132230080.png" srcset="/img/loading.gif" lazyload></p>
+<p>其中就包括了一个 OrderService 接口，所以我们的 OrderServiceImpl 就可以实现这个接口了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@DubboService</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OrderServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">OrderService</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> OrderResponse <span class="hljs-title">getOrderByUserId</span><span class="hljs-params">(OrderRequest request)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> OrderResponse.newBuilder().setCode(<span class="hljs-number">1</span>).setMsg(<span class="hljs-string">&quot;success&quot;</span>).build();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-3-go-消费者调用-java-服务"><a href="#4-3-go-消费者调用-java-服务" class="headerlink" title="4.3 go 消费者调用 java 服务"></a>4.3 go 消费者调用 java 服务</h4><p>首先，新建一个 go 模块，然后把 orderservice.proto 复制到 go-consumer/proto下，然后进行编译，编译成为 go 语言对应的服务代码，只不过 go 语言中没有 maven 可以帮助我们编译，只能用原生的 protobuf 的编译器进行编译。</p>
+<p>下载、安装 protobuf的编译器：protoc</p>
+<ol>
+<li>下载地址：<a target="_blank" rel="noopener" href="https://github.com/protocolbuffers/protobuf/releases/download/v3.20.1/protoc-3.20.1-win64.zip">https://github.com/protocolbuffers/protobuf/releases/download/v3.20.1/protoc-3.20.1-win64.zip</a></li>
+<li>解压之后，把 protoc-3.20.1-win64\bin 添加到环境变量中</li>
+<li>在 cmd 中执行 protoc –version，能正常看到版本号即表示安装成功</li>
+</ol>
+<p>然后在 go-consumer 下新建文件夹 api，进入到 go-consumer/proto下，运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">go env -w GO111MODULE=on<br>go env -w GOPROXY=https://goproxy.cn,direct<br><br>go get -u github.com/dubbogo/tools/cmd/protoc-gen-go-triple<br>go install github.com/golang/protobuf/protoc-gen-go<br>go install github.com/dubbogo/tools/cmd/protoc-gen-go-triple<br><br>protoc -I. orderservice.proto  --go_out=../api --go-triple_out=../api<br></code></pre></td></tr></table></figure>
+
+<p>这样就会在 go-consumer/api 下生成一个 orderservice.pb.go 文件和 orderservice_triple.pb.go 文件。</p>
+<p>然后就可以写 go 语言的服务消费者了，新建一个 consumer.go：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>   <span class="hljs-string">&quot;context&quot;</span><br>   <span class="hljs-string">&quot;dubbo.apache.org/dubbo-go/v3/common/logger&quot;</span><br>   <span class="hljs-string">&quot;dubbo.apache.org/dubbo-go/v3/config&quot;</span><br>   _ <span class="hljs-string">&quot;dubbo.apache.org/dubbo-go/v3/imports&quot;</span><br>   <span class="hljs-string">&quot;go-consumer/api&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> userServiceImpl = <span class="hljs-built_in">new</span>(api.OrderServiceClientImpl)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>   config.SetConsumerService(userServiceImpl)<br>   config.Load()<br><br>   logger.Info(<span class="hljs-string">&quot;start to test dubbo&quot;</span>)<br>   req := &amp;api.OrderRequest&#123;<br>      UserId: <span class="hljs-string">&quot;1&quot;</span>,<br>   &#125;<br><br>   order, err := userServiceImpl.GetOrderByUserId(context.Background(), req)<br>   <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>      logger.Error(err)<br>   &#125;<br>   logger.Infof(<span class="hljs-string">&quot;client response result: %v\n&quot;</span>, order)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>然后在 go-consumer 下新建 conf/dubbogo.yml，用来配置注册中心：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">registries:</span><br>    <span class="hljs-attr">demoZK:</span><br>      <span class="hljs-attr">protocol:</span> <span class="hljs-string">nacos</span><br>      <span class="hljs-attr">address:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.60</span><span class="hljs-number">.10</span><span class="hljs-string">:8848</span><br>  <span class="hljs-attr">consumer:</span><br>    <span class="hljs-attr">references:</span><br>      <span class="hljs-attr">OrderServiceClientImpl:</span><br>        <span class="hljs-attr">protocol:</span> <span class="hljs-string">tri</span><br>        <span class="hljs-attr">interface:</span> <span class="hljs-string">com.debuggingWorld.OrderService</span><br></code></pre></td></tr></table></figure>
+
+<p>在 environment 中添加一个参数：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306140029900.png" srcset="/img/loading.gif" lazyload></p>
+<p>运行测试：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306140030133.png" srcset="/img/loading.gif" lazyload></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Dubbo/" class="category-chain-item">Dubbo</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Dubbo/">#Dubbo</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Dubbo——Dubbo3.0新特性</div>
+      <div>http://example.com/2023/06/01/Dubbo——Dubbo3-0新特性/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/15/Dubbo%E2%80%94%E2%80%94%E6%9C%8D%E5%8A%A1%E5%AF%BC%E5%87%BA%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%BC%95%E5%85%A5/" title="Dubbo——服务导出和服务引入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Dubbo——服务导出和服务引入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/16/Spring-Cloud-Alibaba%E2%80%94%E2%80%94%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8Feign-Dubbo/" title="Spring-Cloud-Alibaba——微服务调用Feign&amp;Dubbo">
+                        <span class="hidden-mobile">Spring-Cloud-Alibaba——微服务调用Feign&amp;Dubbo</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

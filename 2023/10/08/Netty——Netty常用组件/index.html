@@ -1,0 +1,1242 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1.  EventLoop和EventLoopGroup　　回想一下在 NIO 中是如何处理我们关心的事件的？在一个 while 循环中 select 出事件，然后依次处理每种事件。我们可以把它称为事件循环，这就是 EventLoop。interface io.netty.channel. EventLoop 定义了Netty 的核心抽象，用于处理网络连接的生命周期中所发生的事件。 　　io.ne">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty——Netty常用组件">
+<meta property="og:url" content="http://example.com/2023/10/08/Netty%E2%80%94%E2%80%94Netty%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.  EventLoop和EventLoopGroup　　回想一下在 NIO 中是如何处理我们关心的事件的？在一个 while 循环中 select 出事件，然后依次处理每种事件。我们可以把它称为事件循环，这就是 EventLoop。interface io.netty.channel. EventLoop 定义了Netty 的核心抽象，用于处理网络连接的生命周期中所发生的事件。 　　io.ne">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082221379.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082230815.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082234192.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082250245.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082307737.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082314428.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082316079.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082317165.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102218508.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102222602.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082337365.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082341270.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082352986.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092217678.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092223763.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092252768.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092255016.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310122246484.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092300232.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102246292.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102248220.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102301446.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102316410.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102311569.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112203093.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112206687.png">
+<meta property="article:published_time" content="2023-10-08T13:19:18.000Z">
+<meta property="article:modified_time" content="2024-08-10T02:34:14.851Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082221379.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Netty——Netty常用组件 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Netty——Netty常用组件"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-08 21:19" pubdate>
+          2023年10月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          22k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          70 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Netty——Netty常用组件</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="1-EventLoop和EventLoopGroup"><a href="#1-EventLoop和EventLoopGroup" class="headerlink" title="1.  EventLoop和EventLoopGroup"></a>1.  EventLoop和EventLoopGroup</h3><p>　　回想一下在 NIO 中是如何处理我们关心的事件的？在一个 while 循环中 select 出事件，然后依次处理每种事件。我们可以把它称为事件循环，这就是 EventLoop。interface io.netty.channel. EventLoop 定义了Netty 的核心抽象，用于处理网络连接的生命周期中所发生的事件。</p>
+<p>　　io.netty.util.concurrent 包构建在 JDK 的 java.util.concurrent 包上。而 io.netty.channel 包中的类，为了与 Channel 的事件进行交互，扩展了这些接口/类。一个 EventLoop 将由一个永远都不会改变的 Thread 驱动，同时任务（Runnable 或者 Callable）可以直接提交给 EventLoop 实现，以立即执行或者调度执行。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082221379.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></center>
+
+<p><strong>线程的分配</strong></p>
+<p>　　服务于 Channel 的 I/O 和事件的 EventLoop 包含在 EventLoopGroup 中。</p>
+<p>　　异步传输实现只使用了少量的 EventLoop（以及和它们相关联的 Thread），而且在当前的线程模型中，它们可能会被多个 Channel 所共享。这使得可以通过尽可能少量的 Thread 来支撑大量的 Channel，而不是每个 Channel 分配一个 Thread。EventLoopGroup 负责为每个新创建的 Channel 分配一个 EventLoop。在当前实现中，使用顺序循环（round-robin）的方式进行分配以获取一个均衡的分布，并且相同的 EventLoop 可能会被分配给多个 Channel。</p>
+<p>　　一旦一个 Channel 被分配给一个 EventLoop，它将在它的整个生命周期中都使用这个 EventLoop（以及相关联的Thread）。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082230815.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　需要注意，EventLoop 的分配方式对 ThreadLocal 的使用的影响。因为一个 EventLoop 通常会被用于支撑多个 Channel，所以对于所有相关联的 Channel 来说，ThreadLocal 都将是一样的。这使得它对于实现状态追踪等功能来说是个糟糕的选择。然而，在一些无状态的上下文中，它仍然可以被用于在多个 Channel 之间共享一些重度的或者代价昂贵的对象，甚至是事件。</p>
+<p><strong>线程管理</strong></p>
+<p>　　在内部，当提交任务时如果<strong>（</strong>当前）调用线程正是支撑 EventLoop 的线程，那么所提交的代码块将会被（直接）执行。否则，EventLoop 将调度该任务以便稍后执行，并将它放入到内部队列中。当 EventLoop下次处理它的事件时，它会执行队列中的那些任务/事件。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082234192.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+
+
+<h3 id="2-Channel、EventLoop-Group-和ChannelFuture"><a href="#2-Channel、EventLoop-Group-和ChannelFuture" class="headerlink" title="2. Channel、EventLoop(Group)和ChannelFuture"></a>2. Channel、EventLoop(Group)和ChannelFuture</h3><p>Netty 网络抽象的代表：</p>
+<blockquote>
+<ul>
+<li><p>Channel—Socket；</p>
+</li>
+<li><p>EventLoop—控制流、多线程处理、并发；</p>
+</li>
+<li><p>ChannelFuture—异步通知。</p>
+</li>
+</ul>
+</blockquote>
+<p>　　Channel 和 EventLoop关系如图：</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082250245.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></center>
+
+<p>　　从图上我们可以看出 Channel 需要被注册到某个 EventLoop 上，在 Channel 整个生命周期内都由这个 EventLoop 处理 IO 事件，也就是说一个 Channel 和一个 EventLoop 进行了绑定，但是一个 EventLoop 可以同时被多个 Channel 绑定。</p>
+<h4 id="2-1-Channel-接口"><a href="#2-1-Channel-接口" class="headerlink" title="2.1 Channel 接口"></a>2.1 Channel 接口</h4><p>　　基本的 I/O 操作（bind()、connect()、read() 和 write()）依赖于底层网络传输所提供的原语。在基于 Java 的网络编程中，其基本的构造是类 Socket。Netty 的 Channel 接口所提供的 API，被用于所有的 I/O 操作。大大地降低了直接使用 Socket 类的复杂性。此外， Channel 也是拥有许多预定义的、专门化实现的广泛类层次结构的根。</p>
+<p>　　由于 Channel 是独一无二的，所以为了保证顺序将 Channel 声明为 java.lang.Comparable 的一个子接口。因此，如果两个不同的 Channel 实例都返回了相同的散列码，那么 AbstractChannel 中的 compareTo() 方法的实现将会抛出一个 Error。</p>
+<h5 id="1-Channel-的生命周期状态"><a href="#1-Channel-的生命周期状态" class="headerlink" title="1. Channel 的生命周期状态"></a>1. Channel 的生命周期状态</h5><ul>
+<li><p>ChannelUnregistered ：Channel 已经被创建，但还未注册到 EventLoop</p>
+</li>
+<li><p>ChannelRegistered ：Channel 已经被注册到了 EventLoop</p>
+</li>
+<li><p>ChannelActive ：Channel 处于活动状态（已经连接到它的远程节点）,它现在可以接收和发送数据了</p>
+</li>
+<li><p>ChannelInactive ：Channel 没有连接到远程节点</p>
+</li>
+</ul>
+<p>　　当这些状态发生改变时，将会生成对应的事件。这些事件将会被转发给 ChannelPipeline 中的 ChannelHandler，其可以随后对它们做出响应。在我们的编程中，关注 ChannelActive 和 ChannelInactive 会更多一些。</p>
+<h5 id="2-Channel-的重要方法"><a href="#2-Channel-的重要方法" class="headerlink" title="2. Channel 的重要方法"></a>2. Channel 的重要方法</h5><ul>
+<li><p>eventLoop： 返回分配给 Channel 的 EventLoop</p>
+</li>
+<li><p>pipeline： 返回 Channel 的 ChannelPipeline，也就是说每个 Channel 都有自己的 ChannelPipeline。</p>
+</li>
+<li><p>isActive： 如果 Channel 是活动的，则返回 true。活动的意义可能依赖于底层的传输。例如，一个 Socket 传输一旦连接到了远程节点便是活动的，而一个 Datagram 传输一旦被打开便是活动的。</p>
+</li>
+<li><p>localAddress： 返回本地的 SokcetAddress</p>
+</li>
+<li><p>remoteAddress： 返回远程的 SocketAddress</p>
+</li>
+<li><p>write： 将数据写到远程节点，注意，这个写只是写往 Netty 内部的缓存，还没有真正写往 socket。</p>
+</li>
+<li><p>flush： 将之前已写的数据冲刷到底层 socket 进行传输。</p>
+</li>
+<li><p>writeAndFlush： 一个简便的方法，等同于调用 write() 并接着调用 flush()</p>
+</li>
+</ul>
+<h3 id="3-ChannelPipeline和ChannelHandlerContext"><a href="#3-ChannelPipeline和ChannelHandlerContext" class="headerlink" title="3. ChannelPipeline和ChannelHandlerContext"></a>3. ChannelPipeline和ChannelHandlerContext</h3><h4 id="3-1-ChannelPipeline-接口"><a href="#3-1-ChannelPipeline-接口" class="headerlink" title="3.1 ChannelPipeline 接口"></a>3.1 ChannelPipeline 接口</h4><p>当 Channel 被创建时，它将会被自动地分配一个新的 ChannelPipeline，每个 Channel 都有自己的 ChannelPipeline。这项关联是永久性的。在 Netty 组件的生命周期中，这是一项固定的操作，不需要开发人员的任何干预。</p>
+<p>　　ChannelPipeline 提供了 ChannelHandler 链的容器，并定义了用于在该链上传播**入站 **（也就是从网络到业务处理）和 <strong>出站</strong>（也就是从业务处理到网络）各种事件流的 API。这些 ChannelHandler  对象接收事件、执行它们所实现的处理逻辑，并将数据传递给链中的下一个 ChannelHandler，而且 ChannelHandler 对象也完全可以拦截事件不让事件继续传递。它们的执行顺序是由它们被添加的顺序所决定的。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082307737.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+  
+
+<h5 id="1-ChannelHandler-的生命周期"><a href="#1-ChannelHandler-的生命周期" class="headerlink" title="1. ChannelHandler 的生命周期"></a>1. ChannelHandler 的生命周期</h5><p>在 ChannelHandler 被添加到 ChannelPipeline 中或者被从 ChannelPipeline 中移除时会调用下面这些方法。这些方法中的每一个都接受一个 ChannelHandlerContext 参数。</p>
+<ul>
+<li><p><strong>handlerAdded</strong> 当把 ChannelHandler 添加到 ChannelPipeline 中时被调用</p>
+</li>
+<li><p><strong>handlerRemoved</strong> 当从 ChannelPipeline 中移除 ChannelHandler 时被调用</p>
+</li>
+<li><p><strong>exceptionCaught</strong> 当处理过程中在 ChannelPipeline 中有错误产生时被调用</p>
+</li>
+</ul>
+<h5 id="２-ChannelPipeline中的ChannelHandler"><a href="#２-ChannelPipeline中的ChannelHandler" class="headerlink" title="２. ChannelPipeline中的ChannelHandler"></a>２. ChannelPipeline中的ChannelHandler</h5><p>　　入站和出站 ChannelHandler 被安装到同一个 ChannelPipeline 中，ChannelPipeline 以双向链表的形式进行维护管理。比如下图，我们在网络上传递的数据，要求加密，但是加密后密文比较大，需要压缩后再传输，而且按照业务要求，需要检查报文中携带的用户信息是否合法，于是我们实现了5个Handler：解压（入）Handler、压缩（出）handler、解密（入） Handler、加密（出） Handler、授权（入） Handler。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082314428.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　如果一个消息或者任何其他的入站事件被读取，那么它会从 ChannelPipeline 的头部开始流动，但是只被处理入站事件的 Handler 处理，也就是解压（入）Handler、解密（入） Handler、授权（入） Handler，最终，数据将会到达 ChannelPipeline 的尾端，届时，所有处理就都结束了。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082316079.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　数据的出站运动（即正在被写的数据）在概念上也是一样的。在这种情况下，数据将从链的尾端开始流动，但是只被处理出站事件的 Handler 处理，也就是加密（出） Handler、压缩（出）handler，直到它到达链的头部为止。在这之后，出站数据将会到达网络传输层，也就是我们的 Socket。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082317165.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　Netty 能区分入站事件的 Handler 和出站事件的 Handler，并确保数据只会在具有相同定向类型的两个 ChannelHandler 之间传递。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102218508.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102222602.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　所以在我们编写 Netty 应用程序时要注意，分属出站和入站不同的 Handler ，<strong>在业务没特殊要求的情况下</strong>是无所谓顺序的，而同属一个方向的 Handler 则是有顺序的，因为上一个 Handler 处理的结果往往是下一个 Handler 的要求的输入。</p>
+<h5 id="3-ChannelPipeline上的方法"><a href="#3-ChannelPipeline上的方法" class="headerlink" title="3. ChannelPipeline上的方法"></a>3. ChannelPipeline上的方法</h5><p>　　既然 ChannelPipeline 以双向链表的形式进行维护管理 Handler，自然也提供了对应的方法在 ChannelPipeline 中增加或者删除、替换 Handler。</p>
+<ul>
+<li><strong>addFirst、addBefore、addAfter、addLast：</strong> 将一个 ChannelHandler 添加到 ChannelPipeline 中</li>
+<li><strong>remove：</strong> 将一个 ChannelHandler 从 ChannelPipeline 中移除</li>
+<li><strong>replace：</strong> 将 ChannelPipeline 中的一个 ChannelHandler 替换为另一个 ChannelHandler</li>
+<li><strong>get：</strong> 通过类型或者名称返回 ChannelHandler</li>
+<li><strong>context：</strong> 返回和 ChannelHandler 绑定的 ChannelHandlerContext</li>
+<li><strong>names：</strong> 返回 ChannelPipeline 中所有 ChannelHandler 的名称</li>
+</ul>
+<h4 id="3-2-ChannelHandlerContext"><a href="#3-2-ChannelHandlerContext" class="headerlink" title="3.2 ChannelHandlerContext"></a>3.2 ChannelHandlerContext</h4><p>　　ChannelHandlerContext 代表了 ChannelHandler 和 ChannelPipeline 之间的关联，每当有 ChannelHandler 添加到 ChannelPipeline 中时，都会创建 ChannelHandlerContext，为什么需要这个 ChannelHandlerContext ？ChannelPipeline 以双向链表的形式进行维护管理 Handler，毫无疑问，Handler 在放入 ChannelPipeline 的时候必须要有两个指针 pre 和 next 来说明它的前一个元素和后一个元素，但是 Handler 本身来维护这两个指针合适吗？想想我们在使用 JDK 的 LinkedList 的时候，我们放入 LinkedList 的数据是不会带这两个指针的，LinkedList 内部会用类 Node 对我们的数据进行包装，而类 Node 则带有两个指针 pre 和 next。所以，ChannelHandlerContext 的主要作用就和 LinkedList 内部的类 Node 类似。</p>
+<p>不过 ChannelHandlerContext 不仅仅只是个包装类，它还提供了很多的方法，比如让事件从当前 ChannelHandler 传递给链中的下一个 ChannelHandler，还可以被用于获取底层的 Channel，还可以用于写出站数据。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082337365.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<h5 id="1-Channel、ChannelPipeline和ChannelHandlerContext上的事件传播"><a href="#1-Channel、ChannelPipeline和ChannelHandlerContext上的事件传播" class="headerlink" title="1. Channel、ChannelPipeline和ChannelHandlerContext上的事件传播"></a>1. Channel、ChannelPipeline和ChannelHandlerContext上的事件传播</h5><p>　　ChannelHandlerContext 有很多的方法，其中一些方法也存在于 Channel 和 Channel-Pipeline 本身上，<strong>但是有一点重要的不同。</strong>如果调用 Channel 或者 ChannelPipeline 上的这些方法，它们将沿着整个 ChannelPipeline 进行传播。而调用位于 ChannelHandlerContext 上的相同方法，则将从当前所关联的 ChannelHandler 开始，并且只会传播给位于该 ChannelPipeline 中的下一个（入站下一个，出站上一个）能够处理该事件的 ChannelHandler。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082341270.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　我们用一个实际例子来说明，比如服务器收到对端发过来的报文，解压后需要进行解密，结果解密失败，要给对端一个应答。</p>
+<p>　　如果发现解密失败原因是服务器和对端的加密算法不一致，应答报文只能以明文的压缩格式发送，就可以在解密 handler 中直接使用 ctx.write 给对端应答，这样应答报文就只经过压缩 Handler 就发往了对端；</p>
+<p>　　其他情况下，应答报文要以加密和压缩格式发送，就可以在解密 handler 中使用 channel.write() 或者 channelpipeline.write() 给对端应答，这样应答报文就会流经整个出站处理过程。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310082352986.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+
+
+<h5 id="2-ChannelHandlerContext-的API"><a href="#2-ChannelHandlerContext-的API" class="headerlink" title="2. ChannelHandlerContext 的API"></a>2. ChannelHandlerContext 的API</h5><ul>
+<li> <strong>alloc</strong> 返回和这个实例相关联的 Channel 所配置的 ByteBufAllocator</li>
+<li> <strong>bind</strong> 绑定到给定的 SocketAddress，并返回 ChannelFuture</li>
+<li> <strong>channel</strong> 返回绑定到这个实例的 Channel</li>
+<li> <strong>close</strong> 关闭 Channel，并返回 ChannelFuture</li>
+<li> <strong>connect</strong> 连接给定的 SocketAddress，并返回 ChannelFuture</li>
+<li> <strong>deregister</strong> 从之前分配的 EventExecutor 注销，并返回 ChannelFuture</li>
+<li> <strong>disconnect</strong> 从远程节点断开，并返回 ChannelFuture</li>
+<li> <strong>executor</strong> 返回调度事件的 EventExecutor</li>
+<li> <strong>fireChannelActive</strong> 触发对下一个 ChannelInboundHandler 上的 channelActive() 方法（已连接）的调用</li>
+<li> <strong>fireChannelInactive</strong> 触发对下一个 ChannelInboundHandler 上的 channelInactive() 方法（已关闭）的调用</li>
+<li> <strong>fireChannelRead</strong> 触发对下一个 ChannelInboundHandler 上的 channelRead() 方法（已接收的消息）的调用</li>
+<li> <strong>fireChannelReadComplete</strong> 触发对下一个 ChannelInboundHandler 上的 channelReadComplete() 方法的调用</li>
+<li> <strong>fireChannelRegistered</strong> 触发对下一个 ChannelInboundHandler 上的 fireChannelRegistered() 方法的调用</li>
+<li> <strong>fireChannelUnregistered</strong> 触发对下一个 ChannelInboundHandler 上的fire ChannelUnregistered() 方法的调用</li>
+<li> <strong>fireChannelWritabilityChanged</strong> 触发对下一个 ChannelInboundHandler 上的 fireChannelWritabilityChanged() 方法的调用</li>
+<li> <strong>fireExceptionCaught</strong> 触发对下一个 ChannelInboundHandler 上的 fireExceptionCaught(Throwable) 方法的调用</li>
+<li> <strong>fireUserEventTriggered</strong> 触发对下一个 ChannelInboundHandler 上的 fireUserEventTriggered(Object evt) 方法的调用</li>
+<li> <strong>handler</strong> 返回绑定到这个实例的 ChannelHandler</li>
+<li> <strong>isRemoved</strong> 如果所关联的 ChannelHandler 已经被从 ChannelPipeline 中移除则返回 true</li>
+<li> <strong>name</strong> 返回这个实例的唯一名称</li>
+<li> <strong>pipeline</strong> 返回这个实例所关联的 ChannelPipeline</li>
+<li> <strong>read</strong> 将数据从 Channel 读取到第一个入站缓冲区；如果读取成功则触发一个 channelRead 事件，并（在最后一个消息被读取完成后）通知 ChannelInboundHandler 的 channelReadComplete(ctx) 方法</li>
+<li> <strong>write</strong> 通过这个实例写入消息并经过 ChannelPipeline</li>
+<li> <strong>writeAndFlush</strong> 通过这个实例写入并冲刷消息并经过 ChannelPipeline</li>
+</ul>
+<p>　　当使用 ChannelHandlerContext 的 API  的时候，有以下两点：</p>
+<blockquote>
+<ul>
+<li>ChannelHandlerContext 和 ChannelHandler 之间的关联（绑定）是永远不会改变的，所以缓存对它的引用是安全的；</li>
+<li>相对于其他类的同名方法，ChannelHandlerContext 的方法将产生更短的事件</li>
+</ul>
+</blockquote>
+<h3 id="4-ChannelHandler"><a href="#4-ChannelHandler" class="headerlink" title="4. ChannelHandler"></a>4. ChannelHandler</h3><h4 id="4-1-ChannelHandler-接口"><a href="#4-1-ChannelHandler-接口" class="headerlink" title="4.1 ChannelHandler 接口"></a>4.1 ChannelHandler 接口</h4><p>从应用程序开发人员的角度来看，Netty 的主要组件是ChannelHandler，它充当了所有处理入站和出站数据的应用程序逻辑的容器。ChannelHandler 的方法是由网络事件触发的。事实上，ChannelHandler 可专门用于几乎任何类型的动作，例如将数据从一种格式转换为另外一种格式，例如各种编解码，或者处理转换过程中所抛出的异常。</p>
+<p>　　举例来说，ChannelInboundHandler 是一个你将会经常实现的子接口。这种类型的 ChannelHandler 接收入站事件和数据，这些数据随后将会被你的应用程序的业务逻辑所处理。当你要给连接的客户端发送响应时，也可以从 ChannelInboundHandler 直接冲刷数据然后输出到对端。应用程序的业务逻辑通常实现在一个或者多个 ChannelInboundHandler 中。</p>
+<p>　　Netty 定义了下面两个重要的 ChannelHandler 子接口：</p>
+<blockquote>
+<ul>
+<li><p>ChannelInboundHandler——处理入站数据以及各种状态变化；</p>
+</li>
+<li><p>ChannelOutboundHandler——处理出站数据并且允许拦截所有的操作。</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="4-2-ChannelInboundHandler-接口"><a href="#4-2-ChannelInboundHandler-接口" class="headerlink" title="4.2 ChannelInboundHandler 接口"></a>4.2 ChannelInboundHandler 接口</h4><p>　　下面列出了接口 ChannelInboundHandler 的生命周期方法。这些方法将会在数据被接收时或者与其对应的 Channel 状态发生改变时被调用。正如我们前面所提到的，这些方法和 Channel 的生命周期密切相关。</p>
+<ul>
+<li><strong>channelRegistered</strong> 当 Channel 已经注册到它的 EventLoop 并且能够处理 I/O 时被调用</li>
+<li><strong>channelUnregistered</strong> 当 Channel 从它的 EventLoop 注销并且无法处理任何 I/O 时被调用</li>
+<li><strong>channelActive</strong> 当 Channel 处于活动状态时被调用；Channel 已经连接/绑定并且已经就绪</li>
+<li><strong>channelInactive</strong> 当 Channel 离开活动状态并且不再连接它的远程节点时被调用</li>
+<li><strong>channelReadComplete</strong> 当 Channel上的一个读操作完成时被调用</li>
+<li><strong>channelRead</strong> 当从 Channel 读取数据时被调用</li>
+<li><strong>ChannelWritabilityChanged</strong> 当 Channel 的可写状态发生改变时被调用。可以通过调用 Channel 的 isWritable() 方法来检测 Channel  的可写性。与可写性相关的阈值可以通过 Channel.config().setWriteHighWaterMark() 和 Channel.config().setWriteLowWaterMark() 方法来设置</li>
+<li><strong>userEventTriggered</strong> 当 ChannelnboundHandler.fireUserEventTriggered() 方法被调用时被调用。</li>
+</ul>
+<h4 id="4-3-ChannelOutboundHandler-接口"><a href="#4-3-ChannelOutboundHandler-接口" class="headerlink" title="4.3 ChannelOutboundHandler 接口"></a>4.3 ChannelOutboundHandler 接口</h4><p>　　出站操作和数据将由 ChannelOutboundHandler 处理。它的方法将被 Channel、Channel-Pipeline 以及 ChannelHandlerContext 调用。</p>
+<p>　　所有由 ChannelOutboundHandler 本身所定义的方法：</p>
+<ul>
+<li><strong>bind(ChannelHandlerContext,SocketAddress,ChannelPromise)</strong>  当请求将 Channel 绑定到本地地址时被调用</li>
+<li><strong>connect(ChannelHandlerContext,SocketAddress,SocketAddress,ChannelPromise)</strong>  当请求将 Channel 连接到远程节点时被调用</li>
+<li><strong>disconnect(ChannelHandlerContext,ChannelPromise)</strong>  当请求将 Channel 从远程节点断开时被调用</li>
+<li><strong>close(ChannelHandlerContext,ChannelPromise)</strong>  当请求关闭 Channel 时被调用</li>
+<li><strong>deregister(ChannelHandlerContext,ChannelPromise)</strong>  当请求将 Channel 从它的 EventLoop 注销时被调用</li>
+<li><strong>read(ChannelHandlerContext)</strong>  当请求从 Channel 读取更多的数据时被调用</li>
+<li>**flush(ChannelHandlerContext) ** 当请求通过 Channel 将入队数据冲刷到远程节点时被调用</li>
+<li><strong>write(ChannelHandlerContext,Object,ChannelPromise)</strong> 当请求通过 Channel 将数据写到远程节点时被调用</li>
+</ul>
+<h4 id="4-4-ChannelHandler的适配器"><a href="#4-4-ChannelHandler的适配器" class="headerlink" title="4.4 ChannelHandler的适配器"></a>4.4 ChannelHandler的适配器</h4><p>　　有一些适配器类可以将编写自定义的 ChannelHandler 所需要的工作降到最低限度，因为它们提供了定义在对应接口中的所有方法的默认实现。因为你有时会忽略那些不感兴趣的事件，所以 Netty 提供了抽象基类 ChannelInboundHandlerAdapter（处理入站） 和ChannelOutboundHandlerAdapter（处理出站）。</p>
+<p>　　我们可以使用 ChannelInboundHandlerAdapter 和 ChannelOutboundHandlerAdapter 类作为自己的 ChannelHandler 的起始点。这两个适配器分别提供了 ChannelInboundHandler 和 ChannelOutboundHandler 的基本实现。通过扩展抽象类 ChannelHandlerAdapter，它们获得了它们共同的超接口 ChannelHandler 的方法。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092217678.png" srcset="/img/loading.gif" lazyload style="zoom:25%;" /></center>
+
+<p>　　不过 ChannelOutboundHandler 有个非常让人迷惑的 read 方法，ChannelOutboundHandler 不是处理出站事件的吗？怎么会有 read 方法呢？其实这个 read 方法不是表示读数据，而是表示业务发出了读（read）数据的要求，这个要求也会封装为一个事件进行传播，这个事件因为是业务发出到网络的，自然就是个出站事件，而且这个事件触发的就是 ChannelOutboundHandler 中 read 方法。</p>
+<p>　　如果我们的 Handler 既要处理入站又要处理出站怎么办呢？这个时候就可以使用类 ChannelDuplexHandler，当然也可以同时实现 ChannelOutboundHandler, ChannelInboundHandler 这两个接口，自然就要麻烦很多了。</p>
+<h4 id="4-5-Handler的共享和并发安全性"><a href="#4-5-Handler的共享和并发安全性" class="headerlink" title="4.5 Handler的共享和并发安全性"></a>4.5 Handler的共享和并发安全性</h4><p>　　ChannelHandlerAdapter 还提供了实用方法 isSharable()。如果其对应的实现被标注为 Sharable，那么这个方法将返回 true，表示它可以被添加到多个 ChannelPipeline。</p>
+<p>　　这就牵涉到了我们实现的 Handler 的共享性和线程安全性。回顾我们的 Netty 代码，在往 pipeline 安装 Handler的时候，基本上是 new 出 Handle r的实例。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092223763.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　因为每个 socketChannel 有自己的 pipeline 而且每个 socketChannel 又是和线程绑定的，所以这些 Handler 的实例之间完全独立的，只要 Handler 的实例之间不是共享了全局变量，Handler 的实例是线程安全的。</p>
+<p>　　但是如果业务需要我们在多个 socketChannel 之间共享一个 Handler 的实例怎么办呢？比如统计服务器接受到和发出的业务报文总数，我们就需要用一个 Handler 的实例来横跨所有的 socketChannel 来统计所有 socketChannel 业务报文数。</p>
+<p>　　为了实现这一点，我们可以实现一个 MessageCountHandler，并且在 MessageCountHandler 上使用 Netty 的 @Sharable 注解，然后在安装 MessageCountHandler 实例到 pipeline 时，共用一个即可。当然，因为 MessageCountHandler 实例是共享的，所以在实现 MessageCountHandler 的统计功能时，请务必注意线程安全，我们在具体实现时就使用了 Java 并发编程里的 Atomic 类来保证这一点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ChannelHandler</span>.Sharable<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageCountHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelDuplexHandler</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> AtomicLong inCount = <span class="hljs-keyword">new</span> AtomicLong(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">private</span> AtomicLong outCount = <span class="hljs-keyword">new</span> AtomicLong(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;收到报文总数：&quot;</span>+inCount.incrementAndGet());<br>        <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flush</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;发出报文总数：&quot;</span>+outCount.incrementAndGet());<br>        <span class="hljs-keyword">super</span>.flush(ctx);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092252768.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<h4 id="4-6-资源管理和SimpleChannelInboundHandler"><a href="#4-6-资源管理和SimpleChannelInboundHandler" class="headerlink" title="4.6 资源管理和SimpleChannelInboundHandler"></a>4.6 资源管理和SimpleChannelInboundHandler</h4><p>　　<a target="_blank" rel="noopener" href="https://www.skjava.com/series/article/1720220745">（传送门）</a></p>
+<p>　　回想一下我们在 NIO 中是如何接收和发送网络数据的？都是首先创建了一个 Buffer，应用程序中的业务部分和 Channel 之间通过 Buffer 进行数据的交换：</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092255016.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　Netty 在处理网络数据时，同样也需要 Buffer，在 Read 网络数据时由 Netty 创建 Buffer，Write 网络数据时 Buffer 往往是由业务方创建的。不管是读和写，Buffer 用完后都必须进行释放，否则可能会造成内存泄露。</p>
+<h5 id="1-出站Buffer"><a href="#1-出站Buffer" class="headerlink" title="1. 出站Buffer"></a>1. 出站Buffer</h5><p>　　在 Write 网络数据时，可以确保数据被写往网络了，Netty 会自动进行 Buffer 的释放。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelActive</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    String request = <span class="hljs-string">&quot;debuggingWorld&quot;</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100</span>; i++) &#123;<br>        ByteBuf byteBuf = Unpooled.buffer(request.length());<br>        byteBuf.writeBytes(request.getBytes());<br>        ctx.writeAndFlush(byteBuf); <span class="hljs-comment">// writeAndFlush 会自动释放</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　Netty 默认会在 ChannelPipeline 的收尾加上 HeadContext 和 TailContext。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310122246484.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HeadContext</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractChannelHandlerContext</span></span><br><span class="hljs-class">            <span class="hljs-keyword">implements</span> <span class="hljs-title">ChannelOutboundHandler</span>, <span class="hljs-title">ChannelInboundHandler</span> </span>&#123;<br>  ....<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> </span>&#123;<br>            unsafe.write(msg, promise);<br>        &#125;<br>  .....<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　HeadContext 实现了入站和出站 ChannelHandler，在 write() 中调用 unsafe.write()，其内部会进行释放（转传送门）。</p>
+<p>　　但是如果 Write 网络数据时，我们有 outBoundHandler 处理了 write() 操作并丢弃了数据，没有继续往下传递 Handler，要由我们负责释放这个 Buffer，就必须调用 ReferenceCountUtil.release 方法，否则就可能会造成内存泄露。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServerOutReadHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelOutboundHandlerAdapter</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-comment">// super.write(ctx, msg, promise);</span><br>        ReferenceCountUtil.release(msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-入站Buffer"><a href="#2-入站Buffer" class="headerlink" title="2. 入站Buffer"></a>2. 入站Buffer</h5><p>　　在 Read 网络数据时，如果我们可以确保每个 InboundHandler 都把数据往后传递了，也就是调用了相关的 fireChannelRead 方法，Netty 也会帮我们释放。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// io.netty.channel.DefaultChannelPipeline.TailContext#channelRead</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;<br>    onUnhandledInboundMessage(ctx, msg);<br>&#125;<br><br><span class="hljs-comment">// io.netty.channel.DefaultChannelPipeline#onUnhandledInboundMessage</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onUnhandledInboundMessage</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;<br>    onUnhandledInboundMessage(msg);<br>    <span class="hljs-keyword">if</span> (logger.isDebugEnabled()) &#123;<br>        logger.debug(<span class="hljs-string">&quot;Discarded message pipeline : &#123;&#125;. Channel : &#123;&#125;.&quot;</span>,<br>                     ctx.pipeline().names(), ctx.channel());<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// io.netty.channel.DefaultChannelPipeline#onUnhandledInboundMessage</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onUnhandledInboundMessage</span><span class="hljs-params">(Object msg)</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        logger.debug(<br>                <span class="hljs-string">&quot;Discarded inbound message &#123;&#125; that reached at the tail of the pipeline. &quot;</span> +<br>                        <span class="hljs-string">&quot;Please check your pipeline configuration.&quot;</span>, msg);<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        ReferenceCountUtil.release(msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　同样的，如果我们有 InboundHandler 处理了数据，又不继续往后传递，又不调用负责释放的 ReferenceCountUtil.release 方法，就可能会造成内存泄露（比如入站数据在解密失败后应该终止传递）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>    ByteBuf in = (ByteBuf) msg;<br>    String request = in.toString(CharsetUtil.UTF_8);<br>    System.out.println(<span class="hljs-string">&quot;Server accept: &quot;</span> + request);<br>    <span class="hljs-comment">// ctx.fireChannelRead(msg);</span><br>    <span class="hljs-comment">// ReferenceCountUtil.release(msg);</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　但是由于消费入站数据是一项常规任务，所以 Netty 提供了一个特殊的被称为 SimpleChannelInboundHandler 的 ChannelInboundHandler 实现。这个实现会在数据被 channelRead0() 方法消费之后自动释放数据。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310092300232.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+
+
+<p>　　同时系统为我们提供的各种预定义 Handler 实现，都实现了数据的正确处理，所以我们自行在编写业务 Handler 时，也需要注意这一点：<strong>要么继续传递，要么自行释放</strong>。</p>
+<h3 id="5-内置通信传输模式"><a href="#5-内置通信传输模式" class="headerlink" title="5. 内置通信传输模式"></a>5. 内置通信传输模式</h3><ul>
+<li><p><strong>NIO</strong> io.netty.channel.socket.nio 使用 java.nio.channels 包作为基础——基于选择器的方式</p>
+</li>
+<li><p><strong>Epoll</strong> io.netty.channel.epoll 由 JNI 驱动的 epoll() 和非阻塞 IO。这个传输支持只有在 Linux 上可用的多种特性，如 SO_REUSEPORT，比 NIO 传输更快，而且是完全非阻塞的。将 NioEventLoopGroup 替换为 EpollEventLoopGroup ， 并且将 NioServerSocketChannel.class  替换为 EpollServerSocketChannel.class 即可。</p>
+</li>
+<li><p><strong>OIO</strong> io.netty.channel.socket.oio 使用 java.net 包作为基础——使用阻塞流</p>
+</li>
+<li><p><strong>Local</strong> io.netty.channel.local 可以在 VM 内部通过管道进行通信的本地传输</p>
+</li>
+<li><p><strong>Embedded</strong> io.netty.channel.embedded Embedded 传输，允许使用 ChannelHandler 而又不需要一个真正的基于网络的传输。在测试 ChannelHandler 实现时非常有用</p>
+</li>
+</ul>
+<h3 id="6-引导Bootstrap"><a href="#6-引导Bootstrap" class="headerlink" title="6. 引导Bootstrap"></a>6. 引导Bootstrap</h3><p>　　有两种类型的引导：一种用于客户端（简单地称为Bootstrap），而另一种（ServerBootstrap）用于服务器。无论你的应用程序使用哪种协议或者处理哪种类型的数据，唯一决定它使用哪种引导类的是它是作为一个客户端还是作为一个服务器。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Bootstrap</strong></th>
+<th><strong>ServerBootstrap</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络编程中的作用</td>
+<td>连接到远程主机和端口</td>
+<td>绑定到一个本地端口</td>
+</tr>
+<tr>
+<td>EventLoopGroup 的数目</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<p>ServerBootstrap 将绑定到一个端口，因为服务器必须要监听连接，而Bootstrap 则是由想要连接到远程节点的客户端应用程序所使用的。</p>
+<p>　　第二个区别可能更加明显。引导一个客户端只需要一个 EventLoopGroup，但是一个 ServerBootstrap 则需要两个（也可以是同一个实例）。因为服务器需要两组不同的 Channel。第一组将只包含一个 ServerChannel，代表服务器自身的已绑定到某个本地端口的正在监听的套接字。而第二组将包含所有已创建的用来处理传入客户端连接（对于每个服务器已经接受的连接都有一个）的 Channel。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102246292.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></center>
+
+
+
+<p>　　与 ServerChannel 相关联的 EventLoopGroup 将分配一个负责为传入连接请求创建 Channel 的 EventLoop。一旦连接被接受，第二个 EventLoopGroup 就会给它的 Channel 分配一个 EventLoop。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102248220.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+
+
+<h3 id="7-ChannelInitializer"><a href="#7-ChannelInitializer" class="headerlink" title="7. ChannelInitializer"></a>7. ChannelInitializer</h3><p>　　Netty 提供了一个特殊的 ChannelInboundHandlerAdapter 子类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Sharable</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChannelInitializer</span>&lt;<span class="hljs-title">C</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Channel</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelInboundHandlerAdapter</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(C ch)</span> <span class="hljs-keyword">throws</span> Exception</span>;<br>  <br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(ChannelHandlerContext ctx)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-keyword">if</span> (initMap.add(ctx)) &#123; <span class="hljs-comment">// Guard against re-entrance.</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                initChannel((C) ctx.channel());<br>            &#125; <span class="hljs-keyword">catch</span> (Throwable cause) &#123;<br>                exceptionCaught(ctx, cause);<br>            &#125; <span class="hljs-keyword">finally</span> &#123;<br>                <span class="hljs-keyword">if</span> (!ctx.isRemoved()) &#123;<br>                    ctx.pipeline().remove(<span class="hljs-keyword">this</span>);<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br>  <br>  ……<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　initChannel  方法提供了一种将多个 ChannelHandler 添加到一个 ChannelPipeline 中的简便方法。你只需要简单地向 Bootstrap 或 ServerBootstrap 的实例提供你的 ChannelInitializer 实现即可，并且一旦 Channel 被注册到了它的 EventLoop 之后，就会调用你的 initChannel() 版本。在该方法返回之后，ChannelInitializer 的实例将会从 ChannelPipeline 中移除它自己。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102301446.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　所以，在我们自己的应用程序中，如果存在着某个 handler 只使用一次的情况，也可以仿造 ChannelInitializer，用完以后将自己从 ChannelPipeline 中移除自己，比如授权 handler，某客户端第一次连接登录以后，进行授权检查，检查通过后就可以把这个授权 handler 移除了。如果客户端关闭连接下线，下次再连接的时候，就是一个新的连接，授权 handler 依然会被安装到 ChannelPipeline ，依然会进行授权检查。</p>
+<h3 id="8-ChannelOption"><a href="#8-ChannelOption" class="headerlink" title="8. ChannelOption"></a>8. ChannelOption</h3><p>　　ChannelOption 的各种属性在套接字选项中都有对应。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102316410.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="8-1-ChannelOption-SO-BACKLOG"><a href="#8-1-ChannelOption-SO-BACKLOG" class="headerlink" title="8.1 ChannelOption.SO_BACKLOG"></a>8.1 ChannelOption.SO_BACKLOG</h4><p>　　ChannelOption.SO_BACKLOG 对应的是 tcp/ip 协议 listen 函数中的 backlog 参数，服务端处理客户端连接请求是顺序处理的，所以同一时间只能处理一个客户端连接，多个客户端来的时候，服务端将不能处理的客户端连接请求放在队列中等待处理。所以操作系统里一般有两个队列，一个是 ACCEP T队列，保存着已经完成了 TCP 的三次握手的连接，一个 SYN 队列，服务器正在等待 TCP 的三次握手完成的队列。</p>
+<p>　　BSD 派生系统里 backlog 指的就是 SYN 队列的大小，在 Linux 的实现里 backlog 相对来说，就含糊不清了，有些内核版本指的是 ACCEPT 队列 + SYN 队列合起来的大小，有的是指 SYN 队列的大小。</p>
+<p>　　但是从  Linux 2.2 开始，backlog 的参数行为在 Linux 2.2 中发生了变化，现在它指定等待接受的完全建立的套接字的队列长度，而不是不完整的连接请求的数量。 不完整套接字队列的最大长度可以使用 /proc/sys/net/ipv4/tcp_max_syn_backlog 设置，默认值为 128。</p>
+<p>　　如果 backlog 参数大于 /proc/sys/net/core/somaxconn 中的值，那么它会被静默截断为值128。在 2.4.25 之前的内核中，此限制是硬编码值，后续内核版本也可以通过 vim /etc/sysctl.conf 来修改，包括我们前面所说的 tcp_max_syn_backlog 也可以在此处修改，然后通过命令 sysctl -p 生效。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310102311569.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
+
+
+
+<h4 id="8-2-ChannelOption-SO-REUSEADDR"><a href="#8-2-ChannelOption-SO-REUSEADDR" class="headerlink" title="8.2 ChannelOption.SO_REUSEADDR"></a>8.2 ChannelOption.SO_REUSEADDR</h4><p>　　ChanneOption.SO_REUSEADDR 对应于套接字选项中的 SO_REUSEADDR，这个参数表示允许重复使用本地地址和端口，比如，多网卡（IP）绑定相同端口，比如某个进程非正常退出，该程序占用的端口可能要被占用一段时间才能允许其他进程使用，而且程序死掉以后，内核一需要一定的时间才能够释放此端口，不设置 SO_REUSEADDR 就无法正常使用该端口。</p>
+<p>　　但是注意，这个参数无法做到让应用绑定完全相同 IP + Port 来重复启动。</p>
+<p>8.3 ChannelOption.SO_KEEPALIVE</p>
+<p>　　Channeloption.SO_KEEPALIVE 参数对应于套接字选项中的 SO_KEEPALIVE，该参数用于设置 TCP 连接，当设置该选项以后，连接会测试链接的状态，这个选项用于可能长时间没有数据交流的连接。当设置该选项以后，如果在两小时内没有数据的通信时，TCP 会自动发送一个活动探测数据报文。</p>
+<h4 id="8-4-ChannelOption-SO-SNDBUF和ChannelOption-SO-RCVBUF"><a href="#8-4-ChannelOption-SO-SNDBUF和ChannelOption-SO-RCVBUF" class="headerlink" title="8.4 ChannelOption.SO_SNDBUF和ChannelOption.SO_RCVBUF"></a>8.4 ChannelOption.SO_SNDBUF和ChannelOption.SO_RCVBUF</h4><p>　　ChannelOption.SO_SNDBUF 参数对应于套接字选项中的 SO_SNDBUF，ChannelOption.SO_RCVBUF 参数对应于套接字选项中的 SO_RCVBUF，这两个参数用于操作接收缓冲区和发送缓冲区的大小，接收缓冲区用于保存网络协议站内收到的数据，直到应用程序读取成功，发送缓冲区用于保存发送数据，直到发送成功。</p>
+<h4 id="8-5-ChannelOption-SO-LINGER"><a href="#8-5-ChannelOption-SO-LINGER" class="headerlink" title="8.5 ChannelOption.SO_LINGER"></a>8.5 ChannelOption.SO_LINGER</h4><p>ChannelOption.SO_LINGER 参数对应于套接字选项中的 SO_LINGER，Linux 内核默认的处理方式是当用户调用 close（）方法的时候，函数返回，在可能的情况下，尽量发送数据，不一定保证会发生剩余的数据，造成了数据的不确定性，使用 SO_LINGER 可以阻塞 close() 的调用时间，直到数据完全发送</p>
+<h4 id="8-6-ChannelOption-TCP-NODELAY"><a href="#8-6-ChannelOption-TCP-NODELAY" class="headerlink" title="8.6 ChannelOption.TCP_NODELAY"></a>8.6 ChannelOption.TCP_NODELAY</h4><p>　　ChannelOption.TCP_NODELAY 参数对应于套接字选项中的 TCP_NODELAY，该参数的使用与 Nagle 算法有关，Nagle 算法是将小的数据包组装为更大的帧然后进行发送，而不是输入一次发送一次，因此在数据包不足的时候会等待其他数据的到了，组装成大的数据包进行发送，虽然该方式有效提高网络的有效负载，但是却造成了延时，而该参数的作用就是禁止使用 Nagle 算法，使用于小数据即时传输，于 TCP_NODELAY 相对应的是 TCP_CORK，该选项是需要等到发送的数据量最大的时候，一次性发送数据，适用于文件传输。</p>
+<h3 id="9-ByteBuf"><a href="#9-ByteBuf" class="headerlink" title="9. ByteBuf"></a>9. ByteBuf</h3><p>　　ByteBuf API 的优点：</p>
+<blockquote>
+<ul>
+<li>它可以被用户自定义的缓冲区类型扩展；</li>
+<li>通过内置的复合缓冲区类型实现了透明的零拷贝；</li>
+<li>容量可以按需增长（类似于JDK 的StringBuilder）；</li>
+<li>在读和写这两种模式之间切换不需要调用ByteBuffer 的flip()方法；</li>
+<li>读和写使用了不同的索引；</li>
+<li>支持方法的链式调用；</li>
+<li>支持引用计数；</li>
+<li>支持池化。</li>
+</ul>
+</blockquote>
+<p>　　ByteBuf 维护了两个不同的索引，名称以 read 或者 write 开头的 ByteBuf 方法，将会推进其对应的索引，而名称以 set 或者 get 开头的操作则不会。</p>
+<p>　　如果打算读取字节直到 readerIndex 达到和 writerIndex 同样的值时会发生什么。在那时，你将会到达“可以读取的”数据的末尾。就如同试图读取超出数组末尾的数据一样，试图读取超出该点的数据将会触发一个 IndexOutOf-BoundsException。</p>
+<p>　　可以指定 ByteBuf 的最大容量。试图移动写索引（即writerIndex）超过这个值将会触发一个异常。（默认的限制是  Integer.MAX_VALUE。）</p>
+<h4 id="9-1-使用模式"><a href="#9-1-使用模式" class="headerlink" title="9.1 使用模式"></a>9.1 使用模式</h4><h5 id="1-堆缓冲区"><a href="#1-堆缓冲区" class="headerlink" title="1. 堆缓冲区"></a>1. 堆缓冲区</h5><p>　　最常用的 ByteBuf 模式是将数据存储在 JVM 的堆空间中。这种模式被称为支撑数组（backing array），它能在没有使用池化的情况下提供快速的分配和释放。可以由 hasArray() 来判断检查 ByteBuf 是否由数组支撑。如果不是，则这是一个直接缓冲区。</p>
+<h5 id="2-直接缓冲区"><a href="#2-直接缓冲区" class="headerlink" title="2. 直接缓冲区"></a>2. 直接缓冲区</h5><p>　　直接缓冲区是另外一种 ByteBuf 模式。</p>
+<p>直接缓冲区的主要缺点是，相对于基于堆的缓冲区，它们的分配和释放都较为昂贵。</p>
+<h5 id="3-复合缓冲区"><a href="#3-复合缓冲区" class="headerlink" title="3. 复合缓冲区"></a>3. 复合缓冲区</h5><p>　　复合缓冲区 CompositeByteBuf，它为多个 ByteBuf 提供一个聚合视图。比如 HTTP 协议，分为消息头和消息体，这两部分可能由应用程序的不同模块产生，各有各的 ByteBuf，将会在消息被发送的时候组装为一个 ByteBuf，此时可以将这两个 ByteBuf 聚合为一个 CompositeByteBuf，然后使用统一和通用的 ByteBuf API 来操作。</p>
+<h4 id="9-2-分配"><a href="#9-2-分配" class="headerlink" title="9.2 分配"></a>9.2 分配</h4><p>　　如何在我们的程序中获得 ByteBuf 的实例，并使用它呢？Netty 提供了两种方式</p>
+<h5 id="1-ByteBufAllocator-接口"><a href="#1-ByteBufAllocator-接口" class="headerlink" title="1. ByteBufAllocator 接口"></a>1. ByteBufAllocator 接口</h5><p>　　Netty 通过 interface ByteBufAllocator 分配我们所描述过的任意类型的 ByteBuf 实例。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>buffer()</td>
+<td>返回一个基于堆或者直接内存存储的 ByteBuf</td>
+</tr>
+<tr>
+<td>heapBuffer()</td>
+<td>返回一个基于堆内存存储的 ByteBuf</td>
+</tr>
+<tr>
+<td>directBuffer()</td>
+<td>返回一个基于直接内存存储的 ByteBuf</td>
+</tr>
+<tr>
+<td>compositeBuffer()</td>
+<td>返回一个可以通过添加最大到指定数目的基于堆的或者直接内存存储的缓冲区来扩展的 CompositeByteBuf</td>
+</tr>
+<tr>
+<td>ioBuffer()</td>
+<td>返回一个用于套接字的 I/O 操作的 ByteBuf，当所运行的环境具有 sun.misc.Unsafe 支持时，返回基于直接内存存储的 ByteBuf，否则返回基于堆内存存储的 ByteBuf；当指定使用 PreferHeapByteBufAllocator 时，则只会返回基于堆内存存储的 ByteBuf。</td>
+</tr>
+</tbody></table>
+<p>　　可以通过 Channel（每个都可以有一个不同的 ByteBufAllocator 实例）或者绑定到 ChannelHandler 的 ChannelHandlerContext 获取一个到 ByteBufAllocator 的引用。</p>
+<p>　　Netty 提供了两种 ByteBufAllocator 的实现：PooledByteBufAllocator 和 Unpooled-ByteBufAllocator。前者池化了 ByteBuf 的实例以提高性能并最大限度地减少内存碎片。后者的实现不池化 ByteBuf 实例，并且在每次它被调用时都会返回一个新的实例。</p>
+<p>　　Netty4.1 默认使用了 PooledByteBufAllocator。</p>
+<h5 id="2-Unpooled-缓冲区"><a href="#2-Unpooled-缓冲区" class="headerlink" title="2. Unpooled 缓冲区"></a>2. Unpooled 缓冲区</h5><p>　　Netty 提供了一个简单的称为 Unpooled 的工具类，它提供了静态的辅助方法来创建未池化的 ByteBuf 实例。</p>
+<table>
+<thead>
+<tr>
+<th>buffer()</th>
+<th>返回一个未池化的基于堆内存存储的 ByteBuf</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>directBuffer()</td>
+<td>返回一个未池化的基于直接内存存储的 ByteBuf</td>
+</tr>
+<tr>
+<td>wrappedBuffer()</td>
+<td>返回一个包装了给定数据的 ByteBuf</td>
+</tr>
+<tr>
+<td>copiedBuffer()</td>
+<td>返回一个复制了给定数据的 ByteBuf</td>
+</tr>
+</tbody></table>
+<p>　　Unpooled 类可用于 ByteBuf，同样可用于那些并不需要 Netty 的其他组件的非网络项目。</p>
+<h5 id="3-随机访问索引-顺序访问索引-读写操作"><a href="#3-随机访问索引-顺序访问索引-读写操作" class="headerlink" title="3. 随机访问索引/顺序访问索引/读写操作"></a>3. 随机访问索引/顺序访问索引/读写操作</h5><p>　　如同在普通的 Java 字节数组中一样，ByteBuf 的索引是从零开始的：第一个字节的索引是 0，最后一个字节的索引总是 capacity() - 1。使用那些需要一个索引值参数(<strong>随机访问</strong>,也即是数组下标)的方法（的其中）之一来访问数据既不会改变 readerIndex 也不会改变 writerIndex。如果有需要，也可以通过调用 readerIndex(index) 或者 writerIndex(index) 来手动移动这两者。<strong>顺序访问</strong>通过索引访问</p>
+<p>有两种类别的读/写操作：</p>
+<p>　　get() 和 set() 操作，从给定的索引开始，并且保持索引不变；get+数据字长（bool.byte,int,short,long,bytes）</p>
+<p>　　read() 和 write() 操作，从给定的索引开始，并且会根据已经访问过的字节数对索引进行调整。</p>
+<p><strong>更多的操作：</strong></p>
+<table>
+<thead>
+<tr>
+<th>isReadable()</th>
+<th>如果至少有一个字节可供读取，则返回true</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>isWritable()</td>
+<td>如果至少有一个字节可被写入，则返回true</td>
+</tr>
+<tr>
+<td>readableBytes()</td>
+<td>返回可被读取的字节数</td>
+</tr>
+<tr>
+<td>writableBytes()</td>
+<td>返回可被写入的字节数</td>
+</tr>
+<tr>
+<td>capacity()</td>
+<td>capacity() 返回ByteBuf 可容纳的字节数。在此之后，它会尝试再次扩展直到达到maxCapacity()</td>
+</tr>
+<tr>
+<td>maxCapacity()</td>
+<td>返回 ByteBuf 可以容纳的最大字节数</td>
+</tr>
+<tr>
+<td>hasArray()</td>
+<td>如果 ByteBuf 由一个字节数组支撑，则返回 true</td>
+</tr>
+<tr>
+<td>array()</td>
+<td>array() 如果 ByteBuf 由一个字节数组支撑则返回该数组；否则，它将抛出一个UnsupportedOperationException 异常</td>
+</tr>
+</tbody></table>
+<p><strong>可丢弃字节：</strong></p>
+<p>　　可丢弃字节的分段包含了已经被读过的字节。通过调用 discardReadBytes() 方法，可以丢弃它们并回收空间。这个分段的初始大小为 0，存储在 readerIndex 中，会随着 read 操作的执行而增加（get* 操作不会移动 readerIndex）。</p>
+<p>　　缓冲区上调用 discardReadBytes() 方法后，可丢弃字节分段中的空间已经变为可写的了。频繁地调用 discardReadBytes() 方法以确保可写分段的最大化，但是请注意，这将极有可能会导致内存复制，因为可读字节必须被移动到缓冲区的开始位置。建议只在有真正需要的时候才这样做。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112203093.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
+
+
+
+<p><strong>可读字节：</strong></p>
+<p>　　ByteBuf 的可读字节分段存储了实际数据。新分配的、包装的或者复制的缓冲区的默认的 readerIndex 值为 0。</p>
+<p><strong>可写字节：</strong></p>
+<p>　　可写字节分段是指一个拥有未定义内容的、写入就绪的内存区域。新分配的缓冲区的 writerIndex 的默认值为0。任何名称以 write 开头的操作都将从当前的 writerIndex 处开始写数据，并将它增加已经写入的字节数。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310112206687.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></center>
+
+
+
+<h5 id="4-索引管理"><a href="#4-索引管理" class="headerlink" title="4. 索引管理"></a>4. 索引管理</h5><p>　　调用 markReaderIndex()、markWriterIndex()、resetWriterIndex() 和 resetReaderIndex() 来标记和重置 ByteBuf 的 readerIndex 和 writerIndex。</p>
+<p>　　也可以通过调用 readerIndex(int) 或者 writerIndex(int) 来将索引移动到指定位置。试图将任何一个索引设置到一个无效的位置都将导致一个 IndexOutOfBoundsException。</p>
+<p>　　可以通过调用 clear() 方法来将 readerIndex 和 writerIndex 都设置为0。注意，这并不会清除内存中的内容。</p>
+<h5 id="5-查找操作"><a href="#5-查找操作" class="headerlink" title="5. 查找操作"></a>5. 查找操作</h5><p>　　在 ByteBuf 中有多种可以用来确定指定值的索引的方法。最简单的是使用 indexOf() 方法。</p>
+<p>　　较复杂的查找可以通过调用 forEachByte()。</p>
+<p>　　下面的代码展示了一个查找回车符（\r）的例子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">ByteBuf buffer = .. .;<br><br><span class="hljs-keyword">int</span> index = buffer.forEachByte(ByteBufProcessor.FIND_CR);<br></code></pre></td></tr></table></figure>
+
+<h5 id="6-派生缓冲区"><a href="#6-派生缓冲区" class="headerlink" title="6. 派生缓冲区"></a>6. 派生缓冲区</h5><p>　　派生缓冲区为 ByteBuf 提供了以专门的方式来呈现其内容的视图。这类视图是通过以下方法被创建的：</p>
+<p>　　duplicate()；slice()；slice(int, int)；Unpooled.unmodifiableBuffer(…)；order(ByteOrder)；readSlice(int)。</p>
+<p>　　每个这些方法都将返回一个新的 ByteBuf 实例，它具有自己的读索引、写索引和标记索引。其内部存储和 JDK 的 ByteBuffer 一样也是共享的。</p>
+<p>　　<strong>ByteBuf</strong> 复制：如果需要一个现有缓冲区的真实副本，请使用 copy() 或者 copy(int, int) 方法。不同于派生缓冲区，由这个调用所返回的 ByteBuf 拥有独立的数据副本。</p>
+<h5 id="7-引用计数"><a href="#7-引用计数" class="headerlink" title="7. 引用计数"></a>7. 引用计数</h5><p>　　引用计数是一种通过在某个对象所持有的资源不再被其他对象引用时释放该对象所持有的资源来优化内存使用和性能的技术。Netty 在第4 版中为 ByteBuf 引入了引用计数技术， interface ReferenceCounted。</p>
+<h5 id="8-工具类"><a href="#8-工具类" class="headerlink" title="8. 工具类"></a>8. 工具类</h5><p>　　<strong>ByteBufUtil</strong> 提供了用于操作 ByteBuf 的静态的辅助方法。因为这个 API 是通用的，并且和池化无关，所以这些方法已然在分配类的外部实现。</p>
+<p>　　这些静态方法中最有价值的可能就是 hexdump() 方法，它以十六进制的表示形式打印 ByteBuf 的内容。这在各种情况下都很有用，例如，出于调试的目的记录ByteBuf 的内容。十六进制的表示通常会提供一个比字节值的直接表示形式更加有用的日志条目，此外，十六进制的版本还可以很容易地转换回实际的字节表示。</p>
+<p>　　另一个有用的方法是 boolean equals(ByteBuf, ByteBuf)，它被用来判断两个 ByteBuf 实例的相等性。</p>
+<h5 id="9-资源释放"><a href="#9-资源释放" class="headerlink" title="9. 资源释放"></a>9. 资源释放</h5><p>　　当某个 ChannelInboundHandler 的实现重写 channelRead() 方法时，它要负责显式地释放与池化的 ByteBuf 实例相关的内存。Netty  为此提供了一个实用方法 ReferenceCountUtil.release()</p>
+<p>　　Netty 将使用 WARN 级别的日志消息记录未释放的资源，使得可以非常简单地在代码中发现违规的实例。但是以这种方式管理资源可能很繁琐。一个更加简单的方式是使用 SimpleChannelInboundHandler，SimpleChannelInboundHandler 会自动释放资源。</p>
+<p>　　1、对于入站请求，Netty 的 EventLoop 在处理 Channel 的读操作时进行分配 ByteBuf，对于这类 ByteBuf，需要我们自行进行释放，有三种方式：</p>
+<blockquote>
+<ol>
+<li><p>使用 SimpleChannelInboundHandler；</p>
+</li>
+<li><p>在重写 channelRead() 方法使用 ReferenceCountUtil.release()</p>
+</li>
+<li><p>在重写 channelRead() 方法使用使用 ctx.fireChannelRead 继续向后传递</p>
+</li>
+</ol>
+</blockquote>
+<p>　　2、对于出站请求，不管 ByteBuf 是否由我们的业务创建的，当调用了 write 或者 writeAndFlush 方法后，Netty 会自动替我们释放，不需要我们业务代码自行释放。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Netty/" class="category-chain-item">Netty</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Netty/">#Netty</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Netty——Netty常用组件</div>
+      <div>http://example.com/2023/10/08/Netty——Netty常用组件/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月8日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/11/Netty%E2%80%94%E2%80%94%E7%B2%98%E5%8C%85-%E5%8D%8A%E5%8C%85%E3%80%81%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E3%80%81%E5%BA%8F%E5%88%97%E5%8C%96/" title="Netty——粘包/半包、编解码器、序列化">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty——粘包/半包、编解码器、序列化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/05/Netty%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86Netty/" title="Netty——初识Netty">
+                        <span class="hidden-mobile">Netty——初识Netty</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

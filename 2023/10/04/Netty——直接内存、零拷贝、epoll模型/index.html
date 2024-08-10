@@ -1,0 +1,1109 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 直接内存　　在所有的网络通信和应用程序中，每个 TCP 的 Socket 内核中都有一个发送缓冲区（SO_SNDBUF）和一个接收缓冲区（SO_RECVBUF），可以使用相关套接字选项来更改该缓冲区大小。     　　当某个应用进程调用 write时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。如果该套接字的发送缓冲区容不下该应用进程的所有数据(或是应用进程的缓冲区大于套">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty——直接内存、零拷贝、epoll模型">
+<meta property="og:url" content="http://example.com/2023/10/04/Netty%E2%80%94%E2%80%94%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98%E3%80%81%E9%9B%B6%E6%8B%B7%E8%B4%9D%E3%80%81epoll%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 直接内存　　在所有的网络通信和应用程序中，每个 TCP 的 Socket 内核中都有一个发送缓冲区（SO_SNDBUF）和一个接收缓冲区（SO_RECVBUF），可以使用相关套接字选项来更改该缓冲区大小。     　　当某个应用进程调用 write时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。如果该套接字的发送缓冲区容不下该应用进程的所有数据(或是应用进程的缓冲区大于套">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042044616.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042051030.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042117088.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042138197.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042150357.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042155284.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042208186.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042252521.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042232204.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042236640.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051505722.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051511531.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051516121.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051535749.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051539517.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051543056.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051551762.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051606421.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051608264.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051610330.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051619847.png">
+<meta property="article:published_time" content="2023-10-04T12:38:11.000Z">
+<meta property="article:modified_time" content="2024-08-10T02:34:14.851Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042044616.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Netty——直接内存、零拷贝、epoll模型 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Netty——直接内存、零拷贝、epoll模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-04 20:38" pubdate>
+          2023年10月4日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          45 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Netty——直接内存、零拷贝、epoll模型</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="1-直接内存"><a href="#1-直接内存" class="headerlink" title="1. 直接内存"></a>1. 直接内存</h3><p>　　在所有的网络通信和应用程序中，每个 TCP 的 Socket 内核中都有一个发送缓冲区（SO_SNDBUF）和一个接收缓冲区（SO_RECVBUF），可以使用相关套接字选项来更改该缓冲区大小。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042044616.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+</center>
+
+<p>　　当某个应用进程调用 write时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。如果该套接字的发送缓冲区容不下该应用进程的所有数据(或是应用进程的缓冲区大于套接字的发送缓冲区，或是套接字的发送缓冲区中已有其他数据)，假设该套接字是阻塞的，则该应用进程将被投入睡眠。内核将不从 write 系统调用返回，直到应用进程缓冲区中的所有数据都复制到套接字发送缓冲区。因此，从写一个 TCP 套接字的 write 调用成功返回仅仅表示我们可以重新使用原来的应用进程缓冲区，并不表明对端的 TCP 或应用进程已接收到数据。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042051030.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
+
+<p>　　Java 程序自然也要遵守上述的规则。但在 Java 中存在着堆、垃圾回收等特性，所以在实际的 IO 中，在 JVM 内部的存在着这样一种机制：</p>
+<p>　　在 IO 读写上，如果是使用堆内存，JDK 会先创建一个 DirectBuffer，再去执行真正的写操作。这是因为，当我们把一个地址通过 JNI 传递给底层的 C 库的时候，有一个基本的要求，就是这个地址上的内容不能失效。然而，在 GC 管理下的对象是会在 Java 堆中移动的。也就是说，有可能我把一个地址传给底层的 write，但是这段内存却因为 GC 整理内存而失效了。所以必须要把待发送的数据放到一个 GC 管不着的地方。这就是调用 native 方法之前，数据—定要在堆外内存的原因。</p>
+<p>　　可见，站在网络通信的角度 DirectBuffer 并没有节省什么内存拷贝，只是 Java 网络通信里因为 HeapBuffer 必须多做一次拷贝，使用 DirectBuffer 就会少一次内存拷贝。相比没有使用堆内存的 Java 程序，使用直接内存的 Java 程序当然更快一点。</p>
+<p>　　从垃圾回收的角度而言，直接内存不受 GC(新生代的 Minor GC) 影响，只有当执行老年代的 Full GC 时候才会顺便回收直接内存，整理内存的压力也比数据放到 HeapBuffer 要小。</p>
+<p><strong>堆外内存的优点和缺点：</strong></p>
+<p>优点：</p>
+<ol>
+<li>减少了垃圾回收的工作</li>
+<li>加快了复制的速度。因为堆内在 flush 到远程时，会先复制到直接内存（非堆内存），然后在发送；而堆外内存相当于省略掉了这个工作。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>堆外内存难以控制，如果内存泄漏很难排查 </li>
+<li>堆外内存相对来说，不适合存储很复杂的对象。一般简单的对象或者扁平化的比较适合。</li>
+</ol>
+<h3 id="2-零拷贝"><a href="#2-零拷贝" class="headerlink" title="2. 零拷贝"></a>2. 零拷贝</h3><h4 id="2-1-什么是零拷贝"><a href="#2-1-什么是零拷贝" class="headerlink" title="2.1 什么是零拷贝"></a>2.1 什么是零拷贝</h4><p>　　零拷贝(英语: Zero-copy) 技术是指计算机执行操作时，CPU 不需要先将数据从某处内存复制到另一个特定区域。这种技术通常用于通过网络传输文件时节省 CPU 周期和内存带宽。</p>
+<p>➢零拷贝技术可以减少数据拷贝和共享总线操作的次数，消除传输数据在存储器之间不必要的中间拷贝次数，从而有效地提高数据传输效率</p>
+<p>➢零拷贝技术减少了用户进程地址空间和内核地址空间之间因为上:下文切换而带来的开销</p>
+<p>　　可以看出没有说不需要拷贝，只是说减少冗余[不必要]的拷贝。</p>
+<p>　　使用零拷贝的组件、框架：Kafka、Netty、Rocketmq、Nginx、Apache。</p>
+<h4 id="2-2-Linux的I-O机制与DMA"><a href="#2-2-Linux的I-O机制与DMA" class="headerlink" title="2.2 Linux的I/O机制与DMA"></a>2.2 Linux的I/O机制与DMA</h4><p>在早期计算机中，用户进程需要读取磁盘数据，需要 CPU 中断和 CPU 参与，因此效率比较低，发起 IO 请求，每次的 IO 中断，都带来 CPU 的上下文切换，因此出现了——DMA。</p>
+<p>DMA(Direct Memory Access，直接内存存取) 是所有现代电脑的重要特色，它允许不同速度的硬件装置来沟通，而不需要依赖于 CPU 的大量中断负载。</p>
+<p>　　DMA 控制器，接管了数据读写请求，减少 CPU 的负担。这样一来，CPU 能高效工作了。现代硬盘基本都支持 DMA。</p>
+<p>实际因此 IO 读取，涉及两个过程：</p>
+<ol>
+<li>DMA 等待数据准备好，把磁盘数据读取到操作系统内核缓冲区；</li>
+<li>用户进程，将内核缓冲区的数据 copy 到用户空间。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3a26e8c9f402">（传送门）</a></p>
+<h4 id="2-3-传统数据传送机制"><a href="#2-3-传统数据传送机制" class="headerlink" title="2.3 传统数据传送机制"></a>2.3 传统数据传送机制</h4><p>比如读取文件，再用 socket 发送出去，实际经过四次 copy。</p>
+<p>伪码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">buffer = File.read() <br>Socket.send(buffer)<br></code></pre></td></tr></table></figure>
+
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042117088.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+
+<p>1、第一次：将磁盘文件，读取到操作系统内核缓冲区；</p>
+<p>2、第二次：将内核缓冲区的数据，copy 到应用程序的 buffer；</p>
+<p>3、第三步：将 application 应用程序 buffer 中的数据，copy 到 socket 网络发送缓冲区(属于操作系统内核的缓冲区)；</p>
+<p>4、第四次：将 socket buffer 的数据，copy 到网卡，由网卡进行网络传输。</p>
+<p>分析上述的过程，虽然引入 DMA 来接管 CPU 的中断请求，但四次 copy 是存在“不必要的拷贝”的。实际上并不需要第二个和第三个数据副本。应用程序除了缓存数据并将其传输回套接字缓冲区之外什么都不做。相反，数据可以直接从读缓冲区传输到套接字缓冲区。</p>
+<p>　　显然，第二次和第三次数据 copy 其实在这种场景下没有什么帮助反而带来开销，这也正是零拷贝出现的背景和意义。</p>
+<p>　　同时，read 和 send 都属于系统调用，每次调用都牵涉到两次上下文切换：</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042138197.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　</p>
+<p>　　总结下，传统的数据传送所消耗的成本：4 次拷贝，4 次上下文切换。</p>
+<p>　　4 次拷贝，其中两次是 DMA copy，两次是 CPU copy。</p>
+<h4 id="2-4-Linux支持的-常见-零拷贝"><a href="#2-4-Linux支持的-常见-零拷贝" class="headerlink" title="2.4 Linux支持的(常见)零拷贝"></a>2.4 Linux支持的(常见)零拷贝</h4><p>　　目的：减少 IO 流程中不必要的拷贝，当然零拷贝需要 OS 支持，也就是需要 kernel 暴露　api。</p>
+<h5 id="1-mmap内存映射"><a href="#1-mmap内存映射" class="headerlink" title="1. mmap内存映射"></a>1. mmap内存映射</h5><p>　　硬盘上文件的位置和应用程序缓冲区(application buffers)进行映射（建立一种一一对应关系），由于 mmap() 将文件直接映射到用户空间，所以实际文件读取时根据这个映射关系，直接将文件从硬盘拷贝到用户空间，只进行了一次数据拷贝，不再有文件内容从硬盘拷贝到内核空间的一个缓冲区。</p>
+<p>　　mmap 内存映射将会经历：3次拷贝: 1次 cpu copy，2次 DMA copy；</p>
+<p>　　以及4次上下文切换，调用 mmap 函数2次，write 函数2次。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042150357.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<h5 id="2-sendfile"><a href="#2-sendfile" class="headerlink" title="2. sendfile"></a>2. sendfile</h5><p>　　linux 2.1 支持的 sendfile</p>
+<p>　　当调用 sendfile() 时，DMA 将磁盘数据复制到 kernel buffer，然后将内核中的 kernel buffer 直接拷贝到 socket buffer；但是数据并未被真正复制到 socket 关联的缓冲区内。取而代之的是，只有记录数据位置和长度的描述符被加入到 socket 缓冲区中。DMA 模块将数据直接从内核缓冲区传递给协议引擎，从而消除了遗留的最后一次复制。但是要注意，这个需要 DMA 硬件设备支持，如果不支持，CPU 就必须介入进行拷贝。</p>
+<p>　　一旦数据全都拷贝到 socket buffer，sendfile() 系统调用将会 return、代表数据转化的完成。socket buffer 里的数据就能在网络传输了。</p>
+<p>　　sendfile 会经历：3（2，如果硬件设备支持）次拷贝，1（0，如果硬件设备支持）次 CPU copy， 2次 DMA copy；以及2次上下文切换</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042155284.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
+
+<h5 id="3-splice"><a href="#3-splice" class="headerlink" title="3. splice"></a>3. splice</h5><p>　　Linux 从 2.6.17 支持 splice</p>
+<p>　　数据从磁盘读取到 OS 内核缓冲区后，在内核缓冲区直接可将其转成内核空间其他数据 buffer，而不需要拷贝到用户空间。</p>
+<p>　　如下图所示，从磁盘读取到内核 buffer 后，在内核空间直接与 socket buffer 建立 pipe 管道。</p>
+<p>　　和 sendfile() 不同的是，splice() 不需要硬件支持。</p>
+<p>　　注意 splice 和 sendfile 的不同，sendfile 是 DMA 硬件设备不支持的情况下将磁盘数据加载到 kernel buffer 后，需要一次 CPU copy，拷贝到 socket buffer。而 splice 是更进一步，连这个 CPU copy 也不需要了，直接将两个内核空间的  buffer进行 pipe。</p>
+<p>　　splice 会经历2次拷贝: 0次 cpu copy，2次 DMA copy；以及2次上下文切换</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042208186.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
+
+
+
+<h4 id="2-5-Java生态圈中的零拷贝"><a href="#2-5-Java生态圈中的零拷贝" class="headerlink" title="2.5 Java生态圈中的零拷贝"></a>2.5 Java生态圈中的零拷贝</h4><p>　　Linux 提供的零拷贝技术 Java 并不是全支持，支持2种(内存映射mmap、sendfile)；</p>
+<h5 id="1-NIO提供的内存映射-MappedByteBuffer"><a href="#1-NIO提供的内存映射-MappedByteBuffer" class="headerlink" title="1. NIO提供的内存映射 MappedByteBuffer"></a>1. NIO提供的内存映射 MappedByteBuffer</h5><p>　　NIO 中的 FileChannel.map() 方法其实就是采用了操作系统中的内存映射方式，底层就是调用 Linux mmap() 实现的。</p>
+<p>　　将内核缓冲区的内存和用户缓冲区的内存做了一个地址映射。这种方式适合读取大文件，同时也能对文件内容进行更改，但是如果其后要通过 SocketChannel 发送，还是需要 CPU 进行数据的拷贝。</p>
+<h5 id="2-NIO提供的sendfile"><a href="#2-NIO提供的sendfile" class="headerlink" title="2. NIO提供的sendfile"></a>2. NIO提供的sendfile</h5><p>　　Java NIO 中提供的 FileChannel 拥有 transferTo 和 transferFrom 两个方法，可直接把 FileChannel 中的数据拷贝到另外一个 Channel，或者直接把另外一个 Channel 中的数据拷贝到 FileChannel。该接口常被用于高效的网络 / 文件的数据传输和大文件拷贝。在操作系统支持的情况下，通过该方法传输数据并不需要将源数据从内核态拷贝到用户态，再从用户态拷贝到目标通道的内核态，同时也避免了两次用户态和内核态间的上下文切换，也即使用了“零拷贝”，所以其性能一般高于 Java IO 中提供的方法。</p>
+<h5 id="3-Kafka中的零拷贝"><a href="#3-Kafka中的零拷贝" class="headerlink" title="3. Kafka中的零拷贝"></a>3. Kafka中的零拷贝</h5><p>　　Kafka 两个重要过程都使用了零拷贝技术，且都是操作系统层面的狭义零拷贝，一是 Producer 生产的数据存到 broker，二是 Consumer 从 broker 读取数据。</p>
+<p>　　Producer 生产的数据持久化到 broker，broker 里采用 mmap 文件映射，实现顺序的快速写入；</p>
+<p>　　Customer 从 broker 读取数据，broker 里采用 sendfile，将磁盘文件读到 OS 内核缓冲区后，直接转到 socket buffer 进行网络发送。</p>
+<h5 id="4-Netty的零拷贝实现"><a href="#4-Netty的零拷贝实现" class="headerlink" title="4. Netty的零拷贝实现"></a>4. Netty的零拷贝实现</h5><p>　　Netty 的零拷贝主要包含三个方面：</p>
+<p>　　在网络通信上，Netty 的接收和发送 ByteBuffer 采用 DIRECT BUFFERS，使用堆外直接内存进行 Socket 读写，不需要进行字节缓冲区的二次拷贝。如果使用传统的堆内存（HEAP BUFFERS）进行 Socket 读写，JVM 会将堆内存 Buffer 拷贝一份到直接内存中，然后才写入 Socket 中。相比于堆外直接内存，消息在发送过程中多了一次缓冲区的内存拷贝。</p>
+<p>　　在缓存操作上，Netty 提供了 CompositeByteBuf 类，它可以将多个 ByteBuf 合并为一个逻辑上的 ByteBuf，避免了各个 ByteBuf 之间的拷贝。</p>
+<p>　　通过 wrap 操作，我们可以将 byte[] 数组、ByteBuf、 ByteBuffer 等包装成一个 Netty ByteBuf 对象，进而避免了拷贝操作。</p>
+<p>　　ByteBuf 支持 slice 操作，因此可以将 ByteBuf 分解为多个共享同一个存储区域的 ByteBuf，避免了内存的拷贝。</p>
+<p>　　在文件传输上，Netty 的通过 FileRegion 包装的 FileChannel.tranferTo 实现文件传输，它可以直接将文件缓冲区的数据发送到目标 Channel，避免了传统通过循环 write 方式导致的内存拷贝问题。</p>
+<h3 id="3-Linux网络IO模型"><a href="#3-Linux网络IO模型" class="headerlink" title="3. Linux网络IO模型"></a>3. Linux网络IO模型</h3><p><strong>同步和异步</strong></p>
+<p>　　关注的是调用方是否主动获取结果</p>
+<p>　　同步：同步的意思就是调用方需要主动等待结果的返回</p>
+<p>　　异步：异步的意思就是不需要主动等待结果的返回，而是通过其他手段比如，状态通知，回调函数等。</p>
+<p><strong>阻塞和非阻塞</strong></p>
+<p>　　关注的是等待结果返回调用方的状态</p>
+<p>　　阻塞：是指结果返回之前，当前线程被挂起，不做任何事</p>
+<p>　　非阻塞：是指结果在返回之前，线程可以做一些其他事，不会被挂起。</p>
+<p><strong>Linux下的五种I/O模型</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15467009/7063136">（传送门）</a></p>
+<center>
+  <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042252521.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
+
+
+
+<p>　　总的来说，阻塞 IO 就是 JDK 里的 BIO 编程，IO 复用就是 JDK 里的 NIO 编程，Linux下异步 IO 的实现建立在 epoll 之上，是个伪异步实现，而且相比 IO 复用，没有体现出性能优势，使用不广。非阻塞 IO 使用轮询模式，会不断检测是否有数据到达，大量的占用 CPU 的时间，是绝不被推荐的模型。信号驱动 IO 需要在网络通信时额外安装信号处理函数，使用也不广泛。</p>
+<p>阻塞式 I/O 模型：</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042232204.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p> I/O复用模型：</p>
+<center>
+  <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042236640.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
+
+<p>　　比较上面两张图，IO 复用需要使用两个系统调用（select 和 recvfrom），而 blocking IO 只调用了一个系统调用（recvfrom）。但是，用 select 的优势在于它可以同时处理多个 connection。所以，如果处理的连接数不是很高的话，使用 select/epoll 的 web server 不一定比使用 multi-threading + blocking IO 的 web server 性能更好，可能延迟还更大。select/epoll 的优势并不是对于单个连接能处理得更快，而是在于能处理更多的连接。</p>
+<h3 id="4-Linux下的IO复用编程"><a href="#4-Linux下的IO复用编程" class="headerlink" title="4. Linux下的IO复用编程"></a>4. Linux下的IO复用编程</h3><p>　　select，poll，epoll 都是 IO 多路复用的机制。I/O 多路复用就是通过一种机制，一个进程可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。但 select，poll，epoll 本质上都是同步 I/O，因为他们都需要在读写事件就绪后自己负责进行读写，并等待读写完成。</p>
+<h4 id="4-1-文件描述符FD"><a href="#4-1-文件描述符FD" class="headerlink" title="4.1 文件描述符FD"></a>4.1 文件描述符FD</h4><p>　　在 Linux 操作系统中，可以将一切都看作是文件，包括普通文件，目录文件，字符设备文件（如键盘，鼠标…），块设备文件（如硬盘，光驱…），套接字等等，所有一切均抽象成文件，提供了统一的接口，方便应用程序调用。</p>
+<p>既然在 Linux 操作系统中，你将一切都抽象为了文件，那么对于一个打开的文件，我应用程序怎么对应上呢？文件描述符应运而生。</p>
+<p>　　文件描述符：File descriptor，简称 fd，当应用程序请求内核打开/新建一个文件时，内核会返回一个文件描述符用于对应这个打开/新建的文件，其 fd 本质上就是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。</p>
+<p>　　系统为了维护文件描述符建立了3个表：进程级的文件描述符表、系统级的文件描述符表、文件系统的 i-node 表。所谓进程级的文件描述符表，指操作系统为每一个进程维护了一个文件描述符表，该表的索引值都从 0 开始的，所以在不同的进程中可以看到相同的文件描述符，这种情况下相同的文件描述符可能指向同一个实际文件，也可能指向不同的实际文件。</p>
+<h4 id="4-2-select"><a href="#4-2-select" class="headerlink" title="4.2 select"></a>4.2 select</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">select</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>　　select 函数监视的文件描述符分 3 类，分别是 writefds、readfds、和 exceptfds。调用后 select 函数会阻塞，直到有描述副就绪（有数据 可读、可写、或者有错误发生），或者超时（ timeout 指定等待时间，如果立即返回设为 null 即可）函数返回。当 select 函数返回后，可以通过遍历 fdset，来找到就绪的描述符。</p>
+<p>　　select 目前几乎在所有的平台上支持，其良好跨平台支持也是它的一个优点。select 的一 个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在 Linux 上一般为 1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制，但是这样也会造成效率的降低。</p>
+<h4 id="4-3-poll"><a href="#4-3-poll" class="headerlink" title="4.3 poll"></a>4.3 poll</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">poll</span> <span class="hljs-params">(struct pollfd *fds, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> nfds, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>　　不同于 select 使用三个位图来表示三个 fdset 的方式，poll 使用一个 pollfd 的指针实现。</p>
+<p>　　pollfd 结构包含了要监视的 event 和发生的 event，不再使用 select “参数-值”传递的方式。同时，pollfd 并没有最大数量限制（但是数量过大后性能也是会下降）。 和 select 函数一样，poll 返回后，需要轮询 pollfd 来获取就绪的描述符。</p>
+<h4 id="4-4-epoll"><a href="#4-4-epoll" class="headerlink" title="4.4 epoll"></a>4.4 epoll</h4><p>　　epoll 是在 2.6 内核中提出的，是之前的 select 和 poll 的增强版本。相对于 select 和 poll 来说，可以看到 epoll 做了更细致的分解，包含了三个方法，使用上更加灵活。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_create</span><span class="hljs-params">(<span class="hljs-keyword">int</span> size)</span>；</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_ctl</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd, <span class="hljs-keyword">int</span> op, <span class="hljs-keyword">int</span> fd, struct epoll_event *event)</span>；</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_wait</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd, struct epoll_event * events, <span class="hljs-keyword">int</span> maxevents, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>　　①  <strong>epoll_create()</strong>　创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，这个参数不同于 select() 中的第一个参数，给出最大监听的 fd+1 的值，参数 size 并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。当创建好 epoll 句柄后，它就会占用一个 fd 值，在 linux 下如果查看 /proc/进程id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。</p>
+<p>　　作为类比，可以理解为　JDK NIO　编程里的　selector = Selector.open();</p>
+<p>　　② <strong>epoll_ctl</strong>　函数是对指定描述符 fd 执行 op 操作。</p>
+<blockquote>
+<p>epfd：是 epoll_create() 的返回值。</p>
+<p>op：表示操作，用三个宏来表示：添加 EPOLL_CTL_ADD，删除 EPOLL_CTL_DEL，修改 EPOLL_CTL_MOD。分别添加、删除和修改对 fd 的监听事件。</p>
+<p>fd：是需要监听的 fd（文件描述符）</p>
+<p>epoll_event：是告诉内核需要监听什么事，有具体的宏可以使用，比如 EPOLLIN ：表示对应的文件描述符可以读（包括对端 SOCKET 正常关闭）；EPOLLOUT：表示对应的文件描述符可以写；</p>
+</blockquote>
+<p>　　作为类比，可以理解为 JDK NIO 编程里的 socketChannel.register();</p>
+<p>　　③ <strong>epoll_wait</strong> 等待 epfd 上的 io 事件，最多返回 maxevents 个事件。</p>
+<blockquote>
+<p>events：用来从内核得到事件的集合</p>
+<p>maxevents：告诉内核 events 有多大，这个maxevents的值不能大于创建epoll_create()时的size。</p>
+<p>timeout：超时时间（毫秒，0会立即返回，-1将不确定，也有说法说是永久阻塞）。该函数返回需要处理的事件数目，如返回0表示已超时。</p>
+</blockquote>
+<p>　　作为类比，可以理解为对应于 JDK NIO 编程里的 selector.select();</p>
+<h4 id="4-5-select、poll、epoll-的比较"><a href="#4-5-select、poll、epoll-的比较" class="headerlink" title="4.5 select、poll、epoll 的比较"></a>4.5 select、poll、epoll 的比较</h4><p>　　select，poll，epoll 都是操作系统实现  IO 多路复用的机制。 I/O 多路复用就通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。那么这三种机制有什么区别呢。</p>
+<table>
+<thead>
+<tr>
+<th align="center">\</th>
+<th align="center">select</th>
+<th align="center">poll</th>
+<th align="center">epoll</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">操作方式</td>
+<td align="center">遍历</td>
+<td align="center">遍历</td>
+<td align="center">回调</td>
+</tr>
+<tr>
+<td align="center">底层实现</td>
+<td align="center">数组</td>
+<td align="center">链表</td>
+<td align="center">哈希表</td>
+</tr>
+<tr>
+<td align="center">IO效率</td>
+<td align="center">每次调用都进行线性遍历，时间复杂度为O(n)</td>
+<td align="center">每次调用都进行线性遍历，时间复杂度为O(n)</td>
+<td align="center">事件通知方式，每当fd就绪，系统注册的回调函数就会被调用，将就绪fd放到rdllist里面。时间复杂度O(1)</td>
+</tr>
+<tr>
+<td align="center">最大连接数</td>
+<td align="center">1024（x86）或 2048（x64）</td>
+<td align="center">无上限</td>
+<td align="center">无上限</td>
+</tr>
+<tr>
+<td align="center">fd拷贝</td>
+<td align="center">每次调用 select，都需要把 fd 集合从用户态拷贝到内核态</td>
+<td align="center">每次调用 poll，都需要把 fd 集合从用户态拷贝到内核态</td>
+<td align="center">调用 epoll_ctl 时拷贝进内核并保存，之后每次 epoll_wait 不拷贝</td>
+</tr>
+</tbody></table>
+<p> 1、支持一个进程所能打开的最大连接数</p>
+<table>
+<thead>
+<tr>
+<th>select</th>
+<th>单个进程所能打开的最大连接数有 FD_SETSIZE 宏定义，其大小是 32 个整数的大小（在32位的机器上，大小就是32<em>32，同理64位机器上FD_SETSIZE为32</em>64），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>poll</td>
+<td>poll本质上和select没有区别，但是它没有最大连接数的限制，原因是它是基于链表来存储的</td>
+</tr>
+<tr>
+<td>epoll</td>
+<td>虽然连接数基本上只受限于机器的内存大小</td>
+</tr>
+</tbody></table>
+<p>2、FD 剧增后带来的 IO 效率问题</p>
+<table>
+<thead>
+<tr>
+<th>select</th>
+<th>因为每次调用时都会对连接进行线性遍历，所以随着 FD 的增加会造成遍历速度慢的“线性下降性能问题”。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>poll</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>epoll</td>
+<td>因为 epoll 内核中实现是根据每个 fd 上的 callback 函数来实现的，只有活跃的 socket 才会主动调用 callback，所以在活跃 socket 较少的情况下，使用 epoll 没有前面两者的线性下降的性能问题，但是所有 socket 都很活跃的情况下，可能会有性能问题。</td>
+</tr>
+</tbody></table>
+<p>3、 消息传递方式</p>
+<table>
+<thead>
+<tr>
+<th>select</th>
+<th>内核需要将消息传递到用户空间，都需要内核拷贝动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>poll</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>epoll</td>
+<td>epoll 通过内核和用户空间共享一块内存来实现的。</td>
+</tr>
+</tbody></table>
+<p><strong>总结：</strong></p>
+<p>综上，在选择 select，poll，epoll 时要根据具体的使用场合以及这三种方式的自身特点。</p>
+<p>1、表面上看 epoll 的性能最好，但是在连接数少并且连接都十分活跃的情况下，select 和 poll 的性能可能比 epoll 好，毕竟 epoll 的通知机制需要很多函数回调。</p>
+<p>2、select 低效是因为每次它都需要轮询。但低效也是相对的，视情况而定，也可通过良好的设计改善。</p>
+<h3 id="5-epoll-原理和底层机制分析"><a href="#5-epoll-原理和底层机制分析" class="headerlink" title="5. epoll 原理和底层机制分析"></a>5. epoll 原理和底层机制分析</h3><p>　　了解 epoll 本质的第一步，要从硬件的角度看计算机怎样接收网络数据。</p>
+<center>
+  <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051505722.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
+
+<p> 　　网卡收到网线传来的数据，经过硬件电路的传输，最终将数据写入到内存中的某个地址上。</p>
+<h4 id="5-1-如何知道接收了数据？"><a href="#5-1-如何知道接收了数据？" class="headerlink" title="5.1 如何知道接收了数据？"></a>5.1 如何知道接收了数据？</h4><p>　　CPU 和操作系统如何知道网络上有数据要接收？很简单，使用中断机制。</p>
+<p>　　<strong>中断、上半部、下半部</strong></p>
+<p>　　内核和设备驱动是通过中断的方式来处理的。所谓中断，可以理解为当设备上有数据到达的时候，会给 CPU 的相关引脚上触发一个电压变化，以通知 CPU 来处理数据。</p>
+<p>　　计算机执行程序时，会有优先级的需求。比如，当计算机收到断电信号时（电容可以保存少许电量，供 CPU 运行很短的一小段时间），它应立即去保存数据，保存数据的程序具有较高的优先级。</p>
+<p>　　一般而言，由硬件产生的信号需要 cpu 立马做出回应（不然数据可能就丢失），所以它的优先级很高。cpu 理应中断掉正在执行的程序，去做出响应；当 cpu 完成对硬件的响应后，再重新执行用户程序。中断的过程如下图，和函数调用差不多。只不过函数调用是事先定好位置，而中断的位置由“信号”决定。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051511531.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　当网卡把数据写入到内存后，网卡向 cpu 发出一个中断信号，操作系统便能得知有新数据到来，再通过网卡中断程序去处理数据。</p>
+<p>　　对于网络模块来说，由于处理过程比较复杂和耗时，如果在中断函数中完成所有的处理，将会导致中断处理函数（优先级过高）将过度占据 CPU，将导致 CPU 无法响应其它设备，例如鼠标和键盘的消息。</p>
+<p>　　因此 Linux 中断处理函数是分上半部和下半部的。上半部是只进行最简单的工作，快速处理然后释放 CPU，接着 CPU 就可以允许其它中断进来。剩下将绝大部分的工作都放到下半部中，可以慢慢从容处理。2.4 以后的内核版本采用的下半部实现方式是软中断，由 ksoftirqd 内核线程全权处理。和硬中断不同的是，硬中断是通过给 CPU 物理引脚施加电压变化，而软中断是通过给内存中的一个变量的二进制值以通知软中断处理程序。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051516121.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+
+<p>　　当网卡上收到数据以后，Linux 中第一个工作的模块是网络驱动。 网络驱动会以 DMA 的方式把网卡上收到的帧写到内存里。再向 CPU 发起一个中断，以通知 CPU 有数据到达。第二，当 CPU 收到中断请求后，会去调用网络驱动注册的中断处理函数。 网卡的中断处理函数并不做过多工作，发出软中断请求，然后尽快释放 CPU。ksoftirqd 检测到有软中断请求到达，调用 poll 开始轮询收包，收到后交由各级协议栈处理。最后会被放到用户 socket 的接收队列中。</p>
+<h4 id="5-2-进程阻塞"><a href="#5-2-进程阻塞" class="headerlink" title="5.2 进程阻塞"></a>5.2 进程阻塞</h4><p>了解 epoll 本质，要从操作系统进程调度的角度来看数据接收。阻塞是进程调度的关键一环，指的是进程在等待某事件（如接收到网络数据）发生之前的等待状态，recv、select 和 epoll 都是阻塞方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//创建socket</span><br><span class="hljs-keyword">int</span> s = socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);   <br><span class="hljs-comment">//绑定</span><br>bind(s, ...)<br><span class="hljs-comment">//监听</span><br>listen(s, ...)<br><span class="hljs-comment">//接受客户端连接</span><br><span class="hljs-keyword">int</span> c = accept(s, ...)<br><span class="hljs-comment">//接收客户端数据</span><br>recv(c, ...);<br><span class="hljs-comment">//将数据打印出来</span><br><span class="hljs-built_in">printf</span>(...)<br></code></pre></td></tr></table></figure>
+
+<p>　　这是一段最基础的网络编程代码，先新建 socket 对象，依次调用 bind、listen、accept，最后调用 recv 接收数据。recv 是个阻塞方法，当程序运行到 recv 时，它会一直等待，直到接收到数据才往下执行。</p>
+<p>那么阻塞的原理是什么？</p>
+<p>　　操作系统为了支持多任务，实现了进程调度的功能，会把进程分为“运行”和“等待”等几种状态。运行状态是进程获得 cpu 使用权，正在执行代码的状态；等待状态是阻塞状态，比如上述程序运行到 recv 时，程序会从运行状态变为等待状态，接收到数据后又变回运行状态。操作系统会分时执行各个运行状态的进程，由于速度很快，看上去就像是同时执行多个任务。</p>
+<p>　　下图中的计算机中运行着 A、B、C 三个进程，其中进程 A 执行着上述基础网络程序，一开始，这3个进程都被操作系统的工作队列所引用，处于运行状态，会分时执行。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051535749.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></center>
+
+<p>　　当进程 A 执行到创建 socket 的语句时，操作系统会创建一个由文件系统管理的 socket 对象。这个 socket 对象包含了发送缓冲区、接收缓冲区、等待队列等成员。等待队列是个非常重要的结构，它指向所有需要等待该 socket 事件的进程。</p>
+<p>　　当程序执行到 recv 时，操作系统会将进程 A 从工作队列移动到该 socket 的等待队列中（如下图）。由于工作队列只剩下了进程 B 和 C，依据进程调度，cpu 会轮流执行这两个进程的程序，不会执行进程 A 的程序。所以进程 A 被阻塞，不会往下执行代码，也不会占用 cpu 资源。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051539517.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></center>
+
+<p> 　　操作系统添加等待队列只是添加了对这个“等待中”进程的引用，以便在接收到数据时获取进程对象、将其唤醒，而非直接将进程管理纳入自己之下。上图为了方便说明，直接将进程挂到等待队列之下。</p>
+<p>　　当 socket 接收到数据后，操作系统将该 socket 等待队列上的进程重新放回到工作队列，该进程变成运行状态，继续执行代码。也由于 socket 的接收缓冲区已经有了数据，recv 可以返回接收到的数据。</p>
+<h4 id="5-3-内核接收网络数据"><a href="#5-3-内核接收网络数据" class="headerlink" title="5.3 内核接收网络数据"></a>5.3 内核接收网络数据</h4><p>　　进程在 recv 阻塞期间，计算机收到了对端传送的数据（步骤①）。数据经由网卡传送到内存（步骤②），然后网卡通过中断信号通知 cpu 有数据到达，cpu 执行中断程序（步骤③）。此处的中断程序主要有两项功能，先将网络数据写入到对应 socket 的接收缓冲区里面（步骤④），再唤醒进程 A（步骤⑤），重新将进程 A 放入工作队列中。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051543056.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
+
+   
+
+<p>　　操作系统如何知道网络数据对应于哪个 socket？因为一个 socket 对应着一个端口号，而网络数据包中包含了 ip 和端口的信息，内核可以通过端口号找到对应的 socket。当然，为了提高处理速度，操作系统会维护端口号到 socket 的索引结构，以快速读取。</p>
+<h4 id="5-4-同时监视多个-socket-的简单方法"><a href="#5-4-同时监视多个-socket-的简单方法" class="headerlink" title="5.4 同时监视多个 socket 的简单方法"></a>5.4 同时监视多个 socket 的简单方法</h4><p>　　服务端需要管理多个客户端连接，而 recv 只能监视单个 socket，这种矛盾下，人们开始寻找监视多个 socket 的方法。epoll 的要义是高效的监视多个 socket。从历史发展角度看，必然先出现一种不太高效的方法，人们再加以改进。只有先理解了不太高效的方法，才能够理解 epoll 的本质。</p>
+<p>　　假如能够预先传入一个 socket 列表，如果列表中的 socket 都没有数据，挂起进程，直到有一个 socket 收到数据，唤醒进程。这种方法很直接，也是 select 的设计思想。</p>
+<p>　　为方便理解，我们先看看 Linux 中 select 的用法。在如下的代码中，先准备一个数组（下面代码中的 fds），让 fds 存放着所有需要监视的 socket。然后调用 select，如果 fds 中的所有 socket 都没有数据，select 会阻塞，直到有一个 socket 接收到数据，select 返回，唤醒进程。用户可以遍历 fds，通过 FD_ISSET 判断具体哪个 socket 收到数据，然后做出处理。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> fds[] =  存放需要监听的socket<br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    <span class="hljs-keyword">int</span> n = select(..., fds, ...)<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i &lt; fds.count; i++)&#123;<br>        <span class="hljs-keyword">if</span>(FD_ISSET(fds[i], ...))&#123;<br>            <span class="hljs-comment">//fds[i]的数据处理</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　select 的实现思路很直接。假如程序同时监视 sock1、sock2 和 sock3 三个 socket，那么在调用 select 之后，操作系统把进程 A 分别加入这三个 socket 的等待队列中。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051551762.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></center>
+
+<p>　　当任何一个 socket 收到数据后，中断程序将唤起进程。所谓唤起进程，就是将进程从所有的等待队列中移除，加入到工作队列里面。当进程 A 被唤醒后，它知道至少有一个 socket 接收了数据。程序只需遍历一遍 socket 列表，就可以得到就绪的 socket。</p>
+<p>　　这种简单方式行之有效，在几乎所有操作系统都有对应的实现。但是简单的方法往往有缺点，主要是：</p>
+<p>　　其一，每次调用 select 都需要将进程加入到所有被监视 socket 的等待队列，每次唤醒都需要从每个队列中移除，都必须要进行遍历。而且每次都要将整个 fds 列表传递给内核，有一定的开销。正是因为遍历操作开销大，出于效率的考量，才会规定 select 的最大监视数量，默认只能监视 1024 个socket。</p>
+<p>　　其二，进程被唤醒后，程序并不知道哪些 socket 收到数据，还需要遍历一次。</p>
+<p>　　那么，有没有减少遍历的方法？有没有保存就绪 socket 的方法？这两个问题便是 epoll 技术要解决的。</p>
+<h4 id="5-5-epoll的设计思路"><a href="#5-5-epoll的设计思路" class="headerlink" title="5.5 epoll的设计思路"></a>5.5 epoll的设计思路</h4><p>　　epoll 是在 select 出现 N 多年后才被发明的，是 select 和 poll 的增强版本。epoll 通过以下一些措施来改进效率。</p>
+<p>　　措施一：功能分离</p>
+<p>　　select 低效的原因之一是将“维护等待队列”和“阻塞进程”两个步骤合二为一。每次调用 select 都需要这两步操作，然而大多数应用场景中，需要监视的 socket 相对固定，并不需要每次都修改。epoll 将这两个操作分开，先用 epoll_ctl 维护等待队列，再调用 epoll_wait 阻塞进程。显而易见的，效率就能得到提升。</p>
+<p>　　如下的代码中，先用 epoll_create 创建一个 epoll 对象 epfd，再通过 epoll_ctl 将需要监视的 socket 添加到 epfd 中，最后调用 epoll_wait 等待数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> epfd = epoll_create(...);<br>epoll_ctl(epfd, ...); <span class="hljs-comment">//将所有需要监听的socket添加到epfd中</span><br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    <span class="hljs-keyword">int</span> n = epoll_wait(...)<br>    <span class="hljs-keyword">for</span>(接收到数据的socket)&#123;<br>        <span class="hljs-comment">//处理</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>　　措施二：就绪列表</p>
+<p>　　select 低效的另一个原因在于程序不知道哪些 socket 收到数据，只能一个个遍历。如果内核维护一个“就绪列表”，引用收到数据的 socket，就能避免遍历。</p>
+<h4 id="5-6-epoll的原理和流程"><a href="#5-6-epoll的原理和流程" class="headerlink" title="5.6 epoll的原理和流程"></a>5.6 epoll的原理和流程</h4><p>　　当某个进程调用 epoll_create 方法时，内核会创建一个 eventpoll 对象（也就是程序中 epfd 所代表的对象）。eventpoll 对象也是文件系统中的一员，和 socket 一样，它也会有等待队列。</p>
+<p>　　创建 epoll 对象后，可以用 epoll_ctl 添加或删除所要监听的 socket。以添加 socket 为例，如下图，如果通过 epoll_ctl 添加 sock1、sock2 和 sock3 的监视，内核会将 eventpoll 添加到这三个 socket 的等待队列中。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051606421.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></center>
+
+<p>　　当 socket 收到数据后，中断程序会操作 eventpoll 对象，而不是直接操作进程。中断程序会给 eventpoll 的“就绪列表”添加 socket 引用。如下图展示的是 sock2 和 sock3 收到数据后，中断程序让 rdlist 引用这两个 socket。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051608264.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></center>
+
+<p>　　eventpoll 对象相当于是 socket 和进程之间的中介，socket 的数据接收并不直接影响进程，而是通过改变 eventpoll 的就绪列表来改变进程状态。</p>
+<p>　　当程序执行到 epoll_wait 时，如果 rdlist 已经引用了socket，那么 epoll_wait 直接返回，如果 rdlist 为空，阻塞进程。</p>
+<p>　　假设计算机中正在运行进程 A 和进程 B，在某时刻进程 A 运行到了epoll_wait语句。如下图所示，内核会将进程 A 放入 eventpoll 的等待队列中，阻塞进程。</p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051610330.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></center>
+
+<p>　　当 socket 接收到数据，中断程序一方面修改 rdlist，另一方面唤醒 eventpoll 等待队列中的进程，进程 A 再次进入运行状态。也因为 rdlist 的存在，进程 A 可以知道哪些 socket 发生了变化。</p>
+<h4 id="5-7-epoll的实现细节"><a href="#5-7-epoll的实现细节" class="headerlink" title="5.7 epoll的实现细节"></a>5.7 epoll的实现细节</h4><p>　　现在对 epoll 的本质已经有一定的了解。但我们还留有一个问题，eventpoll 的数据结构是什么样子？</p>
+<p>　　就绪队列应该应使用什么数据结构？eventpoll 应使用什么数据结构来管理通过 epoll_ctl 添加或删除的 socket？</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310051619847.png" srcset="/img/loading.gif" lazyload></p>
+<p>　　就绪列表引用着就绪的 socket，所以它应能够快速的插入数据。程序可能随时调用 epoll_ctl 添加监视 socket，也可能随时删除。当删除时，若该 socket 已经存放在就绪列表中，它也应该被移除，所以就绪列表应是一种能够快速插入和删除的数据结构。epoll 使用双向链表来实现就绪队列（即 rdllist）。</p>
+<p>　　既然 epoll 将“维护监视队列”和“进程阻塞”分离，也意味着需要有个数据结构来保存监视的 socket。至少要方便的添加和移除，还要便于搜索，以避免重复添加。红黑树是一种自平衡二叉查找树，搜索、插入和删除时间复杂度都是O(log(N))，效率较好。epoll 使用了红黑树作为索引结构（即 rb_root_cached）。</p>
+<h4 id="5-8总结"><a href="#5-8总结" class="headerlink" title="5.8总结"></a>5.8总结</h4><p>　　当某一进程调用 epoll_create 方法时，Linux  内核会创建一个 eventpoll 结构体，在内核 cache 里建了个红黑树用于存储以后 epoll_ctl 传来的 socket 外，还会再建立一个 rdllist 双向链表，用于存储准备就绪的事件，当 epoll_wait 调用时，仅仅观察这个 rdllist 双向链表里有没有数据即可。有数据就返回，没有数据就 sleep，等到 timeout 时间到后即使链表没数据也返回。</p>
+<p>　　同时，所有添加到 epoll 中的事件都会与设备(如网卡)驱动程序建立回调关系，也就是说相应事件的发生时会调用这里的回调方法。这个回调方法在内核中叫做 ep_poll_callback，它会把这样的事件放到上面的 rdllist 双向链表中。</p>
+<p>　　当调用 epoll_wait 检查是否有发生事件的连接时，只是检查 eventpoll 对象中的 rdllist 双向链表是否有 epitem 元素而已，如果 rdllist 链表不为空，则这里的事件复制到用户态内存（使用共享内存提高效率）中，同时将事件数量返回给用户。因此 epoll_waitx 效率非常高，可以轻易地处理百万级别的并发连接。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Netty/" class="category-chain-item">Netty</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Netty/">#Netty</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Netty——直接内存、零拷贝、epoll模型</div>
+      <div>http://example.com/2023/10/04/Netty——直接内存、零拷贝、epoll模型/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月4日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/05/Netty%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86Netty/" title="Netty——初识Netty">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty——初识Netty</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/03/Netty%E2%80%94%E2%80%94BIO%E3%80%81NIO/" title="Netty——BIO、NIO">
+                        <span class="hidden-mobile">Netty——BIO、NIO</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
