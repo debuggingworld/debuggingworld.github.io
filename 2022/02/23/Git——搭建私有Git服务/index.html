@@ -16,20 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. git 支持的四种通信协议 Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;atals">
+    <meta name="description" content="1. git 支持的四种通信协议  Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。 缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。 适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;at">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——搭建私有Git服务">
 <meta property="og:url" content="http://example.com/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. git 支持的四种通信协议 Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;atals">
+<meta property="og:description" content="1. git 支持的四种通信协议  Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。 缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。 适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;at">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220223231024.png">
 <meta property="article:published_time" content="2022-02-23T12:56:42.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.299Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220223231024.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,89 +290,117 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-git-支持的四种通信协议"><a href="#1-git-支持的四种通信协议" class="headerlink" title="1. git 支持的四种通信协议"></a>1. git 支持的四种通信协议</h3><ul>
+              <h3 id="git-支持的四种通信协议">1. git 支持的四种通信协议</h3>
+<ul>
 <li>Local(本地协议)</li>
 <li>ssh</li>
 <li>http(Dumb、Smart)</li>
 <li>git</li>
 </ul>
-<h4 id="1-1-Local-本地协议"><a href="#1-1-Local-本地协议" class="headerlink" title="1. 1 Local(本地协议)"></a>1. 1 Local(本地协议)</h4><p> 基于本地文件系统或共享（NFS）文件系统进行访问.</p>
-<p>优点：简单，直接使用了现有的文件权限和网络访问权限。<br>缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。<br>适应场景：小团队，小项目临时搭建版本服务。</p>
-<ol>
-<li>从本地 f/git/atals 目录克隆项目，即使是 bare仓库也可以正常下载。</li>
+<h4 id="local本地协议">1. 1 Local(本地协议)</h4>
+<p>基于本地文件系统或共享（NFS）文件系统进行访问.</p>
+<p>优点：简单，直接使用了现有的文件权限和网络访问权限。
+缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。
+适应场景：小团队，小项目临时搭建版本服务。</p>
+<ol type="1">
+<li>从本地 f/git/atals 目录克隆项目，即使是
+bare仓库也可以正常下载。</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> /f/git/atals/<br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>基于 file 协议克隆本地项目<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> file:///f/git/atals/<br></code></pre></td></tr></table></figure>
-如果在 URL 开头明确的指定 file://，那么 Git 的行为会略有不同。 如果仅是指定路径，Git 会尝试使用硬链接（hard link）或直接复制所需要的文件。 如果指定 file://，Git 会触发平时用于网路传输资料的进程，传输过来的是打包好的文件（git gc），更节约硬盘空间。</li>
+<ol start="2" type="1">
+<li>基于 file 协议克隆本地项目 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> file:///f/git/atals/<br></code></pre></td></tr></table></figure> 如果在 URL 开头明确的指定
+file://，那么 Git 的行为会略有不同。 如果仅是指定路径，Git
+会尝试使用硬链接（hard link）或直接复制所需要的文件。 如果指定
+file://，Git
+会触发平时用于网路传输资料的进程，传输过来的是打包好的文件（git
+gc），更节约硬盘空间。</li>
 </ol>
-<h4 id="1-2-ssh-协议"><a href="#1-2-ssh-协议" class="headerlink" title="1.2 ssh 协议"></a>1.2 ssh 协议</h4><p>git 支持利用 ssh 协议进行通信，这是绝大部分 linux、uninx 系统都支持的，所以利用该协议架 设GIT 版本服务是非常方便的。</p>
-<p>优点：首先SSH 架设相对简单、其次通过 SSH 访问是安全的、另外SSH 协议很高效，在传输前也会尽量压缩数据。<br>缺点：权限体系不灵活，必须提供操作系统的帐户密码，哪怕是只需要读取版本。<br>适应场景：小团队、小项目、临时项目</p>
-<h5 id="linux-安装-git-服务"><a href="#linux-安装-git-服务" class="headerlink" title="linux 安装 git 服务"></a>linux 安装 git 服务</h5><ol>
+<h4 id="ssh-协议">1.2 ssh 协议</h4>
+<p>git 支持利用 ssh 协议进行通信，这是绝大部分 linux、uninx
+系统都支持的，所以利用该协议架 设GIT 版本服务是非常方便的。</p>
+<p>优点：首先SSH 架设相对简单、其次通过 SSH 访问是安全的、另外SSH
+协议很高效，在传输前也会尽量压缩数据。
+缺点：权限体系不灵活，必须提供操作系统的帐户密码，哪怕是只需要读取版本。
+适应场景：小团队、小项目、临时项目</p>
+<h5 id="linux-安装-git-服务">linux 安装 git 服务</h5>
+<ol type="1">
 <li>安装依赖环境</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker<br></code></pre></td></tr></table></figure>
-
-<ol start="2">
+<ol start="2" type="1">
 <li>下载并解压源码</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">$ wget https://github.com/git/git/archive/v2.3.0.zip<br>$ unzip v2.3.0.zip<br>$ <span class="hljs-built_in">cd</span> git-2.3.0<br></code></pre></td></tr></table></figure>
-<p>备用下载链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1czwEz8">https://pan.baidu.com/s/1czwEz8</a> 密码: y3hn</p>
-<ol start="3">
-<li>编译安装（如果没有权限就加上sudo）<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">make prefix=/usr/<span class="hljs-built_in">local</span>/git all<br>make prefix=/usr/<span class="hljs-built_in">local</span>/git install<br></code></pre></td></tr></table></figure></li>
+<p>备用下载链接: https://pan.baidu.com/s/1czwEz8 密码: y3hn</p>
+<ol start="3" type="1">
+<li>编译安装（如果没有权限就加上sudo） <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">make prefix=/usr/<span class="hljs-built_in">local</span>/git all<br>make prefix=/usr/<span class="hljs-built_in">local</span>/git install<br></code></pre></td></tr></table></figure></li>
 <li>添加环境变量</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">vim /etc/profile<br><span class="hljs-built_in">export</span> PATH=/usr/<span class="hljs-built_in">local</span>/git/bin:<span class="hljs-variable">$PATH</span><br><span class="hljs-built_in">source</span> /etc/profile<br></code></pre></td></tr></table></figure>
-
-<p>#如果成功显示版本号表示添加成功</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git --version<br>git version 2.3.0<br></code></pre></td></tr></table></figure>
-
-<h5 id="测试-ssh-协议"><a href="#测试-ssh-协议" class="headerlink" title="测试 ssh 协议"></a>测试 ssh 协议</h5><p>#创建一个祼项目</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git --bare init debuggingworld.git<br></code></pre></td></tr></table></figure>
-<p>#本地基于远程克隆仓库</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> root@192.168.60.10:/data/git-repository/debuggingworld.git<br></code></pre></td></tr></table></figure>
-<p>可能的错误：<br>git-upload-pack: command not found<br>原因是 ssh 协议下只能访问/usr/bin 下的目录，解决办法如下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">ln -s /usr/<span class="hljs-built_in">local</span>/git/bin/git-upload-pack /usr/bin/git-upload-pack<br>ln -s /usr/<span class="hljs-built_in">local</span>/git/bin/git-receive-pack /usr/bin/git-receive-pack<br></code></pre></td></tr></table></figure>
-
-<h4 id="3-http-Dumb、Smart"><a href="#3-http-Dumb、Smart" class="headerlink" title="3. http(Dumb、Smart)"></a>3. http(Dumb、Smart)</h4><p>Git http 协议实现是依懒 WEB容器(apache、nginx)及 cgi 组件进行通信交互，并利用 WEB 容器本身权限体系进行授权验证。在 Git 1.6.6  前只支持http Dumb（哑）协议，该协议只能下载不能提交，通常会配合 ssh 协议一起使用，ssh 分配提交帐号，http dumb 提供只读帐号。1.6.6 之后 git 提供了 git-http-backend 的 CGI 用于实现接收远程推送等功能。</p>
-<p>优点：解决了 local 与ssh 权限验证单一的问题、可基于http url 提供匿名服务，从而可以放到公网上去。而 local 与 ssh 是很难做到这一点，比如实现一个类似github 这样的网站。<br>缺点：架设复杂一些需要部署 WEB服务器，和 https 证书之类的配置<br>场景：大型团队、需要对权限精准控制、需要把服务部署到公网上去</p>
-<h5 id="http-Dumb-配置与使用"><a href="#http-Dumb-配置与使用" class="headerlink" title="http Dumb 配置与使用"></a>http Dumb 配置与使用</h5><ol>
-<li>创建服务端版本仓库<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> /data/git-repository<br>git --bare init debuggingworld.git<br><span class="hljs-built_in">cd</span> debuggingworld.git/hooks/<br>// 版本更新钩子，当有版本提交的时候会执行更新<br>mv post-update.sample post-update<br>./post-update<br></code></pre></td></tr></table></figure></li>
+<p>#如果成功显示版本号表示添加成功 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">git --version<br>git version 2.3.0<br></code></pre></td></tr></table></figure></p>
+<h5 id="测试-ssh-协议">测试 ssh 协议</h5>
+<p>#创建一个祼项目 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git --bare init debuggingworld.git<br></code></pre></td></tr></table></figure> #本地基于远程克隆仓库 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> root@192.168.60.10:/data/git-repository/debuggingworld.git<br></code></pre></td></tr></table></figure>
+可能的错误： git-upload-pack: command not found 原因是 ssh
+协议下只能访问/usr/bin 下的目录，解决办法如下： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh">ln -s /usr/<span class="hljs-built_in">local</span>/git/bin/git-upload-pack /usr/bin/git-upload-pack<br>ln -s /usr/<span class="hljs-built_in">local</span>/git/bin/git-receive-pack /usr/bin/git-receive-pack<br></code></pre></td></tr></table></figure></p>
+<h4 id="httpdumbsmart">3. http(Dumb、Smart)</h4>
+<p>Git http 协议实现是依懒 WEB容器(apache、nginx)及 cgi
+组件进行通信交互，并利用 WEB 容器本身权限体系进行授权验证。在 Git 1.6.6
+前只支持http Dumb（哑）协议，该协议只能下载不能提交，通常会配合 ssh
+协议一起使用，ssh 分配提交帐号，http dumb 提供只读帐号。1.6.6 之后 git
+提供了 git-http-backend 的 CGI 用于实现接收远程推送等功能。</p>
+<p>优点：解决了 local 与ssh 权限验证单一的问题、可基于http url
+提供匿名服务，从而可以放到公网上去。而 local 与 ssh
+是很难做到这一点，比如实现一个类似github 这样的网站。
+缺点：架设复杂一些需要部署 WEB服务器，和 https 证书之类的配置
+场景：大型团队、需要对权限精准控制、需要把服务部署到公网上去</p>
+<h5 id="http-dumb-配置与使用">http Dumb 配置与使用</h5>
+<ol type="1">
+<li>创建服务端版本仓库 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> /data/git-repository<br>git --bare init debuggingworld.git<br><span class="hljs-built_in">cd</span> debuggingworld.git/hooks/<br>// 版本更新钩子，当有版本提交的时候会执行更新<br>mv post-update.sample post-update<br>./post-update<br></code></pre></td></tr></table></figure></li>
 <li>nginx 静态访问配置</li>
 </ol>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>        <span class="hljs-attribute">server_name</span>  git.tl.com;<br>        <span class="hljs-attribute">location</span> / &#123;<br>            <span class="hljs-attribute">root</span>  /data/git-repository;<br>        &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>本地克隆远程服务<br>git clone <a target="_blank" rel="noopener" href="http://git.tl.com/debuggingworld.git">http://git.tl.com/debuggingworld.git</a></p>
-<p>注：http  Smart 协议 是基于  CGI 配合GIT  git-http-backend 脚本进行使用，配置较复杂，现在一般不会这么去做，而是采用gitlab 、gogs 之类的web管理进行代替。</p>
-<h4 id="4-GIT-协议"><a href="#4-GIT-协议" class="headerlink" title="4. GIT 协议"></a>4. GIT 协议</h4><p>Git 协议是包含在 Git 里的一个特殊的守护进程；它监听在一个特定的端口（9418），类似于 SSH 服务，但是访问无需任何授权。</p>
-<p>优点：Git 协议是 Git 使用的网络传输协议里最快的。 如果你的项目有很大的访问量，或者你的项目很庞大并且不需要为写进行用户授权，架设 Git 守护进程来提供服务是不错的选择。 它使用与 SSH 相同的数据传输机制，但是省去了加密和授权的开销。</p>
-<p>缺点：Git 协议缺点是缺乏授权机制。 而且9418是一个非标准端口，一般防火墙不会开放。</p>
+<p>本地克隆远程服务 git clone http://git.tl.com/debuggingworld.git</p>
+<p>注：http Smart 协议 是基于 CGI 配合GIT
+git-http-backend 脚本进行使用，配置较复杂，现在一般不会这么去做，而是采用gitlab
+、gogs 之类的web管理进行代替。</p>
+<h4 id="git-协议">4. GIT 协议</h4>
+<p>Git 协议是包含在 Git
+里的一个特殊的守护进程；它监听在一个特定的端口（9418），类似于 SSH
+服务，但是访问无需任何授权。</p>
+<p>优点：Git 协议是 Git 使用的网络传输协议里最快的。
+如果你的项目有很大的访问量，或者你的项目很庞大并且不需要为写进行用户授权，架设
+Git 守护进程来提供服务是不错的选择。 它使用与 SSH
+相同的数据传输机制，但是省去了加密和授权的开销。</p>
+<p>缺点：Git 协议缺点是缺乏授权机制。
+而且9418是一个非标准端口，一般防火墙不会开放。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> debuggingworld.git/<br><span class="hljs-comment"># 创建一个空文件，表示开放该项目</span><br>touch git-daemon-export-ok<br><span class="hljs-comment"># 启动守护进程</span><br><span class="hljs-variable">$nohub</span> git daemon --reuseaddr --base-path=/data/git-repository/ /data/git-repository/ &amp;<br><br></code></pre></td></tr></table></figure>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#本地克隆远程项目</span><br>git <span class="hljs-built_in">clone</span> git://192.168.0.147:9418/debuggingworld.git<br></code></pre></td></tr></table></figure>
-
-<h3 id="2-基于-gogs-搭建私有-GIT-服务"><a href="#2-基于-gogs-搭建私有-GIT-服务" class="headerlink" title="2. 基于 gogs 搭建私有 GIT 服务"></a>2. 基于 gogs 搭建私有 GIT 服务</h3><h4 id="2-1-gogs-介绍安装"><a href="#2-1-gogs-介绍安装" class="headerlink" title="2.1 gogs 介绍安装"></a>2.1 gogs 介绍安装</h4><p>Gogs 是一款开源的轻量级 Git web 服务，其特点是简单易用完档齐全、国际化做的相当不错。其主要功能如下:</p>
-<ol>
-<li>提供 Http 与 ssh 两种协议访问源码服务</li>
-<li>提供可 WEB 界面可查看修改源码代码</li>
-<li>提供较完善的权限管理功能、其中包括组织、团队、个人等仓库权限</li>
-<li>提供简单的项目 viki 功能</li>
-<li>提供工单管理与里程碑管理。</li>
-</ol>
-<p>下载安装<br>官网：<a target="_blank" rel="noopener" href="https://gogs.io/">https://gogs.io</a><br>下载：<a target="_blank" rel="noopener" href="https://gogs.io/docs/installation">https://gogs.io/docs/installation</a> 选择 linx amd64 下载安装<br>文档：<a target="_blank" rel="noopener" href="https://gogs.io/docs/installation/install_from_binary">https://gogs.io/docs/installation/install_from_binary</a></p>
+<h3 id="基于-gogs-搭建私有-git-服务">2. 基于 gogs 搭建私有 GIT 服务</h3>
+<h4 id="gogs-介绍安装">2.1 gogs 介绍安装</h4>
+<p>Gogs 是一款开源的轻量级 Git web
+服务，其特点是简单易用完档齐全、国际化做的相当不错。其主要功能如下: 1.
+提供 Http 与 ssh 两种协议访问源码服务 2. 提供可 WEB
+界面可查看修改源码代码 3.
+提供较完善的权限管理功能、其中包括组织、团队、个人等仓库权限 4.
+提供简单的项目 viki 功能 5. 提供工单管理与里程碑管理。</p>
+<p>下载安装 官网：https://gogs.io
+下载：https://gogs.io/docs/installation 选择 linx amd64 下载安装
+文档：https://gogs.io/docs/installation/install_from_binary</p>
 <p>解压之后目录：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220223231024.png" srcset="/img/loading.gif" lazyload></p>
-<p>运行：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#前台运行</span><br>./gogs web<br><span class="hljs-comment">#后台运行</span><br><span class="hljs-variable">$nohup</span> ./gogs web &amp;<br></code></pre></td></tr></table></figure>
-<p>默认端口：3000</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220223231024.png" srcset="/img/loading.gif" lazyload /></p>
+<p>运行： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#前台运行</span><br>./gogs web<br><span class="hljs-comment">#后台运行</span><br><span class="hljs-variable">$nohup</span> ./gogs web &amp;<br></code></pre></td></tr></table></figure> 默认端口：3000</p>
 <p>初次访问http://<host>:3000 会进到初始化页,进行引导配置。</p>
-<p>可选择mysql 或sqlite 等数据。<br>注：mysql 索引长度的问题没有安装成功,需要用mysql5.7 以上版本。</p>
-<h4 id="2-2-gogs-定时备份与恢复"><a href="#2-2-gogs-定时备份与恢复" class="headerlink" title="2.2 gogs 定时备份与恢复"></a>2.2 gogs 定时备份与恢复</h4><p>备份与恢复：</p>
+<p>可选择mysql 或sqlite 等数据。 注：mysql
+索引长度的问题没有安装成功,需要用mysql5.7 以上版本。</p>
+<h4 id="gogs-定时备份与恢复">2.2 gogs 定时备份与恢复</h4>
+<p>备份与恢复：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment">#查看备份相关参数</span><br>./gogs backup -h<br><span class="hljs-comment">#默认备份,备份在当前目录</span><br>./gogs backup <br><span class="hljs-comment">#参数化备份  --target 输出目录 --database-only 只备份 db </span><br>./gogs backup --target=./backupes --database-only --exclude-repos<br><span class="hljs-comment">#恢复。执行该命令前要先删除 custom.bak</span><br>./gogs restore --from=gogs-backup-20180411062712.zip<br></code></pre></td></tr></table></figure>
-
-<p>#自动备份脚本</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/sh -e</span><br>gogs_home=<span class="hljs-string">&quot;/home/apps/svr/gogs/&quot;</span><br>backup_dir=<span class="hljs-string">&quot;<span class="hljs-variable">$gogs_home</span>/backups&quot;</span><br><br><span class="hljs-built_in">cd</span> `dirname <span class="hljs-variable">$0</span>`<br><span class="hljs-comment"># 执行备份命令</span><br>./gogs backup --target=<span class="hljs-variable">$backup_dir</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;backup sucess&#x27;</span><br>day=7<br><span class="hljs-comment">#查找并删除 7天前的备份  </span><br>find <span class="hljs-variable">$backup_dir</span> -name <span class="hljs-string">&#x27;*.zip&#x27;</span> -mtime +7 -<span class="hljs-built_in">type</span> f |xargs rm -f;<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;delete expire back data!&#x27;</span><br><br><span class="hljs-comment">#添加定时任务 每天4：00执行备份</span><br><span class="hljs-comment"># 打开任务编辑器</span><br>crontab -e<br><span class="hljs-comment"># 输入如下命令 00 04 * * * 每天凌晨4点执行 do-backup.sh 并输出日志至 #backup.log</span><br>00 04 * * * /home/apps/svr/gogs/do-backup.sh &gt;&gt; /home/apps/svr/gogs/backup.log 2&gt;&amp;1<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-3-客户端公钥配置与添加"><a href="#2-3-客户端公钥配置与添加" class="headerlink" title="2.3 客户端公钥配置与添加"></a>2.3 客户端公钥配置与添加</h4><p>SSH公钥创建<br>1、打开git bash<br>2、执行生成公钥和私钥的命令：ssh-keygen -t rsa 并按回车3下<br>3、执行查看公钥的命令：cat ~/.ssh/id_rsa.pub<br>4、拷贝id_rsa.pub 内容至至服务~~/.ssh/authorized_keys 中</p>
+<p>#自动备份脚本 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/sh -e</span><br>gogs_home=<span class="hljs-string">&quot;/home/apps/svr/gogs/&quot;</span><br>backup_dir=<span class="hljs-string">&quot;<span class="hljs-variable">$gogs_home</span>/backups&quot;</span><br><br><span class="hljs-built_in">cd</span> `dirname <span class="hljs-variable">$0</span>`<br><span class="hljs-comment"># 执行备份命令</span><br>./gogs backup --target=<span class="hljs-variable">$backup_dir</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;backup sucess&#x27;</span><br>day=7<br><span class="hljs-comment">#查找并删除 7天前的备份  </span><br>find <span class="hljs-variable">$backup_dir</span> -name <span class="hljs-string">&#x27;*.zip&#x27;</span> -mtime +7 -<span class="hljs-built_in">type</span> f |xargs rm -f;<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;delete expire back data!&#x27;</span><br><br><span class="hljs-comment">#添加定时任务 每天4：00执行备份</span><br><span class="hljs-comment"># 打开任务编辑器</span><br>crontab -e<br><span class="hljs-comment"># 输入如下命令 00 04 * * * 每天凌晨4点执行 do-backup.sh 并输出日志至 #backup.log</span><br>00 04 * * * /home/apps/svr/gogs/do-backup.sh &gt;&gt; /home/apps/svr/gogs/backup.log 2&gt;&amp;1<br></code></pre></td></tr></table></figure></p>
+<h4 id="客户端公钥配置与添加">2.3 客户端公钥配置与添加</h4>
+<p>SSH公钥创建 1、打开git bash 2、执行生成公钥和私钥的命令：ssh-keygen
+-t rsa 并按回车3下 3、执行查看公钥的命令：cat ~/.ssh/id_rsa.pub<br />
+4、拷贝id_rsa.pub 内容至至服务~~/.ssh/authorized_keys 中</p>
 
               
             </div>
@@ -559,6 +585,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -815,6 +847,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

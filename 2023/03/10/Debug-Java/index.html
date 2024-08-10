@@ -1,0 +1,1195 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. JVM基础，JVM GC原理，JVM怎么实现回收内存。          2. Java事件机制包括哪三个部分？分别介绍 1、事件。一般继承自 java.util.EventObject 类，封装了事件源对象及跟事件相关的信息。 2、事件监听器。实现 java.util.EventListener 接口,注册在事件源上,当事件源的属性或状态改变时,取得相应的监听器调用其内部的回调方法。 3、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debug Java">
+<meta property="og:url" content="http://example.com/2023/03/10/Debug-Java/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. JVM基础，JVM GC原理，JVM怎么实现回收内存。          2. Java事件机制包括哪三个部分？分别介绍 1、事件。一般继承自 java.util.EventObject 类，封装了事件源对象及跟事件相关的信息。 2、事件监听器。实现 java.util.EventListener 接口,注册在事件源上,当事件源的属性或状态改变时,取得相应的监听器调用其内部的回调方法。 3、">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-10T10:40:58.000Z">
+<meta property="article:modified_time" content="2024-08-10T02:34:14.857Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="interview">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Debug Java - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Debug Java"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-10 18:40" pubdate>
+          2023年3月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Debug Java</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="jvm基础jvm-gc原理jvm怎么实现回收内存">1. JVM基础，JVM
+GC原理，JVM怎么实现回收内存。</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111541537.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111549143.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111549172.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111547045.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111547940.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111548119.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111550112.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111550197.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111551186.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="java事件机制包括哪三个部分分别介绍">2.
+Java事件机制包括哪三个部分？分别介绍</h3>
+<p>1、事件。一般继承自 java.util.EventObject
+类，封装了事件源对象及跟事件相关的信息。</p>
+<p>2、事件监听器。实现 java.util.EventListener
+接口,注册在事件源上,当事件源的属性或状态改变时,取得相应的监听器调用其内部的回调方法。</p>
+<p>3、事件源。事件发生的地方，由于事件源的某项属性或状态发生了改变(比如BUTTON被单击、TEXTBOX的值发生改变等等)导致某项事件发生。换句话说就是生成了相应的事件对象。因为事件监听器要注册在事件源上,所以事件源类中应该要有盛装监听器的<a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/product/tke?from=10680">容器</a>(List,Set等等)。</p>
+<h3 id="说说你对spring的ioc是怎么理解的">3.
+说说你对Spring的IOC是怎么理解的?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111607640.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112141854.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112143183.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="spring框架中都用到了哪些设计模式">4.
+Spring框架中都用到了哪些设计模式?</h3>
+<p>https://blog.csdn.net/m0_71777195/article/details/126519893</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111610194.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111610293.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说mybatis的优点和缺点">5. 说说MyBatis的优点和缺点</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111611294.png" srcset="/img/loading.gif" lazyload /></p>
+<h3
+id="当实体类中的属性名和表中的字段名不一样怎么办mybatis是如何进行分页的">6.
+当实体类中的属性名和表中的字段名不一样，怎么办?Mybatis是如何进行分页的?</h3>
+<p>不一样：</p>
+<p>https://blog.csdn.net/finally_vince/article/details/126546045</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111613392.png" srcset="/img/loading.gif" lazyload /></p>
+<p>分页：</p>
+<p>https://blog.csdn.net/web13618542420/article/details/126112972</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111614280.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="spring-boot的核心配置文件有哪几个它们的区别是什么">7. Spring
+Boot的核心配置文件有哪几个?它们的区别是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111615301.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么时候不要使用索引说说什么是-mvcc">8.
+什么时候不要使用索引?说说什么是 MVCC?</h3>
+<p>https://blog.csdn.net/weixin_69101491/article/details/125604214</p>
+<p>mvcc:https://blog.csdn.net/lans_g/article/details/124232192</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111616325.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="mvcc可以为数据库解决什么问题说说mvcc的实现原理">9.
+MVCC可以为数据库解决什么问题?说说MVCC的实现原理</h3>
+<p>https://blog.csdn.net/pengfei1990/article/details/128885596</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111617447.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112213427.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="mysql事务隔离级别">10. MySQL事务隔离级别?</h3>
+<p>https://blog.csdn.net/qq_34222160/article/details/124483303</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111617342.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="请说说mysql-数据库的锁">11. 请说说MySQL 数据库的锁?</h3>
+<p>https://blog.csdn.net/TABE_/article/details/122351648</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111618448.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="常用的线程池有哪些">12. 常用的线程池有哪些?</h3>
+<p>https://www.modb.pro/db/136334</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111618451.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="简述一下你对线程池的理解">13. 简述一下你对线程池的理解</h3>
+<p>https://baijiahao.baidu.com/s?id=1710374344849036345&amp;wfr=spider&amp;for=pc</p>
+<p>https://blog.csdn.net/qq_28772075/article/details/119486482</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111619457.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112231715.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>ThreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。</li>
+<li>ThreadPoolExecutor.DiscardPolicy：丢弃任务，但是不抛出异常。</li>
+<li>ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新提交被拒绝的任务。</li>
+<li>ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务</li>
+</ul>
+<h3 id="java程序是如何执行的锁的优化机制了解吗">14.
+Java程序是如何执行的锁的优化机制了解吗?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111621472.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说进程和线程的区别">15.说说进程和线程的区别?</h3>
+<p>进程（Process）是操作系统分配资源的基本单位，一个进程拥有的资源有自己的堆、栈、虚存空间（页表）、文件描述符等信息。</p>
+<p>线程（Thread）是操作系统能够进行运算调度的基本单位。它包含在进程中，是进程中的实际运行单位。</p>
+<p>https://blog.csdn.net/zhaohuodian/article/details/126268051</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111621446.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="产生死锁的四个必要条件">16.产生死锁的四个必要条件?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111622484.png" srcset="/img/loading.gif" lazyload /></p>
+<p>https://blog.csdn.net/wy749929317/article/details/124075683</p>
+<h3 id="如何避免死锁">17. 如何避免死锁?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111622488.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111623501.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="线程池核心线程数怎么设置呢">18. 线程池核心线程数怎么设置呢?</h3>
+<p>https://blog.csdn.net/qq_33333654/article/details/127015385</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111623583.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="在zookeeper中zxid是什么有什么作用">19.
+在Zookeeper中Zxid是什么，有什么作用?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111624850.png" srcset="/img/loading.gif" lazyload /></p>
+<p>https://www.jianshu.com/p/68b45694026c/</p>
+<h3 id="讲解一下zookeeper的持久化机制">20
+讲解一下ZooKeeper的持久化机制</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303110037889.png" srcset="/img/loading.gif" lazyload /></p>
+<p>https://www.cnblogs.com/zhangwanhua/p/9145071.html</p>
+<h3 id="zookeeper选举中投票信息的五元组是什么">21.
+Zookeeper选举中投票信息的五元组是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303110908423.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说zookeeper中的脑裂">22 说说Zookeeper中的脑裂?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303110913879.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="zookeeper脑裂是什么原因导致的">23.
+Zookeeper脑裂是什么原因导致的?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303110915744.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="zookeeper-是如何解决脑裂问题的">24. Zookeeper
+是如何解决脑裂问题的?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111031167.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111031923.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说redis的线程模型">25 说说Redis的线程模型</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111034331.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111037000.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="为什么redis需要把所有数据放到内存中">26.
+为什么Redis需要把所有数据放到内存中?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111038356.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="redis-的同步机制了解是什么">27. Redis 的同步机制了解是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111039369.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说一下redis有什么优点和缺点">29.说一下Redis有什么优点和缺点</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111042412.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="redis缓存刷新策略有哪些">30 Redis缓存刷新策略有哪些?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111044057.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="redis持久化方式有哪些以及有什么区别">31.
+Redis持久化方式有哪些?以及有什么区别?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111047462.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是三阶段提交">32. 什么是三阶段提交?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111048726.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111052118.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是补偿事务">33. 什么是补偿事务?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111058576.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="消息队列是怎么实现的">34. 消息队列是怎么实现的?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111101620.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111111879.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="那你说说sagas事务模型">35 那你说说Sagas事务模型</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111120515.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="分布式id生成有几种方案">36. 分布式ID生成有几种方案?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111127561.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111129992.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111130600.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="幂等解决方法有哪些">37. 幂等解决方法有哪些?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111139889.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111718138.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="常见负载均衡算法有哪些">38. 常见负载均衡算法有哪些?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111142912.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="你知道哪些限流算法">39. 你知道哪些限流算法?</h3>
+<p>限流算法有四种常见算法：</p>
+<p>计数器算法（固定窗口）</p>
+<p>滑动窗口</p>
+<p>漏桶算法</p>
+<p>令牌桶算法</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111144434.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>滑动窗口算法</strong></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111146938.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>漏桶算法</strong></p>
+<p>漏桶算法是访问请求到达时直接放入漏桶，如当前容量已达到上限（限流值），则进行丢弃（触发限流策略）。漏桶以固定的速率进行释放访问请求（即请求通过），直到漏桶为空</p>
+<p><strong>令牌桶算法</strong></p>
+<p>令牌桶算法是程序以r（r=时间周期/限流值）的速度向令牌桶中增加令牌，直到令牌桶满，请求到达时向令牌桶请求令牌，如获取到令牌则通过请求，否则触发限流策略</p>
+<h3 id="简述一下什么是nginx它有什么优势和功能">40.
+简述一下什么是Nginx，它有什么优势和功能?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111153155.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111156194.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111156678.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="nginx是如何处理一个http请求的呢">41.
+Nginx是如何处理一个HTTP请求的呢?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111159573.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="section"></h3>
+<h3 id="怎么实现动态感知服务下线的呢">44.
+怎么实现动态感知服务下线的呢?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111204888.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111205219.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="dubbo负载均衡策略">45. Dubbo负载均衡策略?</h3>
+<p>随机（默认）：随机来</p>
+<p>轮训：一个一个来</p>
+<p>活跃度：机器活跃度来负载</p>
+<p>一致性 hash：落到同一台机器上</p>
+<h3 id="dubbo容错策略">46. Dubbo容错策略</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111206957.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是hystrix它如何实现容错">47.
+什么是Hystrix?它如何实现容错?</h3>
+<p>服务雪崩 多个微服务之间调用的时候，假设微服务 A 调用微服务 B 和微服务
+C,微服务 B 和微服务 C
+又调用其它的微服务,这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引|起系统崩溃,所谓的“雪崩效应”。</p>
+<p>Hystrix Hystrix
+是一个用于处理分布式系统延迟和容错的开源库。在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等,
+Hystrix 能够保证在一个依赖出问题的情况下，
+不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111452301.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111452209.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是hystrix断路器我们需要它吗">48.
+什么是Hystrix断路器?我们需要它吗?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111454485.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说rpc的实现原理">49. 说说RPC的实现原理</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111502184.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="eureka自我保护机制是什么">50. eureka自我保护机制是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111502543.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是ribbon">51. 什么是Ribbon?</h3>
+<p>ribbon是一个负载均衡客户端，可以很好的控制htt和tcp的一些行为。feign默认集成了ribbon。</p>
+<h3 id="什么是feigin它的优点是什么">52.
+什么是feigin?它的优点是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111504764.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="ribbon和feign的区别">53. Ribbon和Feign的区别?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111508787.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说tcp与udp的区别以及各自的优缺点说一下">54.
+说说TCP与UDP的区别，以及各自的优缺点说一下</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111510707.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="http和https的区别">55. HTTP和HTTPS的区别</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111511596.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111513623.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说说httptcpsocket的关系是什么">56.
+说说HTTP、TCP、Socket的关系是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111515826.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111516182.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说一下http的长连接与短连接的区别">57.
+说一下HTTP的长连接与短连接的区别</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111517857.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="tcp为什么要三次握手两次不行吗为什么">58.
+TCP为什么要三次握手，两次不行吗?为什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111521296.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="说一下tcp粘包是怎么产生的怎么解决粘包问题的">59.
+说一下TCP粘包是怎么产生的?怎么解决粘包问题的?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111523803.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="在git中你如何还原已经-push并公开的提交">60.
+在Git中，你如何还原已经 push并公开的提交?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111524374.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="git-pull和git-fetch有什么区别">61. git pull和git
+fetch有什么区别?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111526916.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="git中的staging-area或index是什么">62. git中的"staging
+area"或"index"是什么?</h3>
+<p>在完成提交之前，可以在称为“staging
+area”或“index”的中间区域中对其进行格式化和审查。每个更改首先在暂存区域中进行验证，我将其称为“stage
+fifile”，然后将更改提交到存储库。</p>
+<h3 id="什么是-git-stash">63. 什么是 git stash?</h3>
+<p>首先应该解释 git stash
+的必要性。通常情况下，当你一直在处理项目的某一部分时，如果你想要在某个时候切换分支去处理其他事情，事情会处于混乱的状态。问题是，你不想把完成了一半的工作的提交，以便你以后就可以回到当前的工作。解决这个问题的答案是
+git stash。</p>
+<p>再解释什么是git stash。</p>
+<p>stash
+会将你的工作目录，即修改后的跟踪文件和暂存的更改保存在一堆未完成的更改中，你可以随时重新应用这些更改</p>
+<h3 id="什么是git-stash-drop">64. 什么是git stash drop?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111531991.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="如何找到特定提交中已更改的文件列表">65.
+如何找到特定提交中已更改的文件列表?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303120918835.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="git-config的功能是什么">66. git config的功能是什么?</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303111533015.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="kafka-可以脱离-zookeeper-单独使用吗为什么">67. kafka 可以脱离
+zookeeper 单独使用吗？为什么？</h3>
+<p>kafka 不能脱离 zookeeper 单独使用，</p>
+<p>因为 kafka 使用 zookeeper 管理和协调 kafka 的节点服务器。</p>
+<h3 id="kafka-有几种数据保留的策略">68. kafka
+有几种数据保留的策略？</h3>
+<p>按照过期时间保留和按照存储的消息大小保留。</p>
+<h3
+id="kafka-同时设置了7天河10g清除数据到第五天的时候消息达到了-10g这个时候-kafka-将如何处理">69.
+kafka 同时设置了7天河10G清除数据，到第五天的时候消息达到了 10G，这个时候
+kafka 将如何处理？</h3>
+<p>这个时候 kafka
+会执行数据清除工作，时间和大小不论那个满足条件，都会清空数据。</p>
+<h3 id="什么情况会导致-kafka-运行变慢">70. 什么情况会导致 kafka
+运行变慢？</h3>
+<p>cpu 性能瓶颈</p>
+<p>磁盘读写瓶颈</p>
+<p>网络瓶颈</p>
+<h3 id="使用-kafka-集群需要注意什么">80. 使用 kafka
+集群需要注意什么？</h3>
+<p>集群的数量不是越多越好，最好不要超过 7 个，</p>
+<p>因为节点越多，消息复制需要的时间就越长，整个群组的吞吐量就越低。</p>
+<h3 id="rabbitmq-的使用场景有哪些">81. rabbitmq 的使用场景有哪些？</h3>
+<p>https://www.yukx.com/jing/article/details/1892.html</p>
+<h3 id="rabbitmq-有哪些重要的角色">82. rabbitmq 有哪些重要的角色？</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112052141.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="rabbitmq-有哪些重要的组件">83. rabbitmq 有哪些重要的组件？</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112052803.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="rabbitmq-中-vhost-的作用是什么">84. rabbitmq 中 vhost
+的作用是什么？</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202303112055436.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="rabbitmq-的消息是怎么发送的">85. rabbitmq
+的消息是怎么发送的？</h3>
+<p>https://blog.csdn.net/CaptHua/article/details/123410556</p>
+<h3 id="rabbitmq-怎么保证消息的稳定性">86. rabbitmq
+怎么保证消息的稳定性？</h3>
+<h3 id="rabbitmq-怎么避免消息丢失">87. rabbitmq 怎么避免消息丢失？</h3>
+<h3 id="要保证消息持久化成功的条件有哪些">88.
+要保证消息持久化成功的条件有哪些？</h3>
+<h3 id="rabbitmq-持久化有什么缺点">89. rabbitmq 持久化有什么缺点？</h3>
+<p>持久化的缺地就是降低了服务器的吞吐量，因为使用的是磁盘而非内存存储，从而降低了吞吐量。可尽量使用
+ssd 硬盘来缓解吞吐量的问题。</p>
+<h3 id="rabbitmq-有几种广播类型">90. rabbitmq 有几种广播类型？</h3>
+<h3 id="rabbitmq-怎么实现延迟消息队列">91. rabbitmq
+怎么实现延迟消息队列？</h3>
+<h3 id="rabbitmq-集群有什么用">92. rabbitmq 集群有什么用？</h3>
+<h3 id="rabbitmq-节点的类型有哪些">93. rabbitmq 节点的类型有哪些？</h3>
+<h3 id="rabbitmq-集群搭建需要注意哪些问题">94. rabbitmq
+集群搭建需要注意哪些问题？</h3>
+<h3 id="rabbitmq-每个节点是其他节点的完整拷贝吗为什么">95. rabbitmq
+每个节点是其他节点的完整拷贝吗？为什么？</h3>
+<p>rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？ rabbitmq
+对集群节点停止顺序有要求吗？</p>
+<h3 id="异常类-httpswww.yukx.comjingarticledetails1839.html">异常类
+https://www.yukx.com/jing/article/details/1839.html</h3>
+<p>throw 和 throws 的区别？ final、finally、finalize 有什么区别？
+try-catch-finally 中哪个部分可以省略？ try-catch-finally 中，如果 catch
+中 return 了，finally 还会执行吗？ 常见的异常类有哪些？</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/interview/" class="category-chain-item">interview</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/interview/">#interview</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Debug Java</div>
+      <div>http://example.com/2023/03/10/Debug-Java/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月10日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/06/Spring-Boot%E2%80%94%E2%80%94Web%E5%BC%80%E5%8F%91-SpringMvc%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/" title="Spring Boot——Web开发&amp;SpringMvc自动配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring Boot——Web开发&amp;SpringMvc自动配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/04/Spring-Boot%E2%80%94%E2%80%94%E6%97%A5%E5%BF%97/" title="Spring Boot——日志">
+                        <span class="hidden-mobile">Spring Boot——日志</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 定义 Map var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string   key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、">
+    <meta name="description" content="1. 定义 Map  var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string  key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——Map">
 <meta property="og:url" content="http://example.com/2022/01/02/Go%E2%80%94%E2%80%94Map/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 定义 Map var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string   key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、">
+<meta property="og:description" content="1. 定义 Map  var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string  key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-02T10:13:34.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.300Z">
@@ -290,39 +290,41 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-定义-Map"><a href="#1-定义-Map" class="headerlink" title="1. 定义 Map"></a>1. 定义 Map</h3><blockquote>
+              <h3 id="定义-map">1. 定义 Map</h3>
+<blockquote>
 <p>var　map_variable　map[key_data_type]　value_data_type</p>
 </blockquote>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> student <span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span><br></code></pre></td></tr></table></figure>
-
 <ul>
-<li>key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组</li>
-<li>key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、string、map、结构体</li>
+<li>key、value的类型：bool、数字、string、指针、channel
+、还可以是只包含前面几个类型的接口、结构体、数组</li>
+<li>key 通常为 int 、string 类型，value
+通常为数字（整数、浮点数）、string、map、结构体</li>
 <li>key：slice、map、function 不可以</li>
 <li>map 只申明不会进行内存分配</li>
 <li>map 的 key-value 是无序的</li>
 <li>key 是不可以重复的</li>
 <li>value 可以重复</li>
 </ul>
-<h3 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2. 初始化"></a>2. 初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> student <span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span><br>	<span class="hljs-comment">// 第一种</span><br>	student = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>, <span class="hljs-number">10</span>)<br>	student[<span class="hljs-number">00001</span>] = <span class="hljs-string">&quot;张三&quot;</span><br><br>	<span class="hljs-comment">// 第二种</span><br>	stu := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>)<br>	stu[<span class="hljs-number">00002</span>] = <span class="hljs-string">&quot;李四&quot;</span><br><br>	<span class="hljs-comment">// 第三种</span><br>	stud := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>&#123;<br>		<span class="hljs-number">00003</span>: <span class="hljs-string">&quot;王五&quot;</span>,<br>		<span class="hljs-number">00004</span>: <span class="hljs-string">&quot;赵六&quot;</span>,<br>	&#125;<br><br>	fmt.Println(stud)<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-操作"><a href="#3-操作" class="headerlink" title="3. 操作"></a>3. 操作</h3><ol>
-<li><p>增加、更新操作<br> map[“key”] = value<br> 如果 key 不存在，进行新增，如果 key 存则覆盖。</p>
-</li>
-<li><p>删除操作<br>delete(map，”key”)<br>如果 key 存在，就删除该 key-value，如果 key 不存在，不操作也不会报错。</p>
-</li>
-<li><p>清空操作<br>（1）可以遍历key，逐个删除<br>（2）或者map = make(…)，make一个新的，让原来的成为垃圾，被gc回收</p>
-</li>
-<li><p>查找操作<br>value ,bool = map[key]<br>value 为返回的 value，bool 为是否返回</p>
-</li>
-<li><p>获取长度：len函数</p>
-</li>
-<li><p>遍历：for-range</p>
-</li>
+<h3 id="初始化">2. 初始化</h3>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> student <span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span><br>	<span class="hljs-comment">// 第一种</span><br>	student = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>, <span class="hljs-number">10</span>)<br>	student[<span class="hljs-number">00001</span>] = <span class="hljs-string">&quot;张三&quot;</span><br><br>	<span class="hljs-comment">// 第二种</span><br>	stu := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>)<br>	stu[<span class="hljs-number">00002</span>] = <span class="hljs-string">&quot;李四&quot;</span><br><br>	<span class="hljs-comment">// 第三种</span><br>	stud := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>&#123;<br>		<span class="hljs-number">00003</span>: <span class="hljs-string">&quot;王五&quot;</span>,<br>		<span class="hljs-number">00004</span>: <span class="hljs-string">&quot;赵六&quot;</span>,<br>	&#125;<br><br>	fmt.Println(stud)<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="操作">3. 操作</h3>
+<ol type="1">
+<li><p>增加、更新操作 map["key"] = value 如果 key 不存在，进行新增，如果
+key 存则覆盖。</p></li>
+<li><p>删除操作 delete(map，"key") 如果 key 存在，就删除该
+key-value，如果 key 不存在，不操作也不会报错。</p></li>
+<li><p>清空操作 （1）可以遍历key，逐个删除 （2）或者map =
+make(...)，make一个新的，让原来的成为垃圾，被gc回收</p></li>
+<li><p>查找操作 value ,bool = map[key] value 为返回的 value，bool
+为是否返回</p></li>
+<li><p>获取长度：len函数</p></li>
+<li><p>遍历：for-range</p></li>
 </ol>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	student := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>)<br><br>	student[<span class="hljs-number">00001</span>] = <span class="hljs-string">&quot;张三&quot;</span><br>	student[<span class="hljs-number">00001</span>] = <span class="hljs-string">&quot;李四&quot;</span><br>	student[<span class="hljs-number">00002</span>] = <span class="hljs-string">&quot;王五&quot;</span><br>	fmt.Println(student)<br>	<span class="hljs-comment">// map[1:李四 2:王五]</span><br><br>	<span class="hljs-comment">// 查找</span><br>	s := student[<span class="hljs-number">0001</span>]<br>	fmt.Println(s) <span class="hljs-comment">// 李四</span><br>	s2, b := student[<span class="hljs-number">0004</span>]<br>	fmt.Println(s2, b) <span class="hljs-comment">// false</span><br><br>	<span class="hljs-keyword">for</span> i, s3 := <span class="hljs-keyword">range</span> student &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%v --- %v \n&quot;</span>, i, s3)<br>	&#125;<br><br>	<span class="hljs-comment">// 删除</span><br>	<span class="hljs-built_in">delete</span>(student, <span class="hljs-number">001</span>)<br>	<span class="hljs-built_in">delete</span>(student, <span class="hljs-number">003</span>)<br>	fmt.Println(<span class="hljs-built_in">len</span>(student)) <span class="hljs-comment">// 1</span><br><br>	<span class="hljs-comment">// 清空</span><br>	student = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">int</span>]<span class="hljs-keyword">string</span>)<br>	fmt.Println(<span class="hljs-built_in">len</span>(student)) <span class="hljs-comment">// 0</span><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<h3 id="4-比较"><a href="#4-比较" class="headerlink" title="4. 比较"></a>4. 比较</h3><p>map 之间也不能进行相等比较；唯一的例外是和nil进行比较。要判断两个 map 是否包含相同的 key 和 value，我们必须通过一个循环实现：</p>
+<h3 id="比较">4. 比较</h3>
+<p>map 之间也不能进行相等比较；唯一的例外是和nil进行比较。要判断两个 map
+是否包含相同的 key 和 value，我们必须通过一个循环实现：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">equal</span><span class="hljs-params">(x, y <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>	<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(x) != <span class="hljs-built_in">len</span>(y) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>	&#125;<br>	<span class="hljs-keyword">for</span> k, xv := <span class="hljs-keyword">range</span> x &#123;<br>		<span class="hljs-keyword">if</span> yv, ok := y[k]; !ok || yv != xv &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
               
@@ -508,6 +510,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -764,6 +772,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

@@ -16,22 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;q">
+    <meta name="description" content="更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取 拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins——构建持续集成环境">
 <meta property="og:url" content="http://example.com/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;q">
+<meta property="og:description" content="更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取 拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png">
 <meta property="article:published_time" content="2022-03-08T15:32:04.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.310Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="jenkins">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -295,35 +291,43 @@
             <div class="markdown-body">
               
               <p>更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。</p>
-<h3 id="1-手动拉取"><a href="#1-手动拉取" class="headerlink" title="1. 手动拉取"></a>1. 手动拉取</h3><p>拉取更新流程：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="手动拉取">1. 手动拉取</h3>
+<p>拉取更新流程：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png" srcset="/img/loading.gif" lazyload /></p>
 <p>上述流程由 deploy.sh 脚本实现：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash -e</span><br><span class="hljs-built_in">cd</span> <span class="hljs-string">&quot;`dirname <span class="hljs-variable">$0</span>`&quot;</span><br>. ./pom.sh<br><br><span class="hljs-comment">#1. download war, ready env</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;deploy time: <span class="hljs-variable">$work_time</span>&quot;</span><br>mkdir -p war/<br>war=war/<span class="hljs-variable">$pom_a</span>-<span class="hljs-variable">$pom_v</span>.war<br>download_path=<span class="hljs-string">&quot;<span class="hljs-variable">$nexus_redirect</span>?r=<span class="hljs-variable">$pom_r</span>&amp;g=<span class="hljs-variable">$pom_g</span>&amp;a=<span class="hljs-variable">$pom_a</span>&amp;v=<span class="hljs-variable">$pom_v</span>&amp;e=war&quot;</span><br>wget  <span class="hljs-variable">$download_path</span> -O <span class="hljs-variable">$war</span><br><br>deploy_war<br></code></pre></td></tr></table></figure>
-
-<p>pom.sh 脚本内容：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash -e</span><br>. ../bin/env-set.sh<br><br>pom_g=com.zth<br>pom_a=hello-debuggingWorld<br>pom_v=1.0-SNAPSHOT<br>pom_r=snapshots<br><br><br><span class="hljs-function"><span class="hljs-title">deploy_war</span></span>() &#123;<br>        target_d=war/<span class="hljs-variable">$&#123;pom_a&#125;</span>-<span class="hljs-variable">$&#123;pom_v&#125;</span>-<span class="hljs-variable">$work_time</span><br>        target_dir=`<span class="hljs-built_in">pwd</span>`/<span class="hljs-variable">$target_d</span><br>        <span class="hljs-keyword">if</span> [ ! -f <span class="hljs-string">&quot;<span class="hljs-variable">$war</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>                <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;war not exist: <span class="hljs-variable">$war</span>&quot;</span><br>                <span class="hljs-built_in">exit</span> 1<br>        <span class="hljs-keyword">fi</span><br>        unzip -q <span class="hljs-variable">$war</span> -d <span class="hljs-variable">$target_dir</span><br>        cp -r app-conf/* <span class="hljs-variable">$target_dir</span>/WEB-INF/classes/<br>        rm -rf appwar<br>        ln -sf <span class="hljs-variable">$target_d</span>/  appwar<br><br>        ./tomcat.sh stop<br><br>        target_ln=`<span class="hljs-built_in">pwd</span>`/appwar<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="hljs-string">&lt;Context docBase=&quot;&#x27;</span><span class="hljs-variable">$target_ln</span><span class="hljs-string">&#x27;&quot; allowLinking=&quot;true&quot;&gt;</span><br><span class="hljs-string">&lt;/Context&gt;&#x27;</span> &gt; conf/Catalina/localhost/ROOT.xml<br>        ./tomcat.sh start<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>tomcat.sh 内容：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;`whoami`&quot;</span> != <span class="hljs-string">&quot;root&quot;</span> ];<span class="hljs-keyword">then</span><br>                <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Error: You must be apps to run this command.&quot;</span><br>                <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">cd</span> <span class="hljs-string">&quot;`dirname <span class="hljs-variable">$0</span>`&quot;</span><br>. ../bin/env-set.sh<br>. ./pom.sh<br><br><span class="hljs-built_in">export</span> CATALINA_BASE=<span class="hljs-string">&quot;`pwd`&quot;</span><br>tomcat <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;pom_a&#125;</span>-<span class="hljs-variable">$&#123;pom_v&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p> 文件结构：<br> <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"> ├── apache-tomcat -&gt; /usr/local/apache-maven-<span class="hljs-number">3.8</span>.<span class="hljs-number">4</span>/<br>├── jdk -&gt; /usr/local/jdk1.<span class="hljs-number">8.0</span>_211/<br>└── services<br>    ├── bin<br>    │   └── env-set.sh<br>    └── hello-debuggingworld<br>        ├── app-conf<br>        │   └── app.properties<br>        ├── appwar -&gt; war/hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT-<span class="hljs-number">2022</span>-<span class="hljs-number">03</span>-<span class="hljs-number">08</span>_23-<span class="hljs-number">57</span>-<span class="hljs-number">57</span>/<br>        ├── conf<br>        │   ├── Catalina<br>        │   │   └── localhost<br>        │   │       └── ROOT.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── catalina</span>.policy<br>        │   ├── catalina.properties<br>        │   ├── context.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── jaspic-providers</span>.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── jaspic-providers</span>.xsd<br>        │   ├── logging.properties<br>        │   ├── server.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── tomcat-users</span>.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── tomcat-users</span>.xsd<br>        │   └── web.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">├── deploy</span>.sh<br>        ├── jenkins.sh<br>        ├── logs<br>        ├── pom.sh<br>        ├── tomcat.sh<br>        ├── war<br>        │   ├── hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT-<span class="hljs-number">2022</span>-<span class="hljs-number">03</span>-<span class="hljs-number">08</span>_23-<span class="hljs-number">57</span>-<span class="hljs-number">57</span><br>        │   │   ├── <span class="hljs-keyword">META</span><span class="hljs-literal">-INF</span><br>        │   │   └── WEB<span class="hljs-literal">-INF</span><br>        │   └── hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT.war<br>        ├── webapps<br>        └── work<br>            └── Catalina<br>                └── localhost<br>                    └── ROOT<br></code></pre></td></tr></table></figure></p>
+<p>pom.sh 脚本内容： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash -e</span><br>. ../bin/env-set.sh<br><br>pom_g=com.zth<br>pom_a=hello-debuggingWorld<br>pom_v=1.0-SNAPSHOT<br>pom_r=snapshots<br><br><br><span class="hljs-function"><span class="hljs-title">deploy_war</span></span>() &#123;<br>        target_d=war/<span class="hljs-variable">$&#123;pom_a&#125;</span>-<span class="hljs-variable">$&#123;pom_v&#125;</span>-<span class="hljs-variable">$work_time</span><br>        target_dir=`<span class="hljs-built_in">pwd</span>`/<span class="hljs-variable">$target_d</span><br>        <span class="hljs-keyword">if</span> [ ! -f <span class="hljs-string">&quot;<span class="hljs-variable">$war</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>                <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;war not exist: <span class="hljs-variable">$war</span>&quot;</span><br>                <span class="hljs-built_in">exit</span> 1<br>        <span class="hljs-keyword">fi</span><br>        unzip -q <span class="hljs-variable">$war</span> -d <span class="hljs-variable">$target_dir</span><br>        cp -r app-conf/* <span class="hljs-variable">$target_dir</span>/WEB-INF/classes/<br>        rm -rf appwar<br>        ln -sf <span class="hljs-variable">$target_d</span>/  appwar<br><br>        ./tomcat.sh stop<br><br>        target_ln=`<span class="hljs-built_in">pwd</span>`/appwar<br>        <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="hljs-string">&lt;Context docBase=&quot;&#x27;</span><span class="hljs-variable">$target_ln</span><span class="hljs-string">&#x27;&quot; allowLinking=&quot;true&quot;&gt;</span><br><span class="hljs-string">&lt;/Context&gt;&#x27;</span> &gt; conf/Catalina/localhost/ROOT.xml<br>        ./tomcat.sh start<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>tomcat.sh 内容： <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;`whoami`&quot;</span> != <span class="hljs-string">&quot;root&quot;</span> ];<span class="hljs-keyword">then</span><br>                <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Error: You must be apps to run this command.&quot;</span><br>                <span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">cd</span> <span class="hljs-string">&quot;`dirname <span class="hljs-variable">$0</span>`&quot;</span><br>. ../bin/env-set.sh<br>. ./pom.sh<br><br><span class="hljs-built_in">export</span> CATALINA_BASE=<span class="hljs-string">&quot;`pwd`&quot;</span><br>tomcat <span class="hljs-string">&quot;<span class="hljs-variable">$1</span>&quot;</span> <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;pom_a&#125;</span>-<span class="hljs-variable">$&#123;pom_v&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure></p>
+<p>文件结构： <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"> ├── apache-tomcat -&gt; /usr/local/apache-maven-<span class="hljs-number">3.8</span>.<span class="hljs-number">4</span>/<br>├── jdk -&gt; /usr/local/jdk1.<span class="hljs-number">8.0</span>_211/<br>└── services<br>    ├── bin<br>    │   └── env-set.sh<br>    └── hello-debuggingworld<br>        ├── app-conf<br>        │   └── app.properties<br>        ├── appwar -&gt; war/hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT-<span class="hljs-number">2022</span>-<span class="hljs-number">03</span>-<span class="hljs-number">08</span>_23-<span class="hljs-number">57</span>-<span class="hljs-number">57</span>/<br>        ├── conf<br>        │   ├── Catalina<br>        │   │   └── localhost<br>        │   │       └── ROOT.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── catalina</span>.policy<br>        │   ├── catalina.properties<br>        │   ├── context.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── jaspic-providers</span>.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── jaspic-providers</span>.xsd<br>        │   ├── logging.properties<br>        │   ├── server.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── tomcat-users</span>.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">│   ├── tomcat-users</span>.xsd<br>        │   └── web.<span class="hljs-keyword">xml</span><br>        <span class="hljs-title">├── deploy</span>.sh<br>        ├── jenkins.sh<br>        ├── logs<br>        ├── pom.sh<br>        ├── tomcat.sh<br>        ├── war<br>        │   ├── hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT-<span class="hljs-number">2022</span>-<span class="hljs-number">03</span>-<span class="hljs-number">08</span>_23-<span class="hljs-number">57</span>-<span class="hljs-number">57</span><br>        │   │   ├── <span class="hljs-keyword">META</span><span class="hljs-literal">-INF</span><br>        │   │   └── WEB<span class="hljs-literal">-INF</span><br>        │   └── hello-debuggingWorld-<span class="hljs-number">1.0</span>-SNAPSHOT.war<br>        ├── webapps<br>        └── work<br>            └── Catalina<br>                └── localhost<br>                    └── ROOT<br></code></pre></td></tr></table></figure></p>
 <p>执行 deploy.sh 脚本完成更新</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/debuggingworld/jenkinsScript.git">代码地址</a></p>
-<h3 id="2-自动推送"><a href="#2-自动推送" class="headerlink" title="2. 自动推送"></a>2. 自动推送</h3><p>自动推送方式采用在 jenkins 构建完成之后，执行远程 sh 脚本用于下载本次构建 WAR 包，在自动部署重启。基 jenkins 配置如下：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png" srcset="/img/loading.gif" lazyload></p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/debuggingworld/jenkinsScript.git">代码地址</a></p>
+<h3 id="自动推送">2. 自动推送</h3>
+<p>自动推送方式采用在 jenkins 构建完成之后，执行远程 sh
+脚本用于下载本次构建 WAR 包，在自动部署重启。基 jenkins 配置如下：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png" srcset="/img/loading.gif" lazyload /></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">BUILD_ID=dontKillMe<br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$BUILD_ID</span><br>ssh root@192.168.60.10 BUILD_URL=<span class="hljs-variable">$BUILD_URL</span> /root/svr/services/hello-debuggingworld/jenkins.sh<br></code></pre></td></tr></table></figure>
-
 <p>【注】需要设置免密登录（添加公钥到服务器）</p>
-<h3 id="3-配置文件更新"><a href="#3-配置文件更新" class="headerlink" title="3. 配置文件更新"></a>3. 配置文件更新</h3><p>在跌代的过程中要经过四个环境，每个环境的配置信息是不一样的，如何在更新项目的时候把对应的配置文件也更新了呢? 有一种做法是采用 Disconf 之类的配置系统来管理各个环境 的配置，也可以采用一个简单些的方案: 把当前环境 的配置文件放到 app-conf 目录下，等更新脚本的时候会一同覆盖原来的配置文件。 </p>
-<h3 id="4-版本回滚"><a href="#4-版本回滚" class="headerlink" title="4. 版本回滚"></a>4. 版本回滚</h3><p>之前在部署的时候是通过软链接的形式指向指定程序目录，而且原历史版本不会删除，回滚的时候只要把原软链接指定历史程序目录即可。而且配置文件也会一同回滚。</p>
-<h3 id="5-更新脚本说明"><a href="#5-更新脚本说明" class="headerlink" title="5. 更新脚本说明"></a>5. 更新脚本说明</h3><p>deploy.sh 部署脚本中还用到了 pom.sh 与 tomcat.sh 等脚本，这些脚本的作用是什么呢？整体逻辑如下依赖关系如下:</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="配置文件更新">3. 配置文件更新</h3>
+<p>在跌代的过程中要经过四个环境，每个环境的配置信息是不一样的，如何在更新项目的时候把对应的配置文件也更新了呢?
+有一种做法是采用 Disconf 之类的配置系统来管理各个环境
+的配置，也可以采用一个简单些的方案: 把当前环境 的配置文件放到 app-conf
+目录下，等更新脚本的时候会一同覆盖原来的配置文件。 </p>
+<h3 id="版本回滚">4. 版本回滚</h3>
+<p>之前在部署的时候是通过软链接的形式指向指定程序目录，而且原历史版本不会删除，回滚的时候只要把原软链接指定历史程序目录即可。而且配置文件也会一同回滚。</p>
+<h3 id="更新脚本说明">5. 更新脚本说明</h3>
+<p>deploy.sh 部署脚本中还用到了 pom.sh 与 tomcat.sh
+等脚本，这些脚本的作用是什么呢？整体逻辑如下依赖关系如下:</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png" srcset="/img/loading.gif" lazyload /></p>
 <ul>
 <li>env-set.sh : 设置 jvm 、Tomcat 等环境参数</li>
 <li>pom.sh: 设置当前项目的 groupid 、artifact、version 信息</li>
 <li>tomcat.sh：启动关闭 Tomcat</li>
-<li>deploy.sh :  下载并部署项目</li>
-<li>jenkins.sh:  用于被 jenkins 远程触发下载指定更新版本</li>
+<li>deploy.sh : 下载并部署项目</li>
+<li>jenkins.sh: 用于被 jenkins 远程触发下载指定更新版本</li>
 </ul>
 
               
@@ -509,6 +513,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -765,6 +775,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

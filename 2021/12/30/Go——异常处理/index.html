@@ -16,22 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. defer+recover 机制处理错误 func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌">
+    <meta name="description" content="1. defer+recover 机制处理错误  func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——异常处理">
 <meta property="og:url" content="http://example.com/2021/12/30/Go%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. defer+recover 机制处理错误 func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌">
+<meta property="og:description" content="1. defer+recover 机制处理错误  func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230233446.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234230.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234827.png">
 <meta property="article:published_time" content="2021-12-30T15:19:15.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.303Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230233446.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -294,26 +290,39 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-defer-recover-机制处理错误"><a href="#1-defer-recover-机制处理错误" class="headerlink" title="1. defer+recover 机制处理错误"></a>1. defer+recover 机制处理错误</h3><blockquote>
+              <h3 id="deferrecover-机制处理错误">1. defer+recover 机制处理错误</h3>
+<blockquote>
 <p>func recover() interface{}</p>
 </blockquote>
-<p>内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌过程中时，或提供给 panic 的实参为 nil 时，recover 就会返回nil。</p>
+<p>内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer
+的函数中，执行 recover 调用会取回传至 panic
+调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer
+的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go
+程不在恐慌过程中时，或提供给 panic 的实参为 nil 时，recover
+就会返回nil。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result := division(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)<br>	fmt.Println(result)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">division</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> &#123;<br><br>	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		err := <span class="hljs-built_in">recover</span>()<br>		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>			fmt.Println(<span class="hljs-string">&quot;捕获到异常:&quot;</span>, err)<br>		&#125;<br>	&#125;()<br><br>	<span class="hljs-keyword">return</span> num1 / num2<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230233446.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-自定义错误"><a href="#2-自定义错误" class="headerlink" title="2. 自定义错误"></a>2. 自定义错误</h3><p>调用 errors 包下的 New 函数，函数返回 error 类型。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230233446.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="自定义错误">2. 自定义错误</h3>
+<p>调用 errors 包下的 New 函数，函数返回 error 类型。</p>
 <blockquote>
 <p>func New(text string) error</p>
 </blockquote>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result, err := division(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)<br><br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Println(err)<br>	&#125;<br>	<br>	fmt.Println(result)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">division</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">int</span>, error)</span></span> &#123;<br><br>	<span class="hljs-keyword">if</span> num2 == <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>, errors.New(<span class="hljs-string">&quot;integer divide by zero&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-keyword">return</span> num1 / num2, <span class="hljs-literal">nil</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234230.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="3-出现异常后中断程序"><a href="#3-出现异常后中断程序" class="headerlink" title="3. 出现异常后中断程序"></a>3. 出现异常后中断程序</h3><blockquote>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234230.png" srcset="/img/loading.gif" lazyload /></p>
+<p>### 3. 出现异常后中断程序</p>
+<blockquote>
 <p>func panic(v interface{})</p>
 </blockquote>
-<p> 内建函数 panic 停止当前 Go 程的正常执行。当函数 F 调用 panic 时，F 的正常执行就会立刻停止。F 中 defer 的所有函数先入后出执行后，F 返回给其调用者 G。G 如同 F 一样行动，层层返回，直到该 Go 程中所有函数都按相反的顺序停止执行。之后，程序被终止，而错误情况会被报告，包括引发该恐慌的实参值，此终止序列称为恐慌过程。</p>
- <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result, err := division(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	fmt.Println(result)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">division</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">int</span>, error)</span></span> &#123;<br><br>	<span class="hljs-keyword">if</span> num2 == <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>, errors.New(<span class="hljs-string">&quot;integer divide by zero&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-keyword">return</span> num1 / num2, <span class="hljs-literal">nil</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234827.png" srcset="/img/loading.gif" lazyload></p>
+<p>内建函数 panic 停止当前 Go 程的正常执行。当函数 F 调用 panic 时，F
+的正常执行就会立刻停止。F 中 defer 的所有函数先入后出执行后，F
+返回给其调用者 G。G 如同 F 一样行动，层层返回，直到该 Go
+程中所有函数都按相反的顺序停止执行。之后，程序被终止，而错误情况会被报告，包括引发该恐慌的实参值，此终止序列称为恐慌过程。</p>
+<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result, err := division(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>	fmt.Println(result)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">division</span><span class="hljs-params">(num1 <span class="hljs-keyword">int</span>, num2 <span class="hljs-keyword">int</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">int</span>, error)</span></span> &#123;<br><br>	<span class="hljs-keyword">if</span> num2 == <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>, errors.New(<span class="hljs-string">&quot;integer divide by zero&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-keyword">return</span> num1 / num2, <span class="hljs-literal">nil</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure> <img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211230234827.png" srcset="/img/loading.gif" lazyload /></p>
 
               
             </div>
@@ -498,6 +507,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -754,6 +769,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

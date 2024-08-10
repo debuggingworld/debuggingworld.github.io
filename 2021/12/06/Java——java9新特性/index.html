@@ -16,28 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs  改进钻石操作符  限制使用单独下划线标识符  String 存储结构变更  快速创建只读集合  增强 Stream API  改进 Optional 类  多分辨率图像 API  全新 HTTP 客户端 API  智能 JAVA 编译工具  统一 JVM 日志系统  javado">
+    <meta name="description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs 改进钻石操作符 限制使用单独下划线标识符 String 存储结构变更 快速创建只读集合 增强 Stream API 改进 Optional 类 多分辨率图像 API 全新 HTTP 客户端 API 智能 JAVA 编译工具 统一 JVM 日志系统 javadoc 的 HTML5 支">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java——java9新特性">
 <meta property="og:url" content="http://example.com/2021/12/06/Java%E2%80%94%E2%80%94java9%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs  改进钻石操作符  限制使用单独下划线标识符  String 存储结构变更  快速创建只读集合  增强 Stream API  改进 Optional 类  多分辨率图像 API  全新 HTTP 客户端 API  智能 JAVA 编译工具  统一 JVM 日志系统  javado">
+<meta property="og:description" content="java9 新特性：  目录结构 模块化系统 jshell 接口的私有方法 改进 try-with-resourcs 改进钻石操作符 限制使用单独下划线标识符 String 存储结构变更 快速创建只读集合 增强 Stream API 改进 Optional 类 多分辨率图像 API 全新 HTTP 客户端 API 智能 JAVA 编译工具 统一 JVM 日志系统 javadoc 的 HTML5 支">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212225847.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212230559.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212231645.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226115041.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226122939.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226123032.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226210914.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211227000024.png">
 <meta property="article:published_time" content="2021-12-06T14:22:37.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.306Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="java9新特性">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212225847.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -306,154 +297,245 @@
 <li>模块化系统</li>
 <li>jshell</li>
 <li>接口的私有方法</li>
-<li>改进 try-with-resourcs </li>
-<li>改进钻石操作符 </li>
+<li>改进 try-with-resourcs</li>
+<li>改进钻石操作符</li>
 <li>限制使用单独下划线标识符</li>
-<li> String 存储结构变更</li>
-<li> 快速创建只读集合</li>
-<li> 增强 Stream API</li>
-<li> 改进 Optional 类</li>
-<li> 多分辨率图像 API</li>
-<li> 全新 HTTP 客户端 API</li>
-<li> 智能 JAVA 编译工具</li>
-<li> 统一 JVM 日志系统</li>
-<li> javadoc 的 HTML5 支持</li>
-<li> java 动态编译</li>
+<li>String 存储结构变更</li>
+<li>快速创建只读集合</li>
+<li>增强 Stream API</li>
+<li>改进 Optional 类</li>
+<li>多分辨率图像 API</li>
+<li>全新 HTTP 客户端 API</li>
+<li>智能 JAVA 编译工具</li>
+<li>统一 JVM 日志系统</li>
+<li>javadoc 的 HTML5 支持</li>
+<li>java 动态编译</li>
 </ul>
-<h4 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1.目录结构"></a>1.目录结构</h4><p>JDK9具体目录结构：</p>
-<ul>
-<li>bin： 该目录包含所有的命令。</li>
-<li>conf： 包含用户可以编辑的配置文件，例如以前位于 jre\lib 目录中的 .properties 和 .policy 文件。 </li>
-<li>include： 包含一些编译本地代码时使用的 C/C++头文件。</li>
-<li>jmods： 包含JMOD 格式的平台模块，创建自定义运行映射时需要它。 </li>
-<li>legal： 包含法律声明。 </li>
-<li>lib： 包含非 Windows 平台上动态链接的本地库，其子目录和文件不应由开发人员直 接编辑或使用。</li>
-</ul>
+<h4 id="目录结构">1.目录结构</h4>
+<p>JDK9具体目录结构： + bin： 该目录包含所有的命令。 + conf：
+包含用户可以编辑的配置文件，例如以前位于 jre目录中的 .properties 和
+.policy 文件。 + include： 包含一些编译本地代码时使用的 C/C++头文件。 +
+jmods： 包含JMOD 格式的平台模块，创建自定义运行映射时需要它。 + legal：
+包含法律声明。 + lib： 包含非 Windows
+平台上动态链接的本地库，其子目录和文件不应由开发人员直
+接编辑或使用。</p>
 <blockquote>
-<p>JDK8 目录结构：</p>
-<ul>
-<li>bin： 该目录存放了 JDK 的各种工具命令，即 jdk 工具的可执行二进制文件，包括编译器，调试器等，例如：java，javac</li>
-<li>db： 该目录是安装 Java DB 的路径。Java 自带数据库 Derby。</li>
-<li>include： 包含一些编译本地代码时使用的 C/C++头文件。</li>
-<li>jre： 该目录包含的是 jre 环境(Java runtime environment 即 Java 运行时环境)。</li>
-<li>lib：该目录存放的是 java 工具命令实际执行的程序包。</li>
-</ul>
+<p>JDK8 目录结构： + bin： 该目录存放了 JDK 的各种工具命令，即 jdk
+工具的可执行二进制文件，包括编译器，调试器等，例如：java，javac + db：
+该目录是安装 Java DB 的路径。Java 自带数据库 Derby。 + include：
+包含一些编译本地代码时使用的 C/C++头文件。 + jre： 该目录包含的是 jre
+环境(Java runtime environment 即 Java 运行时环境)。 +
+lib：该目录存放的是 java 工具命令实际执行的程序包。</p>
 </blockquote>
-<p> <strong>注：JDK9 目录中不再有 jre 子目录。</strong></p>
-<h4 id="2-模块化系统"><a href="#2-模块化系统" class="headerlink" title="2. 模块化系统"></a>2. 模块化系统</h4><p>JDK9 将 JDK 分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库： root、corba、hotspot、jaxp、jaxws、jdk、langtools 和 nashorn </p>
+<p><strong>注：JDK9 目录中不再有 jre 子目录。</strong></p>
+<h4 id="模块化系统">2. 模块化系统</h4>
+<p>JDK9 将 JDK
+分成一组模块，可以在编译时，运行时或构建时进行组合。模块化可以减少内存开销；只需必要的模块，并非全部模块，可以简化各种类库和大型应用的开发和维护，八个仓库：
+root、corba、hotspot、jaxp、jaxws、jdk、langtools 和 nashorn</p>
 <blockquote>
-<p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及哪些包被外部使用。<br>exports：控制哪些包可以被其他模块访问，所有不被 exports 的包默认都被封装在模块里面不 被外界所使用。<br>requires：指明对其他模块的依赖。 </p>
+<p>module-info.java：该文件必须位于项目的根目录中。该文件用于定义模块需要什么依赖，以及哪些包被外部使用。
+exports：控制哪些包可以被其他模块访问，所有不被 exports
+的包默认都被封装在模块里面不 被外界所使用。
+requires：指明对其他模块的依赖。</p>
 </blockquote>
 <p><strong>示例:</strong></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212225847.png" srcset="/img/loading.gif" lazyload></p>
-<p>有两个模块 jdk9 和 jdk9module1，在 jdk9 中引用 jdk9module1 的内容。</p>
-<p>jdk9  module-info 内容：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9 &#123;<br>    <span class="hljs-keyword">requires</span> jdk9module1;<br>    <span class="hljs-keyword">requires</span> jdk.incubator.httpclient;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>jdk9module1  module-info 内容：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9module1 &#123;<br>    <span class="hljs-keyword">exports</span> com.zth.bean;<br>    <span class="hljs-comment">//exports com.zth.common;</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212230559.png" srcset="/img/loading.gif" lazyload><br>可以看到如果没有引用 common 包，将如法使用 Util 类。</p>
-<h4 id="3-JShell"><a href="#3-JShell" class="headerlink" title="3. JShell"></a>3. JShell</h4><p>JDK9 新增了 REPL（Read-Eval-Print Loop）工具 jshell，jshell 工具提供了一个交互式命令界面， 可以评估声明、语句和表达式，无需编译即可返回执行结果。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212225847.png" srcset="/img/loading.gif" lazyload /></p>
+<p>有两个模块 jdk9 和 jdk9module1，在 jdk9 中引用 jdk9module1
+的内容。</p>
+<p>jdk9 module-info 内容： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9 &#123;<br>    <span class="hljs-keyword">requires</span> jdk9module1;<br>    <span class="hljs-keyword">requires</span> jdk.incubator.httpclient;<br>&#125;<br></code></pre></td></tr></table></figure> jdk9module1 module-info 内容：
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">module</span> jdk9module1 &#123;<br>    <span class="hljs-keyword">exports</span> com.zth.bean;<br>    <span class="hljs-comment">//exports com.zth.common;</span><br>&#125;<br></code></pre></td></tr></table></figure> <img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212230559.png" srcset="/img/loading.gif" lazyload />
+可以看到如果没有引用 common 包，将如法使用 Util 类。</p>
+<h4 id="jshell">3. JShell</h4>
+<p>JDK9 新增了 REPL（Read-Eval-Print Loop）工具 jshell，jshell
+工具提供了一个交互式命令界面，
+可以评估声明、语句和表达式，无需编译即可返回执行结果。</p>
 <blockquote>
-<ol>
-<li> /list   　　　　    //列出所有的代码 </li>
-<li> /methods 　　   //查看所有的方法 </li>
-<li> /var          　　   //所有的变量 </li>
-<li>/edit          　　  //打开编辑器 </li>
-<li>/open path 　　//执行路径上的代码 如 /open C:\Users\wukong\Desktop\App.java </li>
+<ol type="1">
+<li>/list 　　　　 //列出所有的代码</li>
+<li>/methods 　　 //查看所有的方法</li>
+<li>/var 　　 //所有的变量</li>
+<li>/edit 　　 //打开编辑器</li>
+<li>/open path 　　//执行路径上的代码 如 /open C:.java</li>
 </ol>
 </blockquote>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212231645.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="4-接口私有化方法"><a href="#4-接口私有化方法" class="headerlink" title="4. 接口私有化方法"></a>4. 接口私有化方法</h4><p>jdk1.8 之前接口定义中只有抽象方法（public abstract）和常量（public static final），从 jdk8 开始，接口可以加入静态方法和默认方法，JDK9 可以在接口中使用私有方法。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211212231645.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="接口私有化方法">4. 接口私有化方法</h4>
+<p>jdk1.8 之前接口定义中只有抽象方法（public abstract）和常量（public
+static final），从 jdk8 开始，接口可以加入静态方法和默认方法，JDK9
+可以在接口中使用私有方法。</p>
 <p>作用：在一个接口中，有可能在多个默认方法上存在重复的通用代码，但通用代码又不想被子类发现，所以引入了私有方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">default</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        log(<span class="hljs-string">&quot;getName&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;猫和少年&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">default</span> String <span class="hljs-title">getSlogan</span><span class="hljs-params">()</span> </span>&#123;<br>        log(<span class="hljs-string">&quot;getSlogan&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;才疏学浅，少年登科；满腹经纶，白发不第&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// 接口的私有化方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(String method)</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;TestInterface.&quot;</span>+method+<span class="hljs-string">&quot;()被调用&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="5-改进-try-with-resource"><a href="#5-改进-try-with-resource" class="headerlink" title="5. 改进 try-with-resource"></a>5. 改进 try-with-resource</h3><p>JDK 8中新增了 try-with-resources 语句，可以自动关闭需要关闭的资源文件。但是必须在 try 语句后的括号中初始化需要关闭的资源。在JDK9中改进了 try-with-resources 语句，可以在 try 外初始化资源，然后在 try 后的括号中添加需要自动关的资源即可。</p>
+<h3 id="改进-try-with-resource">5. 改进 try-with-resource</h3>
+<p>JDK 8中新增了 try-with-resources
+语句，可以自动关闭需要关闭的资源文件。但是必须在 try
+语句后的括号中初始化需要关闭的资源。在JDK9中改进了 try-with-resources
+语句，可以在 try 外初始化资源，然后在 try
+后的括号中添加需要自动关的资源即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">jdk7</span><span class="hljs-params">()</span></span>&#123;<br>    FileInputStream fileInputStream = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">try</span>&#123;<br>        fileInputStream = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">&quot;/home/a.txt&quot;</span>);<br>        <span class="hljs-keyword">byte</span>[] temp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];<br>        fileInputStream.read(temp);<br>        System.out.println(<span class="hljs-keyword">new</span> String(temp));<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != fileInputStream)&#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                fileInputStream.close();<br>            &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">jdk8</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">try</span>(FileInputStream fileInputStream =  <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">&quot;/home/a.txt&quot;</span>))&#123;<br><br>        <span class="hljs-keyword">byte</span>[] temp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];<br>        <span class="hljs-keyword">int</span> read = fileInputStream.read(temp);<br>        System.out.println(<span class="hljs-keyword">new</span> String(temp));<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">jdk9</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> FileNotFoundException </span>&#123;<br>    FileInputStream fileInputStream =  <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">&quot;/home/a.txt&quot;</span>);<br>    <span class="hljs-keyword">try</span>(fileInputStream)&#123;<br>        <span class="hljs-keyword">byte</span>[] temp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];<br>        <span class="hljs-keyword">int</span> read = fileInputStream.read(temp);<br>        System.out.println(<span class="hljs-keyword">new</span> String(temp));<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="6-改进钻石操作符"><a href="#6-改进钻石操作符" class="headerlink" title="6. 改进钻石操作符"></a>6. 改进钻石操作符</h3><p>JDK9 中钻石操作符可以使用匿名实现类，可以在匿名实现类中重写方法等操作 。</p>
-<p>JDK8 中：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">Comparator&lt;Integer&gt; integerComparator = <span class="hljs-keyword">new</span> Comparator&lt;Integer&gt;() &#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Integer o1, Integer o2)</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;;<br><br>Set&lt;String&gt; hashSet = <span class="hljs-keyword">new</span> HashSet&lt;String&gt;() &#123;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
-
-<p>JDK9：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">Comparator&lt;Integer&gt; integerComparator = <span class="hljs-keyword">new</span> Comparator&lt;&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Integer o1, Integer o2)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br><br>Set&lt;String&gt; hashSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;() &#123;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
-
-<h3 id="7-限制使用单独下划线标识符"><a href="#7-限制使用单独下划线标识符" class="headerlink" title="7. 限制使用单独下划线标识符"></a>7. 限制使用单独下划线标识符</h3><p>在 JDK8 之前可以使用单独的下划线（ _ ）作为标识符，但在 JDK9 中限制使用单独的下划线作为标识符。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226115041.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="8-String-存储结构变更"><a href="#8-String-存储结构变更" class="headerlink" title="8. String 存储结构变更"></a>8. String 存储结构变更</h3><p>String 类在 JDK8 以及之前将字符存储在 char 数组中，每个字符使用两个字节（十六位）。 从许多不同的应用程序收集的数据表明，字符串是堆使用的主要组成部分，而且大多数 String 对象仅包含 Latin-1 字符。 此类字符仅需要一个字节的存储空间，也就是 String 对象的内部字符数组中有一半空间未使用。<br>JDK 8 String 结构：<br><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226122939.png" srcset="/img/loading.gif" lazyload></p>
-<p>JDK9 将 String 的内部表示从 UTF-16 字符数组更改为字节数组加上编码标志字段。 将根据字符串的内容存储编码为 ISO-8859-1/Latin-1（每个字符一个字节）或 UTF-16（每个字符两个字节）的字符。 编码标志将指示使用哪种编码。<br>JDK 9 String 结构：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226123032.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="改进钻石操作符">6. 改进钻石操作符</h3>
+<p>JDK9 中钻石操作符可以使用匿名实现类，可以在匿名实现类中重写方法等操作
+。</p>
+<p>JDK8 中： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java">Comparator&lt;Integer&gt; integerComparator = <span class="hljs-keyword">new</span> Comparator&lt;Integer&gt;() &#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Integer o1, Integer o2)</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>	&#125;<br>&#125;;<br><br>Set&lt;String&gt; hashSet = <span class="hljs-keyword">new</span> HashSet&lt;String&gt;() &#123;<br>&#125;;<br><br></code></pre></td></tr></table></figure></p>
+<p>JDK9： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">Comparator&lt;Integer&gt; integerComparator = <span class="hljs-keyword">new</span> Comparator&lt;&gt;() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Integer o1, Integer o2)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br><br>Set&lt;String&gt; hashSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;() &#123;<br>&#125;;<br></code></pre></td></tr></table></figure></p>
+<h3 id="限制使用单独下划线标识符">7. 限制使用单独下划线标识符</h3>
+<p>在 JDK8 之前可以使用单独的下划线（ _ ）作为标识符，但在 JDK9
+中限制使用单独的下划线作为标识符。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226115041.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="string-存储结构变更">8. String 存储结构变更</h3>
+<p>String 类在 JDK8 以及之前将字符存储在 char
+数组中，每个字符使用两个字节（十六位）。
+从许多不同的应用程序收集的数据表明，字符串是堆使用的主要组成部分，而且大多数
+String 对象仅包含 Latin-1 字符。
+此类字符仅需要一个字节的存储空间，也就是 String
+对象的内部字符数组中有一半空间未使用。 JDK 8 String 结构： <img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226122939.png" srcset="/img/loading.gif" lazyload /></p>
+<p>JDK9 将 String 的内部表示从 UTF-16
+字符数组更改为字节数组加上编码标志字段。 将根据字符串的内容存储编码为
+ISO-8859-1/Latin-1（每个字符一个字节）或
+UTF-16（每个字符两个字节）的字符。 编码标志将指示使用哪种编码。 JDK 9
+String 结构：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226123032.png" srcset="/img/loading.gif" lazyload /></p>
 <blockquote>
-<p>内码 :某种语言运行时，其 char 和 string 在内存中的编码方式。<br>  外码 :除了内码，皆是外码。<br>要注意的是，源代码编译产生的目标代码文件（可执行文件或class文件）中的编码方式属于外码。</p>
+<p>内码 :某种语言运行时，其 char 和 string 在内存中的编码方式。 外码
+:除了内码，皆是外码。
+要注意的是，源代码编译产生的目标代码文件（可执行文件或class文件）中的编码方式属于外码。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    printString(<span class="hljs-string">&quot;abc&quot;</span>);<br>    printString(<span class="hljs-string">&quot;中文&quot;</span>);<br>    printString(<span class="hljs-string">&quot;abc中文&quot;</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printString</span><span class="hljs-params">(String str)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;======&gt;&quot;</span> + str);<br>    <span class="hljs-comment">// return the UTF-16 char[] size</span><br>    System.out.println(<span class="hljs-string">&quot;length: &quot;</span> + str.length());<br>    <span class="hljs-comment">// Use default Encoding (UTF-8)</span><br>    System.out.println(<span class="hljs-string">&quot;getBytes: &quot;</span> + str.getBytes().length);<br>    <span class="hljs-comment">// Convert UTF-16 char[] to char</span><br>    System.out.println(<span class="hljs-string">&quot;codePointCount: &quot;</span> + str.codePointCount(<span class="hljs-number">0</span>, str.length()));<br>    <span class="hljs-comment">// Get the UTF-16 char[]</span><br>    System.out.println(<span class="hljs-string">&quot;toCharArray: &quot;</span> + str.toCharArray().length);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226210914.png" srcset="/img/loading.gif" lazyload></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/loveshunyi/article/details/90680487">java 编码详解与原理</a></p>
-<h3 id="9-快速创建只读集合"><a href="#9-快速创建只读集合" class="headerlink" title="9. 快速创建只读集合"></a>9. 快速创建只读集合</h3><p>JDK9 在 List、Set 和 Map 集合中新增 of 静态方法，快速创建只读集合。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br><br>    Map&lt;String, String&gt; map = Map.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;aaa&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;bbb&quot;</span>);<br><br>    List&lt;String&gt; names = List.of(<span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;王五&quot;</span>);<br>    names.forEach(System.out::println);<br>    names.remove(<span class="hljs-string">&quot;张三&quot;</span>); <span class="hljs-comment">// 抛出 UnsupportedOperationException</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="10-增强-Stream-API"><a href="#10-增强-Stream-API" class="headerlink" title="10. 增强 Stream API"></a>10. 增强 Stream API</h3><p>JDK9 在 Stream 接口中新增4个方法：dropWhile、takeWhile、ofNullable、iterate方法新增重载方法</p>
-<ol>
-<li> default Stream<T> takeWhile(Predicate&lt; ? super T&gt; predicate)</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226210914.png" srcset="/img/loading.gif" lazyload /></p>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/loveshunyi/article/details/90680487">java
+编码详解与原理</a></p>
+<h3 id="快速创建只读集合">9. 快速创建只读集合</h3>
+<p>JDK9 在 List、Set 和 Map 集合中新增 of 静态方法，快速创建只读集合。
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br><br>    Map&lt;String, String&gt; map = Map.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;aaa&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;bbb&quot;</span>);<br><br>    List&lt;String&gt; names = List.of(<span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;王五&quot;</span>);<br>    names.forEach(System.out::println);<br>    names.remove(<span class="hljs-string">&quot;张三&quot;</span>); <span class="hljs-comment">// 抛出 UnsupportedOperationException</span><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h3 id="增强-stream-api">10. 增强 Stream API</h3>
+<p>JDK9 在 Stream
+接口中新增4个方法：dropWhile、takeWhile、ofNullable、iterate方法新增重载方法</p>
+<ol type="1">
+<li>default Stream<T> takeWhile(Predicate&lt; ? super T&gt;
+predicate)</li>
 </ol>
 <blockquote>
-<p>有序的集合：从 Stream 中获取一部分数据, 返回从头开始的尽可能多的元素, 直到遇到第一个 false 结果，如果第一个值不满足断言条件，将返回一个空的 Stream。</p>
+<p>有序的集合：从 Stream 中获取一部分数据, 返回从头开始的尽可能多的元素,
+直到遇到第一个 false 结果，如果第一个值不满足断言条件，将返回一个空的
+Stream。</p>
 <p>无序的集合：如果这个流是无序的，那么这个操作的结果是<strong>不确定</strong>的。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Stream&lt;String&gt; nameStream = Stream.of(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;王麻子&quot;</span>, <span class="hljs-string">&quot;赵六&quot;</span>);<br>    nameStream.takeWhile(item -&gt; item.length() == <span class="hljs-number">2</span>).forEach(System.out::println);<br>    <span class="hljs-comment">// 张三  李四</span><br><br>    System.out.println(<span class="hljs-string">&quot;=========&quot;</span>);<br><br>    Set&lt;String&gt; names = Set.of(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;王麻子&quot;</span>, <span class="hljs-string">&quot;赵六&quot;</span>);<br>    names.stream().takeWhile(item -&gt; item.length() == <span class="hljs-number">2</span>).forEach(System.out::println);<br>    <span class="hljs-comment">// 第一次执行结果： 李四</span><br>    <span class="hljs-comment">// 第二次执行结果： 张三</span><br>    <span class="hljs-comment">// 第三次执行结果： 赵六  李四</span><br>    <span class="hljs-comment">// ......</span><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>default Stream<T> dropWhile(Predicate&lt; ? super T&gt; predicate)<blockquote>
-<p>与 takeWhile 相反，返回剩余的元素，和 takeWhile 方法形成互补<br>有序的集合：从头开始删除元素，直到第一个值不满足断言条件，返回剩余元素。<br>无序的集合：如果这个流是无序的，那么这个操作的结果是<strong>不确定</strong>的。</p>
-</blockquote>
-</li>
+<ol start="2" type="1">
+<li>default Stream<T> dropWhile(Predicate&lt; ? super T&gt; predicate)
+&gt;与 takeWhile 相反，返回剩余的元素，和 takeWhile 方法形成互补
+&gt;有序的集合：从头开始删除元素，直到第一个值不满足断言条件，返回剩余元素。
+&gt;无序的集合：如果这个流是无序的，那么这个操作的结果是<strong>不确定</strong>的。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Stream&lt;String&gt; nameStream = Stream.of(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;王麻子&quot;</span>, <span class="hljs-string">&quot;赵六&quot;</span>);<br>    nameStream.dropWhile(item -&gt; item.length() == <span class="hljs-number">2</span>).forEach(System.out::println);<br>    <span class="hljs-comment">// 王麻子  赵六</span><br><br>    System.out.println(<span class="hljs-string">&quot;=========&quot;</span>);<br><br>    Set&lt;String&gt; names = Set.of(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;王麻子&quot;</span>, <span class="hljs-string">&quot;赵六&quot;</span>);<br>    names.stream().dropWhile(item -&gt; item.length() == <span class="hljs-number">2</span>).forEach(System.out::println);<br>    <span class="hljs-comment">// 第一次执行结果： 王麻子  赵六</span><br>    <span class="hljs-comment">// 第二次执行结果： 王麻子  赵六  李四</span><br>    <span class="hljs-comment">// ......</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>public static<T> Stream<T> ofNullable(T t)<blockquote>
-<p>如果非空，则返回一个包含单个元素的连续流，否则返回空流。</p>
-</blockquote>
+<ol start="3" type="1">
+<li>public static<T> Stream<T> ofNullable(T t)
+&gt;如果非空，则返回一个包含单个元素的连续流，否则返回空流。
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Stream&lt;Object&gt; nulStream = Stream.ofNullable(<span class="hljs-keyword">null</span>);<br>System.out.println(nulStream.count());<br><span class="hljs-comment">// 0</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="11-改进-Optional-类"><a href="#11-改进-Optional-类" class="headerlink" title="11. 改进 Optional 类"></a>11. 改进 Optional 类</h3><p>Optional 类是在 JDK8 中新增的类，主要是为了解决空指针异常。在 JDK9 中对这个类进行了改进，主要是新增了三个方法：stream、ifPresentOrElse 和 or</p>
+<h3 id="改进-optional-类">11. 改进 Optional 类</h3>
+<p>Optional 类是在 JDK8 中新增的类，主要是为了解决空指针异常。在 JDK9
+中对这个类进行了改进，主要是新增了三个方法：stream、ifPresentOrElse 和
+or</p>
 <blockquote>
-<p>ifPresentOrElse：如果有值，则使用该值执行给定的操作，否则执行给定的基于空的操作。<br>or：如果有值，则返回描述该值的 Optional，否则返回由提供函数生成的 Optional。</p>
+<p>ifPresentOrElse：如果有值，则使用该值执行给定的操作，否则执行给定的基于空的操作。
+or：如果有值，则返回描述该值的 Optional，否则返回由提供函数生成的
+Optional。</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    List&lt;String&gt; list = List.of(<span class="hljs-string">&quot;张三&quot;</span>, <span class="hljs-string">&quot;李四&quot;</span>, <span class="hljs-string">&quot;王麻子&quot;</span>, <span class="hljs-string">&quot;赵六&quot;</span>);<br>    Optional&lt;List&lt;String&gt;&gt; optional = Optional.ofNullable(list);<br>    optional.stream().forEach(System.out::println);<br>    <span class="hljs-comment">// [张三, 李四, 王麻子, 赵六]</span><br><br>    Optional&lt;String&gt; name = Optional.ofNullable(<span class="hljs-keyword">null</span>);<br>    name.ifPresentOrElse(item -&gt; System.out.println(<span class="hljs-string">&quot;name: &quot;</span> + item), () -&gt; System.out.println(<span class="hljs-string">&quot;Not Present.&quot;</span>));<br>    <span class="hljs-comment">// Not Present.</span><br><br>    name = name.or(() -&gt; Optional.of(<span class="hljs-string">&quot;Not Present&quot;</span>));<br>    System.out.println(name.get());<br>    <span class="hljs-comment">// Not Present</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<p>Optional 类是在JDK8中新增的类，主要是为了解决空指针异常。在JDK9中对这个类进行了改 进，主要是新增了三个方法：stream，ifPresentOrElse 和 or 1 List<String> list = new ArrayList&lt;&gt;(); 2 list.add(“人参”); 3 list.add(“当归”); 4 list.add(“鹿茸”); 5 list.add(“黄柏”); 6 Optional&lt;List<String>&gt; optional = Optional.ofNullable(list); 7 optional.stream().forEach(System.out::println); 8910 Optional<String> optional1 = Optional.of(“Mahesh”); 11 optional1.ifPresentOrElse( x ‐&gt; System.out.println(“Value: “ + x),() ‐&gt; 12 System.out.println(“Not Present.”)); 13 Supplier&lt;Optional<String>&gt; supplierString = () ‐&gt; Optional.of(“Not Prese nt”); 14 optional1 = optional1.or( supplierString); </p>
-<h3 id="12-多分辨率图像API"><a href="#12-多分辨率图像API" class="headerlink" title="12. 多分辨率图像API"></a>12. 多分辨率图像API</h3><p>在 java.awt.image 包下新增了支持多分辨率图片的API，用于支持多分辨率的图片。 </p>
-<ol>
-<li>将不同分辨率的图像封装到一张（多分辨率的）图像中，作为它的变体。</li>
-<li>获取这个图像的所有变体。</li>
-<li>获取特定分辨率的图像变体，表示一张已知分辨率单位为 DPI 的特定尺寸大小的逻辑图像，并且这张图像是最佳的变体。</li>
-<li>java.awt.image.MultiResolutionImage 接口的基础实现 java.awt.image.BaseMultiResolutionImage 获取所需要的变体。</li>
-<li>通过接口的 getResolutionVariant（double destImageWidth, double destImageHeight）方法，根据分辨率获取图像。</li>
-</ol>
-<h3 id="13-全新的-HTTP-客户端-API"><a href="#13-全新的-HTTP-客户端-API" class="headerlink" title="13. 全新的 HTTP 客户端 API"></a>13. 全新的 HTTP 客户端 API</h3><p>HTTP，用于传输网页的协议，早在 1997 年就被采用在目前的 1.1 版本中。直到 2015 年， HTTP2 才成为标准。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211227000024.png" srcset="/img/loading.gif" lazyload></p>
+<p>Optional
+类是在JDK8中新增的类，主要是为了解决空指针异常。在JDK9中对这个类进行了改
+进，主要是新增了三个方法：stream，ifPresentOrElse 和 or 1 List<String>
+list = new ArrayList&lt;&gt;(); 2 list.add("人参"); 3 list.add("当归");
+4 list.add("鹿茸"); 5 list.add("黄柏"); 6 Optional&lt;List<String>&gt;
+optional = Optional.ofNullable(list); 7
+optional.stream().forEach(System.out::println); 8910 Optional<String>
+optional1 = Optional.of("Mahesh"); 11 optional1.ifPresentOrElse( x ‐&gt;
+System.out.println("Value: " + x),() ‐&gt; 12 System.out.println("Not
+Present.")); 13 Supplier&lt;Optional<String>&gt; supplierString = ()
+‐&gt; Optional.of("Not Prese nt"); 14 optional1 = optional1.or(
+supplierString);</p>
+<h3 id="多分辨率图像api">12. 多分辨率图像API</h3>
+<p>在 java.awt.image
+包下新增了支持多分辨率图片的API，用于支持多分辨率的图片。 1.
+将不同分辨率的图像封装到一张（多分辨率的）图像中，作为它的变体。 2.
+获取这个图像的所有变体。 3.
+获取特定分辨率的图像变体，表示一张已知分辨率单位为 DPI
+的特定尺寸大小的逻辑图像，并且这张图像是最佳的变体。 4.
+java.awt.image.MultiResolutionImage 接口的基础实现
+java.awt.image.BaseMultiResolutionImage 获取所需要的变体。 5. 通过接口的
+getResolutionVariant（double destImageWidth, double
+destImageHeight）方法，根据分辨率获取图像。</p>
+<h3 id="全新的-http-客户端-api">13. 全新的 HTTP 客户端 API</h3>
+<p>HTTP，用于传输网页的协议，早在 1997 年就被采用在目前的 1.1
+版本中。直到 2015 年， HTTP2 才成为标准。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211227000024.png" srcset="/img/loading.gif" lazyload /></p>
 <p>Http2和Http1.X的区别</p>
-<ol>
+<ol type="1">
 <li>HTTP2 使用的是二进制传输，HTTP1.X 是文本（字符串）传输。</li>
 <li>HTTP2 支持多路复用</li>
 <li>HTTP2 头部压缩</li>
 <li>HTTP2 支持服务器推送</li>
 </ol>
-<p>HTTP/1.1 和 HTTP/2 的主要区别是如何在客户端和服务器之间构建和传输数据。HTTP/1.1 依赖于请求/响应周期。 HTTP/2 允许服务器“push”数据：它可以发送比客户端请求更多的数据。 这使得它可以优先处理并发送对于首先加载网页至关重要的数据</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/63fe1bf5d445">http2 和http1.1 区别详细分析</a></p>
-<p>JDK9 中有新的方式来处理 HTTP 调用。它提供了一个新的 HTTP客户端(HttpClient)，它将替代仅适用于 blocking 模式的 HttpURLConnection（HttpURLConnection 是在HTTP 1.0 时代创建的， 并使用了协议无关的方法)，并提供对 WebSocket 和 HTTP/2 的支持。<br>此外，HTTP客户端还提供 API 来处理 HTTP/2 的特性，比如流和服务器推送等功能。 </p>
-<p>全新的 HTTP 客户端 API 可以从 jdk.incubator.httpclient 模块中获取。因为在默认情况下，这个模块是不能根据 classpath 获取的，需要使用 add modules 命令选项配置这个模块，将这个模块添加到  classpath 中。（requires jdk.incubator.httpclient;）</p>
+<p>HTTP/1.1 和 HTTP/2
+的主要区别是如何在客户端和服务器之间构建和传输数据。HTTP/1.1
+依赖于请求/响应周期。 HTTP/2
+允许服务器“push”数据：它可以发送比客户端请求更多的数据。
+这使得它可以优先处理并发送对于首先加载网页至关重要的数据</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/63fe1bf5d445">http2 和http1.1
+区别详细分析</a></p>
+<p>JDK9 中有新的方式来处理 HTTP 调用。它提供了一个新的
+HTTP客户端(HttpClient)，它将替代仅适用于 blocking 模式的
+HttpURLConnection（HttpURLConnection 是在HTTP 1.0 时代创建的，
+并使用了协议无关的方法)，并提供对 WebSocket 和 HTTP/2 的支持。
+此外，HTTP客户端还提供 API 来处理 HTTP/2
+的特性，比如流和服务器推送等功能。</p>
+<p>全新的 HTTP 客户端 API 可以从 jdk.incubator.httpclient
+模块中获取。因为在默认情况下，这个模块是不能根据 classpath
+获取的，需要使用 add modules 命令选项配置这个模块，将这个模块添加到
+classpath 中。（requires jdk.incubator.httpclient;）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException, URISyntaxException </span>&#123;<br>    <span class="hljs-comment">//创建 builder</span><br>    HttpClient.Builder builder = HttpClient.newBuilder();<br>    <span class="hljs-comment">//链式调用</span><br>    HttpClient client = builder<br>            <span class="hljs-comment">//http 协议版本 1.1 或者 2</span><br>            .version(HttpClient.Version.HTTP_2) <span class="hljs-comment">//.version(HttpClient.Version.HTTP_1_1)</span><br>            <span class="hljs-comment">//连接完成之后的转发策略</span><br>            .followRedirects(HttpClient.Redirect.NEVER). <span class="hljs-comment">//followRedirects(HttpClient.Redirect.ALWAYS)</span><br>            <span class="hljs-comment">// 指定线程池</span><br>                    executor(Executors.newFixedThreadPool(<span class="hljs-number">5</span>))<br><br>            <span class="hljs-comment">//认证，默认情况下 Authenticator.getDefault() 是 null 值，会报错</span><br>            <span class="hljs-comment">//.authenticator(Authenticator.getDefault())</span><br><br>            <span class="hljs-comment">//代理地址</span><br>            <span class="hljs-comment">//.proxy(ProxySelector.of(new InetSocketAddress(&quot;http://www.baidu.com&quot;, 8080)))</span><br><br>            .cookieManager(<span class="hljs-keyword">new</span> CookieManager())<br>            <span class="hljs-comment">//创建完成</span><br>            .build();<br><br>    <span class="hljs-comment">//组装 request</span><br><br>    URI baiduUri = <span class="hljs-keyword">new</span> URI(<span class="hljs-string">&quot;https://www.baidu.com&quot;</span>);<br>    HttpRequest request = HttpRequest.newBuilder(baiduUri)<br>            .version(HttpClient.Version.HTTP_2)<br>            .build();<br>    <span class="hljs-comment">//发起调用</span><br>    HttpResponse&lt;String&gt; r = client.send(request, HttpResponse.BodyHandler.asString());<br>    System.out.println(r.body());<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014042066/article/details/78153653">Java9之HttpClientAPI实战详解</a></p>
-<h3 id="14-智能-JAVA-编译工具"><a href="#14-智能-JAVA-编译工具" class="headerlink" title="14. 智能 JAVA 编译工具"></a>14. 智能 JAVA 编译工具</h3><p>智能 java 编译工具（sjavac）的第一个阶段始于 JEP139 这个项目，用于在多核处理器情况下提升 JDK 的编译速度。如今，这个项目已经进入第二阶段，即 JEP199，其目的是改进 Java 编译工 具，并取代目前 JDK 编译工具 javac，继而成为 Java 环境默认的通用的智能编译工具。<br>JDK 9 还更新了 javac 编译器以便能够将 java 9 代码编译运行在低版本 Java 中。</p>
-<h3 id="15-统一的JVM日志系统"><a href="#15-统一的JVM日志系统" class="headerlink" title="15. 统一的JVM日志系统"></a>15. 统一的JVM日志系统</h3><p>日志是解决问题的唯一有效途径：曾经很难知道导致 JVM 性能问题和导致 JVM 崩溃的根本原因。不同的 JVM 日志的碎片化和日志选项（例如：JVM 组件对于日志使用的是不同的机制和规则），这使得 JVM 难以进行调试。<br>解决该问题最佳方法：对所有的 JVM 组件引入一个单一的系统，这些 JVM 组件支持细粒度的和易配置的 JVM 日志。</p>
-<h3 id="16-javadoc-的-HTML5-支持"><a href="#16-javadoc-的-HTML5-支持" class="headerlink" title="16. javadoc 的 HTML5 支持"></a>16. javadoc 的 HTML5 支持</h3><p>JDK8 生成的 java 帮助文档是在 HTML4 中。而 HTML4 已经是很久的标准了。 JDK9 的 javadoc，现支持HTML5 标准，具有搜索功能。</p>
-<h3 id="18-java-动态编译器"><a href="#18-java-动态编译器" class="headerlink" title="18. java 动态编译器"></a>18. java 动态编译器</h3><p>JIT（Just-in-time）编译器可以在运行时将热点编译成本地代码，速度很快。但是 Java 项目现在变得很大很复杂，因此 JIT 编译器需要花费较长时间才能热身完，而且有些 Java 方法还没法编译，性能方面也会下降。AoT 编译就是为了解决这些问题而生的。</p>
-<p>在 JDK 9 中， AOT（JEP 295: Ahead-of-Time Compilation）作为实验特性被引入进来，开发者可以利用新的 jaotc 工具将重点代码转换成类似类库一样的文件。虽然仍处于试验阶段，但这个功能使得 Java 应用在被虚拟机启动之前能够先将 Java 类编译为原生代码。此功能旨在改进小型和大型应用程序的启动时间，同时对峰值性能的影响很小。<br>但是 Java 技术供应商 Excelsior 的营销总监 Dmitry Leskov 担心 AoT 编译技术不够成熟，希望 Oracle 能够等到 Java10 时有个更稳定版本才发布。</p>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/u014042066/article/details/78153653">Java9之HttpClientAPI实战详解</a></p>
+<h3 id="智能-java-编译工具">14. 智能 JAVA 编译工具</h3>
+<p>智能 java 编译工具（sjavac）的第一个阶段始于 JEP139
+这个项目，用于在多核处理器情况下提升 JDK
+的编译速度。如今，这个项目已经进入第二阶段，即 JEP199，其目的是改进 Java
+编译工 具，并取代目前 JDK 编译工具 javac，继而成为 Java
+环境默认的通用的智能编译工具。 JDK 9 还更新了 javac 编译器以便能够将
+java 9 代码编译运行在低版本 Java 中。</p>
+<h3 id="统一的jvm日志系统">15. 统一的JVM日志系统</h3>
+<p>日志是解决问题的唯一有效途径：曾经很难知道导致 JVM 性能问题和导致 JVM
+崩溃的根本原因。不同的 JVM 日志的碎片化和日志选项（例如：JVM
+组件对于日志使用的是不同的机制和规则），这使得 JVM 难以进行调试。
+解决该问题最佳方法：对所有的 JVM 组件引入一个单一的系统，这些 JVM
+组件支持细粒度的和易配置的 JVM 日志。</p>
+<h3 id="javadoc-的-html5-支持">16. javadoc 的 HTML5 支持</h3>
+<p>JDK8 生成的 java 帮助文档是在 HTML4 中。而 HTML4 已经是很久的标准了。
+JDK9 的 javadoc，现支持HTML5 标准，具有搜索功能。</p>
+<h3 id="java-动态编译器">18. java 动态编译器</h3>
+<p>JIT（Just-in-time）编译器可以在运行时将热点编译成本地代码，速度很快。但是
+Java 项目现在变得很大很复杂，因此 JIT
+编译器需要花费较长时间才能热身完，而且有些 Java
+方法还没法编译，性能方面也会下降。AoT
+编译就是为了解决这些问题而生的。</p>
+<p>在 JDK 9 中， AOT（JEP 295: Ahead-of-Time
+Compilation）作为实验特性被引入进来，开发者可以利用新的 jaotc
+工具将重点代码转换成类似类库一样的文件。虽然仍处于试验阶段，但这个功能使得
+Java 应用在被虚拟机启动之前能够先将 Java
+类编译为原生代码。此功能旨在改进小型和大型应用程序的启动时间，同时对峰值性能的影响很小。
+但是 Java 技术供应商 Excelsior 的营销总监 Dmitry Leskov 担心 AoT
+编译技术不够成熟，希望 Oracle 能够等到 Java10
+时有个更稳定版本才发布。</p>
 
               
             </div>
@@ -640,6 +722,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -896,6 +984,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

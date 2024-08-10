@@ -16,20 +16,13 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 负载均衡负载均衡（Load Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 FTP 服务器、Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。 目前主流的负载均衡方案分为以下两种：  集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如 F5），也有软件的（比如 Nginx）。 客户端根">
+    <meta name="description" content="1. 负载均衡 负载均衡（Load Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 FTP 服务器、Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。 目前主流的负载均衡方案分为以下两种：  集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如 F5），也有软件的（比如 Nginx）。 客户端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud Alibaba——负载均衡器Ribbon&amp;LoadBalancer">
 <meta property="og:url" content="http://example.com/2023/05/14/Spring-Cloud-Alibaba%E2%80%94%E2%80%94%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%99%A8Ribbon-LoadBalancer/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 负载均衡负载均衡（Load Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 FTP 服务器、Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。 目前主流的负载均衡方案分为以下两种：  集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如 F5），也有软件的（比如 Nginx）。 客户端根">
+<meta property="og:description" content="1. 负载均衡 负载均衡（Load Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 FTP 服务器、Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。 目前主流的负载均衡方案分为以下两种：  集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如 F5），也有软件的（比如 Nginx）。 客户端">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141316164.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141318624.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141339692.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141346021.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305142220956.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150103332.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150153890.png">
 <meta property="article:published_time" content="2023-05-14T05:05:15.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.853Z">
 <meta property="article:author" content="debuggingWorld">
@@ -38,7 +31,6 @@
 <meta property="article:tag" content="Ribbon">
 <meta property="article:tag" content="LoadBalancer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141316164.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -301,139 +293,208 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-负载均衡"><a href="#1-负载均衡" class="headerlink" title="1. 负载均衡"></a>1. 负载均衡</h3><p>负载均衡（Load Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 FTP 服务器、Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。</p>
+              <h3 id="负载均衡">1. 负载均衡</h3>
+<p>负载均衡（Load
+Balance），其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如
+FTP 服务器、Web
+服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。</p>
 <p>目前主流的负载均衡方案分为以下两种：</p>
 <ul>
-<li>集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如 F5），也有软件的（比如 Nginx）。</li>
-<li>客户端根据自己的请求情况做负载均衡，Ribbon 就属于客户端自己做负载均衡。</li>
+<li>集中式负载均衡，在消费者和服务提供方中间使用独立的代理方式进行负载，有硬件的（比如
+F5），也有软件的（比如 Nginx）。</li>
+<li>客户端根据自己的请求情况做负载均衡，Ribbon
+就属于客户端自己做负载均衡。</li>
 </ul>
-<h4 id="1-1-客户端的负载均衡"><a href="#1-1-客户端的负载均衡" class="headerlink" title="1.1 客户端的负载均衡"></a>1.1 客户端的负载均衡</h4><p>例如 spring cloud 中的 ribbon，客户端会有一个服务器地址列表，在发送请求前通过负载均衡算法选择一个服务器，然后进行访问，这是客户端负载均衡；即在客户端就进行负载均衡算法分配。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141316164.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="1-2-服务端的负载均衡"><a href="#1-2-服务端的负载均衡" class="headerlink" title="1.2 服务端的负载均衡"></a>1.2 服务端的负载均衡</h4><p>例如 Nginx，通过 Nginx 进行负载均衡，先发送请求，然后通过负载均衡算法在多个服务器之间选择一个进行访问。即在服务器端再进行负载均衡算法分配。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141318624.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="1-3-常见负载均衡算法"><a href="#1-3-常见负载均衡算法" class="headerlink" title="1.3  常见负载均衡算法"></a>1.3  常见负载均衡算法</h4><ul>
+<h4 id="客户端的负载均衡">1.1 客户端的负载均衡</h4>
+<p>例如 spring cloud 中的
+ribbon，客户端会有一个服务器地址列表，在发送请求前通过负载均衡算法选择一个服务器，然后进行访问，这是客户端负载均衡；即在客户端就进行负载均衡算法分配。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141316164.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="服务端的负载均衡">1.2 服务端的负载均衡</h4>
+<p>例如 Nginx，通过 Nginx
+进行负载均衡，先发送请求，然后通过负载均衡算法在多个服务器之间选择一个进行访问。即在服务器端再进行负载均衡算法分配。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141318624.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="常见负载均衡算法">1.3 常见负载均衡算法</h4>
+<ul>
 <li>随机：通过随机选择服务进行执行，一般这种方式使用较少;</li>
 <li>轮训：负载均衡默认实现方式，请求来之后排队处理;</li>
 <li>加权轮训：通过对服务器性能的分型，给高配置，低负载的服务器分配更高的权重，均衡各个服务器的压力;</li>
 <li>地址 hash：通过客户端请求的地址的hash值取模映射进行服务器调度。</li>
-<li>最小连接数：即使请求均衡了，压力不一定会均衡，最小连接数法就是根据服务器的情况，比如请求积压数等参数，将请求分配到当前压力最小的服务器上。 </li>
+<li>最小连接数：即使请求均衡了，压力不一定会均衡，最小连接数法就是根据服务器的情况，比如请求积压数等参数，将请求分配到当前压力最小的服务器上。</li>
 </ul>
-<h3 id="2-什么是-Ribbon"><a href="#2-什么是-Ribbon" class="headerlink" title="2. 什么是 Ribbon"></a>2. 什么是 Ribbon</h3><p>Spring Cloud Ribbon 是基于 Netflix Ribbon 实现的一套客户端的负载均衡工具，Ribbon 客户端组件提供一系列的完善的配置，如超时，重试等。通过 Load Balancer 获取到服务提供的所有机器实例，Ribbon 会自动基于某种规则（轮询，随机）去调用这些服务。Ribbon 也可以实现我们自己的负载均衡算法。</p>
-<h4 id="2-1-Spring-Cloud-Alibaba-整合-Ribbon-快速开始"><a href="#2-1-Spring-Cloud-Alibaba-整合-Ribbon-快速开始" class="headerlink" title="2.1 Spring Cloud Alibaba 整合 Ribbon 快速开始"></a>2.1 Spring Cloud Alibaba 整合 Ribbon 快速开始</h4><ol>
+<h3 id="什么是-ribbon">2. 什么是 Ribbon</h3>
+<p>Spring Cloud Ribbon 是基于 Netflix Ribbon
+实现的一套客户端的负载均衡工具，Ribbon
+客户端组件提供一系列的完善的配置，如超时，重试等。通过 Load Balancer
+获取到服务提供的所有机器实例，Ribbon
+会自动基于某种规则（轮询，随机）去调用这些服务。Ribbon
+也可以实现我们自己的负载均衡算法。</p>
+<h4 id="spring-cloud-alibaba-整合-ribbon-快速开始">2.1 Spring Cloud
+Alibaba 整合 Ribbon 快速开始</h4>
+<ol type="1">
 <li><p>引入 ribbon 依赖</p>
- <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--添加ribbon的依赖--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p> 【注】nacos-discovery 依赖了 ribbon，可以不用再引入 ribbon 依赖</p>
-<p> <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141339692.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>RestTemplate 添加 @LoadBalanced 注解，让 RestTemplate 在请求时拥有客户端负载均衡的能力。</p>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--添加ribbon的依赖--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<p>【注】nacos-discovery 依赖了 ribbon，可以不用再引入 ribbon 依赖</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141339692.png" srcset="/img/loading.gif" lazyload /></p></li>
+<li><p>RestTemplate 添加 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解，让 RestTemplate
+在请求时拥有客户端负载均衡的能力。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestConfig</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span>  <span class="hljs-comment">//开启负载均衡</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>测试，使用微服务名发起调用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> RestTemplate restTemplate;<br><br><span class="hljs-meta">@RequestMapping(value = &quot;/getOrderByUserId/&#123;id&#125;&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">findOrderByUserId</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;<br>    String url = <span class="hljs-string">&quot;http://mall-order/order/findOrderByUserId/&quot;</span>+id;<br>    <span class="hljs-keyword">return</span> restTemplate.getForObject(url,ResponseEntity.class);<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="2-2-Ribbon-内核原理"><a href="#2-2-Ribbon-内核原理" class="headerlink" title="2.2  Ribbon 内核原理"></a>2.2  Ribbon 内核原理</h4><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141346021.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>@LoadBalanced 注解原理：</strong></p>
+<h4 id="ribbon-内核原理">2.2 Ribbon 内核原理</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305141346021.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong><span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解原理：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Qualifier</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> LoadBalanced &#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>LoadBalancerAutoConfiguration 中拿到加了 @LoadBalanced 的 RestTemplate。</p>
+<p>LoadBalancerAutoConfiguration 中拿到加了 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 的 RestTemplate。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadBalancerAutoConfiguration</span> </span>&#123;<br><br>	<span class="hljs-meta">@LoadBalanced</span><br>	<span class="hljs-meta">@Autowired(required = false)</span><br>	<span class="hljs-keyword">private</span> List&lt;RestTemplate&gt; restTemplates = Collections.emptyList();<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> SmartInitializingSingleton <span class="hljs-title">loadBalancedRestTemplateInitializerDeprecated</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">            <span class="hljs-keyword">final</span> ObjectProvider&lt;List&lt;RestTemplateCustomizer&gt;&gt; restTemplateCustomizers)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> SmartInitializingSingleton() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterSingletonsInstantiated</span><span class="hljs-params">()</span> </span>&#123;<br>                restTemplateCustomizers.ifAvailable((List&lt;RestTemplateCustomizer&gt; customizers) -&gt; &#123;<br>                    <span class="hljs-keyword">for</span> (RestTemplate restTemplate : LoadBalancerAutoConfiguration.<span class="hljs-keyword">this</span>.restTemplates) &#123;<br>                        <span class="hljs-keyword">for</span> (RestTemplateCustomizer customizer : customizers) &#123;<br>                            customizer.customize(restTemplate);<br>                        &#125;<br>                    &#125;<br>                &#125;);<br>            &#125;<br>        &#125;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>被 @LoadBalanced 注解的 restTemplate 会被定制，添加 LoadBalancerInterceptor 拦截器。</p>
+<p>被 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解的 restTemplate
+会被定制，添加 LoadBalancerInterceptor 拦截器。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadBalancerInterceptorConfig</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@ConditionalOnMissingBean</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplateCustomizer <span class="hljs-title">restTemplateCustomizer</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">            <span class="hljs-keyword">final</span> LoadBalancerInterceptor loadBalancerInterceptor)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplateCustomizer() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">customize</span><span class="hljs-params">(RestTemplate restTemplate)</span> </span>&#123;<br>                List&lt;ClientHttpRequestInterceptor&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(<br>                        restTemplate.getInterceptors());<br>                list.add(loadBalancerInterceptor);<br>                restTemplate.setInterceptors(list);<br>            &#125;<br>        &#125;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>LoadBalancerInterceptor 会获取 LoadBalancerClient，而 RibbonLoadBalancerClient 是其实现类。</p>
+<p>LoadBalancerInterceptor 会获取 LoadBalancerClient，而
+RibbonLoadBalancerClient 是其实现类。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoadBalancerInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ClientHttpRequestInterceptor</span> </span>&#123;<br><br>   <span class="hljs-keyword">private</span> LoadBalancerClient loadBalancer;<br>   <span class="hljs-keyword">private</span> LoadBalancerRequestFactory requestFactory;<br><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LoadBalancerInterceptor</span><span class="hljs-params">(LoadBalancerClient loadBalancer,</span></span><br><span class="hljs-params"><span class="hljs-function">         LoadBalancerRequestFactory requestFactory)</span> </span>&#123;<br>      <span class="hljs-keyword">this</span>.loadBalancer = loadBalancer;<br>      <span class="hljs-keyword">this</span>.requestFactory = requestFactory;<br>   &#125;<br><br>   <span class="hljs-meta">@Override</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> ClientHttpResponse <span class="hljs-title">intercept</span><span class="hljs-params">(<span class="hljs-keyword">final</span> HttpRequest request, <span class="hljs-keyword">final</span> <span class="hljs-keyword">byte</span>[] body,</span></span><br><span class="hljs-params"><span class="hljs-function">         <span class="hljs-keyword">final</span> ClientHttpRequestExecution execution)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>      <span class="hljs-keyword">final</span> URI originalUri = request.getURI();<br>      String serviceName = originalUri.getHost();<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.loadBalancer.execute(serviceName,<br>            <span class="hljs-keyword">this</span>.requestFactory.createRequest(request, body, execution));<br>   &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RibbonLoadBalancerClient</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">LoadBalancerClient</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><font color="red"> 注意： SmartInitializingSingleton 是在所有的 bean 都实例化完成之后才会调用的，所以在 bean 的实例化期间使用 @LoadBalanced 修饰的 restTemplate 是不具备负载均衡作用的。</font></p>
-<p>如果不使用 @LoadBalanced 注解，也可以通过添加 LoadBalancerInterceptor 拦截器让 restTemplate 起到负载均衡器的作用。</p>
+<p><font color="red"> 注意： SmartInitializingSingleton 是在所有的 bean
+都实例化完成之后才会调用的，所以在 bean 的实例化期间使用 <span
+class="citation" data-cites="LoadBalanced">@LoadBalanced</span> 修饰的
+restTemplate 是不具备负载均衡作用的。</font></p>
+<p>如果不使用 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解，也可以通过添加
+LoadBalancerInterceptor 拦截器让 restTemplate 起到负载均衡器的作用。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">(LoadBalancerInterceptor loadBalancerInterceptor)</span> </span>&#123;<br>    RestTemplate restTemplate = <span class="hljs-keyword">new</span> RestTemplate();<br>    <span class="hljs-comment">//注入loadBalancerInterceptor 拦截器</span><br>    restTemplate.setInterceptors(Collections.singletonList(loadBalancerInterceptor));<br>    <span class="hljs-keyword">return</span> restTemplate;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-3-Ribbon-扩展功能"><a href="#2-3-Ribbon-扩展功能" class="headerlink" title="2.3 Ribbon 扩展功能"></a>2.3 Ribbon 扩展功能</h4><h5 id="1-Ribbon-相关接口"><a href="#1-Ribbon-相关接口" class="headerlink" title="1. Ribbon 相关接口"></a>1. Ribbon 相关接口</h5><p>参考： org.springframework.cloud.netflix.ribbon.<strong>RibbonClientConfiguration</strong></p>
-<p><font color="red"><strong>IRule</strong></font>：Ribbon 的负载均衡策略，默认采用 <strong>ZoneAvoidanceRule</strong> 实现，该策略能够在多区域环境下选出最佳区域的实例进行访问。</p>
-<p><font color="red"><strong>ILoadBalancer</strong></font>：负载均衡器，默认采用 <strong>ZoneAwareLoadBalancer</strong> 实现，它具备了区域感知的能力。</p>
-<p><strong>IClientConfig</strong>：Ribbon 的客户端配置，默认采用 <strong>DefaultClientConfigImpl</strong> 实现。</p>
-<p><strong>IPing</strong>：Ribbon 的实例检查策略，默认采用 <strong>DummyPing</strong> 实现，该检查策略是一个特殊的实现，实际上它并不会检查实例是否可用，而是始终返回t rue，默认认为所有服务实例都是可用的。</p>
-<p><strong>ServerList</strong>：服务实例清单的维护机制，默认采用 <strong>ConfigurationBasedServerList</strong> 实现。</p>
-<p><strong>ServerListFilter</strong>：服务实例清单过滤机制，默认采 <strong>ZonePreferenceServerListFilter</strong>，该策略能够优先过滤出与请求方处于同区域的服务实例。    </p>
-<h5 id="2-Ribbon-负载均衡策略"><a href="#2-Ribbon-负载均衡策略" class="headerlink" title="2. Ribbon 负载均衡策略"></a>2. Ribbon 负载均衡策略</h5><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305142220956.png" srcset="/img/loading.gif" lazyload></p>
-<ol>
+<h4 id="ribbon-扩展功能">2.3 Ribbon 扩展功能</h4>
+<h5 id="ribbon-相关接口">1. Ribbon 相关接口</h5>
+<p>参考：
+org.springframework.cloud.netflix.ribbon.<strong>RibbonClientConfiguration</strong></p>
+<p><font color="red"><strong>IRule</strong></font>：Ribbon
+的负载均衡策略，默认采用 <strong>ZoneAvoidanceRule</strong>
+实现，该策略能够在多区域环境下选出最佳区域的实例进行访问。</p>
+<p><font color="red"><strong>ILoadBalancer</strong></font>：负载均衡器，默认采用
+<strong>ZoneAwareLoadBalancer</strong>
+实现，它具备了区域感知的能力。</p>
+<p><strong>IClientConfig</strong>：Ribbon 的客户端配置，默认采用
+<strong>DefaultClientConfigImpl</strong> 实现。</p>
+<p><strong>IPing</strong>：Ribbon 的实例检查策略，默认采用
+<strong>DummyPing</strong>
+实现，该检查策略是一个特殊的实现，实际上它并不会检查实例是否可用，而是始终返回t
+rue，默认认为所有服务实例都是可用的。</p>
+<p><strong>ServerList</strong>：服务实例清单的维护机制，默认采用
+<strong>ConfigurationBasedServerList</strong> 实现。</p>
+<p><strong>ServerListFilter</strong>：服务实例清单过滤机制，默认采
+<strong>ZonePreferenceServerListFilter</strong>，该策略能够优先过滤出与请求方处于同区域的服务实例。</p>
+<h5 id="ribbon-负载均衡策略">2. Ribbon 负载均衡策略</h5>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305142220956.png" srcset="/img/loading.gif" lazyload /></p>
+<ol type="1">
 <li><strong>RandomRule</strong>： 随机选择一个 Server。</li>
-<li><strong>RetryRule</strong>： 对选定的负载均衡策略机上重试机制，在一个配置时间段内当选择 Server 不成功，则一直尝试使用 subRule 的方式选择一个可用的 server。</li>
-<li><strong>RoundRobinRule</strong>： 轮询选择， 轮询 index，选择 index 对应位置的 Server。</li>
-<li><strong>AvailabilityFilteringRule</strong>： 过滤掉一直连接失败的被标记为 circuit tripped 的后端 Server，并过滤掉那些高并发的后端 Server 或者使用一个AvailabilityPredicate 来包含过滤 server 的逻辑，其实就是检查 status 里记录的各个 Server 的运行状态。</li>
-<li><strong>BestAvailableRule</strong>： 选择一个最小的并发请求的 Server，逐个考察 Server，如果 Serve r被 tripped 了，则跳过。</li>
-<li><strong>WeightedResponseTimeRule</strong>： 根据响应时间加权，响应时间越长，权重越小，被选中的可能性越低。</li>
-<li><strong>ZoneAvoidanceRule</strong>： 默认的负载均衡策略，即复合判断 Server 所在区域和 Server 的可用性选择 Server，在没有区域的环境下，类似于轮询 。</li>
-<li><strong>NacosRule:</strong>  优先调用同一集群的实例，基于随机权重。</li>
+<li><strong>RetryRule</strong>：
+对选定的负载均衡策略机上重试机制，在一个配置时间段内当选择 Server
+不成功，则一直尝试使用 subRule 的方式选择一个可用的 server。</li>
+<li><strong>RoundRobinRule</strong>： 轮询选择， 轮询 index，选择 index
+对应位置的 Server。</li>
+<li><strong>AvailabilityFilteringRule</strong>：
+过滤掉一直连接失败的被标记为 circuit tripped 的后端
+Server，并过滤掉那些高并发的后端 Server
+或者使用一个AvailabilityPredicate 来包含过滤 server 的逻辑，其实就是检查
+status 里记录的各个 Server 的运行状态。</li>
+<li><strong>BestAvailableRule</strong>： 选择一个最小的并发请求的
+Server，逐个考察 Server，如果 Serve r被 tripped 了，则跳过。</li>
+<li><strong>WeightedResponseTimeRule</strong>：
+根据响应时间加权，响应时间越长，权重越小，被选中的可能性越低。</li>
+<li><strong>ZoneAvoidanceRule</strong>： 默认的负载均衡策略，即复合判断
+Server 所在区域和 Server 的可用性选择
+Server，在没有区域的环境下，类似于轮询 。</li>
+<li><strong>NacosRule:</strong>
+优先调用同一集群的实例，基于随机权重。</li>
 </ol>
-<h5 id="3-修改默认负载均衡策略"><a href="#3-修改默认负载均衡策略" class="headerlink" title="3. 修改默认负载均衡策略"></a>3. 修改默认负载均衡策略</h5><p><strong>全局配置：</strong>调用的微服务，一律使用指定的负载均衡策略</p>
+<h5 id="修改默认负载均衡策略">3. 修改默认负载均衡策略</h5>
+<p><strong>全局配置：</strong>调用的微服务，一律使用指定的负载均衡策略</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> IRule <span class="hljs-title">ribbonRule</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 指定使用 Nacos 提供的负载均衡策略</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> NacosRule();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><strong>局部配置</strong>：调用指定微服务时，使用对应的负载均衡策略</p>
 <p>修改 application.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># 被调用的微服务名</span><br><span class="hljs-attr">mall-order:</span><br>  <span class="hljs-attr">ribbon:</span><br>    <span class="hljs-comment"># 指定使用 Nacos 提供的负载均衡策略</span><br>    <span class="hljs-attr">NFLoadBalancerRuleClassName:</span> <span class="hljs-string">com.alibaba.cloud.nacos.ribbon.NacosRule</span><br></code></pre></td></tr></table></figure>
-
 <p>【注】这消费者服务中添加</p>
 <p><strong>实现原理：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// org.springframework.cloud.netflix.ribbon.RibbonClientConfiguration#ribbonRule</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@ConditionalOnMissingBean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> IRule <span class="hljs-title">ribbonRule</span><span class="hljs-params">(IClientConfig config)</span> </span>&#123;<br>   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.propertiesFactory.isSet(IRule.class, name)) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.propertiesFactory.get(IRule.class, config, name);<br>   &#125;<br>   ZoneAvoidanceRule rule = <span class="hljs-keyword">new</span> ZoneAvoidanceRule();<br>   rule.initWithNiwsConfig(config);<br>   <span class="hljs-keyword">return</span> rule;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PropertiesFactory</span> </span>&#123;<br><br>   <span class="hljs-keyword">private</span> Map&lt;Class, String&gt; classToProperty = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PropertiesFactory</span><span class="hljs-params">()</span> </span>&#123;<br>      classToProperty.put(ILoadBalancer.class, <span class="hljs-string">&quot;NFLoadBalancerClassName&quot;</span>);<br>      classToProperty.put(IPing.class, <span class="hljs-string">&quot;NFLoadBalancerPingClassName&quot;</span>);<br>      classToProperty.put(IRule.class, <span class="hljs-string">&quot;NFLoadBalancerRuleClassName&quot;</span>);<br>      classToProperty.put(ServerList.class, <span class="hljs-string">&quot;NIWSServerListClassName&quot;</span>);<br>      classToProperty.put(ServerListFilter.class, <span class="hljs-string">&quot;NIWSServerListFilterClassName&quot;</span>);<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h5 id="4-自定义负载均衡策略"><a href="#4-自定义负载均衡策略" class="headerlink" title="4. 自定义负载均衡策略"></a>4. 自定义负载均衡策略</h5><p>通过实现 IRule 接口可以自定义负载策略，主要的选择服务逻辑在 choose 方法中。</p>
-<ol>
+<h5 id="自定义负载均衡策略">4. 自定义负载均衡策略</h5>
+<p>通过实现 IRule 接口可以自定义负载策略，主要的选择服务逻辑在 choose
+方法中。</p>
+<ol type="1">
 <li><p>实现基于 Nacos 权重的负载均衡策略</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NacosRandomWithWeightRule</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractLoadBalancerRule</span> </span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> NacosDiscoveryProperties nacosDiscoveryProperties;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Server <span class="hljs-title">choose</span><span class="hljs-params">(Object key)</span> </span>&#123;<br>        DynamicServerListLoadBalancer loadBalancer = (DynamicServerListLoadBalancer) getLoadBalancer();<br>        String serviceName = loadBalancer.getName();<br>        NamingService namingService = nacosDiscoveryProperties.namingServiceInstance();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//nacos 基于权重的算法</span><br>            Instance instance = namingService.selectOneHealthyInstance(serviceName);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> NacosServer(instance);<br>        &#125; <span class="hljs-keyword">catch</span> (NacosException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initWithNiwsConfig</span><span class="hljs-params">(IClientConfig clientConfig)</span> </span>&#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>配置自定义的策略</p>
 <p><strong>全局配置：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> IRule <span class="hljs-title">ribbonRule</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> NacosRandomWithWeightRule();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>局部配置：</strong> </p>
+<p><strong>局部配置：</strong></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">mall-order:</span><br>  <span class="hljs-attr">ribbon:</span><br>    <span class="hljs-attr">NFLoadBalancerRuleClassName:</span> <span class="hljs-string">com.debuggingWorld.user.config.NacosRandomWithWeightRule</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-<h5 id="5-饥饿加载"><a href="#5-饥饿加载" class="headerlink" title="5. 饥饿加载"></a>5. 饥饿加载</h5><p>Ribbon 默认懒加载，意味着只有在发起调用的时候才会创建客户端。有可能会导致服务调用超时。</p>
+<h5 id="饥饿加载">5. 饥饿加载</h5>
+<p>Ribbon
+默认懒加载，意味着只有在发起调用的时候才会创建客户端。有可能会导致服务调用超时。</p>
 <p>开启饥饿加载，解决第一次调用慢的问题。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">ribbon:</span><br>  <span class="hljs-attr">eager-load:</span><br>    <span class="hljs-attr">clients:</span> <span class="hljs-string">mall-order</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
 <p>参数说明：</p>
 <ul>
 <li>ribbon.eager-load.enabled：开启 ribbon 的饥饿加载模式</li>
 <li>ribbon.eager-load.clients：指定需要饥饿加载的服务名，也就是需要调用的服务，如果有多个服务，则用逗号隔开。</li>
 </ul>
-<h3 id="3-什么是-LoadBalancer"><a href="#3-什么是-LoadBalancer" class="headerlink" title="3. 什么是  LoadBalancer"></a>3. 什么是  LoadBalancer</h3><p>Spring Cloud LoadBalancer 是 Spring Cloud 官方自己提供的客户端负载均衡器, 用来替代 Ribbon。</p>
+<h3 id="什么是-loadbalancer">3. 什么是 LoadBalancer</h3>
+<p>Spring Cloud LoadBalancer 是 Spring Cloud
+官方自己提供的客户端负载均衡器, 用来替代 Ribbon。</p>
 <p>Spring 官方提供了两种客户端都可以使用 loadbalancer：</p>
 <p><strong>RestTemplate：</strong></p>
-<p>RestTemplate 是 Spring 提供的用于访问 Rest 服务的客户端，RestTemplate 提供了多种便捷访问远程 Http 服务的方法，能够大大提高客户端的编写效率。默认情况下，RestTemplate 默认依赖 jdk 的 HTTP 连接工具。</p>
+<p>RestTemplate 是 Spring 提供的用于访问 Rest 服务的客户端，RestTemplate
+提供了多种便捷访问远程 Http
+服务的方法，能够大大提高客户端的编写效率。默认情况下，RestTemplate
+默认依赖 jdk 的 HTTP 连接工具。</p>
 <p><strong>WebClient：</strong></p>
-<p>WebClient 是从 Spring WebFlux 5.0 版本开始提供的一个非阻塞的基于响应式编程的进行 Http 请求的客户端工具。它的响应式编程的基于 Reactor 的。WebClient 中提供了标准 Http 请求方式对应的 get、post、put、delete 等方法，可以用来发起相应的请求。</p>
-<h4 id="3-1-RestTemplate-整合-LoadBalancer"><a href="#3-1-RestTemplate-整合-LoadBalancer" class="headerlink" title="3.1 RestTemplate 整合 LoadBalancer"></a>3.1 RestTemplate 整合 LoadBalancer</h4><ol>
+<p>WebClient 是从 Spring WebFlux 5.0
+版本开始提供的一个非阻塞的基于响应式编程的进行 Http
+请求的客户端工具。它的响应式编程的基于 Reactor 的。WebClient
+中提供了标准 Http 请求方式对应的 get、post、put、delete
+等方法，可以用来发起相应的请求。</p>
+<h4 id="resttemplate-整合-loadbalancer">3.1 RestTemplate 整合
+LoadBalancer</h4>
+<ol type="1">
 <li><p>引入依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- LoadBalancer --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 提供了RestTemplate支持 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- nacos服务注册与发现  移除ribbon支持--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>注意： nacos-discovery 中引入了 ribbon，需要移除 ribbon 的包。</p>
-<p>如果不移除，也可以在 yml 中配置不使用 ribbon。默认情况下，如果同时拥有 RibbonLoadBalancerClient 和 BlockingLoadBalancerClient，为了保持向后兼容性，将使用 RibbonLoadBalancerClient。要覆盖它，可以设置 spring.cloud.loadbalancer.ribbon.enabled 属性为 false。</p>
+<p>如果不移除，也可以在 yml 中配置不使用
+ribbon。默认情况下，如果同时拥有 RibbonLoadBalancerClient 和
+BlockingLoadBalancerClient，为了保持向后兼容性，将使用
+RibbonLoadBalancerClient。要覆盖它，可以设置
+spring.cloud.loadbalancer.ribbon.enabled 属性为 false。</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">mall-user</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.60</span><span class="hljs-number">.10</span><span class="hljs-string">:8848</span><br>    <span class="hljs-comment"># 不使用ribbon，使用loadbalancer</span><br>    <span class="hljs-attr">loadbalancer:</span><br>      <span class="hljs-attr">ribbon:</span><br>        <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150103332.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>使用 @LoadBalanced 注解修饰 RestTemplate，开启客户端负载均衡功能</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150103332.png" srcset="/img/loading.gif" lazyload /></p></li>
+<li><p>使用 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解修饰
+RestTemplate，开启客户端负载均衡功能</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestConfig</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>使用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/user&quot;)</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RestTemplate restTemplate;<br><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/getOrderByUserId/&#123;id&#125;&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">findOrderByUserId</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;<br>        String url = <span class="hljs-string">&quot;http://mall-order/order/findOrderByUserId/&quot;</span>+id;<br>        <span class="hljs-keyword">return</span> restTemplate.getForObject(url,ResponseEntity.class);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="3-2-WebClient-整合-LoadBalancer"><a href="#3-2-WebClient-整合-LoadBalancer" class="headerlink" title="3.2 WebClient 整合 LoadBalancer"></a>3.2 WebClient 整合 LoadBalancer</h4><ol>
+<h4 id="webclient-整合-loadbalancer">3.2 WebClient 整合
+LoadBalancer</h4>
+<ol type="1">
 <li><p>引入依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- LoadBalancer --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- webflux --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-webflux<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- nacos服务注册与发现 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
 <li><p>配置 WebClient 作为负载均衡器的 client</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebClientConfig</span> </span>&#123;<br><br>    <span class="hljs-meta">@LoadBalanced</span><br>    <span class="hljs-meta">@Bean</span><br>    WebClient.<span class="hljs-function">Builder <span class="hljs-title">webClientBuilder</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> WebClient.builder();<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-function">WebClient <span class="hljs-title">webClient</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> webClientBuilder().build();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>使用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> WebClient webClient;<br><br><span class="hljs-meta">@RequestMapping(value = &quot;/findOrderByUserId2/&#123;id&#125;&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Mono&lt;ResponseEntity&gt; <span class="hljs-title">findOrderByUserIdWithWebClient</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;<br><br>    String url = <span class="hljs-string">&quot;http://mall-order/order/findOrderByUserId/&quot;</span>+id;<br>    <span class="hljs-comment">//基于WebClient</span><br>    Mono&lt;ResponseEntity&gt; result = webClient.get().uri(url)<br>            .retrieve().bodyToMono(ResponseEntity.class);<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>原理： 底层会使用ReactiveLoadBalancer</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150153890.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305150153890.png" srcset="/img/loading.gif" lazyload /></p>
 <p>引入 webFlux：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> ReactorLoadBalancerExchangeFilterFunction lbFunction;<br><br><span class="hljs-meta">@RequestMapping(value = &quot;/findOrderByUserId3/&#123;id&#125;&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Mono&lt;ResponseEntity&gt; <span class="hljs-title">findOrderByUserIdWithWebFlux</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;<br><br>    String url = <span class="hljs-string">&quot;http://mall-order/order/findOrderByUserId/&quot;</span>+id;<br>    <span class="hljs-comment">//基于WebClient+webFlux</span><br>    Mono&lt;ResponseEntity&gt; result = WebClient.builder()<br>            .filter(lbFunction)<br>            .build()<br>            .get()<br>            .uri(url)<br>            .retrieve()<br>            .bodyToMono(ResponseEntity.class);<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
@@ -627,6 +688,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -883,6 +950,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

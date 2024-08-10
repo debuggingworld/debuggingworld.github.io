@@ -16,22 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6308fe21f346fb0714c2314d 1. 动态代理代理模式：为对象提供一种代理以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。 如果我们现在想在不修改 UserService 类源码前提下，给 test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService 对象了。 1.1">
+    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6308fe21f346fb0714c2314d 1. 动态代理 代理模式：为对象提供一种代理以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。 如果我们现在想在不修改 UserService 类源码前提下，给 test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService 对象了。 1.1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring——AOP源码解析">
 <meta property="og:url" content="http://example.com/2022/08/14/Spring%E2%80%94%E2%80%94AOP%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6308fe21f346fb0714c2314d 1. 动态代理代理模式：为对象提供一种代理以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。 如果我们现在想在不修改 UserService 类源码前提下，给 test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService 对象了。 1.1">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6308fe21f346fb0714c2314d 1. 动态代理 代理模式：为对象提供一种代理以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。 如果我们现在想在不修改 UserService 类源码前提下，给 test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService 对象了。 1.1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220824223600.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220821204534.png">
 <meta property="article:published_time" content="2022-08-14T15:02:52.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.854Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220824223600.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -294,137 +291,293 @@
             
             <div class="markdown-body">
               
-              <p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/6308fe21f346fb0714c2314d">https://www.processon.com/view/link/6308fe21f346fb0714c2314d</a></p>
-<h3 id="1-动态代理"><a href="#1-动态代理" class="headerlink" title="1. 动态代理"></a>1. 动态代理</h3><p>代理模式：为<strong>对象</strong>提供一种<strong>代理</strong>以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。</p>
-<p>如果我们现在想在<strong>不修改 UserService 类源码</strong>前提下，给 test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService 对象了。</p>
-<h4 id="1-1-cglib-动态代理"><a href="#1-1-cglib-动态代理" class="headerlink" title="1.1 cglib 动态代理"></a>1.1 cglib 动态代理</h4><p>比如，现在存在一个UserService类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;test...&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debug</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;debug...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+              <p>https://www.processon.com/view/link/6308fe21f346fb0714c2314d</p>
+<h3 id="动态代理">1. 动态代理</h3>
+<p>代理模式：为<strong>对象</strong>提供一种<strong>代理</strong>以控制对这个对象的访问，增强一个类中的某个方法，对程序进行扩展。</p>
+<p>如果我们现在想在<strong>不修改 UserService 类源码</strong>前提下，给
+test() 增加额外逻辑，那么就可以使用动态代理机制来创建 UserService
+对象了。</p>
+<h4 id="cglib-动态代理">1.1 cglib 动态代理</h4>
+<p>比如，现在存在一个UserService类： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;test...&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debug</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;debug...&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 被代理对象</span><br>UserService target = <span class="hljs-keyword">new</span> UserService();<br><br>Enhancer enhancer = <span class="hljs-keyword">new</span> Enhancer();<br>enhancer.setSuperclass(UserService.class);<br><br><span class="hljs-comment">// 定义代理逻辑</span><br>enhancer.setCallbacks(<span class="hljs-keyword">new</span> Callback[]&#123;<span class="hljs-keyword">new</span> MethodInterceptor() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * o 代理对象</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">intercept</span><span class="hljs-params">(Object o, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before......&quot;</span>);<br>        <span class="hljs-comment">// 执行被代理对象方法</span><br>        <span class="hljs-comment">// Object result = methodProxy.invoke(target, objects);</span><br>        <span class="hljs-comment">// Object result = method.invoke(target, objects);</span><br>        Object result = methodProxy.invokeSuper(o, objects);  <span class="hljs-comment">// 执行代理对象的父类的方法（等同于执行被代理对象的方法）</span><br>        <span class="hljs-comment">// method.invoke(o,objects); 会无限递归（错误用法）</span><br>        System.out.println(<span class="hljs-string">&quot;after........&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;&#125;);<br>UserService userService = (UserService) enhancer.create();<br>userService.test();<br>userService.debug();<br></code></pre></td></tr></table></figure>
 <p>userService 中的所有方法都会执行相同的代理逻辑。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java">UserService target = <span class="hljs-keyword">new</span> UserService();<br><br>Enhancer enhancer = <span class="hljs-keyword">new</span> Enhancer();<br>enhancer.setSuperclass(UserService.class);<br><br>enhancer.setCallbacks(<span class="hljs-keyword">new</span> Callback[]&#123;<span class="hljs-keyword">new</span> MethodInterceptor() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">intercept</span><span class="hljs-params">(Object o, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before......&quot;</span>);<br>        Object result = methodProxy.invoke(target, objects);<br>        System.out.println(<span class="hljs-string">&quot;after........&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;, NoOp.INSTANCE&#125;);<br><span class="hljs-comment">// NoOp.INSTANCE 为空实现</span><br><span class="hljs-comment">// debug 方法执行下标为0的拦截器，其他的执行下标为1的拦截器</span><br>enhancer.setCallbackFilter(<span class="hljs-keyword">new</span> CallbackFilter() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">accept</span><span class="hljs-params">(Method method)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (method.getName().equals(<span class="hljs-string">&quot;debug&quot;</span>)) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>&#125;);<br>UserService userService = (UserService) enhancer.create();<br>userService.test();<br>userService.debug();<br></code></pre></td></tr></table></figure>
 <p>实现不同的方法执行不同的代理逻辑。</p>
-<p>上面是通过 cglib 来实现的代理对象的创建，是基于<strong>父子类</strong>的，被代理类（UserService）是父类，代理类是子类，代理对象就是代理类的实例对象，代理类是由 cglib 创建的。</p>
-<h4 id="1-2-jdk-动态代理"><a href="#1-2-jdk-动态代理" class="headerlink" title="1.2 jdk 动态代理"></a>1.2 jdk 动态代理</h4><p>除了 cglib技术，jdk 本身也提供了一种创建代理对象的动态代理机制，但是它只能代理接口，也就是 UserService 得先有一个接口才能利用 jdk 动态代理机制来生成一个代理对象。</p>
+<p>上面是通过 cglib
+来实现的代理对象的创建，是基于<strong>父子类</strong>的，被代理类（UserService）是父类，代理类是子类，代理对象就是代理类的实例对象，代理类是由
+cglib 创建的。</p>
+<h4 id="jdk-动态代理">1.2 jdk 动态代理</h4>
+<p>除了 cglib技术，jdk
+本身也提供了一种创建代理对象的动态代理机制，但是它只能代理接口，也就是
+UserService 得先有一个接口才能利用 jdk
+动态代理机制来生成一个代理对象。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserInterface</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserInterface</span> </span>&#123;<br><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		System.out.println(<span class="hljs-string">&quot;test...&quot;</span>);<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>利用 JDK 动态代理来生成一个代理对象：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java">UserService target = <span class="hljs-keyword">new</span> UserService();<br>Object proxy = Proxy.newProxyInstance(UserService.class.getClassLoader(), <span class="hljs-keyword">new</span> Class[]&#123;IUserService.class&#125;, <span class="hljs-keyword">new</span> InvocationHandler() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before...&quot;</span>);<br>        Object result = method.invoke(target, args);<br>        System.out.println(<span class="hljs-string">&quot;after...&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;);<br>IUserService userService = (IUserService) proxy;<br>userService.test();<br></code></pre></td></tr></table></figure>
-<p>如果你把 new Class[]{UserInterface.class}，替换成 new Class[]{UserService.class}，允许代码会直接报错：</p>
+<p>如果你把 new Class[]{UserInterface.class}，替换成 new
+Class[]{UserService.class}，允许代码会直接报错：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.lang.IllegalArgumentException: com.zth.debugSpring.service.UserService is not an <span class="hljs-class"><span class="hljs-keyword">interface</span></span><br></code></pre></td></tr></table></figure>
 <p>表示一定要是个接口。</p>
-<p>由于这个限制，所以产生的代理对象的类型是 UserInterface，而不是 UserService。</p>
-<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000041619989">https://segmentfault.com/a/1190000041619989</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_38033199/article/details/125852733">https://blog.csdn.net/m0_38033199/article/details/125852733</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/426867875">https://zhuanlan.zhihu.com/p/426867875</a></p>
-<h3 id="2-ProxyFactory"><a href="#2-ProxyFactory" class="headerlink" title="2. ProxyFactory"></a>2. ProxyFactory</h3><p>在 Spring 中对以上两种动态代理技术进行了封装，封装后的类叫做 ProxyFactory，表示是创建代理对象的一个工厂。</p>
+<p>由于这个限制，所以产生的代理对象的类型是 UserInterface，而不是
+UserService。</p>
+<p>https://segmentfault.com/a/1190000041619989</p>
+<p>https://blog.csdn.net/m0_38033199/article/details/125852733</p>
+<p>https://zhuanlan.zhihu.com/p/426867875</p>
+<h3 id="proxyfactory">2. ProxyFactory</h3>
+<p>在 Spring 中对以上两种动态代理技术进行了封装，封装后的类叫做
+ProxyFactory，表示是创建代理对象的一个工厂。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><br>UserService target = <span class="hljs-keyword">new</span> UserService();<br><br>ProxyFactory proxyFactory = <span class="hljs-keyword">new</span> ProxyFactory();<br>proxyFactory.setTarget(target);<br>proxyFactory.addAdvice(<span class="hljs-keyword">new</span> MethodInterceptor() &#123;<br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>		System.out.println(<span class="hljs-string">&quot;before...&quot;</span>);<br>		Object result = invocation.proceed();<br>		System.out.println(<span class="hljs-string">&quot;after...&quot;</span>);<br>		<span class="hljs-keyword">return</span> result;<br>	&#125;<br>&#125;);<br><br>UserInterface userService = (UserInterface) proxyFactory.getProxy();<br>userService.test();<br></code></pre></td></tr></table></figure>
-
-<p>通过 ProxyFactory，可以不再关心到底是用 cglib 还是 jdk 动态代理了，ProxyFactory 会去判断，如果 UserService 实现了接口，那么 ProxyFactory 底层就会用 jdk 动态代理，如果没有实现接口，就会用 cglib 技术。</p>
-<h3 id="3-Advice"><a href="#3-Advice" class="headerlink" title="3. Advice"></a>3. Advice</h3><h4 id="3-1-前置通知-MethodBeforeAdvice"><a href="#3-1-前置通知-MethodBeforeAdvice" class="headerlink" title="3.1 前置通知 MethodBeforeAdvice"></a>3.1 前置通知 MethodBeforeAdvice</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugBeforeAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MethodBeforeAdvice</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * target：被代理对象</span><br><span class="hljs-comment">     * method：当前执行的方法</span><br><span class="hljs-comment">     * args：执行方法传入的参数</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">(Method method, Object[] args, Object target)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        <span class="hljs-comment">// 只需写代理逻辑，不需要调用被代理方法</span><br>        System.out.println(<span class="hljs-string">&quot;before.....&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="3-2-后置返回通知-AfterReturningAdvice"><a href="#3-2-后置返回通知-AfterReturningAdvice" class="headerlink" title="3.2 后置返回通知 AfterReturningAdvice"></a>3.2 后置返回通知 AfterReturningAdvice</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAfterReturningAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AfterReturningAdvice</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * returnValue：方法返回值</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturning</span><span class="hljs-params">(Object returnValue, Method method, Object[] args, Object target)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;after return&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="3-3-异常通知-ThrowsAdvice"><a href="#3-3-异常通知-ThrowsAdvice" class="headerlink" title="3.3 异常通知 ThrowsAdvice"></a>3.3 异常通知 ThrowsAdvice</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugThrowsAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ThrowsAdvice</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Method method,Object[] args,Object target,NullPointerException e)</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;after throw nullPointerException&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>ThrowsAdvice 接口不包含任何方法。 它只是标识给定对象实现一个或多个类型化异常通知方法的标识接口,这些应该是以下形式:</p>
+<p>通过 ProxyFactory，可以不再关心到底是用 cglib 还是 jdk
+动态代理了，ProxyFactory 会去判断，如果 UserService 实现了接口，那么
+ProxyFactory 底层就会用 jdk 动态代理，如果没有实现接口，就会用 cglib
+技术。</p>
+<h3 id="advice">3. Advice</h3>
+<h4 id="前置通知-methodbeforeadvice">3.1 前置通知
+MethodBeforeAdvice</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugBeforeAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MethodBeforeAdvice</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * target：被代理对象</span><br><span class="hljs-comment">     * method：当前执行的方法</span><br><span class="hljs-comment">     * args：执行方法传入的参数</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">(Method method, Object[] args, Object target)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        <span class="hljs-comment">// 只需写代理逻辑，不需要调用被代理方法</span><br>        System.out.println(<span class="hljs-string">&quot;before.....&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="后置返回通知-afterreturningadvice">3.2 后置返回通知
+AfterReturningAdvice</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAfterReturningAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AfterReturningAdvice</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * returnValue：方法返回值</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturning</span><span class="hljs-params">(Object returnValue, Method method, Object[] args, Object target)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;after return&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="异常通知-throwsadvice">3.3 异常通知 ThrowsAdvice</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugThrowsAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ThrowsAdvice</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Method method,Object[] args,Object target,NullPointerException e)</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;after throw nullPointerException&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>ThrowsAdvice 接口不包含任何方法。
+它只是标识给定对象实现一个或多个类型化异常通知方法的标识接口,这些应该是以下形式:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Exception ex)</span></span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(RemoteException)</span></span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Method method, Object[] args, Object target, Exception ex)</span></span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Method method, Object[] args, Object target, ServletException ex)</span></span><br></code></pre></td></tr></table></figure>
-
-<h4 id="3-4-环绕通知-MethodInterceptor"><a href="#3-4-环绕通知-MethodInterceptor" class="headerlink" title="3.4 环绕通知 MethodInterceptor"></a>3.4 环绕通知 MethodInterceptor</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// MethodInterceptor 是 aop 包中的，不是 cglib 包中的</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAroundAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MethodInterceptor</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;around before...&quot;</span>);<br>        <span class="hljs-comment">// 执行被代理的方法，执行之前会执行其他的 前置通知</span><br>        Object result = invocation.proceed();<br>        System.out.println(<span class="hljs-string">&quot;around after...&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
+<h4 id="环绕通知-methodinterceptor">3.4 环绕通知 MethodInterceptor</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// MethodInterceptor 是 aop 包中的，不是 cglib 包中的</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAroundAdvice</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MethodInterceptor</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(MethodInvocation invocation)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;around before...&quot;</span>);<br>        <span class="hljs-comment">// 执行被代理的方法，执行之前会执行其他的 前置通知</span><br>        Object result = invocation.proceed();<br>        System.out.println(<span class="hljs-string">&quot;around after...&quot;</span>);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>Spring 会把五个注解解析为对应的 Advice 类：</p>
-<ol>
-<li>@Before：AspectJMethodBeforeAdvice，实际上就是一个 MethodBeforeAdvice，继承了接口 BeforeAdvice</li>
-<li>@AfterReturning：AspectJAfterReturningAdvice，实际上就是一个 AfterReturningAdvice</li>
-<li>@AfterThrowing：AspectJAfterThrowingAdvice，实际上就是一个MethodInterceptor</li>
-<li>@After：AspectJAfterAdvice，实际上就是一个 MethodInterceptor</li>
-<li>@Around：AspectJAroundAdvice，实际上就是一个 MethodInterceptor</li>
+<ol type="1">
+<li><span class="citation"
+data-cites="Before">@Before</span>：AspectJMethodBeforeAdvice，实际上就是一个
+MethodBeforeAdvice，继承了接口 BeforeAdvice</li>
+<li><span class="citation"
+data-cites="AfterReturning">@AfterReturning</span>：AspectJAfterReturningAdvice，实际上就是一个
+AfterReturningAdvice</li>
+<li><span class="citation"
+data-cites="AfterThrowing">@AfterThrowing</span>：AspectJAfterThrowingAdvice，实际上就是一个MethodInterceptor</li>
+<li><span class="citation"
+data-cites="After">@After</span>：AspectJAfterAdvice，实际上就是一个
+MethodInterceptor</li>
+<li><span class="citation"
+data-cites="Around">@Around</span>：AspectJAroundAdvice，实际上就是一个
+MethodInterceptor</li>
 </ol>
-<h3 id="4-Advisor"><a href="#4-Advisor" class="headerlink" title="4.  Advisor"></a>4.  Advisor</h3><p>一个 Advisor 是由一个 Pointcut 和一个 Advice 组成的，通过 Pointcut 可以指定要需要被代理的逻辑，比如上面的 UserService ，所有方法都会被代理，被增强，可以通过 Advisor，来控制到具体代理哪一个方法。</p>
+<h3 id="advisor">4. Advisor</h3>
+<p>一个 Advisor 是由一个 Pointcut 和一个 Advice 组成的，通过 Pointcut
+可以指定要需要被代理的逻辑，比如上面的 UserService
+，所有方法都会被代理，被增强，可以通过
+Advisor，来控制到具体代理哪一个方法。</p>
 <p>比如只有 debug 方法执行代理逻辑：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java">UserService target = <span class="hljs-keyword">new</span> UserService();<br><br>ProxyFactory proxyFactory = <span class="hljs-keyword">new</span> ProxyFactory();<br>proxyFactory.setTarget(target);<br><br>proxyFactory.addAdvisor(<span class="hljs-keyword">new</span> PointcutAdvisor() &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Pointcut <span class="hljs-title">getPointcut</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> StaticMethodMatcherPointcut() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">matches</span><span class="hljs-params">(Method method, Class&lt;?&gt; targetClass)</span> </span>&#123;<br>                <span class="hljs-keyword">return</span> method.getName().equals(<span class="hljs-string">&quot;debug&quot;</span>);<br>            &#125;<br>        &#125;;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Advice <span class="hljs-title">getAdvice</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DebugBeforeAdvice();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isPerInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br>&#125;);<br><br>UserService proxy = (UserService) proxyFactory.getProxy();<br>proxy.test();<br>proxy.debug();<br></code></pre></td></tr></table></figure>
-
-<h3 id="5-创建代理对象的方式"><a href="#5-创建代理对象的方式" class="headerlink" title="5. 创建代理对象的方式"></a>5. 创建代理对象的方式</h3><p>上面介绍了 Spring 中所提供的 ProxyFactory、Advisor、Advice、PointCu t等技术来实现代理对象的创建，但是在使用 Spring 时，并不会直接去使用 ProxyFactory，比如说，希望 ProxyFactory 所产生的代理对象能直接就是 Bean，能直接从 Spring 容器中得到 UserSerivce 的代理对象，而这些，Spring 都是支持的，只不过肯定需要指定哪些类需要被代理，代理逻辑是什么。</p>
-<h4 id="5-1-ProxyFactoryBean"><a href="#5-1-ProxyFactoryBean" class="headerlink" title="5.1 ProxyFactoryBean"></a>5.1 ProxyFactoryBean</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ProxyFactoryBean <span class="hljs-title">proxyFactoryBean</span><span class="hljs-params">()</span></span>&#123;<br><br>    ProxyFactoryBean proxyFactoryBean = <span class="hljs-keyword">new</span> ProxyFactoryBean();<br>    proxyFactoryBean.addAdvice(<span class="hljs-keyword">new</span> DebugBeforeAdvice());<br>    proxyFactoryBean.setTarget(<span class="hljs-keyword">new</span> UserService());<br><br>    <span class="hljs-keyword">return</span> proxyFactoryBean;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>通过这种方法来定义一个UserService的Bean，并且是经过了AOP的。但是这种方式<strong>只能针对某一个 Bean</strong>。它是一个 FactoryBean，所以利用的就是 FactoryBean 技术，间接的将 UserService 的代理对象作为了 Bean。</p>
-<p>ProxyFactoryBean 还有额外的功能，比如可以把某个 Advise 或 Advisor 定义成为 Bean，然后在 ProxyFactoryBean 中进行设置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DebugBeforeAdvice <span class="hljs-title">debugBeforeAdvice</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DebugBeforeAdvice();<br>&#125;<br><br><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ProxyFactoryBean <span class="hljs-title">userService</span><span class="hljs-params">()</span></span>&#123;<br>    ProxyFactoryBean proxyFactoryBean = <span class="hljs-keyword">new</span> ProxyFactoryBean();<br>    proxyFactoryBean.setTarget( <span class="hljs-keyword">new</span> UserService());<br>    proxyFactoryBean.setInterceptorNames(<span class="hljs-string">&quot;debugBeforeAdvice&quot;</span>);<br>    <span class="hljs-keyword">return</span> proxyFactoryBean;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="5-2-BeanNameAutoProxyCreator"><a href="#5-2-BeanNameAutoProxyCreator" class="headerlink" title="5.2 BeanNameAutoProxyCreator"></a>5.2 BeanNameAutoProxyCreator</h4><p>ProxyFactoryBean 得指定被代理的对象，而 BeanNameAutoProxyCreator 通过指定某个 bean 的名字，来对该 bean 进行代理</p>
+<h3 id="创建代理对象的方式">5. 创建代理对象的方式</h3>
+<p>上面介绍了 Spring 中所提供的 ProxyFactory、Advisor、Advice、PointCu
+t等技术来实现代理对象的创建，但是在使用 Spring 时，并不会直接去使用
+ProxyFactory，比如说，希望 ProxyFactory 所产生的代理对象能直接就是
+Bean，能直接从 Spring 容器中得到 UserSerivce 的代理对象，而这些，Spring
+都是支持的，只不过肯定需要指定哪些类需要被代理，代理逻辑是什么。</p>
+<h4 id="proxyfactorybean">5.1 ProxyFactoryBean</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ProxyFactoryBean <span class="hljs-title">proxyFactoryBean</span><span class="hljs-params">()</span></span>&#123;<br><br>    ProxyFactoryBean proxyFactoryBean = <span class="hljs-keyword">new</span> ProxyFactoryBean();<br>    proxyFactoryBean.addAdvice(<span class="hljs-keyword">new</span> DebugBeforeAdvice());<br>    proxyFactoryBean.setTarget(<span class="hljs-keyword">new</span> UserService());<br><br>    <span class="hljs-keyword">return</span> proxyFactoryBean;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过这种方法来定义一个UserService的Bean，并且是经过了AOP的。但是这种方式<strong>只能针对某一个
+Bean</strong>。它是一个 FactoryBean，所以利用的就是 FactoryBean
+技术，间接的将 UserService 的代理对象作为了 Bean。</p>
+<p>ProxyFactoryBean 还有额外的功能，比如可以把某个 Advise 或 Advisor
+定义成为 Bean，然后在 ProxyFactoryBean 中进行设置 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> DebugBeforeAdvice <span class="hljs-title">debugBeforeAdvice</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DebugBeforeAdvice();<br>&#125;<br><br><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ProxyFactoryBean <span class="hljs-title">userService</span><span class="hljs-params">()</span></span>&#123;<br>    ProxyFactoryBean proxyFactoryBean = <span class="hljs-keyword">new</span> ProxyFactoryBean();<br>    proxyFactoryBean.setTarget( <span class="hljs-keyword">new</span> UserService());<br>    proxyFactoryBean.setInterceptorNames(<span class="hljs-string">&quot;debugBeforeAdvice&quot;</span>);<br>    <span class="hljs-keyword">return</span> proxyFactoryBean;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h4 id="beannameautoproxycreator">5.2 BeanNameAutoProxyCreator</h4>
+<p>ProxyFactoryBean 得指定被代理的对象，而 BeanNameAutoProxyCreator
+通过指定某个 bean 的名字，来对该 bean 进行代理</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> BeanNameAutoProxyCreator <span class="hljs-title">beanNameAutoProxyCreator</span><span class="hljs-params">()</span> </span>&#123;<br>    BeanNameAutoProxyCreator beanNameAutoProxyCreator = <span class="hljs-keyword">new</span> BeanNameAutoProxyCreator();<br>    <span class="hljs-comment">// 匹配 beanName</span><br>    beanNameAutoProxyCreator.setBeanNames(<span class="hljs-string">&quot;userSer*&quot;</span>);<br>    <span class="hljs-comment">// 前提是将通知作为 Bean</span><br>    beanNameAutoProxyCreator.setInterceptorNames(<span class="hljs-string">&quot;debugBeforeAdvice&quot;</span>);<br>    <span class="hljs-keyword">return</span> beanNameAutoProxyCreator;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>通过 BeanNameAutoProxyCreator 可以对批量的 Bean 进行 AOP，并且指定了代理逻辑，指定了一个 InterceptorName，也就是一个 Advice，前提条件是这个 Advice 也得是一个 Bean，这样 Spring 才能找到的，但是 BeanNameAutoProxyCreator 的缺点很明显，它只能根据 beanName 来指定想要代理的 Bean。</p>
-<h4 id="5-3-DefaultAdvisorAutoProxyCreator"><a href="#5-3-DefaultAdvisorAutoProxyCreator" class="headerlink" title="5.3 DefaultAdvisorAutoProxyCreator"></a>5.3 DefaultAdvisorAutoProxyCreator</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java">   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> DefaultPointcutAdvisor <span class="hljs-title">defaultPointcutAdvisor</span><span class="hljs-params">()</span> </span>&#123;<br><br>       NameMatchMethodPointcut pointcut = <span class="hljs-keyword">new</span> NameMatchMethodPointcut();<br>       pointcut.addMethodName(<span class="hljs-string">&quot;debug&quot;</span>);<br><br>       DefaultPointcutAdvisor advisor = <span class="hljs-keyword">new</span> DefaultPointcutAdvisor();<br>       advisor.setPointcut(pointcut);<br>       advisor.setAdvice(<span class="hljs-keyword">new</span> DebugBeforeAdvice());<br>       <span class="hljs-keyword">return</span> advisor;<br>   &#125;<br>   <br><br><span class="hljs-comment">// 等价于 @Import(DefaultAdvisorAutoProxyCreator.class)</span><br>   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> DefaultAdvisorAutoProxyCreator  <span class="hljs-title">defaultAdvisorAutoProxyCreator</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DefaultAdvisorAutoProxyCreator();<br>   &#125;<br></code></pre></td></tr></table></figure>
-<p>DefaultAdvisorAutoProxyCreator 是一个 BeanPostProcessor，会使 Bean 在初始化后找到所有的 Advisor，匹配其中的 pointcut ，如果匹配则生成代理对象。</p>
-<p>但是，通过这种方式得依靠某一个类来实现定义 Advisor，或者 Advise，或者 Pointcut，那么这个步骤能不能更加简化一点呢？</p>
+<p>通过 BeanNameAutoProxyCreator 可以对批量的 Bean 进行
+AOP，并且指定了代理逻辑，指定了一个 InterceptorName，也就是一个
+Advice，前提条件是这个 Advice 也得是一个 Bean，这样 Spring
+才能找到的，但是 BeanNameAutoProxyCreator 的缺点很明显，它只能根据
+beanName 来指定想要代理的 Bean。</p>
+<h4 id="defaultadvisorautoproxycreator">5.3
+DefaultAdvisorAutoProxyCreator</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java">   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> DefaultPointcutAdvisor <span class="hljs-title">defaultPointcutAdvisor</span><span class="hljs-params">()</span> </span>&#123;<br><br>       NameMatchMethodPointcut pointcut = <span class="hljs-keyword">new</span> NameMatchMethodPointcut();<br>       pointcut.addMethodName(<span class="hljs-string">&quot;debug&quot;</span>);<br><br>       DefaultPointcutAdvisor advisor = <span class="hljs-keyword">new</span> DefaultPointcutAdvisor();<br>       advisor.setPointcut(pointcut);<br>       advisor.setAdvice(<span class="hljs-keyword">new</span> DebugBeforeAdvice());<br>       <span class="hljs-keyword">return</span> advisor;<br>   &#125;<br>   <br><br><span class="hljs-comment">// 等价于 @Import(DefaultAdvisorAutoProxyCreator.class)</span><br>   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> DefaultAdvisorAutoProxyCreator  <span class="hljs-title">defaultAdvisorAutoProxyCreator</span><span class="hljs-params">()</span></span>&#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DefaultAdvisorAutoProxyCreator();<br>   &#125;<br></code></pre></td></tr></table></figure>
+<p>DefaultAdvisorAutoProxyCreator 是一个 BeanPostProcessor，会使 Bean
+在初始化后找到所有的 Advisor，匹配其中的 pointcut
+，如果匹配则生成代理对象。</p>
+<p>但是，通过这种方式得依靠某一个类来实现定义 Advisor，或者 Advise，或者
+Pointcut，那么这个步骤能不能更加简化一点呢？</p>
 <p>对的，通过<strong>注解</strong>！</p>
-<h4 id="5-4-通过注解"><a href="#5-4-通过注解" class="headerlink" title="5.4 通过注解"></a>5.4 通过注解</h4><p>定义一个类，在类中的方法上通过某些注解，来定义 PointCut 以及 Advice。</p>
+<h4 id="通过注解">5.4 通过注解</h4>
+<p>定义一个类，在类中的方法上通过某些注解，来定义 PointCut 以及
+Advice。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAspect</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Before(&quot;execution(public void com.zth.debugSpring.service.UserService.test())&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugBefore</span><span class="hljs-params">(JoinPoint joinPoint)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Before.....&quot;</span>);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>对于 Spring 来说，要做的就是来解析这些注解，解析之后得到对应的 Pointcut 对象、Advice 对象，生成 Advisor 对象，放进 ProxyFactory 中，进而产生对应的代理对象（由 @EnableAspectJAutoProxy 注解完成）。</p>
-<h3 id="6-对-Spring-AOP-的理解"><a href="#6-对-Spring-AOP-的理解" class="headerlink" title="6. 对 Spring AOP 的理解"></a>6. 对 Spring AOP 的理解</h3><p>OOP表示面向对象编程，是一种编程思想，AOP表示面向切面编程，也是一种编程思想，而上面所描述的就是 Spring 为了更加方便的做到面向切面编程所提供的技术支持，换句话说，就是 Spring 提供了一套机制，可以更加容易的来进行 AOP，这套机制可以称之为 Spring AOP。</p>
-<p>上面所提供的注解的方式来定义 Pointcut 和 Advice，Spring 并不是首创，首创是 AspectJ，而且也不仅仅只有 Spring 提供了一套机制来支持 AOP，还有比如 JBoss 4.0、aspectwerkz 等技术都提供了对于 AOP 的支持。而刚刚说的注解的方式，Spring 是依赖了 AspectJ 的，或者说，Spring 是直接把 AspectJ 中所定义的那些注解直接拿过来用，自己没有再重复定义了，不过也仅仅只是把注解的定义复制过来了，每个注解具体底层是怎么解析的，还是 Spring 自己做的，所以在用 Spring 时，如果你想用 @Before、@Around 等注解，需要引入 aspecj 相关 jar 包的。</p>
-<p>值得注意的是：AspectJ 是在编译时对字节码进行了修改，是直接在 UserService 类对应的字节码中进行增强的，也就是说在编译时就会去解析 @Before 这些注解，然后得到代理逻辑，加入到被代理的类中的字节码中去的，所以如果想用 AspectJ 技术来生成代理对象 ，是需要用单独的 AspectJ 编译器的。而 Spring 只是用了 @Before 这些注解，在启动 Spring 的过程中，Spring 会去解析这些注解，然后利用动态代理机制生成代理对象。</p>
-<p>IDEA中使用Aspectj：<a target="_blank" rel="noopener" href="https://blog.csdn.net/gavin_john/article/details/80156963">https://blog.csdn.net/gavin_john/article/details/80156963</a></p>
-<h3 id="7-TargetSource-的使用"><a href="#7-TargetSource-的使用" class="headerlink" title="7. TargetSource 的使用"></a>7. TargetSource 的使用</h3><p>AOP 中被代理对象就是 Bean 对象，是由 BeanFactory 给我们创建出来的，Spring AOP 中提供了 TargetSource 机制，可以用来自定义逻辑来创建<strong>被代理对象</strong>。</p>
-<p>当 @Lazy注解加在属性上时，会产生一个代理对象赋值给这个属性，生成代理对象的代码：</p>
+<p>对于 Spring 来说，要做的就是来解析这些注解，解析之后得到对应的
+Pointcut 对象、Advice 对象，生成 Advisor 对象，放进 ProxyFactory
+中，进而产生对应的代理对象（由 <span class="citation"
+data-cites="EnableAspectJAutoProxy">@EnableAspectJAutoProxy</span>
+注解完成）。</p>
+<h3 id="对-spring-aop-的理解">6. 对 Spring AOP 的理解</h3>
+<p>OOP表示面向对象编程，是一种编程思想，AOP表示面向切面编程，也是一种编程思想，而上面所描述的就是
+Spring 为了更加方便的做到面向切面编程所提供的技术支持，换句话说，就是
+Spring 提供了一套机制，可以更加容易的来进行 AOP，这套机制可以称之为
+Spring AOP。</p>
+<p>上面所提供的注解的方式来定义 Pointcut 和 Advice，Spring
+并不是首创，首创是 AspectJ，而且也不仅仅只有 Spring 提供了一套机制来支持
+AOP，还有比如 JBoss 4.0、aspectwerkz 等技术都提供了对于 AOP
+的支持。而刚刚说的注解的方式，Spring 是依赖了 AspectJ 的，或者说，Spring
+是直接把 AspectJ
+中所定义的那些注解直接拿过来用，自己没有再重复定义了，不过也仅仅只是把注解的定义复制过来了，每个注解具体底层是怎么解析的，还是
+Spring 自己做的，所以在用 Spring 时，如果你想用 <span class="citation"
+data-cites="Before">@Before</span>、<span class="citation"
+data-cites="Around">@Around</span> 等注解，需要引入 aspecj 相关 jar
+包的。</p>
+<p>值得注意的是：AspectJ 是在编译时对字节码进行了修改，是直接在
+UserService 类对应的字节码中进行增强的，也就是说在编译时就会去解析 <span
+class="citation" data-cites="Before">@Before</span>
+这些注解，然后得到代理逻辑，加入到被代理的类中的字节码中去的，所以如果想用
+AspectJ 技术来生成代理对象 ，是需要用单独的 AspectJ 编译器的。而 Spring
+只是用了 <span class="citation" data-cites="Before">@Before</span>
+这些注解，在启动 Spring 的过程中，Spring
+会去解析这些注解，然后利用动态代理机制生成代理对象。</p>
+<p>IDEA中使用Aspectj：<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/gavin_john/article/details/80156963">https://blog.csdn.net/gavin_john/article/details/80156963</a></p>
+<h3 id="targetsource-的使用">7. TargetSource 的使用</h3>
+<p>AOP 中被代理对象就是 Bean 对象，是由 BeanFactory
+给我们创建出来的，Spring AOP 中提供了 TargetSource
+机制，可以用来自定义逻辑来创建<strong>被代理对象</strong>。</p>
+<p>当 <span class="citation"
+data-cites="Lazy注解加在属性上时">@Lazy注解加在属性上时</span>，会产生一个代理对象赋值给这个属性，生成代理对象的代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> Object <span class="hljs-title">buildLazyResolutionProxy</span><span class="hljs-params">(<span class="hljs-keyword">final</span> DependencyDescriptor descriptor, <span class="hljs-keyword">final</span> <span class="hljs-meta">@Nullable</span> String beanName)</span> </span>&#123;<br>		BeanFactory beanFactory = getBeanFactory();<br>		Assert.state(beanFactory <span class="hljs-keyword">instanceof</span> DefaultListableBeanFactory,<br>				<span class="hljs-string">&quot;BeanFactory needs to be a DefaultListableBeanFactory&quot;</span>);<br>		<span class="hljs-keyword">final</span> DefaultListableBeanFactory dlbf = (DefaultListableBeanFactory) beanFactory;<br><br>		TargetSource ts = <span class="hljs-keyword">new</span> TargetSource() &#123;<br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-keyword">public</span> Class&lt;?&gt; getTargetClass() &#123;<br>				<span class="hljs-keyword">return</span> descriptor.getDependencyType();<br>			&#125;<br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isStatic</span><span class="hljs-params">()</span> </span>&#123;<br>				<span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>			&#125;<br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getTarget</span><span class="hljs-params">()</span> </span>&#123;<br>				Set&lt;String&gt; autowiredBeanNames = (beanName != <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">new</span> LinkedHashSet&lt;&gt;(<span class="hljs-number">1</span>) : <span class="hljs-keyword">null</span>);<br>				Object target = dlbf.doResolveDependency(descriptor, beanName, autowiredBeanNames, <span class="hljs-keyword">null</span>);<br>				<span class="hljs-keyword">if</span> (target == <span class="hljs-keyword">null</span>) &#123;<br>					Class&lt;?&gt; type = getTargetClass();<br>					<span class="hljs-keyword">if</span> (Map.class == type) &#123;<br>						<span class="hljs-keyword">return</span> Collections.emptyMap();<br>					&#125;<br>					<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (List.class == type) &#123;<br>						<span class="hljs-keyword">return</span> Collections.emptyList();<br>					&#125;<br>					<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (Set.class == type || Collection.class == type) &#123;<br>						<span class="hljs-keyword">return</span> Collections.emptySet();<br>					&#125;<br>					<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchBeanDefinitionException(descriptor.getResolvableType(),<br>							<span class="hljs-string">&quot;Optional dependency not present for lazy injection point&quot;</span>);<br>				&#125;<br>				<span class="hljs-keyword">if</span> (autowiredBeanNames != <span class="hljs-keyword">null</span>) &#123;<br>					<span class="hljs-keyword">for</span> (String autowiredBeanName : autowiredBeanNames) &#123;<br>						<span class="hljs-keyword">if</span> (dlbf.containsBean(autowiredBeanName)) &#123;<br>							dlbf.registerDependentBean(autowiredBeanName, beanName);<br>						&#125;<br>					&#125;<br>				&#125;<br>				<span class="hljs-keyword">return</span> target;<br>			&#125;<br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">releaseTarget</span><span class="hljs-params">(Object target)</span> </span>&#123;<br>			&#125;<br>		&#125;;<br><br>		ProxyFactory pf = <span class="hljs-keyword">new</span> ProxyFactory();<br>		pf.setTargetSource(ts);<br>		Class&lt;?&gt; dependencyType = descriptor.getDependencyType();<br>		<span class="hljs-keyword">if</span> (dependencyType.isInterface()) &#123;<br>			pf.addInterface(dependencyType);<br>		&#125;<br>		<span class="hljs-keyword">return</span> pf.getProxy(dlbf.getBeanClassLoader());<br>	&#125;<br></code></pre></td></tr></table></figure>
-
 <p>这段代码就利用了ProxyFactory来生成代理对象，以及使用了TargetSource，以达到代理对象在执行某个方法时，调用TargetSource的getTarget()方法实时得到一个<strong>被代理对象</strong>。</p>
-<h3 id="8-ProxyFactory-选择-cglib-或-jdk-动态代理原理"><a href="#8-ProxyFactory-选择-cglib-或-jdk-动态代理原理" class="headerlink" title="8. ProxyFactory 选择 cglib 或 jdk 动态代理原理"></a>8. ProxyFactory 选择 cglib 或 jdk 动态代理原理</h3><p>ProxyFactory 在生成代理对象之前需要决定到底是使用 JDK 动态代理还是 CGLIB 技术：</p>
+<h3 id="proxyfactory-选择-cglib-或-jdk-动态代理原理">8. ProxyFactory
+选择 cglib 或 jdk 动态代理原理</h3>
+<p>ProxyFactory 在生成代理对象之前需要决定到底是使用 JDK 动态代理还是
+CGLIB 技术：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// config就是ProxyFactory对象</span><br><span class="hljs-comment">// optimize为true,或proxyTargetClass为true,或用户没有给ProxyFactory对象添加interface</span><br><span class="hljs-keyword">if</span> (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) &#123;<br>	Class&lt;?&gt; targetClass = config.getTargetClass();<br>	<span class="hljs-keyword">if</span> (targetClass == <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> AopConfigException(<span class="hljs-string">&quot;TargetSource cannot determine target class: &quot;</span> +<br>				<span class="hljs-string">&quot;Either an interface or a target is required for proxy creation.&quot;</span>);<br>	&#125;<br>    <span class="hljs-comment">// targetClass是接口，直接使用Jdk动态代理</span><br>	<span class="hljs-keyword">if</span> (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> JdkDynamicAopProxy(config);<br>	&#125;<br>    <span class="hljs-comment">// 使用Cglib</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ObjenesisCglibAopProxy(config);<br>&#125;<br><span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 使用Jdk动态代理</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> JdkDynamicAopProxy(config);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="9-代理对象的创建"><a href="#9-代理对象的创建" class="headerlink" title="9. 代理对象的创建"></a>9. 代理对象的创建</h3><h4 id="9-1-JdkDynamicAopProxy"><a href="#9-1-JdkDynamicAopProxy" class="headerlink" title="9. 1 JdkDynamicAopProxy"></a>9. 1 JdkDynamicAopProxy</h4><ol>
-<li>在构造 JdkDynamicAopProxy 对象时，会先拿到被代理对象自己所实现的接口，并且额外的增加 SpringProxy、Advised、DecoratingProxy 三个接口，组合成一个 Class[]，并赋值给 proxiedInterfaces 属性</li>
+<h3 id="代理对象的创建">9. 代理对象的创建</h3>
+<h4 id="jdkdynamicaopproxy">9. 1 JdkDynamicAopProxy</h4>
+<ol type="1">
+<li>在构造 JdkDynamicAopProxy
+对象时，会先拿到被代理对象自己所实现的接口，并且额外的增加
+SpringProxy、Advised、DecoratingProxy 三个接口，组合成一个
+Class[]，并赋值给 proxiedInterfaces 属性</li>
 <li>并且检查这些接口中是否定义了 equals()、hashcode() 方法</li>
-<li>执行 <code>Proxy.newProxyInstance(classLoader, this.proxiedInterfaces, this)</code>，得到代理对象，<strong>JdkDynamicAopProxy</strong> 作为 InvocationHandler，代理对象在执行某个方法时，会进入到JdkDynamicAopProxy 的 <strong>invoke()</strong> 方法中</li>
+<li>执行
+<code>Proxy.newProxyInstance(classLoader, this.proxiedInterfaces, this)</code>，得到代理对象，<strong>JdkDynamicAopProxy</strong>
+作为
+InvocationHandler，代理对象在执行某个方法时，会进入到JdkDynamicAopProxy
+的 <strong>invoke()</strong> 方法中</li>
 </ol>
-<h4 id="9-2-ObjenesisCglibAopProxy"><a href="#9-2-ObjenesisCglibAopProxy" class="headerlink" title="9.2 ObjenesisCglibAopProxy"></a>9.2 ObjenesisCglibAopProxy</h4><ol>
+<h4 id="objenesiscglibaopproxy">9.2 ObjenesisCglibAopProxy</h4>
+<ol type="1">
 <li>创建 Enhancer 对象</li>
-<li>设置 Enhancer 的 superClass 为通过 ProxyFactory.setTarget() 所设置的对象的类</li>
-<li>设置 Enhancer 的 interfaces 为通过 ProxyFactory.addInterface() 所添加的接口，以及 SpringProxy、Advised、DecoratingProxy 接口</li>
+<li>设置 Enhancer 的 superClass 为通过 ProxyFactory.setTarget()
+所设置的对象的类</li>
+<li>设置 Enhancer 的 interfaces 为通过 ProxyFactory.addInterface()
+所添加的接口，以及 SpringProxy、Advised、DecoratingProxy 接口</li>
 <li>设置 Enhancer 的 Callbacks 为 DynamicAdvisedInterceptor</li>
-<li>最后创建一个代理对象，代理对象在执行某个方法时，会进入到 DynamicAdvisedInterceptor 的 intercept() 方法中</li>
+<li>最后创建一个代理对象，代理对象在执行某个方法时，会进入到
+DynamicAdvisedInterceptor 的 intercept() 方法中</li>
 </ol>
-<h3 id="10-代理对象执行过程"><a href="#10-代理对象执行过程" class="headerlink" title="10. 代理对象执行过程"></a>10. 代理对象执行过程</h3><ol>
-<li>在使用 ProxyFactory 创建代理对象之前，需要往 ProxyFactory 先添加 Advisor</li>
-<li>代理对象在执行某个方法时，会把 ProxyFactory 中的 Advisor 拿出来和当前正在执行的方法进行匹配筛选</li>
+<h3 id="代理对象执行过程">10. 代理对象执行过程</h3>
+<ol type="1">
+<li>在使用 ProxyFactory 创建代理对象之前，需要往 ProxyFactory 先添加
+Advisor</li>
+<li>代理对象在执行某个方法时，会把 ProxyFactory 中的 Advisor
+拿出来和当前正在执行的方法进行匹配筛选</li>
 <li>把和方法所匹配的 Advisor 适配成 MethodInterceptor</li>
-<li>把和当前方法匹配的 MethodInterceptor 链，以及被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为 MethodInvocation 对象</li>
-<li>调用 MethodInvocation 的 proceed() 方法，开始执行各个 MethodInterceptor 以及被代理对象的对应方法</li>
-<li>按顺序调用每个MethodInterceptor 的 invoke() 方法，并且会把 MethodInvocation 对象传入 invoke() 方法</li>
-<li>直到执行完最后一个 MethodInterceptor 了，就会调用 invokeJoinpoint() 方法，从而执行被代理对象的当前方法</li>
+<li>把和当前方法匹配的 MethodInterceptor
+链，以及被代理对象、代理对象、代理类、当前 Method 对象、方法参数封装为
+MethodInvocation 对象</li>
+<li>调用 MethodInvocation 的 proceed() 方法，开始执行各个
+MethodInterceptor 以及被代理对象的对应方法</li>
+<li>按顺序调用每个MethodInterceptor 的 invoke() 方法，并且会把
+MethodInvocation 对象传入 invoke() 方法</li>
+<li>直到执行完最后一个 MethodInterceptor 了，就会调用 invokeJoinpoint()
+方法，从而执行被代理对象的当前方法</li>
 </ol>
-<h3 id="11-各注解对应的-MethodInterceptor"><a href="#11-各注解对应的-MethodInterceptor" class="headerlink" title="11. 各注解对应的 MethodInterceptor"></a>11. 各注解对应的 MethodInterceptor</h3><ul>
-<li><strong>@Before</strong>  对应 AspectJMethodBeforeAdvice，在进行动态代理时会转成 <strong>MethodBeforeAdviceInterceptor</strong><ul>
+<h3 id="各注解对应的-methodinterceptor">11. 各注解对应的
+MethodInterceptor</h3>
+<ul>
+<li><strong><span class="citation"
+data-cites="Before">@Before</span></strong> 对应
+AspectJMethodBeforeAdvice，在进行动态代理时会转成
+<strong>MethodBeforeAdviceInterceptor</strong>
+<ul>
 <li>先执行 advice 对应的方法</li>
-<li>再执行 MethodInvocation 的 proceed()，会执行下一个 Interceptor，如果没有下一个 Interceptor 了，会执行 target 对应的方法</li>
-</ul>
-</li>
-<li><strong>@After</strong> 对应 AspectJAfterAdvice，直接实现了 <strong>MethodInterceptor</strong><ul>
-<li>先执行 MethodInvocation 的 proceed()，会执行下一个 Interceptor，如果没有下一个 Interceptor了，会执行 target 对应的方法</li>
+<li>再执行 MethodInvocation 的 proceed()，会执行下一个
+Interceptor，如果没有下一个 Interceptor 了，会执行 target
+对应的方法</li>
+</ul></li>
+<li><strong><span class="citation"
+data-cites="After">@After</span></strong> 对应
+AspectJAfterAdvice，直接实现了 <strong>MethodInterceptor</strong>
+<ul>
+<li>先执行 MethodInvocation 的 proceed()，会执行下一个
+Interceptor，如果没有下一个 Interceptor了，会执行 target 对应的方法</li>
 <li>再执行 advice 对应的方法</li>
-</ul>
-</li>
-<li><strong>@Around</strong> 对应 AspectJAroundAdvice，直接实现了  <strong>MethodInterceptor</strong><ul>
-<li>直接执行 advice 对应的方法，由 @Around 自己决定要不要继续往后面调用</li>
-</ul>
-</li>
-<li><strong>@AfterThrowing</strong> 对应 AspectJAfterThrowingAdvice，直接实现了 <strong>MethodInterceptor</strong><ul>
-<li>先执行 MethodInvocation 的 proceed()，会执行下一个 Interceptor，如果没有下一个 Interceptor 了，会执行 target 对应的方法</li>
+</ul></li>
+<li><strong><span class="citation"
+data-cites="Around">@Around</span></strong> 对应
+AspectJAroundAdvice，直接实现了 <strong>MethodInterceptor</strong>
+<ul>
+<li>直接执行 advice 对应的方法，由 <span class="citation"
+data-cites="Around">@Around</span> 自己决定要不要继续往后面调用</li>
+</ul></li>
+<li><strong><span class="citation"
+data-cites="AfterThrowing">@AfterThrowing</span></strong> 对应
+AspectJAfterThrowingAdvice，直接实现了
+<strong>MethodInterceptor</strong>
+<ul>
+<li>先执行 MethodInvocation 的 proceed()，会执行下一个
+Interceptor，如果没有下一个 Interceptor 了，会执行 target
+对应的方法</li>
 <li>如果上面抛了 Throwable，那么则会执行 advice 对应的方法</li>
-</ul>
-</li>
-<li><strong>@AfterReturning</strong> 对应 AspectJAfterReturningAdvice，在进行动态代理时转成 <strong>AfterReturningAdviceInterceptor</strong> <ul>
-<li>先执行 MethodInvocation 的 proceed()，会执行下一个 Interceptor，如果没有下一个 Interceptor 了，会执行 target 对应的方法</li>
+</ul></li>
+<li><strong><span class="citation"
+data-cites="AfterReturning">@AfterReturning</span></strong> 对应
+AspectJAfterReturningAdvice，在进行动态代理时转成
+<strong>AfterReturningAdviceInterceptor</strong>
+<ul>
+<li>先执行 MethodInvocation 的 proceed()，会执行下一个
+Interceptor，如果没有下一个 Interceptor 了，会执行 target
+对应的方法</li>
 <li>执行上面的方法后得到最终的方法的返回值</li>
 <li>再执行 Advice 对应的方法</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="12-AbstractAdvisorAutoProxyCreator"><a href="#12-AbstractAdvisorAutoProxyCreator" class="headerlink" title="12. AbstractAdvisorAutoProxyCreator"></a>12. AbstractAdvisorAutoProxyCreator</h3><p>DefaultAdvisorAutoProxyCreator 的父类是 AbstractAdvisorAutoProxyCreator。</p>
-<p>只要 Spring 容器中存在 <strong>AbstractAdvisorAutoProxyCreator</strong>  类型的 Bean，就相当于开启了 AOP，AbstractAdvisorAutoProxyCreator 实际上就是一个 BeanPostProcessor，所以在创建某个 Bean 时，就会进入到它对应的生命周期方法中，比如：在某个 Bean <strong>初始化之后</strong>，会调用 wrapIfNecessary() 方法进行 AOP，底层逻辑是，AbstractAdvisorAutoProxyCreator 会找到所有的 Advisor，然后判断当前这个 Bean 是否存在某个 Advisor 与之匹配（根据 Pointcut），如果匹配就表示当前这个 Bean 有对应的切面逻辑，需要进行 AOP，需要产生一个代理对象。</p>
-<h3 id="13-EnableAspectJAutoProxy"><a href="#13-EnableAspectJAutoProxy" class="headerlink" title="13 @EnableAspectJAutoProxy"></a>13 @EnableAspectJAutoProxy</h3><p>这个注解主要就是往 Spring 容器中添加了一个 AnnotationAwareAspectJAutoProxyCreator 类型的 Bean。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220824223600.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>AspectJAwareAdvisorAutoProxyCreator</strong> 继承了 <strong>AbstractAdvisorAutoProxyCreator</strong>，重写了 findCandidateAdvisors() 方法，<strong>AbstractAdvisorAutoProxyCreator</strong> 只能找到所有 Advisor 类型的 Bean 对象，但是 <strong>AspectJAwareAdvisorAutoProxyCreator</strong> 除开可以找到所有 Advisor 类型的 Bean 对象，还能把 @Aspect 注解所标注的 Bean 中的 @Before 等注解及方法进行解析，并生成对应的 Advisor 对象。</p>
-<p>所以，我们可以理解 @EnableAspectJAutoProxy，其实就是向 Spring 容器中添加了一个 AbstractAdvisorAutoProxyCreator 类型的 Bean，从而开启了 AOP，并且还会解析 @Before 等注解生成 Advisor。</p>
-<h3 id="14-Spring-中-AOP-原理流程图"><a href="#14-Spring-中-AOP-原理流程图" class="headerlink" title="14. Spring 中 AOP 原理流程图"></a>14. Spring 中 AOP 原理流程图</h3><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220821204534.png" srcset="/img/loading.gif" lazyload><br><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/5faa4ccce0b34d7a1aa2a9a5">https://www.processon.com/view/link/5faa4ccce0b34d7a1aa2a9a5</a></p>
+<h3 id="abstractadvisorautoproxycreator">12.
+AbstractAdvisorAutoProxyCreator</h3>
+<p>DefaultAdvisorAutoProxyCreator 的父类是
+AbstractAdvisorAutoProxyCreator。</p>
+<p>只要 Spring 容器中存在
+<strong>AbstractAdvisorAutoProxyCreator</strong> 类型的
+Bean，就相当于开启了 AOP，AbstractAdvisorAutoProxyCreator 实际上就是一个
+BeanPostProcessor，所以在创建某个 Bean
+时，就会进入到它对应的生命周期方法中，比如：在某个 Bean
+<strong>初始化之后</strong>，会调用 wrapIfNecessary() 方法进行
+AOP，底层逻辑是，AbstractAdvisorAutoProxyCreator 会找到所有的
+Advisor，然后判断当前这个 Bean 是否存在某个 Advisor 与之匹配（根据
+Pointcut），如果匹配就表示当前这个 Bean 有对应的切面逻辑，需要进行
+AOP，需要产生一个代理对象。</p>
+<h3 id="enableaspectjautoproxy">13 <span class="citation"
+data-cites="EnableAspectJAutoProxy">@EnableAspectJAutoProxy</span></h3>
+<p>这个注解主要就是往 Spring 容器中添加了一个
+AnnotationAwareAspectJAutoProxyCreator 类型的 Bean。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220824223600.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>AspectJAwareAdvisorAutoProxyCreator</strong> 继承了
+<strong>AbstractAdvisorAutoProxyCreator</strong>，重写了
+findCandidateAdvisors()
+方法，<strong>AbstractAdvisorAutoProxyCreator</strong> 只能找到所有
+Advisor 类型的 Bean 对象，但是
+<strong>AspectJAwareAdvisorAutoProxyCreator</strong> 除开可以找到所有
+Advisor 类型的 Bean 对象，还能把 <span class="citation"
+data-cites="Aspect">@Aspect</span> 注解所标注的 Bean 中的 <span
+class="citation" data-cites="Before">@Before</span>
+等注解及方法进行解析，并生成对应的 Advisor 对象。</p>
+<p>所以，我们可以理解 <span class="citation"
+data-cites="EnableAspectJAutoProxy">@EnableAspectJAutoProxy</span>，其实就是向
+Spring 容器中添加了一个 AbstractAdvisorAutoProxyCreator 类型的
+Bean，从而开启了 AOP，并且还会解析 <span class="citation"
+data-cites="Before">@Before</span> 等注解生成 Advisor。</p>
+<h3 id="spring-中-aop-原理流程图">14. Spring 中 AOP 原理流程图</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220821204534.png" srcset="/img/loading.gif" lazyload />
+https://www.processon.com/view/link/5faa4ccce0b34d7a1aa2a9a5</p>
 
               
             </div>
@@ -611,6 +764,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -867,6 +1026,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

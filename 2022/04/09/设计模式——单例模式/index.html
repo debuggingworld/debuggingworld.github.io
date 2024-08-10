@@ -16,21 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 模式定义保证一个类只有一个实例，并且提供一个全局访问点。 优点：  保证内存里只有一个实例，减少了内存的开销。 避免对资源的多重占用。 设置全局访问点，可以优化和共享资源的访问。  缺点：  单例模式一般没有接口，扩展困难。违背开闭原则。 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。  场景:  重量级的对象，不需要多个实例，如线程池，数据库连接池  2">
+    <meta name="description" content="1. 模式定义 保证一个类只有一个实例，并且提供一个全局访问点。 优点： + 保证内存里只有一个实例，减少了内存的开销。 + 避免对资源的多重占用。 + 设置全局访问点，可以优化和共享资源的访问。 缺点： + 单例模式一般没有接口，扩展困难。违背开闭原则。 + 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。 场景: 重量级的对象，不需要多个实例，如线程池，数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式——单例模式">
 <meta property="og:url" content="http://example.com/2022/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 模式定义保证一个类只有一个实例，并且提供一个全局访问点。 优点：  保证内存里只有一个实例，减少了内存的开销。 避免对资源的多重占用。 设置全局访问点，可以优化和共享资源的访问。  缺点：  单例模式一般没有接口，扩展困难。违背开闭原则。 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。  场景:  重量级的对象，不需要多个实例，如线程池，数据库连接池  2">
+<meta property="og:description" content="1. 模式定义 保证一个类只有一个实例，并且提供一个全局访问点。 优点： + 保证内存里只有一个实例，减少了内存的开销。 + 避免对资源的多重占用。 + 设置全局访问点，可以优化和共享资源的访问。 缺点： + 单例模式一般没有接口，扩展困难。违背开闭原则。 + 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。 场景: 重量级的对象，不需要多个实例，如线程池，数据库">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220409142054.png">
 <meta property="article:published_time" content="2022-04-09T06:07:51.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.312Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="设计模式">
 <meta property="article:tag" content="创建型模式">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220409142054.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -251,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -293,59 +291,60 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-模式定义"><a href="#1-模式定义" class="headerlink" title="1. 模式定义"></a>1. 模式定义</h3><p>保证一个类只有一个实例，并且提供一个全局访问点。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>保证内存里只有一个实例，减少了内存的开销。</li>
-<li>避免对资源的多重占用。</li>
-<li>设置全局访问点，可以优化和共享资源的访问。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>单例模式一般没有接口，扩展困难。违背开闭原则。</li>
-<li>单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。</li>
-</ul>
-<p><strong>场景:</strong>  重量级的对象，不需要多个实例，如线程池，数据库连接池</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220409142054.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-实现"><a href="#2-实现" class="headerlink" title="2. 实现"></a>2. 实现</h3><h4 id="2-1-懒汉模式"><a href="#2-1-懒汉模式" class="headerlink" title="2.1 懒汉模式"></a>2.1 懒汉模式</h4><p>延迟加载， 只有在真正使用的时候，才开始实例化。 </p>
-<ol>
-<li>线程安全问题</li>
-<li>double check 加锁优化</li>
-<li>编译器(JIT)、CPU 有可能对指令进行重排序，导致使用到尚未初始化的实例，可以通过添加 volatile 关键字进行修饰，防止指令重排。</li>
-</ol>
+              <h3 id="模式定义">1. 模式定义</h3>
+<p>保证一个类只有一个实例，并且提供一个全局访问点。</p>
+<p><strong>优点：</strong> + 保证内存里只有一个实例，减少了内存的开销。
++ 避免对资源的多重占用。 +
+设置全局访问点，可以优化和共享资源的访问。</p>
+<p><strong>缺点：</strong> +
+单例模式一般没有接口，扩展困难。违背开闭原则。 +
+单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。</p>
+<p><strong>场景:</strong>
+重量级的对象，不需要多个实例，如线程池，数据库连接池</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220409142054.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="实现">2. 实现</h3>
+<h4 id="懒汉模式">2.1 懒汉模式</h4>
+<p>延迟加载， 只有在真正使用的时候，才开始实例化。 1. 线程安全问题 2.
+double check 加锁优化 3. 编译器(JIT)、CPU
+有可能对指令进行重排序，导致使用到尚未初始化的实例，可以通过添加
+volatile 关键字进行修饰，防止指令重排。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LazySingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">static</span> LazySingleton instance;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">LazySingleton</span><span class="hljs-params">()</span></span>&#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LazySingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> == instance)&#123;<br>            <span class="hljs-keyword">synchronized</span> (LazySingleton.class)&#123;<br>                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> == instance)&#123;<br>                    instance = <span class="hljs-keyword">new</span> LazySingleton();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-2-饿汉模式"><a href="#2-2-饿汉模式" class="headerlink" title="2.2 饿汉模式"></a>2.2 饿汉模式</h4><p>类加载的初始化阶段就完成了实例的初始化 。<br>本质上就是借助于 jvm 类加载机制，保证实例的唯一性（初始化过程只会执行一次）及线程安 全（JVM 以同步的形式来完成类加载的整个过程）。</p>
+<h4 id="饿汉模式">2.2 饿汉模式</h4>
+<p>类加载的初始化阶段就完成了实例的初始化 。 本质上就是借助于 jvm
+类加载机制，保证实例的唯一性（初始化过程只会执行一次）及线程安 全（JVM
+以同步的形式来完成类加载的整个过程）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HungrySingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> HungrySingleton instance = <span class="hljs-keyword">new</span> HungrySingleton();<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">HungrySingleton</span><span class="hljs-params">()</span></span>&#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> HungrySingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-3-静态内部类"><a href="#2-3-静态内部类" class="headerlink" title="2.3 静态内部类"></a>2.3 静态内部类</h4><ol>
+<h4 id="静态内部类">2.3 静态内部类</h4>
+<ol type="1">
 <li>本质上是利用类的加载机制来保证线程安全</li>
-<li>只有在实际使用的时候，才会触发类的初始化，所以也是懒加载的一 种形式</li>
+<li>只有在实际使用的时候，才会触发类的初始化，所以也是懒加载的一
+种形式</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassSingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassHolder</span></span>&#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> InnerClassSingleton instance = <span class="hljs-keyword">new</span> InnerClassSingleton();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">InnerClassSingleton</span><span class="hljs-params">()</span></span>&#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> InnerClassSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> InnerClassHolder.instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-4-反射攻击实例"><a href="#2-4-反射攻击实例" class="headerlink" title="2.4 反射攻击实例"></a>2.4 反射攻击实例</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">Constructor&lt;InnerClassSingleton&gt; declaredConstructors = InnerClassSingleton.class.getDeclaredConstructor();<br>declaredConstructors.setAccessible(<span class="hljs-keyword">true</span>);<br>InnerClassSingleton innerClassSingleton = declaredConstructors.newInstance();<br><span class="hljs-comment">// false</span><br>System.out.println(innerClassSingleton == InnerClassSingleton.getInstance());<br></code></pre></td></tr></table></figure>
-
+<h4 id="反射攻击实例">2.4 反射攻击实例</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">Constructor&lt;InnerClassSingleton&gt; declaredConstructors = InnerClassSingleton.class.getDeclaredConstructor();<br>declaredConstructors.setAccessible(<span class="hljs-keyword">true</span>);<br>InnerClassSingleton innerClassSingleton = declaredConstructors.newInstance();<br><span class="hljs-comment">// false</span><br>System.out.println(innerClassSingleton == InnerClassSingleton.getInstance());<br></code></pre></td></tr></table></figure>
 <p><strong>静态内部类防止反射破坏：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassSingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassHolder</span></span>&#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> InnerClassSingleton instance = <span class="hljs-keyword">new</span> InnerClassSingleton();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">InnerClassSingleton</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != InnerClassHolder.instance)&#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot; 单例不允许多个实例 &quot;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> InnerClassSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> InnerClassHolder.instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="2-5-反序列化攻击"><a href="#2-5-反序列化攻击" class="headerlink" title="2.5 反序列化攻击"></a>2.5 反序列化攻击</h4><p>可以利用指定方法来替换从反序列化流中的数据：</p>
+<h4 id="反序列化攻击">2.5 反序列化攻击</h4>
+<p>可以利用指定方法来替换从反序列化流中的数据：</p>
 <blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ANY‐ACCESS‐<span class="hljs-function">MODIFIER Object <span class="hljs-title">readResolve</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ObjectStreamException</span>;<br></code></pre></td></tr></table></figure>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassSingleton</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">42L</span>;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InnerClassHolder</span></span>&#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> InnerClassSingleton instance = <span class="hljs-keyword">new</span> InnerClassSingleton();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">InnerClassSingleton</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> != InnerClassHolder.instance)&#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot; 单例不允许多个实例 &quot;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> InnerClassSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> InnerClassHolder.instance;<br>    &#125;<br><br>    <span class="hljs-function">Object <span class="hljs-title">readResolve</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ObjectStreamException </span>&#123;<br>        <span class="hljs-keyword">return</span> InnerClassSingleton.getInstance();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>测试：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>    InnerClassSingleton instance = InnerClassSingleton.getInstance();<br><br>    ObjectOutputStream outputStream = <span class="hljs-keyword">new</span> ObjectOutputStream(<span class="hljs-keyword">new</span> FileOutputStream(<span class="hljs-string">&quot;testObject&quot;</span>));<br>    outputStream.writeObject(instance);<br>    outputStream.close();<br><br>    ObjectInputStream inputStream = <span class="hljs-keyword">new</span> ObjectInputStream(<span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">&quot;testObject&quot;</span>));<br>    InnerClassSingleton serializedObject = ((InnerClassSingleton) inputStream.readObject());<br>    inputStream.close();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 添加 readResolve() 前 false</span><br><span class="hljs-comment">     * 添加后为 true</span><br><span class="hljs-comment">     */</span><br>    System.out.println(serializedObject == instance);<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="2-6-枚举类型"><a href="#2-6-枚举类型" class="headerlink" title="2.6 枚举类型"></a>2.6 枚举类型</h4><ol>
-<li>天然不支持反射创建对应的实例，且有自己的反序列化机制 </li>
+<h4 id="枚举类型">2.6 枚举类型</h4>
+<ol type="1">
+<li>天然不支持反射创建对应的实例，且有自己的反序列化机制</li>
 <li>利用类加载机制保证线程安全</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">EnumSingleton</span> </span>&#123;<br>    INSTANCE;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-keyword">this</span>.hashCode());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-jdk-中的应用"><a href="#3-jdk-中的应用" class="headerlink" title="3. jdk 中的应用"></a>3. jdk 中的应用</h3><p>java.lang.Runtime</p>
+<h3 id="jdk-中的应用">3. jdk 中的应用</h3>
+<p>java.lang.Runtime</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Runtime</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Runtime currentRuntime = <span class="hljs-keyword">new</span> Runtime();<br><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Runtime <span class="hljs-title">getRuntime</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> currentRuntime;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Runtime</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="4-Spring-中的应用"><a href="#4-Spring-中的应用" class="headerlink" title="4. Spring 中的应用"></a>4. Spring 中的应用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">org.springframework.aop.framework.ProxyFactoryBean<br>org.springframework.beans.factory.support.DefaultSingletonBeanRegistry <br>org.springframework.core.ReactiveAdapterRegistry<br></code></pre></td></tr></table></figure>
+<h4 id="spring-中的应用">4. Spring 中的应用</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">org.springframework.aop.framework.ProxyFactoryBean<br>org.springframework.beans.factory.support.DefaultSingletonBeanRegistry <br>org.springframework.core.ReactiveAdapterRegistry<br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -532,6 +531,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -788,6 +793,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

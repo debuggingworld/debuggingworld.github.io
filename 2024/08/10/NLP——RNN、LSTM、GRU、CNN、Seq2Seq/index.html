@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Encoder-Decoder 模型​    Encoder-Decoder 是 NLP 领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为 Encoder-Decoder 结构更合适。Encoder-Decoder 算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder 这个框架很好的诠释了机器学习的核心思路：  将现实问题转化为数">
+    <meta name="description" content="1. Encoder-Decoder 模型 ​ Encoder-Decoder 是 NLP 领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为 Encoder-Decoder 结构更合适。Encoder-Decoder 算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder 这个框架很好的诠释了机器学习的核心思路：  将现实问题转化为数学问">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP——RNN、LSTM、GRU、CNN、Seq2Seq">
 <meta property="og:url" content="http://example.com/2024/08/10/NLP%E2%80%94%E2%80%94RNN%E3%80%81LSTM%E3%80%81GRU%E3%80%81CNN%E3%80%81Seq2Seq/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Encoder-Decoder 模型​    Encoder-Decoder 是 NLP 领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为 Encoder-Decoder 结构更合适。Encoder-Decoder 算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder 这个框架很好的诠释了机器学习的核心思路：  将现实问题转化为数">
+<meta property="og:description" content="1. Encoder-Decoder 模型 ​ Encoder-Decoder 是 NLP 领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为 Encoder-Decoder 结构更合适。Encoder-Decoder 算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder 这个框架很好的诠释了机器学习的核心思路：  将现实问题转化为数学问">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082017205.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082019337.png">
@@ -45,7 +45,6 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092043785.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092044477.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092202261.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092204759.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092145683.gif">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092154742.png">
 <meta property="article:published_time" content="2024-08-10T02:51:52.000Z">
@@ -317,63 +316,102 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-Encoder-Decoder-模型"><a href="#1-Encoder-Decoder-模型" class="headerlink" title="1. Encoder-Decoder 模型"></a>1. Encoder-Decoder 模型</h3><p>​    Encoder-Decoder 是 NLP 领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为 Encoder-Decoder 结构更合适。Encoder-Decoder 算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder 这个框架很好的诠释了机器学习的核心思路：</p>
+              <h3 id="encoder-decoder-模型">1. Encoder-Decoder 模型</h3>
+<p>​ Encoder-Decoder 是 NLP
+领域的概念，它并不特指某种具体的算法，而是一类算法的统称，称之为
+Encoder-Decoder 结构更合适。Encoder-Decoder
+算是一个通用的框架，在这个框架下可以使用不同的算法来解决不同的任务。Encoder-Decoder
+这个框架很好的诠释了机器学习的核心思路：</p>
 <blockquote>
 <p>将现实问题转化为数学问题，通过求解数学问题，从而解决现实问题。</p>
 </blockquote>
-<p><code>Encoder</code> 又称作编码器。它的作用就是“将现实问题转化为数学问题“：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082017205.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></center>
-
-<p><code>Decoder</code> 又称作解码器，它的作用是“求解数学问题，并转化为现实世界的解决方案”：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082019337.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></center>
-
+<p><code>Encoder</code>
+又称作编码器。它的作用就是“将现实问题转化为数学问题“：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082017205.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
+</center>
+<p><code>Decoder</code>
+又称作解码器，它的作用是“求解数学问题，并转化为现实世界的解决方案”：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082019337.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
+</center>
 <p>把两个环节连接起来，用通用的图来表达则是下面的样子：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082020548.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></center>
-
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082020548.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
+</center>
 <p>关于 Encoder-Decoder，有两点需要说明：</p>
 <ul>
 <li>不论输入和输出的长度是多少，中间的“向量 C”长度都是固定的</li>
-<li>根据不同的任务可以选择不同的编码器和解码器（可以是一个 RNN ，但通常是其变种 LSTM 或者 GRU ）</li>
+<li>根据不同的任务可以选择不同的编码器和解码器（可以是一个 RNN
+，但通常是其变种 LSTM 或者 GRU ）</li>
 </ul>
 <blockquote>
-<p>只要是符合上面的框架，都可以统称为 Encoder-Decoder 模型。具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN/RNN/BiRNN/GRU/LSTM 等等，你可以自由组合。比如说，你在编码时使用 BiRNN，解码时使用RNN，或者在编码时使用 RNN，解码时使用 LSTM 等等。</p>
+<p>只要是符合上面的框架，都可以统称为 Encoder-Decoder 模型。具体实现
+Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有
+CNN/RNN/BiRNN/GRU/LSTM 等等，你可以自由组合。比如说，你在编码时使用
+BiRNN，解码时使用RNN，或者在编码时使用 RNN，解码时使用 LSTM 等等。</p>
 </blockquote>
-<p>当然提到 Encoder-Decoder 模型就经常提到一个名词——Seq2Seq。其实 Encoder-Decoder 和 Seq2Seq 几乎就是等价的，只不过 Encoder-Decoder 是一种抽象的框架概念，Seq2Seq 是具体的一种实现。</p>
-<h3 id="2-Seq2Seq"><a href="#2-Seq2Seq" class="headerlink" title="2. Seq2Seq"></a>2. Seq2Seq</h3><p>​    Seq2Seq（即 Sequence-to-sequence），输入一个序列，输出另一个序列。这种结构最重要的地方在于输入序列和输出序列的长度是可变的。例如下图：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092150188.gif" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></center>
-
-<p>如上图：输入了 6 个汉字，输出了 3 个英文单词。输入和输出的长度不同。</p>
+<p>当然提到 Encoder-Decoder 模型就经常提到一个名词——Seq2Seq。其实
+Encoder-Decoder 和 Seq2Seq 几乎就是等价的，只不过 Encoder-Decoder
+是一种抽象的框架概念，Seq2Seq 是具体的一种实现。</p>
+<h3 id="seq2seq">2. Seq2Seq</h3>
+<p>​ Seq2Seq（即
+Sequence-to-sequence），输入一个序列，输出另一个序列。这种结构最重要的地方在于输入序列和输出序列的长度是可变的。例如下图：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092150188.gif" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
+</center>
+<p>如上图：输入了 6 个汉字，输出了 3
+个英文单词。输入和输出的长度不同。</p>
 <p><strong>Seq2Seq 的由来</strong></p>
-<p>在 Seq2Seq 框架提出之前，深度神经网络在图像分类等问题上取得了非常好的效果。在其擅长解决的问题中，输入和输出通常都可以表示为固定长度的向量，如果长度稍有变化，会使用补零等操作。</p>
+<p>在 Seq2Seq
+框架提出之前，深度神经网络在图像分类等问题上取得了非常好的效果。在其擅长解决的问题中，输入和输出通常都可以表示为固定长度的向量，如果长度稍有变化，会使用补零等操作。</p>
 <p>然而许多重要的问题，例如机器翻译、语音识别、自动对话等，表示成序列后，其长度事先并不知道。因此如何突破先前深度神经网络的局限，使其可以适应这些场景，成为了13年以来的研究热点，Seq2Seq框架应运而生。</p>
 <p><strong>「Seq2Seq」和「Encoder-Decoder」的关系</strong></p>
-<p>Seq2Seq（强调目的）不特指具体方法，满足「输入序列、输出序列」的目的，都可以统称为 Seq2Seq 模型。</p>
-<p>而 Seq2Seq 使用的具体方法基本都属于 Encoder-Decoder 模型（强调方法）的范畴。</p>
+<p>Seq2Seq（强调目的）不特指具体方法，满足「输入序列、输出序列」的目的，都可以统称为
+Seq2Seq 模型。</p>
+<p>而 Seq2Seq 使用的具体方法基本都属于 Encoder-Decoder
+模型（强调方法）的范畴。</p>
 <p>总结一下的话：</p>
 <ul>
 <li>Seq2Seq 属于 Encoder-Decoder 的大范畴</li>
 <li>Seq2Seq 更强调目的，Encoder-Decoder 更强调方法</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/encoder-decoder-seq2seq/">传送门</a></p>
-<h3 id="3-RNN"><a href="#3-RNN" class="headerlink" title="3. RNN"></a>3. RNN</h3><p>​    RNN 即 Recurrent Neural Network，循环神经网络，也有人将它翻译为递归神经网络。从这个名字就可以想到，它的结构中存在着“环”。确实，RNN 和 NN/DNN 的数据单一方向传递不同。RNN 的神经元接受的输入除了“前辈”的输出，还有自身的状态信息，其状态信息在网络中循环传递。</p>
-<h4 id="3-1-单层网络"><a href="#3-1-单层网络" class="headerlink" title="3.1 单层网络"></a>3.1 单层网络</h4><p>首先来了解一下最基本的单层网络，它的结构如图：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082027402.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
-<p><code>输入是 x</code>，经过<code>变换Wx+b</code> 和 <code>激活函数f</code> 得到<code>输出y</code>。</p>
+<p><a
+target="_blank" rel="noopener" href="https://easyai.tech/ai-definition/encoder-decoder-seq2seq/">传送门</a></p>
+<h3 id="rnn">3. RNN</h3>
+<p>​ RNN 即 Recurrent Neural
+Network，循环神经网络，也有人将它翻译为递归神经网络。从这个名字就可以想到，它的结构中存在着“环”。确实，RNN
+和 NN/DNN 的数据单一方向传递不同。RNN
+的神经元接受的输入除了“前辈”的输出，还有自身的状态信息，其状态信息在网络中循环传递。</p>
+<h4 id="单层网络">3.1 单层网络</h4>
+<p>首先来了解一下最基本的单层网络，它的结构如图：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082027402.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
+<p><code>输入是 x</code>，经过<code>变换Wx+b</code> 和
+<code>激活函数f</code> 得到<code>输出y</code>。</p>
 <blockquote>
-<p><code>w</code> 是模型的权重参数，它决定了每个输入特征对输出的贡献程度。<code>b</code> 是模型的偏置参数，它控制着输出的整体水平。</p>
+<p><code>w</code>
+是模型的权重参数，它决定了每个输入特征对输出的贡献程度。<code>b</code>
+是模型的偏置参数，它控制着输出的整体水平。</p>
 </blockquote>
-<h4 id="3-2-RNN结构（N-vs-N）"><a href="#3-2-RNN结构（N-vs-N）" class="headerlink" title="3.2 RNN结构（N vs N）"></a>3.2 RNN结构（N vs N）</h4><p>在实际应用中，我们还会遇到很多序列型的数据：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082035078.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<h4 id="rnn结构n-vs-n">3.2 RNN结构（N vs N）</h4>
+<p>在实际应用中，我们还会遇到很多序列型的数据：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082035078.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <p>如：</p>
 <ul>
-<li>自然语言处理问题。x1 可以看做是第一个单词，x2 可以看做是第二个单词，依次类推。</li>
+<li>自然语言处理问题。x1 可以看做是第一个单词，x2
+可以看做是第二个单词，依次类推。</li>
 <li>语音处理。此时，x1、x2、x3……是每帧的声音信号。</li>
 </ul>
-<p>序列型的数据就不太好用原始的神经网络处理了。为了建模序列问题，RNN 引入了隐状态 h（hidden state）的概念，h 可以对序列形的数据提取特征，接着再转换为输出。先从h1的计算开始看：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082041437.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<p>序列型的数据就不太好用原始的神经网络处理了。为了建模序列问题，RNN
+引入了隐状态 h（hidden state）的概念，h
+可以对序列形的数据提取特征，接着再转换为输出。先从h1的计算开始看：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082041437.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <ul>
 <li>h1: 表示 t=1 时刻的隐状态</li>
 <li>U: 输入层到隐含层的权值矩阵</li>
@@ -385,20 +423,29 @@
 <p>图示中记号的含义是：</p>
 <ul>
 <li>圆圈或方块表示的是向量。</li>
-<li><code>一个箭头就表示对该向量做一次变换</code>。如上图中 h0 和 x1 分别有一个箭头连接，就表示对 h0 和 x1 各做了一次变换。</li>
+<li><code>一个箭头就表示对该向量做一次变换</code>。如上图中 h0 和 x1
+分别有一个箭头连接，就表示对 h0 和 x1 各做了一次变换。</li>
 </ul>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082100270.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
-<p>h2 的计算和 h1类似。要注意的是，<code>在计算时，每一步使用的参数 U、W、b 都是一样的，也就是说每个步骤的参数都是共享的</code>，这是 RNN 的重要特点，一定要牢记。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082100270.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
+<p>h2 的计算和
+h1类似。要注意的是，<code>在计算时，每一步使用的参数 U、W、b 都是一样的，也就是说每个步骤的参数都是共享的</code>，这是
+RNN 的重要特点，一定要牢记。</p>
 <blockquote>
-<p>注意：图中的 h 并不是一个神经元，而是一个神经网络块，可以简单理解为神经网络的一个隐层。</p>
+<p>注意：图中的 h
+并不是一个神经元，而是一个神经网络块，可以简单理解为神经网络的一个隐层。</p>
 </blockquote>
 <p>依次计算剩下来的 h3、h4（使用相同的参数U、W、b）：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082101771.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
-<p>目前我们的 RNN 还没有输出，得到输出值的方法就是直接通过 h 进行计算。正如之前所说，一个箭头就表示对对应的向量做一次类似于 f(Wx+b) 的变换，这里的这个箭头就表示对 h1进行一次变换，得到输出 y1：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082102386.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082101771.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
+<p>目前我们的 RNN 还没有输出，得到输出值的方法就是直接通过 h
+进行计算。正如之前所说，一个箭头就表示对对应的向量做一次类似于 f(Wx+b)
+的变换，这里的这个箭头就表示对 h1进行一次变换，得到输出 y1：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082102386.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <ul>
 <li>y1：表示 t=1 时刻的输出状态</li>
 <li>softmax：是一种激活函数，它可以把输入转化为概率分布的形式</li>
@@ -407,114 +454,191 @@
 <li>c：偏置元</li>
 </ul>
 <p>剩下的输出类似进行（使用和y1同样的参数V和c）：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082106129.png" srcset="/img/loading.gif" lazyload style="zoom: 33%;" /></center>
-
-<p>OK！大功告成！这种输入序列长度为 N 且输出序列长度也为 N 的 RNN 就是最经典的 RNN 结构，我们像搭积木一样把它搭好了。它的输入是 x1, x2, …xn，输出为 y1, y2, …yn，也就是说，输入和输出序列必须要是等长的。</p>
-<p>由于这个限制的存在，经典 RNN 的适用范围比较小，但也有一些问题适合用经典的 RNN 结构建模，如：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082106129.png" srcset="/img/loading.gif" lazyload style="zoom: 33%;" />
+</center>
+<p>OK！大功告成！这种输入序列长度为 N 且输出序列长度也为 N 的 RNN
+就是最经典的 RNN 结构，我们像搭积木一样把它搭好了。它的输入是 x1, x2,
+…xn，输出为 y1, y2, …yn，也就是说，输入和输出序列必须要是等长的。</p>
+<p>由于这个限制的存在，经典 RNN
+的适用范围比较小，但也有一些问题适合用经典的 RNN 结构建模，如：</p>
 <ul>
 <li>计算视频中每一帧的分类标签。因为要对每一帧进行计算，因此输入和输出序列等长。</li>
 <li>输入为字符，输出为下一个字符的概率。</li>
 </ul>
-<h4 id="3-3-N-VS-1"><a href="#3-3-N-VS-1" class="headerlink" title="3.3 N VS 1"></a>3.3 N VS 1</h4><p>​    有的时候，我们要处理的问题输入是一个序列，输出是一个单独的值而不是序列，应该怎样建模呢？实际上，我们只在最后一个h上进行输出变换就可以了：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082113077.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<h4 id="n-vs-1">3.3 N VS 1</h4>
+<p>​
+有的时候，我们要处理的问题输入是一个序列，输出是一个单独的值而不是序列，应该怎样建模呢？实际上，我们只在最后一个h上进行输出变换就可以了：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082113077.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <p>这种结构通常用来处理序列分类问题。如输入一段文字判别它所属的类别，输入一个句子判断其情感倾向，输入一段视频并判断它的类别等等。</p>
-<h4 id="3-4-1-VS-N"><a href="#3-4-1-VS-N" class="headerlink" title="3.4 1 VS N"></a>3.4 1 VS N</h4><p>输入不是序列而输出为序列的情况怎么处理？我们可以只在序列开始进行输入计算：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082115557.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<h4 id="vs-n">3.4 1 VS N</h4>
+<p>输入不是序列而输出为序列的情况怎么处理？我们可以只在序列开始进行输入计算：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082115557.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <p>还有一种结构是把输入信息X作为每个阶段的输入（右图省略了一些X的圆圈，是一个等价表示）：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082118203.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" /></center>
-
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082118203.png" srcset="/img/loading.gif" lazyload style="zoom:33%;" />
+</center>
 <p>这种1 VS N的结构可以处理的问题有：</p>
 <ul>
-<li>从图像生成文字（image caption），此时输入的X就是图像的特征，而输出的y序列就是一段句子</li>
+<li>从图像生成文字（image
+caption），此时输入的X就是图像的特征，而输出的y序列就是一段句子</li>
 <li>从类别生成语音或音乐等</li>
 </ul>
-<h4 id="3-5-N-vs-M"><a href="#3-5-N-vs-M" class="headerlink" title="3.5 N vs M"></a>3.5 N vs M</h4><p>下面我们来介绍 RNN 最重要的一个变种：N vs M。</p>
-<p>原始的 N vs N RNN 要求序列等长，然而我们遇到的大部分问题序列都是不等长的，如机器翻译中，源语言和目标语言的句子往往并没有相同的长度。</p>
-<p>为此，Encoder-Decoder 结构先将输入数据编码成一个上下文向量c（context vector）：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082119369.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></center>
-
-<p>得到 c 有多种方式，最简单的方法就是把 Encoder 的最后一个隐状态赋值给c，还可以对最后的隐状态做一个变换得到 c，也可以对所有的隐状态做变换，可以表示为下面三种方式：</p>
+<h4 id="n-vs-m">3.5 N vs M</h4>
+<p>下面我们来介绍 RNN 最重要的一个变种：N vs M。</p>
+<p>原始的 N vs N RNN
+要求序列等长，然而我们遇到的大部分问题序列都是不等长的，如机器翻译中，源语言和目标语言的句子往往并没有相同的长度。</p>
+<p>为此，Encoder-Decoder 结构先将输入数据编码成一个上下文向量c（context
+vector）：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082119369.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
+</center>
+<p>得到 c 有多种方式，最简单的方法就是把 Encoder
+的最后一个隐状态赋值给c，还可以对最后的隐状态做一个变换得到
+c，也可以对所有的隐状态做变换，可以表示为下面三种方式：</p>
 <ul>
 <li>c = h <sub>4</sub></li>
 <li>c = f(h <sub>4</sub>)</li>
-<li>c= g(h <sub>1</sub>,h <sub>2</sub>,h <sub>3</sub>,h <sub>4</sub>)</li>
+<li>c= g(h <sub>1</sub>,h <sub>2</sub>,h <sub>3</sub>,h
+<sub>4</sub>)</li>
 </ul>
-<p>拿到 c 之后，就用另一个 RNN 网络对其进行解码，这部分 RNN 网络被称为 Decoder。具体做法就是将 c 当做之前的初始状态 h0 输入到Decoder 中：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082128634.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
-
+<p>拿到 c 之后，就用另一个 RNN 网络对其进行解码，这部分 RNN 网络被称为
+Decoder。具体做法就是将 c 当做之前的初始状态 h0 输入到Decoder 中：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082128634.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
 <p>还有一种做法是将c当做每一步的输入：</p>
-<center><img src="https://i-blog.csdnimg.cn/blog_migrate/a94c808e4734a3b0482c20e027b2c88c.png" srcset="/img/loading.gif" lazyload alt="decoder" style="zoom:50%;" /></center>
-
-<p>Decoder 是 Encoder 的逆过程，每个状态由之前的状态和 context vector 决定，即：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082131791.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
-
-<p>由于这种 Encoder-Decoder 结构不限制输入和输出的序列长度，因此应用的范围非常广泛，比如：</p>
+<center>
+<img src="https://i-blog.csdnimg.cn/blog_migrate/a94c808e4734a3b0482c20e027b2c88c.png" srcset="/img/loading.gif" lazyload alt="decoder" style="zoom:50%;" />
+</center>
+<p>Decoder 是 Encoder 的逆过程，每个状态由之前的状态和 context vector
+决定，即：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408082131791.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+</center>
+<p>由于这种 Encoder-Decoder
+结构不限制输入和输出的序列长度，因此应用的范围非常广泛，比如：</p>
 <ul>
-<li>机器翻译。Encoder-Decoder 的最经典应用，事实上这一结构就是在机器翻译 - 领域最先提出的</li>
+<li>机器翻译。Encoder-Decoder 的最经典应用，事实上这一结构就是在机器翻译
+- 领域最先提出的</li>
 <li>文本摘要。输入是一段文本序列，输出是这段文本序列的摘要序列。</li>
 <li>阅读理解。将输入的文章和问题分别编码，再对其进行解码得到问题的答案。</li>
-<li>语音识别。输入是语音信号序列，输出是文字序列。<br>……</li>
+<li>语音识别。输入是语音信号序列，输出是文字序列。 ……</li>
 </ul>
-<p>上面提到：Encoder 和 Decoder 之间只有一个「向量 C」来传递信息，且 C 的长度固定。这样做有两个弊端：</p>
-<ol>
+<p>上面提到：Encoder 和 Decoder 之间只有一个「向量 C」来传递信息，且 C
+的长度固定。这样做有两个弊端：</p>
+<ol type="1">
 <li>语义向量无法完全表示整个序列的信息。</li>
 <li>当句子长度较大时，容易丢失信息。</li>
 </ol>
 <p>针对信息丢失这个问题，后面提出了 Seq2Seq+Attention 的模型。</p>
-<h3 id="4-LSTM"><a href="#4-LSTM" class="headerlink" title="4. LSTM"></a>4. LSTM</h3><p>​    长短时记忆（Long Short Term Memory，LSTM）</p>
-<p>​    LSTM也是一种RNN，因此它也是一种循环结构，不同的是RNN神经元内部只用tan层进行计算，而LSTM是有4个全连接层进行计算的，LSTM的内部结构如下图所示。</p>
-<p>​    相较于构造简单的 RNN 神经元，LSTM 的神经元要复杂得多，每个神经元接受的输入除了当前时刻样本输入，上一个时刻的输出，还有一个元胞状态（Cell State），LSTM 神经元结构请参见下图：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092042460.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></center>
-
-<p>​    上图中符号的含义如下图所示，黄色方框类似于CNN中的激活函数操作，粉色圆圈表示点操作，单箭头表示数据流向，下图中第四个符号表示两个向量的连接操作，第五个符号表示向量的拷贝操作，且上图中的σ表示sigmoid层(该层的输出时0-1的值，0表示不能通过，1表示能通过)。 </p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092043785.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></center>
-
-<p>​    现在来描述LSTM的内部操作，具体内容如下图所示：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092044477.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
-
-<p>​    LSTM的核心是细胞状态——最上层的横穿整个细胞的水平线，它通过门来控制信息的增加或者删除。</p>
+<h3 id="lstm">4. LSTM</h3>
+<p>​ 长短时记忆（Long Short Term Memory，LSTM）</p>
+<p>​
+LSTM也是一种RNN，因此它也是一种循环结构，不同的是RNN神经元内部只用tan层进行计算，而LSTM是有4个全连接层进行计算的，LSTM的内部结构如下图所示。</p>
+<p>​ 相较于构造简单的 RNN 神经元，LSTM
+的神经元要复杂得多，每个神经元接受的输入除了当前时刻样本输入，上一个时刻的输出，还有一个元胞状态（Cell
+State），LSTM 神经元结构请参见下图：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092042460.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+</center>
+<p>​
+上图中符号的含义如下图所示，黄色方框类似于CNN中的激活函数操作，粉色圆圈表示点操作，单箭头表示数据流向，下图中第四个符号表示两个向量的连接操作，第五个符号表示向量的拷贝操作，且上图中的σ表示sigmoid层(该层的输出时0-1的值，0表示不能通过，1表示能通过)。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092043785.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+</center>
+<p>​ 现在来描述LSTM的内部操作，具体内容如下图所示：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092044477.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
+</center>
+<p>​
+LSTM的核心是细胞状态——最上层的横穿整个细胞的水平线，它通过门来控制信息的增加或者删除。</p>
 <p>　　那么什么是门呢？门是一种用来选择信息通过与否的方式，它由一个sigmoid层和点乘操作组成。LSTM共有三个门，分别是遗忘门，输入门和输出门，具体内容如下所述：</p>
 <p>　　(1)遗忘门：遗忘门决定丢弃哪些信息，输入是上一个神经元细胞的计算结果ht-1以及当前的输入向量xt,二者联接并通过遗忘门后(sigmoid会决定哪些信息留下，哪些信息丢弃)，会生成一个0-1向量Γft(维度与上一个神经元细胞的输出向量Ct-1相同)，Γft与Ct-1进行点乘操作后，就会获取上一个神经元细胞经过计算后保留的信息。遗忘门控制前一步记忆单元中的信息有多大程度被遗忘掉。</p>
-<p>　　(2)输入门：表示要保存的信息或者待更新的信息，如上图所示是ht-1与xt的连接向量，经过sigmoid层后得到的结果Γit，这就是输入门的输出结果了。但是接下来我们要计算该神经元细胞的输出结果，即新细胞的更新状态：Ct，Ct = Ct-1· Γft + Γit · <del>ct(其中</del>ct = tanh(ht-1，xt))，文字描述是：输入门的计算结果点乘 ht-1与xt的连接向量经过tanh层计算的结果后，再与上一个神经元细胞经过计算后保留的信息进行相加，则是最终要输出的Ct。输入门控制当前计算的新状态以多大程度更新到记忆单元中。</p>
-<p>　　(3)输出门：输出门决定当前神经原细胞输出的隐向量ht，ht与Ct不同，ht要稍微复杂一点，它是Ct进过tanh计算后与输出门的计算结果进行点乘操作后的结果，用公式描述是：ht = tanh(ct) · Γot。输出门控制当前的输出有多大程度上取决于当前的记忆单元。</p>
+<p>　　(2)输入门：表示要保存的信息或者待更新的信息，如上图所示是ht-1与xt的连接向量，经过sigmoid层后得到的结果Γit，这就是输入门的输出结果了。但是接下来我们要计算该神经元细胞的输出结果，即新细胞的更新状态：Ct，Ct
+= Ct-1· Γft + Γit · <sub>ct(其中</sub>ct =
+tanh(ht-1，xt))，文字描述是：输入门的计算结果点乘
+ht-1与xt的连接向量经过tanh层计算的结果后，再与上一个神经元细胞经过计算后保留的信息进行相加，则是最终要输出的Ct。输入门控制当前计算的新状态以多大程度更新到记忆单元中。</p>
+<p>　　(3)输出门：输出门决定当前神经原细胞输出的隐向量ht，ht与Ct不同，ht要稍微复杂一点，它是Ct进过tanh计算后与输出门的计算结果进行点乘操作后的结果，用公式描述是：ht
+= tanh(ct) ·
+Γot。输出门控制当前的输出有多大程度上取决于当前的记忆单元。</p>
 <p>　　在一个训练好的网络中，当输入的序列中没有重要信息时，LSTM的遗忘门的值接近于1，输入门的值接近于0，此时过去的记忆会被保存，从而实现了长期记忆的功能；当输入的序列中出现了重要的信息时，LSTM应当把其存入记忆中，此时其输入门的值会接近于1；当输入的序列中出现了重要信息，且该信息意味着之前的记忆不再重要时，输入门的值接近于1，而遗忘门的值接近于0，这样旧的记忆被遗忘，新的重要信息被记忆。经过这样的设计，整个网络更容易学习到序列之间的长期依赖。</p>
-<h4 id="4-1-LSTM如何避免梯度消失与梯度爆炸"><a href="#4-1-LSTM如何避免梯度消失与梯度爆炸" class="headerlink" title="4.1 LSTM如何避免梯度消失与梯度爆炸"></a>4.1 LSTM如何避免梯度消失与梯度爆炸</h4><p>　　RNN 中的梯度消失/爆炸与 CNN 中的含义不同，CNN 中不同的层有不同的参数，每个参数都有自己的梯度；而 RNN 中同样的权重在各个时间步中共享，所以最终的梯度等于各个时间步的梯度和。因此，RNN 中的梯度不会消失，它只会遗忘远距离的依赖关系，而被近距离的梯度所主导。但是 LSTM 中的梯度传播有很多条路径，最主要的一条是当前细胞的状态更新这一过程，该过程中只有逐元素的相乘和相加操作，梯度流最稳定，因此基本不会发生梯度消失或者梯度爆炸；但是其他的传播路径依然有梯度消失或者爆炸风险，而最终的梯度计算是各个梯度路径的和，因此 LSTM 仍然有梯度消失或者爆炸的风险，只是这个风险被大幅降低了。</p>
-<h4 id="4-2-总结"><a href="#4-2-总结" class="headerlink" title="4.2 总结"></a>4.2 总结</h4><p>　LSTM 优点：LSTM 降低了梯度消失或者梯度爆炸的风险，并且比 RNN 具有更强的长距离依赖能力。</p>
+<h4 id="lstm如何避免梯度消失与梯度爆炸">4.1
+LSTM如何避免梯度消失与梯度爆炸</h4>
+<p>　　RNN 中的梯度消失/爆炸与 CNN 中的含义不同，CNN
+中不同的层有不同的参数，每个参数都有自己的梯度；而 RNN
+中同样的权重在各个时间步中共享，所以最终的梯度等于各个时间步的梯度和。因此，RNN
+中的梯度不会消失，它只会遗忘远距离的依赖关系，而被近距离的梯度所主导。但是
+LSTM
+中的梯度传播有很多条路径，最主要的一条是当前细胞的状态更新这一过程，该过程中只有逐元素的相乘和相加操作，梯度流最稳定，因此基本不会发生梯度消失或者梯度爆炸；但是其他的传播路径依然有梯度消失或者爆炸风险，而最终的梯度计算是各个梯度路径的和，因此
+LSTM 仍然有梯度消失或者爆炸的风险，只是这个风险被大幅降低了。</p>
+<h4 id="总结">4.2 总结</h4>
+<p>　LSTM 优点：LSTM 降低了梯度消失或者梯度爆炸的风险，并且比 RNN
+具有更强的长距离依赖能力。</p>
 <p>　LSTM 缺点：</p>
 <ul>
-<li>LSTM 处理长距离依赖的能力依然不够，因此 Transformer 横空出世，它具有比 LSTM 更强的长距离依赖处理能力。</li>
-<li>它的计算很费时。每个细胞中都有 4 个全连接层 (MLP)，因此如果 LSTM 的时间跨度很大的话，计算量会很大也很费时。</li>
+<li>LSTM 处理长距离依赖的能力依然不够，因此 Transformer
+横空出世，它具有比 LSTM 更强的长距离依赖处理能力。</li>
+<li>它的计算很费时。每个细胞中都有 4 个全连接层 (MLP)，因此如果 LSTM
+的时间跨度很大的话，计算量会很大也很费时。</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/13423872.html">LSMT理解</a></p>
-<p><a target="_blank" rel="noopener" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/lstm.html">（传送门）</a></p>
-<h3 id="5-GRU"><a href="#5-GRU" class="headerlink" title="5. GRU"></a>5. GRU</h3><p>​    GRU（Gate Recurrent Unit，循环门单元）是循环神经网络（Recurrent Neural Network, RNN）的一种。和LSTM（Long-Short Term Memory）一样，也是为了解决长期记忆和反向传播中的梯度等问题而提出来的。</p>
+<p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/13423872.html">LSMT理解</a></p>
+<p><a
+target="_blank" rel="noopener" href="http://zh.gluon.ai/chapter_recurrent-neural-networks/lstm.html">（传送门）</a></p>
+<h3 id="gru">5. GRU</h3>
+<p>​ GRU（Gate Recurrent Unit，循环门单元）是循环神经网络（Recurrent
+Neural Network, RNN）的一种。和LSTM（Long-Short Term
+Memory）一样，也是为了解决长期记忆和反向传播中的梯度等问题而提出来的。</p>
 <p>　　在LSTM中引入了三个门函数：输入门、遗忘门和输出门来控制输入值、记忆值和输出值。而在GRU模型中只有两个门：分别是更新门和重置门。具体结构如下图所示：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092202261.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></center>
-
-<p>​    图中的zt和rt分别表示更新门和重置门。更新门用于控制前一时刻的状态信息被带入到当前状态中的程度，更新门的值越大说明前一时刻的状态信息带入越多。重置门控制前一状态有多少信息被写入到当前的候选集 ℎ̃<em>t</em>上，重置门越小，前一状态的信息被写入的越少。</p>
-<p>　　GRU组合了遗忘门和输入门到一个单独的更新门当中，也合并了细胞状态 C和隐藏状态h，并且还做了一些其他的改变，使得其模型比标准LSTM模型更简单，其数学表达式为：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092204759.png" srcset="/img/loading.gif" lazyload></p>
-<p>​    其中，门控信号zt的范围为0~1。门控信号越接近1，代表”记忆“下来的数据越多；而越接近0则代表”遗忘“的越多。</p>
-<h3 id="6-CNN"><a href="#6-CNN" class="headerlink" title="6. CNN"></a>6. CNN</h3><p>​    CNN 是一种前馈神经网络，通常由一个或多个卷积层（Convolutional Layer）和全连接层（Fully Connected Layer，对应经典的 NN）组成，此外也会包括池化层（Pooling Layer）。</p>
-<p>​    CNN 的结构使得它易于利用输入数据的二维结构。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092202261.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
+</center>
+<p>​
+图中的zt和rt分别表示更新门和重置门。更新门用于控制前一时刻的状态信息被带入到当前状态中的程度，更新门的值越大说明前一时刻的状态信息带入越多。重置门控制前一状态有多少信息被写入到当前的候选集
+ℎ̃<em>t</em>上，重置门越小，前一状态的信息被写入的越少。</p>
+<p>　　GRU组合了遗忘门和输入门到一个单独的更新门当中，也合并了细胞状态
+C和隐藏状态h，并且还做了一些其他的改变，使得其模型比标准LSTM模型更简单，其数学表达式为：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092204759.png" srcset="/img/loading.gif" lazyload /></p>
+<p>​
+其中，门控信号zt的范围为0~1。门控信号越接近1，代表”记忆“下来的数据越多；而越接近0则代表”遗忘“的越多。</p>
+<h3 id="cnn">6. CNN</h3>
+<p>​ CNN 是一种前馈神经网络，通常由一个或多个卷积层（Convolutional
+Layer）和全连接层（Fully Connected Layer，对应经典的
+NN）组成，此外也会包括池化层（Pooling Layer）。</p>
+<p>​ CNN 的结构使得它易于利用输入数据的二维结构。</p>
 <blockquote>
-<p>注意：前馈神经网络（Feedforward NN）指每个神经元只与前一层的神经元相连，数据从前向后单向传播的 NN。其内部结构不会形成有向环（对比后面要讲到的 RNN/LSTM）。 它是最早被发明的简单 NN 类型，前面讲到的 NN、DNN 都是前馈神经网络。</p>
+<p>注意：前馈神经网络（Feedforward
+NN）指每个神经元只与前一层的神经元相连，数据从前向后单向传播的
+NN。其内部结构不会形成有向环（对比后面要讲到的 RNN/LSTM）。
+它是最早被发明的简单 NN 类型，前面讲到的 NN、DNN 都是前馈神经网络。</p>
 </blockquote>
-<p>​    每个卷积层由若干卷积单元组成——可以想象成经典 NN 的神经元，只不过激活函数变成了卷积运算。</p>
-<p>​    卷积运算是有其严格的数学定义的。不过在 CNN 的应用中，卷积运算的形式是数学中卷积定义的一个特例，它的目的是提取输入的不同特征。</p>
-<p>​    一般情况下，从直观角度来看，CNN 的卷积运算，就是下图这样：</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092145683.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></center>
-
+<p>​ 每个卷积层由若干卷积单元组成——可以想象成经典 NN
+的神经元，只不过激活函数变成了卷积运算。</p>
+<p>​ 卷积运算是有其严格的数学定义的。不过在 CNN
+的应用中，卷积运算的形式是数学中卷积定义的一个特例，它的目的是提取输入的不同特征。</p>
+<p>​ 一般情况下，从直观角度来看，CNN 的卷积运算，就是下图这样：</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092145683.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+</center>
 <blockquote>
-<p>上图中左侧的蓝色大矩阵表示输入数据，在蓝色大矩阵上不断运动的绿色小矩阵叫做卷积核，每次卷积核运动到一个位置，它的每个元素就与其覆盖的输入数据对应元素相乘求积，然后再将整个卷积核内求积的结果累加，结果填注到右侧红色小矩阵中。 卷积核横向每次平移一列，纵向每次平移一行。最后将输入数据矩阵完全覆盖后，生成完整的红色小矩阵就是卷积运算的结果。</p>
+<p>上图中左侧的蓝色大矩阵表示输入数据，在蓝色大矩阵上不断运动的绿色小矩阵叫做卷积核，每次卷积核运动到一个位置，它的每个元素就与其覆盖的输入数据对应元素相乘求积，然后再将整个卷积核内求积的结果累加，结果填注到右侧红色小矩阵中。
+卷积核横向每次平移一列，纵向每次平移一行。最后将输入数据矩阵完全覆盖后，生成完整的红色小矩阵就是卷积运算的结果。</p>
 </blockquote>
-<p>​    CNN 经常被用于处理图像，那么对应的输入数据就是一张图片的像素信息。</p>
-<p>​    对于这样的输入数据，第一层卷积层可能只能提取一些低级的特征，如边缘、线条、角等，更多层的网络再从低级特征中迭代提取更复杂的特征。</p>
-<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092154742.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></center>
-
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/13463723.html">（传送门）</a></p>
+<p>​ CNN
+经常被用于处理图像，那么对应的输入数据就是一张图片的像素信息。</p>
+<p>​
+对于这样的输入数据，第一层卷积层可能只能提取一些低级的特征，如边缘、线条、角等，更多层的网络再从低级特征中迭代提取更复杂的特征。</p>
+<center>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408092154742.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+</center>
+<p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/13463723.html">（传送门）</a></p>
 
               
             </div>
@@ -603,6 +727,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2024/08/10/NLP%E2%80%94%E2%80%94Attention-%E6%9C%BA%E5%88%B6/" title="NLP——Encoder-Decoder &amp; Attention 机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">NLP——Encoder-Decoder &amp; Attention 机制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
@@ -695,6 +825,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -951,6 +1087,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

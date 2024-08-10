@@ -16,35 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点：  统一的代码库(git) 统一的依赖包管理(nexus) 测试自动化 构建全自动化(maven) 部署自动">
+    <meta name="description" content="1. 概述与环境配置 1.1 持续化集成 持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点： + 统一的代码库(git) + 统一的依赖包管理(nexus) + 测试自动化 + 构建全自动化(ma">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins——核心功能">
 <meta property="og:url" content="http://example.com/2022/01/20/jenkins%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 概述与环境配置1.1 持续化集成持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点：  统一的代码库(git) 统一的依赖包管理(nexus) 测试自动化 构建全自动化(maven) 部署自动">
+<meta property="og:description" content="1. 概述与环境配置 1.1 持续化集成 持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。  持续集成要点： + 统一的代码库(git) + 统一的依赖包管理(nexus) + 测试自动化 + 构建全自动化(ma">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/CI.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305154059.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305155309.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305162615.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305170148.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193106.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193334.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233105.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233742.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000108.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000043.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306004515.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306005949.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306011723.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306013006.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306012633.png">
 <meta property="article:published_time" content="2022-01-20T13:48:04.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.310Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="jenkins">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/CI.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -307,33 +290,42 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-概述与环境配置"><a href="#1-概述与环境配置" class="headerlink" title="1. 概述与环境配置"></a>1. 概述与环境配置</h3><h4 id="1-1-持续化集成"><a href="#1-1-持续化集成" class="headerlink" title="1.1 持续化集成"></a>1.1 持续化集成</h4><p>持续集成即 Continuous integration（CI） 是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/CI.png" srcset="/img/loading.gif" lazyload></p>
-<p>持续集成要点：</p>
-<ul>
-<li>统一的代码库(git)</li>
-<li>统一的依赖包管理(nexus)</li>
-<li>测试自动化</li>
-<li>构建全自动化(maven)</li>
-<li>部署自动化</li>
-<li>可追踪的集成记录</li>
-</ul>
-<h4 id="1-2-jenkins-概述"><a href="#1-2-jenkins-概述" class="headerlink" title="1.2 jenkins 概述"></a>1.2 jenkins 概述</h4><p>jenkins 就是为了满足持续集成的要点而设计的一款工具，其主体框架采用 JAVA 开发，实质内部功能都是由各种插件实现，极大提高了系统的扩展性。其不仅可以满足 JAVA 系统的集成，也可以实现 PHP 等语言的集成发布。通过其 pipeline 插件，用户可以随自己需要定制集成流程。</p>
-<h4 id="1-3-安装-jenkins"><a href="#1-3-安装-jenkins" class="headerlink" title="1.3 安装 jenkins"></a>1.3 安装 jenkins</h4><ol>
-<li><p>下载：jenkins 支持Docker、yum、msi 等安装，推荐通过 WAR 包进行安装。<a target="_blank" rel="noopener" href="https://jenkins.io/download/">https://jenkins.io/download/</a></p>
-</li>
-<li><p>启动：下载完成之后直接可通过 jar -jar 命令启动</p>
-</li>
+              <h3 id="概述与环境配置">1. 概述与环境配置</h3>
+<h4 id="持续化集成">1.1 持续化集成</h4>
+<p>持续集成即 Continuous integration（CI）
+是一种软件开发实践，即团队开发成员经常集成他们的工作，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽快地发现集成错误，让团队能够更高效的开发软件。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/CI.png" srcset="/img/loading.gif" lazyload /></p>
+<p>持续集成要点： + 统一的代码库(git) + 统一的依赖包管理(nexus) +
+测试自动化 + 构建全自动化(maven) + 部署自动化 + 可追踪的集成记录</p>
+<h4 id="jenkins-概述">1.2 jenkins 概述</h4>
+<p>jenkins 就是为了满足持续集成的要点而设计的一款工具，其主体框架采用
+JAVA
+开发，实质内部功能都是由各种插件实现，极大提高了系统的扩展性。其不仅可以满足
+JAVA 系统的集成，也可以实现 PHP 等语言的集成发布。通过其 pipeline
+插件，用户可以随自己需要定制集成流程。</p>
+<h4 id="安装-jenkins">1.3 安装 jenkins</h4>
+<ol type="1">
+<li><p>下载：jenkins 支持Docker、yum、msi 等安装，推荐通过 WAR
+包进行安装。https://jenkins.io/download/</p></li>
+<li><p>启动：下载完成之后直接可通过 jar -jar 命令启动</p></li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -jar jenkins.war --httpPort=8080<br></code></pre></td></tr></table></figure>
-<p>也可以将其放至到 servlet 容器（tomcat\jetty\jboss）中直接启动，无需过多的配置。</p>
-<ol start="3">
-<li>配置：下载完成之后进入启动页 (<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/">http://127.0.0.1:8080/</a>) 会有一个 验证过程，验证码存储在 ${user_home}.jenkins\secrets\initialAdminPassword 中，接着就是进入安装插件页，选择默认即可。</li>
+<p>也可以将其放至到 servlet
+容器（tomcat）中直接启动，无需过多的配置。</p>
+<ol start="3" type="1">
+<li>配置：下载完成之后进入启动页 (http://127.0.0.1:8080/) 会有一个
+验证过程，验证码存储在
+${user_home}.jenkins中，接着就是进入安装插件页，选择默认即可。</li>
 </ol>
-<h4 id="1-4-基础环境配置与常用插件下载"><a href="#1-4-基础环境配置与常用插件下载" class="headerlink" title="1.4 基础环境配置与常用插件下载"></a>1.4 基础环境配置与常用插件下载</h4><p>在集成的时候，jenkins 用到了 Maven 、Git。所以服务器中必须提前安装好这些环境。</p>
-<p>Manage Jenkins  –&gt;  Manage Plugins –&gt; Advanced –&gt; 升级站点：</p>
-<p><a target="_blank" rel="noopener" href="https://updates.jenkins.io/update-center.json">https://updates.jenkins.io/update-center.json</a>   改为 <a target="_blank" rel="noopener" href="http://mirror.esuni.jp/jenkins/updates/update-center.json">http://mirror.esuni.jp/jenkins/updates/update-center.json</a></p>
-<p>镜像源查询：<a target="_blank" rel="noopener" href="http://mirrors.jenkins-ci.org/status.html">http://mirrors.jenkins-ci.org/status.html</a></p>
+<h4 id="基础环境配置与常用插件下载">1.4 基础环境配置与常用插件下载</h4>
+<p>在集成的时候，jenkins 用到了 Maven
+、Git。所以服务器中必须提前安装好这些环境。</p>
+<p>Manage Jenkins --&gt; Manage Plugins --&gt; Advanced --&gt;
+升级站点：</p>
+<p>https://updates.jenkins.io/update-center.json 改为
+http://mirror.esuni.jp/jenkins/updates/update-center.json</p>
+<p>镜像源查询：http://mirrors.jenkins-ci.org/status.html</p>
 <p>基本插件列表：</p>
 <table>
 <thead>
@@ -342,7 +334,8 @@
 <th>插件描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Maven Integration</td>
 <td>maven 管理插件</td>
 </tr>
@@ -355,83 +348,109 @@
 <td>管道集成插件</td>
 </tr>
 <tr>
-<td>Email Extension</td>
+<td>Email Extension  </td>
 <td>邮件通知插件</td>
 </tr>
 <tr>
 <td>SSH</td>
 <td>用于ssh 通信</td>
 </tr>
-</tbody></table>
-<h3 id="2-基于-jenkins-实现可持续化集成"><a href="#2-基于-jenkins-实现可持续化集成" class="headerlink" title="2. 基于 jenkins 实现可持续化集成"></a>2. 基于 jenkins 实现可持续化集成</h3><h4 id="2-1-持续化集成完成的目标"><a href="#2-1-持续化集成完成的目标" class="headerlink" title="2.1 持续化集成完成的目标"></a>2.1 持续化集成完成的目标</h4><ol>
+</tbody>
+</table>
+<h3 id="基于-jenkins-实现可持续化集成">2. 基于 jenkins
+实现可持续化集成</h3>
+<h4 id="持续化集成完成的目标">2.1 持续化集成完成的目标</h4>
+<ol type="1">
 <li>自动基于分支构建项目</li>
 <li>构建好的项目自动部署至 Tomcat 容器</li>
 <li>构建好的项目自动上传至 Nexus 私服存档</li>
 <li>保存构建历史记录，并可以下载历史记录</li>
 </ol>
-<h4 id="2-2-持续化集成配置"><a href="#2-2-持续化集成配置" class="headerlink" title="2.2 持续化集成配置"></a>2.2 持续化集成配置</h4><ol>
-<li> 新建 maven job</li>
+<h4 id="持续化集成配置">2.2 持续化集成配置</h4>
+<ol type="1">
+<li>新建 maven job</li>
 </ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305154059.png" srcset="/img/loading.gif" lazyload></p>
-<ol start="2">
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305154059.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="2" type="1">
 <li>配置checkout 源码</li>
 </ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305155309.png" srcset="/img/loading.gif" lazyload></p>
-<ol start="3">
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305155309.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="3" type="1">
 <li>编写 maven 构建命令</li>
 </ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305162615.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305162615.png" srcset="/img/loading.gif" lazyload /></p>
 <p>构建结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305170148.png" srcset="/img/loading.gif" lazyload></p>
-<ol start="4">
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305170148.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="4" type="1">
 <li>自动部署至 Tomcat 配置</li>
 </ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193106.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193106.png" srcset="/img/loading.gif" lazyload /></p>
 <p>构建后访问：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193334.png" srcset="/img/loading.gif" lazyload></p>
-<p>自动部署的前提条件：<br>1.需要下载 Deploy to container 插件<br>2.设置Tomcat manager 用户和密码，以下配置加入至 Tomcat conf/tomcat-users.xml 中<br>3.tomcat webapp  中必须保留 manager 项目</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;admin-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;manager-gui,manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin-gui,manager-gui&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33965305/article/details/93610207">远程无法管理 tomcat 问题</a></p>
-<ol start="5">
-<li>存档配置<br>构建后发布到 nexus 私服</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193334.png" srcset="/img/loading.gif" lazyload /></p>
+<p>自动部署的前提条件： 1.需要下载 Deploy to container 插件 2.设置Tomcat
+manager 用户和密码，以下配置加入至 Tomcat conf/tomcat-users.xml 中
+3.tomcat webapp 中必须保留 manager 项目 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;admin-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;manager-gui,manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin-gui,manager-gui&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure> <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33965305/article/details/93610207">远程无法管理
+tomcat 问题</a></p>
+<ol start="5" type="1">
+<li>存档配置 构建后发布到 nexus 私服</li>
 </ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233105.png" srcset="/img/loading.gif" lazyload></p>
-<p>配置 setting.xml 获取上传至 nexus 的权限：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-release<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>构建结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233742.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-3-集成实现原理"><a href="#2-3-集成实现原理" class="headerlink" title="2.3 集成实现原理"></a>2.3 集成实现原理</h4><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000108.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233105.png" srcset="/img/loading.gif" lazyload /></p>
+<p>配置 setting.xml 获取上传至 nexus 的权限： <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-release<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br></code></pre></td></tr></table></figure>
+构建结果：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233742.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="集成实现原理">2.3 集成实现原理</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000108.png" srcset="/img/loading.gif" lazyload /></p>
 <p>工作空间目录：~/.jenkins/workspace/</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000043.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="3-jenkins-pipeline-核心应用"><a href="#3-jenkins-pipeline-核心应用" class="headerlink" title="3. jenkins pipeline 核心应用"></a>3. jenkins pipeline 核心应用</h3><h4 id="3-1-pipeline-概要"><a href="#3-1-pipeline-概要" class="headerlink" title="3.1 pipeline 概要"></a>3.1 pipeline 概要</h4><p>使用 maven 来进行自动化构建，其流程分别是：构建环境准备 ——&gt; 源码下载——&gt;构建——&gt;存档——&gt;部署，这是一种固化的构建流程，如果需要多个项目进行依赖构建，这种复杂的构建场景 时该怎么办？jenkins pipeline 可以做到这一点。<br>Jenkins 从根本上讲是一种支持多种自动化模式的自动化引擎。Pipeline 在 Jenkins 上添加了一套强大的自动化工具，支持从简单的连续集成到全面的连续输送 Pipeline 的用例。用户可以基于他实现更为复杂的建模场景。</p>
-<h4 id="3-2-pipeline-基础语法"><a href="#3-2-pipeline-基础语法" class="headerlink" title="3.2 pipeline 基础语法"></a>3.2 pipeline 基础语法</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;Build&#x27;) &#123; <br>            steps &#123; <br>                sh &#x27;make&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Test&#x27;)&#123;<br>            steps &#123;<br>                sh &#x27;make check&#x27;<br>                junit &#x27;reports<span class="hljs-comment">/**/</span>*.xml&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Deploy&#x27;) &#123;<br>            steps &#123;<br>                sh &#x27;make publish&#x27;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000043.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="jenkins-pipeline-核心应用">3. jenkins pipeline 核心应用</h3>
+<h4 id="pipeline-概要">3.1 pipeline 概要</h4>
+<p>使用 maven 来进行自动化构建，其流程分别是：构建环境准备 ——&gt;
+源码下载——&gt;构建——&gt;存档——&gt;部署，这是一种固化的构建流程，如果需要多个项目进行依赖构建，这种复杂的构建场景
+时该怎么办？jenkins pipeline 可以做到这一点。 Jenkins
+从根本上讲是一种支持多种自动化模式的自动化引擎。Pipeline 在 Jenkins
+上添加了一套强大的自动化工具，支持从简单的连续集成到全面的连续输送
+Pipeline 的用例。用户可以基于他实现更为复杂的建模场景。</p>
+<h4 id="pipeline-基础语法">3.2 pipeline 基础语法</h4>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;Build&#x27;) &#123; <br>            steps &#123; <br>                sh &#x27;make&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Test&#x27;)&#123;<br>            steps &#123;<br>                sh &#x27;make check&#x27;<br>                junit &#x27;reports<span class="hljs-comment">/**/</span>*.xml&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Deploy&#x27;) &#123;<br>            steps &#123;<br>                sh &#x27;make publish&#x27;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
-<li>agent  表示 Jenkins 应该为 Pipeline 的这一部分分配一个执行者和工作区。</li>
+<li>agent  表示 Jenkins 应该为 Pipeline
+的这一部分分配一个执行者和工作区。</li>
 <li>stage  描述了这条 Pipeline 的一个阶段。</li>
 <li>steps  描述了要在其中运行的步骤</li>
-<li>sh      执行给定的 shell 命令</li>
-<li>junit   是由 JUnit 插件提供的，用于聚合测试报告的 Pipeline 步骤。</li>
+<li>sh  执行给定的 shell 命令</li>
+<li>junit 是由 JUnit 插件提供的，用于聚合测试报告的 Pipeline 步骤。</li>
 </ul>
-<h4 id="3-3-pipeline-示例"><a href="#3-3-pipeline-示例" class="headerlink" title="3.3 pipeline 示例"></a>3.3 pipeline 示例</h4><p>前提条件：</p>
-<ol>
-<li>Jenkins 2.x 或更高版本</li>
-<li>Pipeline插件</li>
-</ol>
-<p>可以通过以下任一方式创建基本 Pipeline：</p>
-<ol>
-<li>直接在 Jenkins 网页界面中输入脚本。</li>
-<li>通过创建一个 Jenkinsfile 可以检入项目的源代码管理库。</li>
-</ol>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306004515.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="Pipeline-script-方式"><a href="#Pipeline-script-方式" class="headerlink" title="Pipeline script 方式"></a>Pipeline script 方式</h5><p>点击”流水线语法“查看语法帮助：<br><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306005949.png" srcset="/img/loading.gif" lazyload></p>
-<p>pipeline script：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;checkout&#x27;) &#123; <br>            steps &#123; <br>                echo &#x27;checkout&#x27; <br>                checkout([$class: &#x27;GitSCM&#x27;, branches: [[name: &#x27;*/master&#x27;]], extensions: [], userRemoteConfigs: [[credentialsId: &#x27;<span class="hljs-number">3</span>c819818-d272<span class="hljs-number">-4155</span><span class="hljs-number">-91</span>d5<span class="hljs-number">-3</span>d59158e2823&#x27;, url: &#x27;http:<span class="hljs-comment">//192.168.60.10:3000/root/hello-debuggingWorld.git&#x27;]]])</span><br>            &#125;<br>        &#125;<br>        stage(&#x27;build&#x27;)&#123;<br>            steps &#123;<br>                 echo &#x27;build&#x27;<br>                 sh &#x27;mvn clean install&#x27;<br>            &#125;<br>        &#125;<br>        stage(&#x27;save&#x27;) &#123;<br>            steps &#123;<br>               echo &#x27;save&#x27;<br>               archiveArtifacts artifacts: &#x27;target<span class="hljs-comment">/*.war&#x27;, followSymlinks: false</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br></code></pre></td></tr></table></figure>
-<p>构建结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306011723.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="Jenkinsfile-方式"><a href="#Jenkinsfile-方式" class="headerlink" title="Jenkinsfile 方式"></a>Jenkinsfile 方式</h5><p>项目中添加 Jenkinsfile（内容同上）：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306013006.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="pipeline-示例">3.3 pipeline 示例</h4>
+<p>前提条件： 1. Jenkins 2.x 或更高版本 2. Pipeline插件</p>
+<p>可以通过以下任一方式创建基本 Pipeline： 1. 直接在 Jenkins
+网页界面中输入脚本。 2. 通过创建一个 Jenkinsfile
+可以检入项目的源代码管理库。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306004515.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="pipeline-script-方式">Pipeline script 方式</h5>
+<p>点击”流水线语法“查看语法帮助： <img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306005949.png" srcset="/img/loading.gif" lazyload /></p>
+<p>pipeline script： <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;checkout&#x27;) &#123; <br>            steps &#123; <br>                echo &#x27;checkout&#x27; <br>                checkout([$class: &#x27;GitSCM&#x27;, branches: [[name: &#x27;*/master&#x27;]], extensions: [], userRemoteConfigs: [[credentialsId: &#x27;<span class="hljs-number">3</span>c819818-d272<span class="hljs-number">-4155</span><span class="hljs-number">-91</span>d5<span class="hljs-number">-3</span>d59158e2823&#x27;, url: &#x27;http:<span class="hljs-comment">//192.168.60.10:3000/root/hello-debuggingWorld.git&#x27;]]])</span><br>            &#125;<br>        &#125;<br>        stage(&#x27;build&#x27;)&#123;<br>            steps &#123;<br>                 echo &#x27;build&#x27;<br>                 sh &#x27;mvn clean install&#x27;<br>            &#125;<br>        &#125;<br>        stage(&#x27;save&#x27;) &#123;<br>            steps &#123;<br>               echo &#x27;save&#x27;<br>               archiveArtifacts artifacts: &#x27;target<span class="hljs-comment">/*.war&#x27;, followSymlinks: false</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br></code></pre></td></tr></table></figure> 构建结果：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306011723.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="jenkinsfile-方式">Jenkinsfile 方式</h5>
+<p>项目中添加 Jenkinsfile（内容同上）：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306013006.png" srcset="/img/loading.gif" lazyload /></p>
 <p>配置流水线：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306012633.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306012633.png" srcset="/img/loading.gif" lazyload /></p>
 
               
             </div>
@@ -616,6 +635,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -872,6 +897,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

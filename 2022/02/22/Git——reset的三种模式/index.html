@@ -16,20 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. reset 的三种模式 –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。  –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。  –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2. res">
+    <meta name="description" content="1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——reset的三种模式">
 <meta property="og:url" content="http://example.com/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. reset 的三种模式 –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。  –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。  –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2. res">
+<meta property="og:description" content="1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png">
 <meta property="article:published_time" content="2022-02-22T13:58:42.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.298Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,25 +290,29 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-reset-的三种模式"><a href="#1-reset-的三种模式" class="headerlink" title="1. reset 的三种模式"></a>1. reset 的三种模式</h3><ul>
-<li><p>–hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。</p>
-</li>
-<li><p>–soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
-</li>
-<li><p>–mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。</p>
-</li>
+              <h3 id="reset-的三种模式">1. reset 的三种模式 </h3>
+<ul>
+<li><p>--hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。</p></li>
+<li><p>--soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p></li>
+<li><p>--mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。</p></li>
 </ul>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-reset-–hard"><a href="#2-reset-–hard" class="headerlink" title="2. reset –hard"></a>2. reset –hard</h3><p>重置 stage 区和工作目录（慎用）。</p>
-<p>在 reset 后面加 –hard 参数时，stage 区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。也就是没有 commit 的修改会被全部擦掉。执行后工作区、暂存区、版本库保持一致（指定HEAD版本）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   aa.txt<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit 79ed69f7fdeb3474c36fa111ee82ef067575ad83 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:27 2020 +0800<br><br>    bb<br><br>commit d40163567818b2ac0b28743058ff9c68a7798390<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset --hard HEAD^<br>HEAD is now at d401635 aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit d40163567818b2ac0b28743058ff9c68a7798390 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>nothing to commit, working tree clean<br></code></pre></td></tr></table></figure>
-<h3 id="3-reset-–soft"><a href="#3-reset-–soft" class="headerlink" title="3. reset –soft"></a>3. reset –soft</h3><p>保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
-<p>可以使用 Soft Reset 合并「当前节点」与「reset目标节点」之间不具太大意义的 commit 记录，让 commit 演进线图较为清晰点。</p>
-<p>【示例】工作区添加新文件后reset </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit 82ad83fcfcfb366ab7a895053f9b8936aaabf6cf (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:39:37 2020 +0800<br><br>    bb<br><br>commit d40163567818b2ac0b28743058ff9c68a7798390<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br>nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset --soft HEAD^<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit d40163567818b2ac0b28743058ff9c68a7798390 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br></code></pre></td></tr></table></figure>
-<h3 id="4-reset-不加参数-mixed"><a href="#4-reset-不加参数-mixed" class="headerlink" title="4. reset 不加参数(mixed)"></a>4. reset 不加参数(mixed)</h3><p>工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。简而言之，就是「把所有差异都混合（mixed）放在工作目录中」。</p>
-<p>【例】工作区修改后添加到暂存区，在工作区添加新文件后reset</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset HEAD^<br>Unstaged changes after reset:<br>M       aa.txt<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="reset---hard">2. reset --hard</h3>
+<p>重置 stage 区和工作目录（慎用）。</p>
+<p>在 reset 后面加 --hard 参数时，stage
+区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。也就是没有
+commit
+的修改会被全部擦掉。执行后工作区、暂存区、版本库保持一致（指定HEAD版本）
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   aa.txt<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit 79ed69f7fdeb3474c36fa111ee82ef067575ad83 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:27 2020 +0800<br><br>    bb<br><br>commit d40163567818b2ac0b28743058ff9c68a7798390<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset --hard HEAD^<br>HEAD is now at d401635 aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit d40163567818b2ac0b28743058ff9c68a7798390 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>nothing to commit, working tree clean<br></code></pre></td></tr></table></figure> ### 3. reset --soft
+保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
+<p>可以使用 Soft
+Reset 合并「当前节点」与「reset目标节点」之间不具太大意义的 commit 记录，让 commit 演进线图较为清晰点。</p>
+<p>【示例】工作区添加新文件后reset  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit 82ad83fcfcfb366ab7a895053f9b8936aaabf6cf (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:39:37 2020 +0800<br><br>    bb<br><br>commit d40163567818b2ac0b28743058ff9c68a7798390<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br>nothing added to commit but untracked files present (use <span class="hljs-string">&quot;git add&quot;</span> to track)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset --soft HEAD^<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git <span class="hljs-built_in">log</span><br>commit d40163567818b2ac0b28743058ff9c68a7798390 (HEAD -&gt; master)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Nov 25 21:19:03 2020 +0800<br><br>    aa<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br></code></pre></td></tr></table></figure> ### 4. reset
+不加参数(mixed)
+工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。简而言之，就是「把所有差异都混合（mixed）放在工作目录中」。</p>
+<p>【例】工作区修改后添加到暂存区，在工作区添加新文件后reset
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git reset HEAD^<br>Unstaged changes after reset:<br>M       aa.txt<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/<span class="hljs-built_in">test</span> (master)<br>$ git status<br>On branch master<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   aa.txt<br><br>Untracked files:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to include <span class="hljs-keyword">in</span> what will be committed)<br>        bb.txt<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br></code></pre></td></tr></table></figure></p>
 
               
             </div>
@@ -495,6 +497,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -751,6 +759,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

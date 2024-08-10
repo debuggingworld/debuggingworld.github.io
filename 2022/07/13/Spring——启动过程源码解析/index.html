@@ -16,21 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 1.概述通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefinitio">
+    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 ### 1.概述 通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring——启动过程源码解析">
 <meta property="og:url" content="http://example.com/2022/07/13/Spring%E2%80%94%E2%80%94%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 1.概述通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefinitio">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 ### 1.概述 通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220713220403.png">
 <meta property="article:published_time" content="2022-07-13T11:44:48.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.855Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220713220403.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -293,94 +291,183 @@
             
             <div class="markdown-body">
               
-              <p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/62e0189b63768979df38f399">https://www.processon.com/view/link/62e0189b63768979df38f399</a></p>
-<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h3><p>通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。</p>
+              <p>https://www.processon.com/view/link/62e0189b63768979df38f399 ###
+1.概述</p>
+<p>通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用
+refresh() 方法的过程。</p>
 <p>首先，Spring 启动过程主要做了这么几件事情：</p>
-<ol>
+<ol type="1">
 <li>构造一个 BeanFactory 对象</li>
-<li>解析配置类，得到 BeanDefinition，并注册到 BeanFactory 中<ul>
-<li>解析 @ComponentScan，此时就会完成扫描</li>
-<li>解析 @Import</li>
-<li>解析 @Bean</li>
-<li>…</li>
-</ul>
-</li>
-<li>因为 ApplicationContext 还支持国际化，所以还需要初始化 MessageSource 对象</li>
-<li>因为 ApplicationContext 还支持事件机制，所以还需要初始化 ApplicationEventMulticaster 对象</li>
-<li>把用户定义的 ApplicationListener 对象添加到 ApplicationContext 中，等 Spring 启动完了就要发布事件了</li>
-<li>创建<strong>非懒加载的单例</strong> Bean 对象，并存在 BeanFactory 的单例池中。</li>
+<li>解析配置类，得到 BeanDefinition，并注册到 BeanFactory 中
+<ul>
+<li>解析 <span class="citation"
+data-cites="ComponentScan">@ComponentScan</span>，此时就会完成扫描</li>
+<li>解析 <span class="citation" data-cites="Import">@Import</span></li>
+<li>解析 <span class="citation" data-cites="Bean">@Bean</span></li>
+<li>...</li>
+</ul></li>
+<li>因为 ApplicationContext 还支持国际化，所以还需要初始化 MessageSource
+对象</li>
+<li>因为 ApplicationContext 还支持事件机制，所以还需要初始化
+ApplicationEventMulticaster 对象</li>
+<li>把用户定义的 ApplicationListener 对象添加到 ApplicationContext
+中，等 Spring 启动完了就要发布事件了</li>
+<li>创建<strong>非懒加载的单例</strong> Bean 对象，并存在 BeanFactory
+的单例池中。</li>
 <li>调用 Lifecycle Bean 的 start() 方法</li>
 <li>发布 <strong>ContextRefreshedEvent</strong> 事件</li>
 </ol>
-<p>由于 Spring 启动过程中要创建非懒加载的单例 Bean 对象，那么就需要用到 BeanPostProcessor，所以 Spring 在启动过程中就需要做两件事：</p>
-<ol>
-<li>生成默认的 BeanPostProcessor 对象，并添加到 BeanFactory 中<ul>
-<li> AutowiredAnnotationBeanPostProcessor：处理 @Autowired、@Value</li>
-<li> CommonAnnotationBeanPostProcessor：处理 @Resource、@PostConstruct、@PreDestroy</li>
-<li> ApplicationContextAwareProcessor：处理 ApplicationContextAware 等回调</li>
-</ul>
-</li>
-<li>找到外部用户所定义的 BeanPostProcessor 对象（类型为 BeanPostProcessor 的 Bean 对象），并添加到 BeanFactory 中</li>
+<p>由于 Spring 启动过程中要创建非懒加载的单例 Bean 对象，那么就需要用到
+BeanPostProcessor，所以 Spring 在启动过程中就需要做两件事：</p>
+<ol type="1">
+<li>生成默认的 BeanPostProcessor 对象，并添加到 BeanFactory 中
+<ul>
+<li>AutowiredAnnotationBeanPostProcessor：处理 <span class="citation"
+data-cites="Autowired">@Autowired</span>、<span class="citation"
+data-cites="Value">@Value</span></li>
+<li>CommonAnnotationBeanPostProcessor：处理 <span class="citation"
+data-cites="Resource">@Resource</span>、<span class="citation"
+data-cites="PostConstruct">@PostConstruct</span>、<span class="citation"
+data-cites="PreDestroy">@PreDestroy</span></li>
+<li>ApplicationContextAwareProcessor：处理 ApplicationContextAware
+等回调</li>
+</ul></li>
+<li>找到外部用户所定义的 BeanPostProcessor 对象（类型为
+BeanPostProcessor 的 Bean 对象），并添加到 BeanFactory 中</li>
 </ol>
-<h3 id="2-BeanFactoryPostProcessor"><a href="#2-BeanFactoryPostProcessor" class="headerlink" title="2. BeanFactoryPostProcessor"></a>2. BeanFactoryPostProcessor</h3><p>BeanPostProcessor 表示 Bean 的后置处理器，是用来对 Bean 进行加工的，类似的，BeanFactoryPostProcessor 理解为 BeanFactory 的后置处理器，用来对 BeanFactory 进行加工的。</p>
-<p>Spring 支持用户定义 BeanFactoryPostProcessor 的实现类 Bean，来对 BeanFactory 进行加工，比如：</p>
+<h3 id="beanfactorypostprocessor">2. BeanFactoryPostProcessor</h3>
+<p>BeanPostProcessor 表示 Bean 的后置处理器，是用来对 Bean
+进行加工的，类似的，BeanFactoryPostProcessor 理解为 BeanFactory
+的后置处理器，用来对 BeanFactory 进行加工的。</p>
+<p>Spring 支持用户定义 BeanFactoryPostProcessor 的实现类 Bean，来对
+BeanFactory 进行加工，比如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugBeanFactoryPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanFactoryPostProcessor</span> </span>&#123;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>		BeanDefinition beanDefinition = beanFactory.getBeanDefinition(<span class="hljs-string">&quot;userService&quot;</span>);<br>		beanDefinition.setAutowireCandidate(<span class="hljs-keyword">false</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>以上代码，就利用了 BeanFactoryPostProcessor 来拿到 BeanFactory，然后获取 BeanFactory 内的某个 BeanDefinition 对象并进行修改，注意这一步是发生在 Spring 启动时，创建单例 Bean 之前的，所以此时对 BeanDefinition 进行修改是会生效的。</p>
-<p>注意：在 ApplicationContext 内部有一个核心的 DefaultListableBeanFactory，它实现了 ConfigurableListableBeanFactory 和BeanDefinitionRegistry 接口，所以 ApplicationContext 和 DefaultListableBeanFactory 是可以注册 BeanDefinition 的，但是 ConfigurableListableBeanFactory 是不能注册 BeanDefinition 的，只能获取 BeanDefinition，然后做修改。</p>
-<p>所以 Spring 还提供了一个 BeanFactoryPostProcessor 的子接口：<strong>BeanDefinitionRegistryPostProcessor</strong></p>
-<h3 id="3-BeanDefinitionRegistryPostProcessor"><a href="#3-BeanDefinitionRegistryPostProcessor" class="headerlink" title="3. BeanDefinitionRegistryPostProcessor"></a>3. BeanDefinitionRegistryPostProcessor</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BeanDefinitionRegistryPostProcessor</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BeanFactoryPostProcessor</span> </span>&#123;<br><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanDefinitionRegistry</span><span class="hljs-params">(BeanDefinitionRegistry registry)</span> <span class="hljs-keyword">throws</span> BeansException</span>;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>BeanDefinitionRegistryPostProcessor 继承了 BeanFactoryPostProcessor 接口，并新增了一个方法，注意方法的参数为 BeanDefinitionRegistry，所以如果一个类实现了 BeanDefinitionRegistryPostProcessor，那么在 postProcessBeanDefinitionRegistry() 方法中就可以注册 BeanDefinition 了。比如：</p>
+<p>以上代码，就利用了 BeanFactoryPostProcessor 来拿到
+BeanFactory，然后获取 BeanFactory 内的某个 BeanDefinition
+对象并进行修改，注意这一步是发生在 Spring 启动时，创建单例 Bean
+之前的，所以此时对 BeanDefinition 进行修改是会生效的。</p>
+<p>注意：在 ApplicationContext 内部有一个核心的
+DefaultListableBeanFactory，它实现了 ConfigurableListableBeanFactory
+和BeanDefinitionRegistry 接口，所以 ApplicationContext 和
+DefaultListableBeanFactory 是可以注册 BeanDefinition 的，但是
+ConfigurableListableBeanFactory 是不能注册 BeanDefinition 的，只能获取
+BeanDefinition，然后做修改。</p>
+<p>所以 Spring 还提供了一个 BeanFactoryPostProcessor
+的子接口：<strong>BeanDefinitionRegistryPostProcessor</strong></p>
+<h3 id="beandefinitionregistrypostprocessor">3.
+BeanDefinitionRegistryPostProcessor</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BeanDefinitionRegistryPostProcessor</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BeanFactoryPostProcessor</span> </span>&#123;<br><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanDefinitionRegistry</span><span class="hljs-params">(BeanDefinitionRegistry registry)</span> <span class="hljs-keyword">throws</span> BeansException</span>;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>BeanDefinitionRegistryPostProcessor 继承了 BeanFactoryPostProcessor
+接口，并新增了一个方法，注意方法的参数为
+BeanDefinitionRegistry，所以如果一个类实现了
+BeanDefinitionRegistryPostProcessor，那么在
+postProcessBeanDefinitionRegistry() 方法中就可以注册 BeanDefinition
+了。比如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugBeanDefinitionRegistryPostProcessor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">BeanDefinitionRegistryPostProcessor</span> </span>&#123;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanDefinitionRegistry</span><span class="hljs-params">(BeanDefinitionRegistry registry)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>		AbstractBeanDefinition beanDefinition = BeanDefinitionBuilder.genericBeanDefinition().getBeanDefinition();<br>		beanDefinition.setBeanClass(User.class);<br>		registry.registerBeanDefinition(<span class="hljs-string">&quot;user&quot;</span>, beanDefinition);<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">postProcessBeanFactory</span><span class="hljs-params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>		BeanDefinition beanDefinition = beanFactory.getBeanDefinition(<span class="hljs-string">&quot;userService&quot;</span>);<br>		beanDefinition.setAutowireCandidate(<span class="hljs-keyword">false</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<h3 id="4-refresh-作用"><a href="#4-refresh-作用" class="headerlink" title="4. refresh() 作用"></a>4. refresh() 作用</h3><p>org.springframework.context.ConfigurableApplicationContext#refresh</p>
+<h3 id="refresh-作用">4. refresh() 作用</h3>
+<p>org.springframework.context.ConfigurableApplicationContext#refresh</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * Load or refresh the persistent representation of the configuration,</span><br><span class="hljs-comment">	 * which might an XML file, properties file, or relational database schema.</span><br><span class="hljs-comment">	 * &lt;p&gt;As this is a startup method, it should destroy already created singletons</span><br><span class="hljs-comment">	 * if it fails, to avoid dangling resources. In other words, after invocation</span><br><span class="hljs-comment">	 * of that method, either all or no singletons at all should be instantiated.</span><br><span class="hljs-comment">	 * <span class="hljs-doctag">@throws</span> BeansException if the bean factory could not be initialized</span><br><span class="hljs-comment">	 * <span class="hljs-doctag">@throws</span> IllegalStateException if already initialized and multiple refresh</span><br><span class="hljs-comment">	 * attempts are not supported</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">refresh</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> BeansException, IllegalStateException</span>;<br></code></pre></td></tr></table></figure>
-
 <p>翻译：加载或刷新持久化的配置，可能是XML文件、属性文件或关系数据库中存储的。由于这是一个启动方法，如果失败，它应该销毁已经创建的单例，以避免暂用资源。换句话说，在调用该方法之后，应该实例化所有的单例，或者根本不实例化单例 。</p>
-<p><strong>ApplicationContext 关闭之后不代表 JVM 也关闭了，ApplicationContext 是属于 JVM 的，说白了 ApplicationContext 也是 JVM 中的一个对象。</strong></p>
-<p>在 Spring 的设计中，也提供可以重复刷新的 ApplicationContext 和不可以重复刷新的  ApplicationContext。比如：</p>
+<p><strong>ApplicationContext 关闭之后不代表 JVM
+也关闭了，ApplicationContext 是属于 JVM 的，说白了 ApplicationContext
+也是 JVM 中的一个对象。</strong></p>
+<p>在 Spring 的设计中，也提供可以重复刷新的 ApplicationContext
+和不可以重复刷新的 ApplicationContext。比如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">AbstractRefreshableApplicationContext extends AbstractApplicationContext</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">refreshBeanFactory</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> BeansException </span>&#123;<br>	<span class="hljs-keyword">if</span> (hasBeanFactory()) &#123;<br>		destroyBeans();<br>		closeBeanFactory();<br>	&#125;<br>	<span class="hljs-keyword">try</span> &#123;<br>		DefaultListableBeanFactory beanFactory = createBeanFactory();<br>		beanFactory.setSerializationId(getId());<br>		customizeBeanFactory(beanFactory);<br>		loadBeanDefinitions(beanFactory);<br>		<span class="hljs-keyword">this</span>.beanFactory = beanFactory;<br>	&#125;<br>	<span class="hljs-keyword">catch</span> (IOException ex) &#123;<br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ApplicationContextException(<span class="hljs-string">&quot;I/O error parsing bean definition source for &quot;</span> + getDisplayName(), ex);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>就是可以重复刷新的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">GenericApplicationContext extends AbstractApplicationContext</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">refreshBeanFactory</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IllegalStateException </span>&#123;<br>	<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.refreshed.compareAndSet(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>)) &#123;<br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<br>				<span class="hljs-string">&quot;GenericApplicationContext does not support multiple refresh attempts: just call &#x27;refresh&#x27; once&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">this</span>.beanFactory.setSerializationId(getId());<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>就是不可以重复刷新的。</p>
-<p>AnnotationConfigApplicationContext 继承的是 GenericApplicationContext，所以它是不能刷新的。<br>AnnotationConfigWebApplicationContext 继承的是 AbstractRefreshableWebApplicationContext，所以它是可以刷的。</p>
-<p><strong>不能重复刷新是指只能调用一次 refresh 方法，第二次时会报错。</strong></p>
-<h3 id="5-refresh-底层原理流程"><a href="#5-refresh-底层原理流程" class="headerlink" title="5. refresh() 底层原理流程"></a>5. refresh() 底层原理流程</h3><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220713220403.png" srcset="/img/loading.gif" lazyload></p>
-<p>底层原理流程图：<a target="_blank" rel="noopener" href="https://www.processon.com/view/link/5f60a7d71e08531edf26a919">https://www.processon.com/view/link/5f60a7d71e08531edf26a919</a></p>
-<p>下面以 AnnotationConfigApplicationContext 为例子，来介绍 refresh 的底层原理。</p>
-<ol>
-<li>在调用 AnnotationConfigApplicationContext 的构造方法之前，会调用父类 GenericApplicationContext 的无参构造方法，会构造一个BeanFactory，为 <strong>DefaultListableBeanFactory</strong>。</li>
-<li>构造 AnnotatedBeanDefinitionReader（<strong>主要作用添加一些基础的 PostProcessor，同时可以通过 reader 进行BeanDefinition 的注册</strong>），同时对 BeanFactory 进行设置和添加 <strong>PostProcessor</strong>（后置处理器）<ol>
-<li>设置 dependencyComparator：AnnotationAwareOrderComparator，它是一个 Comparator，是用来进行排序的，会获取某个对象上的 <strong>Order 注解</strong>或者通过实现 <strong>Ordered 接口</strong> 所定义的值进行排序，在日常开发中可以利用这个类来进行排序。</li>
-<li>设置 autowireCandidateResolver：ContextAnnotationAutowireCandidateResolver，用来解析某个 Bean 能不能进行自动注入，比如某个 Bean 的 autowireCandidate 属性是否等于 true</li>
-<li>向 BeanFactory 中添加 <strong>ConfigurationClassPostProcessor</strong> 对应的 BeanDefinition，它是一个 BeanDefinitionRegistryPostProcessor，并且实现了 PriorityOrdered 接口</li>
-<li>向 BeanFactory 中添加 <strong>AutowiredAnnotationBeanPostProcessor</strong> 对应的 BeanDefinition，它是一个 InstantiationAwareBeanPostProcessorAdapter，MergedBeanDefinitionPostProcessor</li>
-<li>向 BeanFactory 中添加 CommonAnnotationBeanPostProcessor 对应的 BeanDefinition，它是一个 InstantiationAwareBeanPostProcessor，InitDestroyAnnotationBeanPostProcessor</li>
-<li>向 BeanFactory 中添加 EventListenerMethodProcessor 对应的 BeanDefinition，它是一个 BeanFactoryPostProcessor，SmartInitializingSingleton</li>
-<li>向 BeanFactory 中添加 DefaultEventListenerFactory 对应的 BeanDefinition，它是一个 EventListenerFactory</li>
-</ol>
-</li>
-<li>构造 ClassPathBeanDefinitionScanner（<strong>主要作用可以用来扫描得到并注册 BeanDefinition</strong>），同时进行设置：<ol>
-<li>设置 <strong>this.includeFilters = AnnotationTypeFilter(Component.class)</strong></li>
+<p>AnnotationConfigApplicationContext 继承的是
+GenericApplicationContext，所以它是不能刷新的。
+AnnotationConfigWebApplicationContext 继承的是
+AbstractRefreshableWebApplicationContext，所以它是可以刷的。</p>
+<p><strong>不能重复刷新是指只能调用一次 refresh
+方法，第二次时会报错。</strong></p>
+<h3 id="refresh-底层原理流程">5. refresh() 底层原理流程</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220713220403.png" srcset="/img/loading.gif" lazyload /></p>
+<p>底层原理流程图：<a
+target="_blank" rel="noopener" href="https://www.processon.com/view/link/5f60a7d71e08531edf26a919">https://www.processon.com/view/link/5f60a7d71e08531edf26a919</a></p>
+<p>下面以 AnnotationConfigApplicationContext 为例子，来介绍 refresh
+的底层原理。</p>
+<ol type="1">
+<li>在调用 AnnotationConfigApplicationContext 的构造方法之前，会调用父类
+GenericApplicationContext 的无参构造方法，会构造一个BeanFactory，为
+<strong>DefaultListableBeanFactory</strong>。</li>
+<li>构造 AnnotatedBeanDefinitionReader（<strong>主要作用添加一些基础的
+PostProcessor，同时可以通过 reader 进行BeanDefinition
+的注册</strong>），同时对 BeanFactory 进行设置和添加
+<strong>PostProcessor</strong>（后置处理器）
+<ol type="1">
+<li>设置 dependencyComparator：AnnotationAwareOrderComparator，它是一个
+Comparator，是用来进行排序的，会获取某个对象上的 <strong>Order
+注解</strong>或者通过实现 <strong>Ordered 接口</strong>
+所定义的值进行排序，在日常开发中可以利用这个类来进行排序。</li>
+<li>设置
+autowireCandidateResolver：ContextAnnotationAutowireCandidateResolver，用来解析某个
+Bean 能不能进行自动注入，比如某个 Bean 的 autowireCandidate 属性是否等于
+true</li>
+<li>向 BeanFactory 中添加
+<strong>ConfigurationClassPostProcessor</strong> 对应的
+BeanDefinition，它是一个 BeanDefinitionRegistryPostProcessor，并且实现了
+PriorityOrdered 接口</li>
+<li>向 BeanFactory 中添加
+<strong>AutowiredAnnotationBeanPostProcessor</strong> 对应的
+BeanDefinition，它是一个
+InstantiationAwareBeanPostProcessorAdapter，MergedBeanDefinitionPostProcessor</li>
+<li>向 BeanFactory 中添加 CommonAnnotationBeanPostProcessor 对应的
+BeanDefinition，它是一个
+InstantiationAwareBeanPostProcessor，InitDestroyAnnotationBeanPostProcessor</li>
+<li>向 BeanFactory 中添加 EventListenerMethodProcessor 对应的
+BeanDefinition，它是一个
+BeanFactoryPostProcessor，SmartInitializingSingleton</li>
+<li>向 BeanFactory 中添加 DefaultEventListenerFactory 对应的
+BeanDefinition，它是一个 EventListenerFactory</li>
+</ol></li>
+<li>构造
+ClassPathBeanDefinitionScanner（<strong>主要作用可以用来扫描得到并注册
+BeanDefinition</strong>），同时进行设置：
+<ol type="1">
+<li>设置 <strong>this.includeFilters =
+AnnotationTypeFilter(Component.class)</strong></li>
 <li>设置 environment</li>
 <li>设置 resourceLoader</li>
-</ol>
-</li>
-<li>利用 reader 注册 AppConfig 为 BeanDefinition，类型为 AnnotatedGenericBeanDefinition</li>
+</ol></li>
+<li>利用 reader 注册 AppConfig 为 BeanDefinition，类型为
+AnnotatedGenericBeanDefinition</li>
 <li><strong>接下来就是调用 refresh 方法</strong></li>
-<li>prepareRefresh()：<ol>
+<li>prepareRefresh()：
+<ol type="1">
 <li>记录启动时间</li>
 <li>可以允许子容器设置一些内容到 Environment 中</li>
 <li>验证 Environment 中是否包括了必须要有的属性</li>
-</ol>
-</li>
-<li>obtainFreshBeanFactory()：进行 BeanFactory 的 refresh，在这里会去调用子类的 refreshBeanFactory 方法，具体子类是怎么刷新的得看子类，然后再调用子类的 getBeanFactory 方法，重新得到一个 BeanFactory</li>
-<li>prepareBeanFactory(beanFactory)：<ol>
+</ol></li>
+<li>obtainFreshBeanFactory()：进行 BeanFactory 的
+refresh，在这里会去调用子类的 refreshBeanFactory
+方法，具体子类是怎么刷新的得看子类，然后再调用子类的 getBeanFactory
+方法，重新得到一个 BeanFactory</li>
+<li>prepareBeanFactory(beanFactory)：
+<ol type="1">
 <li>设置 beanFactory 的类加载器</li>
-<li>设置表达式解析器：StandardBeanExpressionResolver，用来解析 Spring 中的表达式</li>
-<li>添加 PropertyEditorRegistrar：ResourceEditorRegistrar，PropertyEditorRegistrar 类型转化器注册器，用来注册一些默认的 PropertyEditor</li>
-<li>添加一个 Bean 的后置处理器：ApplicationContextAwareProcessor，是一个 BeanPostProcessor，用来执行 EnvironmentAware、ApplicationEventPublisherAware 等回调方法</li>
-<li>添加 <strong>ignoredDependencyInterface</strong>：可以向这个属性中添加一些接口，如果某个类实现了这个接口，并且这个类中的某些 set 方法在接口中也存在，那么这个 set 方法在自动注入的时候是不会执行的，比如 EnvironmentAware 这个接口，如果某个类实现了这个接口，那么就必须实现它的 setEnvironment 方法，而这是一个 set 方法，和 Spring 中的 autowire 是冲突的，那么 Spring 在自动注入时是不会调用 setEnvironment 方法的，而是等到回调 Aware 接口时再来调用（注意，这个功能仅限于 spring 自带的 autowire，@Autowired 注解是忽略这个属性的）<ol>
+<li>设置表达式解析器：StandardBeanExpressionResolver，用来解析 Spring
+中的表达式</li>
+<li>添加
+PropertyEditorRegistrar：ResourceEditorRegistrar，PropertyEditorRegistrar
+类型转化器注册器，用来注册一些默认的 PropertyEditor</li>
+<li>添加一个 Bean 的后置处理器：ApplicationContextAwareProcessor，是一个
+BeanPostProcessor，用来执行
+EnvironmentAware、ApplicationEventPublisherAware 等回调方法</li>
+<li>添加
+<strong>ignoredDependencyInterface</strong>：可以向这个属性中添加一些接口，如果某个类实现了这个接口，并且这个类中的某些
+set 方法在接口中也存在，那么这个 set
+方法在自动注入的时候是不会执行的，比如 EnvironmentAware
+这个接口，如果某个类实现了这个接口，那么就必须实现它的 setEnvironment
+方法，而这是一个 set 方法，和 Spring 中的 autowire 是冲突的，那么 Spring
+在自动注入时是不会调用 setEnvironment 方法的，而是等到回调 Aware
+接口时再来调用（注意，这个功能仅限于 spring 自带的 autowire，<span
+class="citation" data-cites="Autowired">@Autowired</span>
+注解是忽略这个属性的）
+<ol type="1">
 <li>EnvironmentAware</li>
 <li>EmbeddedValueResolverAware</li>
 <li>ResourceLoaderAware</li>
@@ -391,79 +478,152 @@
 <li>BeanNameAware</li>
 <li>BeanClassLoaderAware</li>
 <li>BeanFactoryAware</li>
-</ol>
-</li>
-<li>添加 <strong>resolvableDependencies</strong>：在 byType 进行依赖注入时，会先从这个属性中根据类型找 bean<ol>
+</ol></li>
+<li>添加 <strong>resolvableDependencies</strong>：在 byType
+进行依赖注入时，会先从这个属性中根据类型找 bean
+<ol type="1">
 <li>BeanFactory.class：当前 BeanFactory 对象</li>
 <li>ResourceLoader.class：当前 ApplicationContext 对象</li>
 <li>ApplicationEventPublisher.class：当前 ApplicationContext 对象</li>
 <li>ApplicationContext.class：当前 ApplicationContext 对象</li>
-</ol>
-</li>
-<li>添加一个 Bean 的后置处理器：ApplicationListenerDetector，是一个 BeanPostProcessor，用来判断某个 Bean 是不是 ApplicationListener，如果是则把这个 Bean 添加到 ApplicationContext 中去，注意一个 ApplicationListener 只能是单例的</li>
-<li>添加一个 Bean 的后置处理器：LoadTimeWeaverAwareProcessor，是一个 BeanPostProcessor，用来判断某个 Bean 是不是实现了 LoadTimeWeaverAware 接口，如果实现了则把 ApplicationContext 中的 loadTimeWeaver 回调 setLoadTimeWeaver 方法设置给该 Bean。</li>
-<li>添加一些单例 bean 到单例池：<ol>
-<li>“environment”：Environment 对象</li>
-<li>“systemProperties”：System.getProperties() 返回的 Map 对象</li>
-<li>“systemEnvironment”：System.getenv() 返回的 Map 对象</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>postProcessBeanFactory(beanFactory) ： 提供给 AbstractApplicationContext 的子类进行扩展，具体的子类，可以继续向 BeanFactory 中再添加一些东西</li>
-<li>invokeBeanFactoryPostProcessors(beanFactory)：<strong>执行 BeanFactoryPostProcessor</strong><ol>
-<li>此时在 BeanFactory 中会存在一个 BeanFactoryPostProcessor：<strong>ConfigurationClassPostProcessor</strong>，它也是一个 <strong>BeanDefinitionRegistryPostProcessor</strong></li>
+</ol></li>
+<li>添加一个 Bean 的后置处理器：ApplicationListenerDetector，是一个
+BeanPostProcessor，用来判断某个 Bean 是不是
+ApplicationListener，如果是则把这个 Bean 添加到 ApplicationContext
+中去，注意一个 ApplicationListener 只能是单例的</li>
+<li>添加一个 Bean 的后置处理器：LoadTimeWeaverAwareProcessor，是一个
+BeanPostProcessor，用来判断某个 Bean 是不是实现了 LoadTimeWeaverAware
+接口，如果实现了则把 ApplicationContext 中的 loadTimeWeaver 回调
+setLoadTimeWeaver 方法设置给该 Bean。</li>
+<li>添加一些单例 bean 到单例池：
+<ol type="1">
+<li>"environment"：Environment 对象</li>
+<li>"systemProperties"：System.getProperties() 返回的 Map 对象</li>
+<li>"systemEnvironment"：System.getenv() 返回的 Map 对象</li>
+</ol></li>
+</ol></li>
+<li>postProcessBeanFactory(beanFactory) ： 提供给
+AbstractApplicationContext 的子类进行扩展，具体的子类，可以继续向
+BeanFactory 中再添加一些东西</li>
+<li>invokeBeanFactoryPostProcessors(beanFactory)：<strong>执行
+BeanFactoryPostProcessor</strong>
+<ol type="1">
+<li>此时在 BeanFactory 中会存在一个
+BeanFactoryPostProcessor：<strong>ConfigurationClassPostProcessor</strong>，它也是一个
+<strong>BeanDefinitionRegistryPostProcessor</strong></li>
 <li><strong>第一阶段</strong></li>
-<li>从 BeanFactory 中找到类型为 BeanDefinitionRegistryPostProcessor 的 beanName，也就是 <strong>ConfigurationClassPostProcessor</strong>， 然后调用 BeanFactory 的 getBean 方法得到实例对象</li>
-<li>执行 <strong>ConfigurationClassPostProcessor 的 postProcessBeanDefinitionRegistry()</strong> 方法:<ol>
+<li>从 BeanFactory 中找到类型为 BeanDefinitionRegistryPostProcessor 的
+beanName，也就是 <strong>ConfigurationClassPostProcessor</strong>，
+然后调用 BeanFactory 的 getBean 方法得到实例对象</li>
+<li>执行 <strong>ConfigurationClassPostProcessor 的
+postProcessBeanDefinitionRegistry()</strong> 方法:
+<ol type="1">
 <li>解析 AppConfig 类</li>
 <li>扫描得到 BeanDefinition 并注册</li>
-<li>解析 @Import，@Bean 等注解得到 BeanDefinition 并注册</li>
-<li>这些 BeanDefinition 中可能存在 BeanFactoryPostProcessor 和 BeanDefinitionRegistryPostProcessor，所以执行完ConfigurationClassPostProcessor 的 postProcessBeanDefinitionRegistry() 方法后，还需要继续执行其他 BeanDefinitionRegistryPostProcessor 的 postProcessBeanDefinitionRegistry() 方法</li>
-</ol>
-</li>
-<li>执行其他 BeanDefinitionRegistryPostProcessor 的  <strong>postProcessBeanDefinitionRegistry()</strong> 方法</li>
-<li>执行所有 BeanDefinitionRegistryPostProcessor 的 <strong>postProcessBeanFactory()</strong> 方法</li>
+<li>解析 <span class="citation"
+data-cites="Import">@Import</span>，<span class="citation"
+data-cites="Bean">@Bean</span> 等注解得到 BeanDefinition 并注册</li>
+<li>这些 BeanDefinition 中可能存在 BeanFactoryPostProcessor 和
+BeanDefinitionRegistryPostProcessor，所以执行完ConfigurationClassPostProcessor
+的 postProcessBeanDefinitionRegistry() 方法后，还需要继续执行其他
+BeanDefinitionRegistryPostProcessor 的
+postProcessBeanDefinitionRegistry() 方法</li>
+</ol></li>
+<li>执行其他 BeanDefinitionRegistryPostProcessor 的
+<strong>postProcessBeanDefinitionRegistry()</strong> 方法</li>
+<li>执行所有 BeanDefinitionRegistryPostProcessor 的
+<strong>postProcessBeanFactory()</strong> 方法</li>
 <li><strong>第二阶段</strong></li>
-<li>从 BeanFactory 中找到类型为 BeanFactoryPostProcessor 的 beanName，而这些 BeanFactoryPostProcessor 包括了上面的 BeanDefinitionRegistryPostProcessor</li>
-<li>执行还没有执行过的 BeanFactoryPostProcessor 的 <strong>postProcessBeanFactory()</strong> 方法</li>
-</ol>
-</li>
-<li>到此，所有的 BeanFactoryPostProcessor 的逻辑都执行完了，主要做的事情就是得到 BeanDefinition 并注册到 BeanFactory 中</li>
-<li>registerBeanPostProcessors(beanFactory)：因为上面的步骤完成了扫描，这个过程中程序员可能自己定义了一些 BeanPostProcessor，在这一步就会把 BeanFactory 中所有的 BeanPostProcessor 找出来并实例化得到一个对象，并添加到 BeanFactory 中去（属性 <strong>beanPostProcessors</strong>），最后再重新添加一个 ApplicationListenerDetector 对象（之前其实就添加了过，这里是为了把 ApplicationListenerDetector 移动到最后）</li>
-<li>initMessageSource()： 设置 ApplicationContext 的 MessageSource,要么是用户设置的，要么是 DelegatingMessageSource，让 ApplicationContext 拥有<strong>国际化</strong>的功能</li>
-<li>initApplicationEventMulticaster()：设置 ApplicationContext 的 applicationEventMulticaster，要么是用户设置的，要么是 SimpleApplicationEventMulticaster，让 ApplicationContext 拥有<strong>事件发布</strong>的功能</li>
+<li>从 BeanFactory 中找到类型为 BeanFactoryPostProcessor 的
+beanName，而这些 BeanFactoryPostProcessor 包括了上面的
+BeanDefinitionRegistryPostProcessor</li>
+<li>执行还没有执行过的 BeanFactoryPostProcessor 的
+<strong>postProcessBeanFactory()</strong> 方法</li>
+</ol></li>
+<li>到此，所有的 BeanFactoryPostProcessor
+的逻辑都执行完了，主要做的事情就是得到 BeanDefinition 并注册到
+BeanFactory 中</li>
+<li>registerBeanPostProcessors(beanFactory)：因为上面的步骤完成了扫描，这个过程中程序员可能自己定义了一些
+BeanPostProcessor，在这一步就会把 BeanFactory 中所有的 BeanPostProcessor
+找出来并实例化得到一个对象，并添加到 BeanFactory 中去（属性
+<strong>beanPostProcessors</strong>），最后再重新添加一个
+ApplicationListenerDetector 对象（之前其实就添加了过，这里是为了把
+ApplicationListenerDetector 移动到最后）</li>
+<li>initMessageSource()： 设置 ApplicationContext 的
+MessageSource,要么是用户设置的，要么是 DelegatingMessageSource，让
+ApplicationContext 拥有<strong>国际化</strong>的功能</li>
+<li>initApplicationEventMulticaster()：设置 ApplicationContext 的
+applicationEventMulticaster，要么是用户设置的，要么是
+SimpleApplicationEventMulticaster，让 ApplicationContext
+拥有<strong>事件发布</strong>的功能</li>
 <li>onRefresh()：提供给 AbstractApplicationContex t的子类进行扩展</li>
-<li>registerListeners()：从 BeanFactory 中获取 ApplicationListener 类型的 beanName，然后添加到 ApplicationContext 中的事件广播器 <strong>applicationEventMulticaster</strong> 中去，到这一步因为 FactoryBean 还没有调用 getObject() 方法生成 Bean 对象，所以这里要再根据类型找一下 ApplicationListener，记录一下对应的 beanName</li>
-<li>finishBeanFactoryInitialization(beanFactory)：完成 BeanFactory 的初始化，主要就是<strong>实例化非懒加载的单例 Bean</strong></li>
-<li>finishRefresh()：BeanFactory 的初始化完后，就到了 Spring 启动的最后一步了</li>
-<li>设置 ApplicationContext 的 lifecycleProcessor，默认情况下设置的是 DefaultLifecycleProcessor</li>
-<li>调用 lifecycleProcessor 的 onRefresh() 方法，如果是 DefaultLifecycleProcessor，那么会获取所有类型为 Lifecycle 的 Bean 对象，然后调用它的 start() 方法，这就是 ApplicationContext 的生命周期扩展机制</li>
+<li>registerListeners()：从 BeanFactory 中获取 ApplicationListener
+类型的 beanName，然后添加到 ApplicationContext 中的事件广播器
+<strong>applicationEventMulticaster</strong> 中去，到这一步因为
+FactoryBean 还没有调用 getObject() 方法生成 Bean
+对象，所以这里要再根据类型找一下 ApplicationListener，记录一下对应的
+beanName</li>
+<li>finishBeanFactoryInitialization(beanFactory)：完成 BeanFactory
+的初始化，主要就是<strong>实例化非懒加载的单例 Bean</strong></li>
+<li>finishRefresh()：BeanFactory 的初始化完后，就到了 Spring
+启动的最后一步了</li>
+<li>设置 ApplicationContext 的 lifecycleProcessor，默认情况下设置的是
+DefaultLifecycleProcessor</li>
+<li>调用 lifecycleProcessor 的 onRefresh() 方法，如果是
+DefaultLifecycleProcessor，那么会获取所有类型为 Lifecycle 的 Bean
+对象，然后调用它的 start() 方法，这就是 ApplicationContext
+的生命周期扩展机制</li>
 <li>发布 <strong>ContextRefreshedEvent</strong> 事件</li>
 </ol>
-<h3 id="6-执行BeanFactoryPostProcessor"><a href="#6-执行BeanFactoryPostProcessor" class="headerlink" title="6. 执行BeanFactoryPostProcessor"></a>6. 执行BeanFactoryPostProcessor</h3><ol>
-<li>执行通过 ApplicationContext 添加进来的 BeanDefinitionRegistryPostProcessor 的 <font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
-<li>执行 BeanFactory 中实现了 PriorityOrdered 接口的 BeanDefinitionRegistryPostProcessor 的 <font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
-<li>执行 BeanFactory 中实现了 Ordered 接口的 BeanDefinitionRegistryPostProcessor 的 <font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
-<li>执行 BeanFactory 中其他的 BeanDefinitionRegistryPostProcessor 的 <font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
-<li>执行上面所有的 BeanDefinitionRegistryPostProcessor 的 <font color="green">postProcessBeanFactory()</font> 方法</li>
-<li>执行通过 ApplicationContext 添加进来的 BeanFactoryPostProcessor 的 <font color="green">postProcessBeanFactory()</font> 方法</li>
-<li>执行 BeanFactory 中实现了 PriorityOrdered 接口的 BeanFactoryPostProcessor 的 <font color="green">postProcessBeanFactory()</font> 方法</li>
-<li>执行 BeanFactory 中实现了 Ordered 接口的 BeanFactoryPostProcessor 的 <font color="green">postProcessBeanFactory()</font> 方法</li>
-<li>执行 BeanFactory 中其他的 BeanFactoryPostProcessor 的 <font color="green">postProcessBeanFactory()</font> 方法</li>
+<h3 id="执行beanfactorypostprocessor">6.
+执行BeanFactoryPostProcessor</h3>
+<ol type="1">
+<li>执行通过 ApplicationContext 添加进来的
+BeanDefinitionRegistryPostProcessor 的
+<font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
+<li>执行 BeanFactory 中实现了 PriorityOrdered 接口的
+BeanDefinitionRegistryPostProcessor 的
+<font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
+<li>执行 BeanFactory 中实现了 Ordered 接口的
+BeanDefinitionRegistryPostProcessor 的
+<font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
+<li>执行 BeanFactory 中其他的 BeanDefinitionRegistryPostProcessor 的
+<font color="red">postProcessBeanDefinitionRegistry()</font> 方法</li>
+<li>执行上面所有的 BeanDefinitionRegistryPostProcessor 的
+<font color="green">postProcessBeanFactory()</font> 方法</li>
+<li>执行通过 ApplicationContext 添加进来的 BeanFactoryPostProcessor 的
+<font color="green">postProcessBeanFactory()</font> 方法</li>
+<li>执行 BeanFactory 中实现了 PriorityOrdered 接口的
+BeanFactoryPostProcessor 的
+<font color="green">postProcessBeanFactory()</font> 方法</li>
+<li>执行 BeanFactory 中实现了 Ordered 接口的 BeanFactoryPostProcessor 的
+<font color="green">postProcessBeanFactory()</font> 方法</li>
+<li>执行 BeanFactory 中其他的 BeanFactoryPostProcessor 的
+<font color="green">postProcessBeanFactory()</font> 方法</li>
 </ol>
-<h3 id="7-Lifecycle的使用"><a href="#7-Lifecycle的使用" class="headerlink" title="7. Lifecycle的使用"></a>7. Lifecycle的使用</h3><p>Lifecycle 表示的是 ApplicationContext 的生命周期，可以定义一个 SmartLifecycle 来监听 ApplicationContext 的启动和关闭：</p>
+<h3 id="lifecycle的使用">7. Lifecycle的使用</h3>
+<p>Lifecycle 表示的是 ApplicationContext 的生命周期，可以定义一个
+SmartLifecycle 来监听 ApplicationContext 的启动和关闭：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugLifecycle</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SmartLifecycle</span> </span>&#123;<br><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> isRunning = <span class="hljs-keyword">false</span>;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> </span>&#123;<br>		System.out.println(<span class="hljs-string">&quot;启动&quot;</span>);<br>		isRunning = <span class="hljs-keyword">true</span>;<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">stop</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 要触发stop()，要调用context.close()，或者注册关闭钩子（context.registerShutdownHook();）</span><br>		System.out.println(<span class="hljs-string">&quot;停止&quot;</span>);<br>		isRunning = <span class="hljs-keyword">false</span>;<br>	&#125;<br><br>	<span class="hljs-meta">@Override</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isRunning</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-keyword">return</span> isRunning;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="事件相关类">8. 事件相关类</h3>
+<h4 id="事件监听器">事件监听器</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugApplicationListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ApplicationEvent event)</span> </span>&#123;<br>        <span class="hljs-comment">// 事件发布 context.publishEvent(&quot;deBugWord&quot;);</span><br>        PayloadApplicationEvent applicationEvent = (PayloadApplicationEvent) event;<br>        System.out.println(applicationEvent.getPayload());<br>    &#125;<br>&#125;<br>````<br><br>普通 Bean 中：<br>```java<br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">aa</span><span class="hljs-params">(ApplicationEvent applicationEvent)</span></span>&#123;<br>        System.out.println(applicationEvent);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<h4 id="applicationlistenerdetector">ApplicationListenerDetector</h4>
+<p>ApplicationListenerDetector 是一个 BeanPostProcessor，用于检查一个
+Bean 是不是 ApplicationListener。</p>
+<h4 id="eventlistenermethodprocessor">EventListenerMethodProcessor</h4>
+<p>EventListenerMethodProcessor 是一个 SmartInitializingSingleton，利用
+EventListenerFactory 将加了 <span class="citation"
+data-cites="EventListener">@EventListener</span> 注解的方法封装成
+ApplicationListener 对象</p>
+<h4
+id="simpleapplicationeventmulticaster">SimpleApplicationEventMulticaster</h4>
+<p>SimpleApplicationEventMulticaster 默认事件发布器</p>
+<p>AbstractApplicationContext#publishEvent(java.lang.Object,
+org.springframework.core.ResolvableType) <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">publishEvent</span><span class="hljs-params">(Object event, <span class="hljs-meta">@Nullable</span> ResolvableType eventType)</span> </span>&#123;<br>	Assert.notNull(event, <span class="hljs-string">&quot;Event must not be null&quot;</span>);<br><br>	<span class="hljs-comment">// Decorate event as an ApplicationEvent if necessary</span><br>	ApplicationEvent applicationEvent;<br>	<span class="hljs-keyword">if</span> (event <span class="hljs-keyword">instanceof</span> ApplicationEvent) &#123;<br>		applicationEvent = (ApplicationEvent) event;<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		applicationEvent = <span class="hljs-keyword">new</span> PayloadApplicationEvent&lt;&gt;(<span class="hljs-keyword">this</span>, event);<br>		<span class="hljs-keyword">if</span> (eventType == <span class="hljs-keyword">null</span>) &#123;<br>			eventType = ((PayloadApplicationEvent&lt;?&gt;) applicationEvent).getResolvableType();<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-comment">// Multicast right now if possible - or lazily once the multicaster is initialized</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.earlyApplicationEvents != <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">this</span>.earlyApplicationEvents.add(applicationEvent);<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);<br>	&#125;<br><br>	<span class="hljs-comment">// Publish event via parent context as well...</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.parent != <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.parent <span class="hljs-keyword">instanceof</span> AbstractApplicationContext) &#123;<br>			((AbstractApplicationContext) <span class="hljs-keyword">this</span>.parent).publishEvent(event, eventType);<br>		&#125;<br>		<span class="hljs-keyword">else</span> &#123;<br>			<span class="hljs-keyword">this</span>.parent.publishEvent(event);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+SimpleApplicationEventMulticaster#multicastEvent(org.springframework.context.ApplicationEvent,
+org.springframework.core.ResolvableType) <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">multicastEvent</span><span class="hljs-params">(<span class="hljs-keyword">final</span> ApplicationEvent event, <span class="hljs-meta">@Nullable</span> ResolvableType eventType)</span> </span>&#123;<br>	ResolvableType type = (eventType != <span class="hljs-keyword">null</span> ? eventType : resolveDefaultEventType(event));<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">final</span> ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;<br>		Executor executor = getTaskExecutor();<br>		<span class="hljs-keyword">if</span> (executor != <span class="hljs-keyword">null</span>) &#123;<br>			executor.execute(() -&gt; invokeListener(listener, event));<br>		&#125;<br>		<span class="hljs-keyword">else</span> &#123;<br>			invokeListener(listener, event);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
 
-<h3 id="8-事件相关类"><a href="#8-事件相关类" class="headerlink" title="8. 事件相关类"></a>8. 事件相关类</h3><h4 id="事件监听器"><a href="#事件监听器" class="headerlink" title="事件监听器"></a>事件监听器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugApplicationListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ApplicationEvent event)</span> </span>&#123;<br>        <span class="hljs-comment">// 事件发布 context.publishEvent(&quot;deBugWord&quot;);</span><br>        PayloadApplicationEvent applicationEvent = (PayloadApplicationEvent) event;<br>        System.out.println(applicationEvent.getPayload());<br>    &#125;<br>&#125;<br>````<br><br>普通 Bean 中：<br>```java<br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">aa</span><span class="hljs-params">(ApplicationEvent applicationEvent)</span></span>&#123;<br>        System.out.println(applicationEvent);<br>    &#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="ApplicationListenerDetector"><a href="#ApplicationListenerDetector" class="headerlink" title="ApplicationListenerDetector"></a>ApplicationListenerDetector</h4><p>ApplicationListenerDetector 是一个 BeanPostProcessor，用于检查一个 Bean 是不是 ApplicationListener。</p>
-<h4 id="EventListenerMethodProcessor"><a href="#EventListenerMethodProcessor" class="headerlink" title="EventListenerMethodProcessor"></a>EventListenerMethodProcessor</h4><p>EventListenerMethodProcessor 是一个 SmartInitializingSingleton，利用 EventListenerFactory 将加了 @EventListener 注解的方法封装成 ApplicationListener 对象</p>
-<h4 id="SimpleApplicationEventMulticaster"><a href="#SimpleApplicationEventMulticaster" class="headerlink" title="SimpleApplicationEventMulticaster"></a>SimpleApplicationEventMulticaster</h4><p>SimpleApplicationEventMulticaster 默认事件发布器</p>
-<p>AbstractApplicationContext#publishEvent(java.lang.Object, org.springframework.core.ResolvableType)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">publishEvent</span><span class="hljs-params">(Object event, <span class="hljs-meta">@Nullable</span> ResolvableType eventType)</span> </span>&#123;<br>	Assert.notNull(event, <span class="hljs-string">&quot;Event must not be null&quot;</span>);<br><br>	<span class="hljs-comment">// Decorate event as an ApplicationEvent if necessary</span><br>	ApplicationEvent applicationEvent;<br>	<span class="hljs-keyword">if</span> (event <span class="hljs-keyword">instanceof</span> ApplicationEvent) &#123;<br>		applicationEvent = (ApplicationEvent) event;<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		applicationEvent = <span class="hljs-keyword">new</span> PayloadApplicationEvent&lt;&gt;(<span class="hljs-keyword">this</span>, event);<br>		<span class="hljs-keyword">if</span> (eventType == <span class="hljs-keyword">null</span>) &#123;<br>			eventType = ((PayloadApplicationEvent&lt;?&gt;) applicationEvent).getResolvableType();<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-comment">// Multicast right now if possible - or lazily once the multicaster is initialized</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.earlyApplicationEvents != <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">this</span>.earlyApplicationEvents.add(applicationEvent);<br>	&#125;<br>	<span class="hljs-keyword">else</span> &#123;<br>		getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);<br>	&#125;<br><br>	<span class="hljs-comment">// Publish event via parent context as well...</span><br>	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.parent != <span class="hljs-keyword">null</span>) &#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.parent <span class="hljs-keyword">instanceof</span> AbstractApplicationContext) &#123;<br>			((AbstractApplicationContext) <span class="hljs-keyword">this</span>.parent).publishEvent(event, eventType);<br>		&#125;<br>		<span class="hljs-keyword">else</span> &#123;<br>			<span class="hljs-keyword">this</span>.parent.publishEvent(event);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>SimpleApplicationEventMulticaster#multicastEvent(org.springframework.context.ApplicationEvent, org.springframework.core.ResolvableType)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">multicastEvent</span><span class="hljs-params">(<span class="hljs-keyword">final</span> ApplicationEvent event, <span class="hljs-meta">@Nullable</span> ResolvableType eventType)</span> </span>&#123;<br>	ResolvableType type = (eventType != <span class="hljs-keyword">null</span> ? eventType : resolveDefaultEventType(event));<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">final</span> ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;<br>		Executor executor = getTaskExecutor();<br>		<span class="hljs-keyword">if</span> (executor != <span class="hljs-keyword">null</span>) &#123;<br>			executor.execute(() -&gt; invokeListener(listener, event));<br>		&#125;<br>		<span class="hljs-keyword">else</span> &#123;<br>			invokeListener(listener, event);<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
               
             </div>
             <hr/>
@@ -649,6 +809,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -905,6 +1071,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

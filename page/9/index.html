@@ -239,6 +239,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/01/13/Go%E2%80%94%E2%80%94%E5%B9%B6%E5%8F%91/" target="_blank">
+          Go——并发
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/01/13/Go%E2%80%94%E2%80%94%E5%B9%B6%E5%8F%91/" target="_blank">
+        <div>
+          
+          1. Goroutine Go 语言中的 goroutine 是由 Go 的运行时（runtime）调度和管理的。Go 程序会将 goroutine 中的任务合理地分配给每个CPU。 OS线程（操作系统线程）一般都有固定的栈内存（通常为2MB）,一个 goroutine 的栈在其生命周期开始时只有很小的栈（典型情况下 2KB），goroutine 的栈不是固定的，他可以按需增大和缩小，gorout
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-13 21:47" pubdate>
+              2022-01-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Golang/">#Golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/01/11/Go%E2%80%94%E2%80%94%E5%8F%8D%E5%B0%84/" target="_blank">
           Go——反射
         </a>
@@ -247,7 +308,7 @@
       <a class="index-excerpt" href="/2022/01/11/Go%E2%80%94%E2%80%94%E5%8F%8D%E5%B0%84/" target="_blank">
         <div>
           
-          反射是指在程序运行期对程序本身进行访问和修改的能力。 支持反射的语言可以在程序编译期将变量的反射信息，如字段名称、类型信息、结构体信息等整合到可执行文件中，并给程序提供接口访问反射信息，这样就可以在程序运行期获取类型的反射信息，并且有能力修改它们。 Go 程序在运行期使用 reflect 包访问程序的反射信息。 1. reflect 包在 Go 语言的反射机制中，任何接口值都由是一个 具体类型 和
+          反射是指在程序运行期对程序本身进行访问和修改的能力。 支持反射的语言可以在程序编译期将变量的反射信息，如字段名称、类型信息、结构体信息等整合到可执行文件中，并给程序提供接口访问反射信息，这样就可以在程序运行期获取类型的反射信息，并且有能力修改它们。 Go 程序在运行期使用 reflect 包访问程序的反射信息。 1. reflect 包 在 Go 语言的反射机制中，任何接口值都由是一个 具体类型
         </div>
       </a>
 
@@ -308,7 +369,7 @@
       <a class="index-excerpt" href="/2022/01/09/Go%E2%80%94%E2%80%94%E6%8E%92%E5%BA%8F/" target="_blank">
         <div>
           
-          1. 使用 sort.Interface 接口进行排序sort.Interface 接口的定义： 12345678910type Interface interface &amp;#123;	&#x2F;&#x2F; Len 集合中元素的数量	Len() int	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前	Less(i, j int) bool	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素	Swa
+          1. 使用 sort.Interface 接口进行排序 sort.Interface 接口的定义： 12345678910type Interface interface &amp;#123;	&#x2F;&#x2F; Len 集合中元素的数量	Len() int	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前	Less(i, j int) bool	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素	Sw
         </div>
       </a>
 
@@ -369,7 +430,7 @@
       <a class="index-excerpt" href="/2022/01/06/Go%E2%80%94%E2%80%94%E6%8E%A5%E5%8F%A3/" target="_blank">
         <div>
           
-          接口（interface）定义了一个对象的行为规范，只定义规范不实现，由具体的对象来实现规范的细节。  接口（interface）是一种类型 1. 接口定义Go 语言中每个接口由数个方法（零个或多个）组成，接口的定义格式如下：  type　接口类型名　interface{　方法名1( 参数列表1 )　返回值列表1　方法名2( 参数列表2 )　返回值列表2　 …}  其中：  接口名：使用 type
+          接口（interface）定义了一个对象的行为规范，只定义规范不实现，由具体的对象来实现规范的细节。  接口（interface）是一种类型 1. 接口定义 Go 语言中每个接口由数个方法（零个或多个）组成，接口的定义格式如下：  type　接口类型名　interface{ 　方法名1( 参数列表1 )　返回值列表1 　方法名2( 参数列表2 )　返回值列表2 　 … }  其中：  接口名：使用
         </div>
       </a>
 
@@ -430,7 +491,7 @@
       <a class="index-excerpt" href="/2022/01/02/Go%E2%80%94%E2%80%94%E7%BB%93%E6%9E%84%E4%BD%93/" target="_blank">
         <div>
           
-          Golang 面向对象编程非常简洁，去掉了传统 OOP 语言的方法重载、构造函数和析构函数、隐藏的this指针等等 1. 结构体1.1 结构体的定义使用type和struct关键字来定义结构体，具体代码格式如下：  type　类型名　struct {　字段名　字段类型　字段名　字段类型　…}  123456789101112type Student struct &amp;#123;	ID   strin
+          Golang 面向对象编程非常简洁，去掉了传统 OOP 语言的方法重载、构造函数和析构函数、隐藏的this指针等等 1. 结构体 1.1 结构体的定义 使用type和struct关键字来定义结构体，具体代码格式如下：  type　类型名　struct { 　字段名　字段类型 　字段名　字段类型 　… }  123456789101112type Student struct &amp;#123;	ID
         </div>
       </a>
 
@@ -491,7 +552,7 @@
       <a class="index-excerpt" href="/2022/01/02/Go%E2%80%94%E2%80%94Map/" target="_blank">
         <div>
           
-          1. 定义 Map var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string   key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、
+          1. 定义 Map  var　map_variable　map[key_data_type]　value_data_type  1var student map[int]string  key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、
         </div>
       </a>
 
@@ -552,7 +613,7 @@
       <a class="index-excerpt" href="/2022/01/02/Go%E2%80%94%E2%80%94%E5%88%87%E7%89%87/" target="_blank">
         <div>
           
-          切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义 从数组或切片生成
+          切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义  从数组或切片生
         </div>
       </a>
 
@@ -613,7 +674,7 @@
       <a class="index-excerpt" href="/2022/01/01/Go%E2%80%94%E2%80%94%E6%95%B0%E7%BB%84/" target="_blank">
         <div>
           
-          1. 数组的申明 var　variable_name　[SIZE]variable_type  1234567891011121314func main() &amp;#123;	var scores [5]int16	fmt.Println(scores)         &#x2F;&#x2F; [0 0 0 0 0]	fmt.Println(len(scores))    &#x2F;&#x2F; 5	fmt.Printf(&quot;%
+          1. 数组的申明  var　variable_name　[SIZE]variable_type  1234567891011121314func main() &amp;#123;	var scores [5]int16	fmt.Println(scores)         &#x2F;&#x2F; [0 0 0 0 0]	fmt.Println(len(scores))    &#x2F;&#x2F; 5	fmt.Printf(&quot;
         </div>
       </a>
 
@@ -674,7 +735,7 @@
       <a class="index-excerpt" href="/2021/12/30/Go%E2%80%94%E2%80%94%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_blank">
         <div>
           
-          1. defer+recover 机制处理错误 func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐慌
+          1. defer+recover 机制处理错误  func recover() interface{}  内建函数 recover 允许程序管理恐慌过程中的 Go 程。在 defer 的函数中，执行 recover 调用会取回传至 panic 调用的错误值，恢复正常执行，停止恐慌过程。若 recover 在 defer 的函数之外被调用，它将不会停止恐慌过程序列。在此情况下，或当该 Go 程不在恐
         </div>
       </a>
 
@@ -735,7 +796,7 @@
       <a class="index-excerpt" href="/2021/12/29/Go%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0/" target="_blank">
         <div>
           
-          1. 函数基本语法：func   函数名（形参列表) [ 返回值类型列表 ] { 　　执行语句..　　return　返回值列表} 123func add(num1 int, num2 int) (int) &amp;#123; &#x2F;&#x2F; 如果返回值类型只有一个，那么()是可以省略不写	return num1 + num2&amp;#125;   函数名   驼峰命名   首字母不能是数字 首字母大写该函数可以被本包文
+          1. 函数 基本语法： func 函数名（形参列表) [ 返回值类型列表 ] { 　　执行语句.. 　　return　返回值列表 } 123func add(num1 int, num2 int) (int) &amp;#123; &#x2F;&#x2F; 如果返回值类型只有一个，那么()是可以省略不写	return num1 + num2&amp;#125;  函数名   驼峰命名  首字母不能是数字 首字母大写该函数可以被本包文
         </div>
       </a>
 
@@ -744,67 +805,6 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2021-12-29 23:32" pubdate>
-              2021-12-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" target="_blank">
-          Go——流程控制
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" target="_blank">
-        <div>
-          
-          1. 分支结构1.1 if 分支基本语法： if  条件表达式1 {    　逻辑代码1} else if　条件表达式2 {   　逻辑代码2}…….else {  　逻辑代码n}   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    12345678910
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-29 10:54" pubdate>
               2021-12-29
             </time>
           </div>

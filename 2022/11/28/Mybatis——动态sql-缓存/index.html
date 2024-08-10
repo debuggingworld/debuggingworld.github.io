@@ -16,25 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 动态 SQL动态 sql 是基于 OGNL 的表达式的。 1.1  if123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;">
+    <meta name="description" content="1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mybatis——动态SQL&amp;缓存">
 <meta property="og:url" content="http://example.com/2022/11/28/Mybatis%E2%80%94%E2%80%94%E5%8A%A8%E6%80%81sql-%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 动态 SQL动态 sql 是基于 OGNL 的表达式的。 1.1  if123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;">
+<meta property="og:description" content="1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302155684.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302153203.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302306656.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302334260.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302346921.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202212012226849.png">
 <meta property="article:published_time" content="2022-11-28T15:38:14.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.850Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Mybatis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302155684.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -243,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          9.2k 字
+          9.3k 字
         
       </span>
     
@@ -297,141 +290,172 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-动态-SQL"><a href="#1-动态-SQL" class="headerlink" title="1. 动态 SQL"></a>1. 动态 SQL</h2><p>动态 sql 是基于 OGNL 的表达式的。</p>
-<h3 id="1-1-if"><a href="#1-1-if" class="headerlink" title="1.1  if"></a>1.1  if</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT * FROM t_user WHERE<br>    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;createTime != 0&quot;</span>&gt;</span><br>        create_time &gt;= #&#123;createTime&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;deptId != null&quot;</span>&gt;</span><br>        AND dept_id = #&#123;deptId&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
+              <h2 id="动态-sql">1. 动态 SQL</h2>
+<p>动态 sql 是基于 OGNL 的表达式的。</p>
+<h3 id="if">1.1 if</h3>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT * FROM t_user WHERE<br>    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;createTime != 0&quot;</span>&gt;</span><br>        create_time &gt;= #&#123;createTime&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;deptId != null&quot;</span>&gt;</span><br>        AND dept_id = #&#123;deptId&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>其中的条件不成立会怎么样？这个时候拼接的 sql 语句就会变得有问题。</p>
-<p>第一个不成立或者都不成立，那么语句中就会多一个 where 或者 and 关键字。</p>
-<p>where  问题可通过添加 “1 = 1” 恒等条件解决。但 mybatis 中也给出了具体的解决方案（trim、where、set）。</p>
-<h3 id="1-2-trim（where、set）"><a href="#1-2-trim（where、set）" class="headerlink" title="1.2 trim（where、set）"></a>1.2 trim（where、set）</h3><p><em>where</em> 元素只会在子元素返回任何内容的情况下才插入 “WHERE” 子句。而且，若子句的开头为 “AND” 或 “OR”，<em>where</em> 元素也会将它们去除。</p>
+<p>第一个不成立或者都不成立，那么语句中就会多一个 where 或者 and
+关键字。</p>
+<p>where 问题可通过添加 “1 = 1" 恒等条件解决。但 mybatis
+中也给出了具体的解决方案（trim、where、set）。</p>
+<h3 id="trimwhereset">1.2 trim（where、set）</h3>
+<p><em>where</em> 元素只会在子元素返回任何内容的情况下才插入 “WHERE”
+子句。而且，若子句的开头为 “AND” 或 “OR”，<em>where</em>
+元素也会将它们去除。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT * FROM t_user<br>    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;createTime != 0&quot;</span>&gt;</span><br>            create_time &gt;= #&#123;createTime&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;deptId != null&quot;</span>&gt;</span><br>            AND dept_id = #&#123;deptId&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>用于动态更新语句的类似解决方案叫做 <em>set</em>。<em>set</em> 元素可以用于动态包含需要更新的列，忽略其它不更新的列。</p>
+<p>用于动态更新语句的类似解决方案叫做 <em>set</em>。<em>set</em>
+元素可以用于动态包含需要更新的列，忽略其它不更新的列。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">update</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;updateUser&quot;</span>&gt;</span><br>    update t_user<br>    <span class="hljs-tag">&lt;<span class="hljs-name">set</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;createTime != 0&quot;</span>&gt;</span>create_time = #&#123;createTime&#125;,<span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;deptId != null&quot;</span>&gt;</span>dept_id = #&#123;deptId&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">set</span>&gt;</span><br>    where user_id=#&#123;id&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">update</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p><em>set</em> 元素会动态地在行首插入 SET 关键字，并会删掉额外的逗号（createTime 后面的逗号）。</p>
+<p><em>set</em> 元素会动态地在行首插入 SET
+关键字，并会删掉额外的逗号（createTime 后面的逗号）。</p>
 <p>也可以通过自定义 trim 元素来定制 。</p>
 <p>和 <em>where</em> 元素等价的自定义 trim 元素为：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">   prefix：前缀，为sql整体添加一个前缀</span><br><span class="hljs-comment">   prefixOverrides:去除整体字符串前面多余的字符</span><br><span class="hljs-comment">   suffixOverrides:去除后面多余的字符</span><br><span class="hljs-comment">--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">trim</span> <span class="hljs-attr">prefix</span>=<span class="hljs-string">&quot;WHERE&quot;</span> <span class="hljs-attr">prefixOverrides</span>=<span class="hljs-string">&quot;AND |OR &quot;</span>&gt;</span><br>    ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">trim</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>和 <em>where</em> 元素等价的自定义 trim 元素为：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">trim</span> <span class="hljs-attr">prefix</span>=<span class="hljs-string">&quot;SET&quot;</span> <span class="hljs-attr">suffixOverrides</span>=<span class="hljs-string">&quot;,&quot;</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">trim</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="1-3-foreach"><a href="#1-3-foreach" class="headerlink" title="1.3 foreach"></a>1.3 foreach</h3><p>动态 SQL 的另一个常见使用场景是对集合进行遍历（尤其是在构建 IN 条件语句的时候）。</p>
-<p><em>foreach</em> 元素的功能非常强大，它允许你指定一个集合，声明可以在元素体内使用的集合项（item）和索引（index）变量。它也允许你指定开头与结尾的字符串以及集合项迭代之间的分隔符。</p>
-<p>可以将任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象作为集合参数传递给 <em>foreach</em>。当使用可迭代对象或者数组时，index 是当前迭代的序号，item 的值是本次迭代获取到的元素。当使用 Map 对象（或者 Map.Entry 对象的集合）时，index 是键，item 是值。</p>
+<h3 id="foreach">1.3 foreach</h3>
+<p>动态 SQL 的另一个常见使用场景是对集合进行遍历（尤其是在构建 IN
+条件语句的时候）。</p>
+<p><em>foreach</em>
+元素的功能非常强大，它允许你指定一个集合，声明可以在元素体内使用的集合项（item）和索引（index）变量。它也允许你指定开头与结尾的字符串以及集合项迭代之间的分隔符。</p>
+<p>可以将任何可迭代对象（如 List、Set 等）、Map
+对象或者数组对象作为集合参数传递给
+<em>foreach</em>。当使用可迭代对象或者数组时，index
+是当前迭代的序号，item 的值是本次迭代获取到的元素。当使用 Map 对象（或者
+Map.Entry 对象的集合）时，index 是键，item 是值。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">    collection=&quot;deptNos&quot; 指定要遍历的集合</span><br><span class="hljs-comment">    close=&quot;&quot; 表示以什么结束</span><br><span class="hljs-comment">    index=&quot;&quot; 给定一个索引值</span><br><span class="hljs-comment">    item=&quot;&quot; 遍历的每一个元素的值</span><br><span class="hljs-comment">    open=&quot;&quot; 表示以什么开始</span><br><span class="hljs-comment">    separator=&quot;&quot; 表示多个元素的分隔符</span><br><span class="hljs-comment">--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT * FROM t_user<br>    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;item&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;index&quot;</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;deptNos&quot;</span></span><br><span class="hljs-tag">                 <span class="hljs-attr">open</span>=<span class="hljs-string">&quot;dept_id in (&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span> <span class="hljs-attr">close</span>=<span class="hljs-string">&quot;)&quot;</span> &gt;</span><br>            #&#123;item&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="1-4-choose-when-otherwise"><a href="#1-4-choose-when-otherwise" class="headerlink" title="1.4  choose (when, otherwise)"></a>1.4  choose (when, otherwise)</h3><p>有时候，我们不想使用所有的条件，而只是想从多个条件中选择一个使用。针对这种情况，MyBatis 提供了 choose 元素，它有点像 Java 中的 switch 语句。</p>
+<h3 id="choose-when-otherwise">1.4 choose (when, otherwise)</h3>
+<p>有时候，我们不想使用所有的条件，而只是想从多个条件中选择一个使用。针对这种情况，MyBatis
+提供了 choose 元素，它有点像 Java 中的 switch 语句。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT * FROM t_user<br>    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">choose</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;deptId != null&quot;</span>&gt;</span><br>                dept_id = #&#123;deptId&#125;<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">when</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;createTime != 0&quot;</span>&gt;</span><br>                create_time &gt; #&#123;createTime&#125;<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">when</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">otherwise</span>&gt;</span><br>                user_id &gt; 1<br>            <span class="hljs-tag">&lt;/<span class="hljs-name">otherwise</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">choose</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>【注】只有一个条件会成立</p>
 </blockquote>
-<h3 id="1-5-bind"><a href="#1-5-bind" class="headerlink" title="1.5 bind"></a>1.5 bind</h3><p><code>bind</code> 元素允许你在 OGNL 表达式以外创建一个变量，并将其绑定到当前的上下文。比如：</p>
+<h3 id="bind">1.5 bind</h3>
+<p><code>bind</code> 元素允许你在 OGNL
+表达式以外创建一个变量，并将其绑定到当前的上下文。比如：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bind</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;pattern&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&#x27;%&#x27; + user.getName() + &#x27;%&#x27;&quot;</span>/&gt;</span><br>    SELECT * FROM t_user<br>    WHERE<br>    user_name LIKE #&#123;pattern&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<h3 id="1-6-sql"><a href="#1-6-sql" class="headerlink" title="1.6 sql"></a>1.6 sql</h3><p>用来定义可重用的 SQL 代码片段，以便在其它语句中使用。</p>
+<h3 id="sql">1.6 sql</h3>
+<p>用来定义可重用的 SQL 代码片段，以便在其它语句中使用。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userColumns&quot;</span>&gt;</span> $&#123;alias&#125;.user_id,  $&#123;alias&#125;.user_name <span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUser&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span>&gt;</span><br>    SELECT<br>    <span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">refid</span>=<span class="hljs-string">&quot;userColumns&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;alias&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;t&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">include</span>&gt;</span><br>    FROM t_user t<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-MyBatis常用OGNL表达式"><a href="#2-MyBatis常用OGNL表达式" class="headerlink" title="2. MyBatis常用OGNL表达式"></a>2. MyBatis常用OGNL表达式</h2><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">e1 <span class="hljs-keyword">or</span> e2<br>e1 <span class="hljs-keyword">and</span> e2<br>e1 == e2,e1 eq e2<br>e1 != e2,e1 neq e2<br>e1 lt e2：小于<br>e1 lte e2：小于等于，其他gt（大于）,gte（大于等于）<br>e1 <span class="hljs-keyword">in</span> e2<br>e1 <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> e2<br>e1 + e2,e1 * e2,e1/e2,e1 ‐ e2,e1%e2<br>!e,<span class="hljs-keyword">not</span> e：非，求反<br>e.method(args)调用对象方法<br>e.property对象属性值<br>e1[ e2 ]按索引取值，List,数组和Map<br>@<span class="hljs-keyword">class</span>@<span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">(args)</span>调用类的静态方法</span><br><span class="hljs-function">@<span class="hljs-title">class</span>@<span class="hljs-title">field</span>调用类的静态字段值</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="3-缓存"><a href="#3-缓存" class="headerlink" title="3. 缓存"></a>3. 缓存</h2><h3 id="3-1-一级缓存"><a href="#3-1-一级缓存" class="headerlink" title="3.1 一级缓存"></a>3.1 一级缓存</h3><h4 id="1-一级缓存的使用"><a href="#1-一级缓存的使用" class="headerlink" title="1. 一级缓存的使用"></a>1. 一级缓存的使用</h4><p>一级缓存是 sqlsession 级别的缓存，默认是开启的。</p>
+<h2 id="mybatis常用ognl表达式">2. MyBatis常用OGNL表达式</h2>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">e1 <span class="hljs-keyword">or</span> e2<br>e1 <span class="hljs-keyword">and</span> e2<br>e1 == e2,e1 eq e2<br>e1 != e2,e1 neq e2<br>e1 lt e2：小于<br>e1 lte e2：小于等于，其他gt（大于）,gte（大于等于）<br>e1 <span class="hljs-keyword">in</span> e2<br>e1 <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> e2<br>e1 + e2,e1 * e2,e1/e2,e1 ‐ e2,e1%e2<br>!e,<span class="hljs-keyword">not</span> e：非，求反<br>e.method(args)调用对象方法<br>e.property对象属性值<br>e1[ e2 ]按索引取值，List,数组和Map<br>@<span class="hljs-keyword">class</span>@<span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">(args)</span>调用类的静态方法</span><br><span class="hljs-function">@<span class="hljs-title">class</span>@<span class="hljs-title">field</span>调用类的静态字段值</span><br></code></pre></td></tr></table></figure>
+<h2 id="缓存">3. 缓存</h2>
+<h3 id="一级缓存">3.1 一级缓存</h3>
+<h4 id="一级缓存的使用">1. 一级缓存的使用</h4>
+<p>一级缓存是 sqlsession 级别的缓存，默认是开启的。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user);<br>        user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302155684.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302155684.png" srcset="/img/loading.gif" lazyload /></p>
 <p>发送了两个相同的请求，但是sql语句仅仅执行了一次，那么就意味着第一次查询的时候已经将结果进行了缓存。</p>
-<h4 id="2-一级缓存失效"><a href="#2-一级缓存失效" class="headerlink" title="2. 一级缓存失效"></a>2. 一级缓存失效</h4><p>1、一级缓存是 sqlSession 级别的缓存，如果在应用程序中开启了多个 sqlsession，那么会造成缓存失效。</p>
+<h4 id="一级缓存失效">2. 一级缓存失效</h4>
+<p>1、一级缓存是 sqlSession 级别的缓存，如果在应用程序中开启了多个
+sqlsession，那么会造成缓存失效。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user);<br>    &#125;<br>    <span class="hljs-keyword">try</span> (SqlSession sqlSession = sqlSessionFactory.openSession())&#123;<br>        UserMapper mapper = sqlSession.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302153203.png" srcset="/img/loading.gif" lazyload></p>
-<p>2、同一 sqlSession， 如果查询语句不一样或者同一语句查询参数不一样，那么也会缓存失效。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302153203.png" srcset="/img/loading.gif" lazyload /></p>
+<p>2、同一 sqlSession，
+如果查询语句不一样或者同一语句查询参数不一样，那么也会缓存失效。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>        System.out.println(user);<br>        user = mapper.selectUserById(<span class="hljs-number">3</span>);<br>        System.out.println(user);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>3、同一 sqlSession，中间执行增删改操作，则会缓存失效。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br><br>        DeptMapper deptMapper = session.getMapper(DeptMapper.class);<br>        deptMapper.deleteDeptById(<span class="hljs-number">2</span>);<br><br>        user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>4、同一 sqlSession，手动执行清除缓存</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br><br>        session.clearCache();<br><br>        user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
 <p>默认缓存实现类： PerpetualCache</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302306656.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302306656.png" srcset="/img/loading.gif" lazyload /></p>
 <p>一级缓存的 key：hashcode + sqlid + sql+参数+环境</p>
-<p>执行更新操作，当前 sqlSession 缓存全部清空（会直接调用  clear 方法）。</p>
-<h3 id="3-2-二级缓存"><a href="#3-2-二级缓存" class="headerlink" title="3.2 二级缓存"></a>3.2 二级缓存</h3><p>二级缓存作用域是全局，即 Application级。默认是开启的（cacheEnabled 默认值为 true )，但是没有实现。</p>
-<p>Mybatis 提供二级缓存的接口以及实现，缓存实现的时候要求实体类实现 Serializable 接口，二级缓存在 sqlSession 关闭或提交之后才会生效。</p>
+<p>执行更新操作，当前 sqlSession 缓存全部清空（会直接调用 clear
+方法）。</p>
+<h3 id="二级缓存">3.2 二级缓存</h3>
+<p>二级缓存作用域是全局，即 Application级。默认是开启的（cacheEnabled
+默认值为 true )，但是没有实现。</p>
+<p>Mybatis 提供二级缓存的接口以及实现，缓存实现的时候要求实体类实现
+Serializable 接口，二级缓存在 sqlSession 关闭或提交之后才会生效。</p>
 <p>一级缓存时机：查询完成进行缓存</p>
 <p>二级缓存时机：事务提交之后（sqlSession 关闭）进行缓存</p>
 <p>缓存查询顺序：<strong>先二级缓存再一级缓存</strong></p>
-<h4 id="1-二级缓存的使用"><a href="#1-二级缓存的使用" class="headerlink" title="1. 二级缓存的使用"></a>1. 二级缓存的使用</h4><p>1、开启二级缓存</p>
+<h4 id="二级缓存的使用">1. 二级缓存的使用</h4>
+<p>1、开启二级缓存</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--默认为true，显式声明，增加可读性--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;cacheEnabled&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302334260.png" srcset="/img/loading.gif" lazyload></p>
-<p>2、Mapper 映射文件中添加  &lt;cache/&gt; 标签</p>
-<p>二级缓存是基于 Mapper 映射文件实现缓存的，基于 Mapper 映射文件的命名空间来存储的。</p>
-<p>一级 map 的 key 是  Mapper 映射文件 namespace 命名空间，value 指向二级 map（PerpetualCache 中的 map )</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302346921.png" srcset="/img/loading.gif" lazyload alt="二级缓存"></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302334260.png" srcset="/img/loading.gif" lazyload /></p>
+<p>2、Mapper 映射文件中添加 &lt;cache/&gt; 标签</p>
+<p>二级缓存是基于 Mapper 映射文件实现缓存的，基于 Mapper
+映射文件的命名空间来存储的。</p>
+<p>一级 map 的 key 是 Mapper 映射文件 namespace 命名空间，value 指向二级
+map（PerpetualCache 中的 map )</p>
+<figure>
+<img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202211302346921.png" srcset="/img/loading.gif" lazyload
+alt="二级缓存" />
+<figcaption aria-hidden="true">二级缓存</figcaption>
+</figure>
 <p>默认缓存效果：</p>
 <ul>
 <li>映射语句文件中的所有 select 语句的结果将会被缓存。</li>
 <li>映射语句文件中的所有 insert、update 和 delete 语句会刷新缓存。</li>
-<li>缓存会使用最近最少使用算法（LRU, Least Recently Used）算法来清除不需要的缓存。</li>
+<li>缓存会使用最近最少使用算法（LRU, Least Recently
+Used）算法来清除不需要的缓存。</li>
 <li>缓存不会定时进行刷新（也就是说，没有刷新间隔）。</li>
 <li>缓存会保存列表或对象（无论查询方法返回哪种）的 1024 个引用。</li>
 <li>缓存会被视为读/写缓存，这意味着获取到的对象并不是共享的，可以安全地被调用者修改，而不干扰其他调用者或线程所做的潜在修改。</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cache</span></span><br><span class="hljs-tag">  <span class="hljs-attr">eviction</span>=<span class="hljs-string">&quot;FIFO&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">flushInterval</span>=<span class="hljs-string">&quot;60000&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;512&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">readOnly</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>这个更高级的配置创建了一个 FIFO 缓存，每隔 60 秒刷新，最多可以存储结果对象或列表的 512 个引用，而且返回的对象被认为是只读的，因此对它们进行修改可能会在不同线程中的调用者产生冲突。</p>
+<p>这个更高级的配置创建了一个 FIFO 缓存，每隔 60
+秒刷新，最多可以存储结果对象或列表的 512
+个引用，而且返回的对象被认为是只读的，因此对它们进行修改可能会在不同线程中的调用者产生冲突。</p>
 <p>可用的清除策略有：</p>
 <ul>
 <li><code>LRU</code> – 最近最少使用：移除最长时间不被使用的对象。</li>
 <li><code>FIFO</code> – 先进先出：按对象进入缓存的顺序来移除它们。</li>
-<li><code>SOFT</code> – 软引用：基于垃圾回收器状态和软引用规则移除对象。</li>
-<li><code>WEAK</code> – 弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。</li>
+<li><code>SOFT</code> –
+软引用：基于垃圾回收器状态和软引用规则移除对象。</li>
+<li><code>WEAK</code> –
+弱引用：更积极地基于垃圾收集器状态和弱引用规则移除对象。</li>
 </ul>
 <p>默认的清除策略是 LRU。</p>
-<p>flushInterval（刷新间隔）属性可以被设置为任意的正整数，设置的值应该是一个以毫秒为单位的合理时间量。 默认情况是不设置，也就是没有刷新间隔，缓存仅仅会在调用语句时刷新。</p>
-<p>size（引用数目）属性可以被设置为任意正整数，要注意欲缓存对象的大小和运行环境中可用的内存资源。默认值是 1024。</p>
-<p>readOnly（只读）属性可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。 速度上会慢一些，但是更安全，因此默认值是 false。</p>
-<p>type 二级缓存实现类，默认值：org.apache.ibatis.cache.impl.PerpetualCache</p>
+<p>flushInterval（刷新间隔）属性可以被设置为任意的正整数，设置的值应该是一个以毫秒为单位的合理时间量。
+默认情况是不设置，也就是没有刷新间隔，缓存仅仅会在调用语句时刷新。</p>
+<p>size（引用数目）属性可以被设置为任意正整数，要注意欲缓存对象的大小和运行环境中可用的内存资源。默认值是
+1024。</p>
+<p>readOnly（只读）属性可以被设置为 true 或
+false。只读的缓存会给所有调用者返回缓存对象的相同实例。
+因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。
+速度上会慢一些，但是更安全，因此默认值是 false。</p>
+<p>type
+二级缓存实现类，默认值：org.apache.ibatis.cache.impl.PerpetualCache</p>
 <p>3、使用到二级缓存的 javaBean 需要实现 Serializable</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202212012226849.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-二级缓存失效"><a href="#2-二级缓存失效" class="headerlink" title="2. 二级缓存失效"></a>2. 二级缓存失效</h4><p>1、同一命名空间进行增删改，会导致二级缓存失效。</p>
-<p>可以将 flushCache 设置为 false 不清空缓存，默认为 true。谨慎设置！！</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202212012226849.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="二级缓存失效">2. 二级缓存失效</h4>
+<p>1、同一命名空间进行增删改，会导致二级缓存失效。</p>
+<p>可以将 flushCache 设置为 false 不清空缓存，默认为
+true。谨慎设置！！</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">update</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;updateUser&quot;</span> <span class="hljs-attr">flushCache</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        mapper.updateUser(<span class="hljs-keyword">new</span> User(<span class="hljs-number">6</span>,<span class="hljs-string">&quot;aaa&quot;</span>,<span class="hljs-number">234</span>,<span class="hljs-string">&quot;1&quot;</span>));<br>        session.commit();<br>    &#125;<br><br>    <span class="hljs-keyword">try</span> (SqlSession session = sqlSessionFactory.openSession()) &#123;<br>        UserMapper mapper = session.getMapper(UserMapper.class);<br>        User user = mapper.selectUserById(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>2、设置查询不缓存数据到二级缓存中。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUserById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span> <span class="hljs-attr">useCache</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>useCache  默认为 true。</p>
+<p>useCache 默认为 true。</p>
 <p>另外，查询语句也有 flushCache ，但是默认值为 false。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectUserById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;userMap&quot;</span> <span class="hljs-attr">flushCache</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>3、使用 cache-ref 增删改的时候清空指定 nameSpace 的缓存。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">cache-ref</span> <span class="hljs-attr">namespace</span>=<span class="hljs-string">&quot;com.debuggingWorld.mapper.DeptMapper&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>引用 nameSpace 所指定 mapper 映射文件的缓存机制，执行增删改会清空执行 nameSpace 的缓存。</p>
+<p>引用 nameSpace 所指定 mapper 映射文件的缓存机制，执行增删改会清空执行
+nameSpace 的缓存。</p>
 <p>限制：只能引用一个 nameSpace。</p>
-<h3 id="3-3-整合第三方缓存"><a href="#3-3-整合第三方缓存" class="headerlink" title="3.3 整合第三方缓存"></a>3.3 整合第三方缓存</h3><p><a target="_blank" rel="noopener" href="https://github.com/hazendaz/redis-cache">https://github.com/hazendaz/redis-cache</a></p>
+<h3 id="整合第三方缓存">3.3 整合第三方缓存</h3>
+<p>https://github.com/hazendaz/redis-cache</p>
 <p>1、添加依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/org.mybatis.caches/mybatis-redis --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis.caches<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0-beta2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>2、添加 redis 配置类</p>
 <p>redis.properties：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">redis.host</span>=<span class="hljs-string">localhost</span><br><span class="hljs-meta">redis.port</span>=<span class="hljs-string">6379</span><br><span class="hljs-meta">redis.connectionTimeout</span>=<span class="hljs-string">5000</span><br><span class="hljs-meta">redis.soTimeout</span>=<span class="hljs-string">5000</span><br><span class="hljs-meta">redis.password</span>=<span class="hljs-string"></span><br><span class="hljs-meta">redis.database</span>=<span class="hljs-string">0</span><br><span class="hljs-meta">redis.clientName</span>=<span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
-
 <p>3、设置 mybatis 二级缓存实现类</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">namespace</span>=<span class="hljs-string">&quot;org.acme.FooMapper&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">cache</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;org.mybatis.caches.redis.RedisCache&quot;</span> /&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">mapper</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
               
             </div>
             <hr/>
@@ -615,6 +639,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -871,6 +901,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

@@ -16,22 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;631f3fa10e3e7420767c11fe 1. @EnableTransactionManagement工作原理开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个 B">
+    <meta name="description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;631f3fa10e3e7420767c11fe 1. @EnableTransactionManagement工作原理 开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring——事务源码解析">
 <meta property="og:url" content="http://example.com/2022/08/29/Spring%E2%80%94%E2%80%94%E4%BA%8B%E5%8A%A1%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;631f3fa10e3e7420767c11fe 1. @EnableTransactionManagement工作原理开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个 B">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;631f3fa10e3e7420767c11fe 1. @EnableTransactionManagement工作原理 开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220905220453.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/Spring_transaction_ab123123132.png">
 <meta property="article:published_time" content="2022-08-29T12:46:29.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.855Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="源码">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220905220453.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -294,98 +291,156 @@
             
             <div class="markdown-body">
               
-              <p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/631f3fa10e3e7420767c11fe">https://www.processon.com/view/link/631f3fa10e3e7420767c11fe</a></p>
-<h3 id="1-EnableTransactionManagement工作原理"><a href="#1-EnableTransactionManagement工作原理" class="headerlink" title="1. @EnableTransactionManagement工作原理"></a>1. @EnableTransactionManagement工作原理</h3><p>开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个 Bean：</p>
-<ol>
+              <p>https://www.processon.com/view/link/631f3fa10e3e7420767c11fe</p>
+<h3 id="enabletransactionmanagement工作原理">1. <span class="citation"
+data-cites="EnableTransactionManagement工作原理">@EnableTransactionManagement工作原理</span></h3>
+<p>开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 <span
+class="citation"
+data-cites="EnableTransactionManagement">@EnableTransactionManagement</span>
+注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个 Bean：</p>
+<ol type="1">
 <li>AutoProxyRegistrar</li>
 <li>ProxyTransactionManagementConfiguration</li>
 </ol>
-<p>AutoProxyRegistrar 主要的作用是向 Spring 容器中注册了一个 <strong>InfrastructureAdvisorAutoProxyCreator</strong> 的 Bean。<br>而 InfrastructureAdvisorAutoProxyCreator 继承了 <strong>AbstractAdvisorAutoProxyCreator</strong>，所以这个类的主要作用就是<strong>开启自动代理</strong>的作用，也就是一个 BeanPostProcessor，会在初始化后步骤中去寻找 Advisor 类型的 Bean，并判断当前 Bean 是否有匹配的 Advisor，是否需要利用动态代理产生一个代理对象。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220905220453.png" srcset="/img/loading.gif" lazyload></p>
-<p>ProxyTransactionManagementConfiguration 是一个配置类，它又定义了另外三个 bean：</p>
-<ol>
+<p>AutoProxyRegistrar 主要的作用是向 Spring 容器中注册了一个
+<strong>InfrastructureAdvisorAutoProxyCreator</strong> 的 Bean。 而
+InfrastructureAdvisorAutoProxyCreator 继承了
+<strong>AbstractAdvisorAutoProxyCreator</strong>，所以这个类的主要作用就是<strong>开启自动代理</strong>的作用，也就是一个
+BeanPostProcessor，会在初始化后步骤中去寻找 Advisor 类型的
+Bean，并判断当前 Bean 是否有匹配的
+Advisor，是否需要利用动态代理产生一个代理对象。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220905220453.png" srcset="/img/loading.gif" lazyload /></p>
+<p>ProxyTransactionManagementConfiguration
+是一个配置类，它又定义了另外三个 bean：</p>
+<ol type="1">
 <li>BeanFactoryTransactionAttributeSourceAdvisor：一个 Advisor</li>
-<li>AnnotationTransactionAttributeSource：相当于 BeanFactoryTransactionAttributeSourceAdvisor 中的 Pointcut</li>
-<li>TransactionInterceptor：相当于 BeanFactoryTransactionAttributeSourceAdvisor 中的 Advice</li>
+<li>AnnotationTransactionAttributeSource：相当于
+BeanFactoryTransactionAttributeSourceAdvisor 中的 Pointcut</li>
+<li>TransactionInterceptor：相当于
+BeanFactoryTransactionAttributeSourceAdvisor 中的 Advice</li>
 </ol>
-<p><strong>AnnotationTransactionAttributeSource</strong> 就是用来判断某个类上是否存在 @Transactional 注解，或者判断某个方法上是否存在 @Transactional 注解的。</p>
-<p><strong>TransactionInterceptor</strong> 就是代理逻辑，当某个类中存在 @Transactional 注解时，到时就产生一个代理对象作为 Bean，代理对象在执行某个方法时，最终就会进入到 TransactionInterceptor 的 invoke() 方法。</p>
-<h3 id="2-Spring事务基本执行原理"><a href="#2-Spring事务基本执行原理" class="headerlink" title="2. Spring事务基本执行原理"></a>2. Spring事务基本执行原理</h3><p>一个 Bean 在执行 Bean 的创建生命周期时，会经过 InfrastructureAdvisorAutoProxyCreator 的初始化后的方法，会判断当前当前 Bean 对象是否和 BeanFactoryTransactionAttributeSourceAdvisor 匹配，匹配逻辑为判断该 Bean 的类上是否存在 @Transactional 注解，或者类中的某个方法上是否存在 @Transactional 注解，如果存在则表示该 Bean 需要进行动态代理产生一个代理对象作为 Bean 对象。</p>
-<p>该代理对象在执行某个方法时，会再次判断当前执行的方法是否和 BeanFactoryTransactionAttributeSourceAdvisor 匹配，如果匹配则执行该 Advisor 中的 TransactionInterceptor 的 invoke() 方法，执行基本流程为：</p>
-<ol>
-<li>利用所配置的 PlatformTransactionManager 事务管理器新建一个数据库连接</li>
+<p><strong>AnnotationTransactionAttributeSource</strong>
+就是用来判断某个类上是否存在 <span class="citation"
+data-cites="Transactional">@Transactional</span>
+注解，或者判断某个方法上是否存在 <span class="citation"
+data-cites="Transactional">@Transactional</span> 注解的。</p>
+<p><strong>TransactionInterceptor</strong> 就是代理逻辑，当某个类中存在
+<span class="citation" data-cites="Transactional">@Transactional</span>
+注解时，到时就产生一个代理对象作为
+Bean，代理对象在执行某个方法时，最终就会进入到 TransactionInterceptor 的
+invoke() 方法。</p>
+<h3 id="spring事务基本执行原理">2. Spring事务基本执行原理</h3>
+<p>一个 Bean 在执行 Bean 的创建生命周期时，会经过
+InfrastructureAdvisorAutoProxyCreator 的初始化后的方法，会判断当前当前
+Bean 对象是否和 BeanFactoryTransactionAttributeSourceAdvisor
+匹配，匹配逻辑为判断该 Bean 的类上是否存在 <span class="citation"
+data-cites="Transactional">@Transactional</span>
+注解，或者类中的某个方法上是否存在 <span class="citation"
+data-cites="Transactional">@Transactional</span> 注解，如果存在则表示该
+Bean 需要进行动态代理产生一个代理对象作为 Bean 对象。</p>
+<p>该代理对象在执行某个方法时，会再次判断当前执行的方法是否和
+BeanFactoryTransactionAttributeSourceAdvisor 匹配，如果匹配则执行该
+Advisor 中的 TransactionInterceptor 的 invoke()
+方法，执行基本流程为：</p>
+<ol type="1">
+<li>利用所配置的 PlatformTransactionManager
+事务管理器新建一个数据库连接</li>
 <li>修改数据库连接的 autocommit 为 false</li>
-<li>执行 MethodInvocation.proceed() 方法，即执行业务方法，其中就会执行 sql</li>
+<li>执行 MethodInvocation.proceed() 方法，即执行业务方法，其中就会执行
+sql</li>
 <li>如果没有抛异常，则提交</li>
 <li>如果抛了异常，则回滚</li>
 </ol>
-<h3 id="3-Spring事务详细执行流程"><a href="#3-Spring事务详细执行流程" class="headerlink" title="3. Spring事务详细执行流程"></a>3. Spring事务详细执行流程</h3><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/Spring_transaction_ab123123132.png" srcset="/img/loading.gif" lazyload></p>
-<p>Spring事务执行流程图：<a target="_blank" rel="noopener" href="https://www.processon.com/view/link/5fab6edf1e0853569633cc06">https://www.processon.com/view/link/5fab6edf1e0853569633cc06</a></p>
-<h3 id="4-Spring事务传播机制"><a href="#4-Spring事务传播机制" class="headerlink" title="4. Spring事务传播机制"></a>4. Spring事务传播机制</h3><p>在开发过程中，经常会出现一个方法调用另外一个方法，那么这里就涉及到了多种场景，比如a()调用b()：</p>
-<ol>
+<h3 id="spring事务详细执行流程">3. Spring事务详细执行流程</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/Spring_transaction_ab123123132.png" srcset="/img/loading.gif" lazyload /></p>
+<p>Spring事务执行流程图：<a
+target="_blank" rel="noopener" href="https://www.processon.com/view/link/5fab6edf1e0853569633cc06">https://www.processon.com/view/link/5fab6edf1e0853569633cc06</a></p>
+<h3 id="spring事务传播机制">4. Spring事务传播机制</h3>
+<p>在开发过程中，经常会出现一个方法调用另外一个方法，那么这里就涉及到了多种场景，比如a()调用b()：</p>
+<ol type="1">
 <li>a() 和 b() 方法中的所有 sql 需要在同一个事务中吗？</li>
 <li>a() 和 b() 方法需要单独的事务吗？</li>
 <li>a() 需要在事务中执行，b() 还需要在事务中执行吗？</li>
-<li>等等情况…</li>
+<li>等等情况...</li>
 </ol>
-<p>所以，这就要求 Spring 事务能支持上面各种场景，这就是 Spring 事务传播机制的由来。那 Spring 事务传播机制是如何实现的呢?</p>
-<p>先来看上述几种场景中的一种情况，a() 在一个事务中执行，调用 b() 方法时需要新开一个事务执行：</p>
-<ol>
-<li>首先，代理对象执行 a() 方法前，先利用事务管理器新建一个数据库连接 a</li>
+<p>所以，这就要求 Spring 事务能支持上面各种场景，这就是 Spring
+事务传播机制的由来。那 Spring 事务传播机制是如何实现的呢?</p>
+<p>先来看上述几种场景中的一种情况，a() 在一个事务中执行，调用 b()
+方法时需要新开一个事务执行：</p>
+<ol type="1">
+<li>首先，代理对象执行 a() 方法前，先利用事务管理器新建一个数据库连接
+a</li>
 <li>将数据库连接 a 的 autocommit 改为 false</li>
 <li>把数据库连接 a 设置到 ThreadLocal 中</li>
 <li>执行 a() 方法中的 sql</li>
-<li>执行 a() 方法过程中，调用了 b() 方法（注意用代理对象调用 b() 方法）<ul>
-<li>代理对象执行 b() 方法前，判断出来了当前线程中已经存在一个数据库连接 a 了，表示当前线程其实已经拥有一个 Spring 事务了，则进行<strong>挂起</strong></li>
-<li> 挂起就是把 ThreadLocal 中的数据库连接 a 从 ThreadLocal 中移除，并放入一个<strong>挂起资源对象</strong>中</li>
+<li>执行 a() 方法过程中，调用了 b() 方法（注意用代理对象调用 b() 方法）
+<ul>
+<li>代理对象执行 b() 方法前，判断出来了当前线程中已经存在一个数据库连接
+a 了，表示当前线程其实已经拥有一个 Spring
+事务了，则进行<strong>挂起</strong></li>
+<li>挂起就是把 ThreadLocal 中的数据库连接 a 从 ThreadLocal
+中移除，并放入一个<strong>挂起资源对象</strong>中</li>
 <li>挂起完成后，再次利用事务管理器新建一个数据库连接 b</li>
-<li> 将数据库连接 b 的 autocommit 改为 false</li>
-<li> 把数据库连接 b 设置到 ThreadLocal 中</li>
-<li> 执行 b() 方法中的 sql</li>
-<li> b() 方法正常执行完，则从 ThreadLocal 中拿到数据库连接 b 进行提交</li>
-<li> 提交之后会恢复所挂起的数据库连接 a，这里的恢复，其实只是把在<strong>挂起资源对象</strong>中所保存的数据库连接 a 再次设置到 ThreadLocal 中</li>
-</ul>
-</li>
-<li>a() 方法正常执行完，则从 ThreadLocal 中拿到数据库连接 a 进行提交</li>
+<li>将数据库连接 b 的 autocommit 改为 false</li>
+<li>把数据库连接 b 设置到 ThreadLocal 中</li>
+<li>执行 b() 方法中的 sql</li>
+<li>b() 方法正常执行完，则从 ThreadLocal 中拿到数据库连接 b
+进行提交</li>
+<li>提交之后会恢复所挂起的数据库连接
+a，这里的恢复，其实只是把在<strong>挂起资源对象</strong>中所保存的数据库连接
+a 再次设置到 ThreadLocal 中</li>
+</ul></li>
+<li>a() 方法正常执行完，则从 ThreadLocal 中拿到数据库连接 a
+进行提交</li>
 </ol>
-<p>这个过程中最为核心的是：<strong>在执行某个方法时，判断当前是否已经存在一个事务，就是判断当前线程的 ThreadLocal 中是否存在一个数据库连接对象，如果存在则表示已经存在一个事务了。</strong></p>
-<p>其中，以非事务方式运行，表示以非 Spring 事务运行，就是在执行这个方法时，Spring 事务管理器不会去建立数据库连接，执行 sql 时，由 Mybatis 或 JdbcTemplate 自己来建立数据库连接来执行 sql。</p>
-<h4 id="情况1"><a href="#情况1" class="headerlink" title="情况1"></a>情况1</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>默认情况下传播机制为 <strong>REQUIRED，表示当前如果没有事务则新建一个事务，如果有事务则在当前事务中执行。</strong></p>
+<p>这个过程中最为核心的是：<strong>在执行某个方法时，判断当前是否已经存在一个事务，就是判断当前线程的
+ThreadLocal
+中是否存在一个数据库连接对象，如果存在则表示已经存在一个事务了。</strong></p>
+<p>其中，以非事务方式运行，表示以非 Spring
+事务运行，就是在执行这个方法时，Spring
+事务管理器不会去建立数据库连接，执行 sql 时，由 Mybatis 或 JdbcTemplate
+自己来建立数据库连接来执行 sql。</p>
+<h4 id="情况1">情况1</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>默认情况下传播机制为
+<strong>REQUIRED，表示当前如果没有事务则新建一个事务，如果有事务则在当前事务中执行。</strong></p>
 <p>所以上面这种情况的执行流程如下：</p>
-<ol>
+<ol type="1">
 <li>新建一个数据库连接 conn</li>
 <li>设置 conn 的 autocommit 为 false</li>
 <li>执行 test 方法中的 sql</li>
 <li>执行 a 方法中的 sql</li>
 <li>执行 conn 的 commit() 方法进行提交</li>
 </ol>
-<h4 id="情况2"><a href="#情况2" class="headerlink" title="情况2"></a>情况2</h4><p>假如是这种情况</p>
+<h4 id="情况2">情况2</h4>
+<p>假如是这种情况</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>        <span class="hljs-keyword">int</span> result = <span class="hljs-number">100</span>/<span class="hljs-number">0</span>;<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>所以上面这种情况的执行流程如下：</p>
-<ol>
+<ol type="1">
 <li>新建一个数据库连接 conn</li>
 <li>设置 conn 的 autocommit 为 false</li>
 <li>执行 test 方法中的 sql</li>
 <li>执行 a 方法中的 sql</li>
 <li>抛出异常</li>
-<li>执行 conn 的 rollback() 方法进行回滚，所以两个方法中的 sql 都会回滚掉</li>
+<li>执行 conn 的 rollback() 方法进行回滚，所以两个方法中的 sql
+都会回滚掉</li>
 </ol>
-<h4 id="情况3"><a href="#情况3" class="headerlink" title="情况3"></a>情况3</h4><p>假如是这种情况：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>        <span class="hljs-keyword">int</span> result = <span class="hljs-number">100</span>/<span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>所以上面这种情况的执行流程如下：</p>
-<ol>
+<h4 id="情况3">情况3</h4>
+<p>假如是这种情况： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>        <span class="hljs-keyword">int</span> result = <span class="hljs-number">100</span>/<span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure> 所以上面这种情况的执行流程如下：</p>
+<ol type="1">
 <li>新建一个数据库连接 conn</li>
 <li>设置 conn 的 autocommit 为 false</li>
 <li>执行 test 方法中的 sql</li>
 <li>执行 a 方法中的 sql</li>
 <li>抛出异常</li>
-<li>执行 conn 的 rollback() 方法进行回滚，所以两个方法中的 sql 都会回滚掉</li>
+<li>执行 conn 的 rollback() 方法进行回滚，所以两个方法中的 sql
+都会回滚掉</li>
 </ol>
-<h4 id="情况4"><a href="#情况4" class="headerlink" title="情况4"></a>情况4</h4><p>如果是这种情况：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>		<span class="hljs-keyword">int</span> result = <span class="hljs-number">100</span>/<span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>所以上面这种情况的执行流程如下：</p>
-<ol>
+<h4 id="情况4">情况4</h4>
+<p>如果是这种情况： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// test方法中的sql</span><br>		userService.a();<br>	&#125;<br><br>	<span class="hljs-meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">a</span><span class="hljs-params">()</span> </span>&#123;<br>		<span class="hljs-comment">// a方法中的sql</span><br>		<span class="hljs-keyword">int</span> result = <span class="hljs-number">100</span>/<span class="hljs-number">0</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure> 所以上面这种情况的执行流程如下：</p>
+<ol type="1">
 <li>新建一个数据库连接 conn</li>
 <li>设置 conn 的 autocommit 为 false</li>
 <li>执行 test 方法中的 sql</li>
@@ -393,17 +448,24 @@
 <li>执行 a 方法中的 sql</li>
 <li>抛出异常</li>
 <li>执行 conn2 的 rollback() 方法进行回滚</li>
-<li><strong>继续抛异常，对于 test() 方法而言，它会接收到一个异常，然后抛出</strong></li>
-<li>执行 conn 的 rollback() 方法进行回滚，最终还是两个方法中的 sql 都回滚了</li>
+<li><strong>继续抛异常，对于 test()
+方法而言，它会接收到一个异常，然后抛出</strong></li>
+<li>执行 conn 的 rollback() 方法进行回滚，最终还是两个方法中的 sql
+都回滚了</li>
 </ol>
-<h3 id="5-Spring事务强制回滚"><a href="#5-Spring事务强制回滚" class="headerlink" title="5. Spring事务强制回滚"></a>5. Spring事务强制回滚</h3><p>正常情况下，a() 调用 b() 方法时，如果 b() 方法抛了异常，但是在 a() 方法捕获了，那么 a() 的事务还是会正常提交的，但是有的时候，我们捕获异常可能仅仅只是不把异常信息返回给客户端，而返回一些更友好的错误信息，此时我们还是希望事务能回滚的，那就得告诉 Spring 把当前事务回滚掉，做法就是：</p>
+<h3 id="spring事务强制回滚">5. Spring事务强制回滚</h3>
+<p>正常情况下，a() 调用 b() 方法时，如果 b() 方法抛了异常，但是在 a()
+方法捕获了，那么 a()
+的事务还是会正常提交的，但是有的时候，我们捕获异常可能仅仅只是不把异常信息返回给客户端，而返回一些更友好的错误信息，此时我们还是希望事务能回滚的，那就得告诉
+Spring 把当前事务回滚掉，做法就是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span>&#123;<br>	<br>    <span class="hljs-comment">// 执行sql</span><br>	<span class="hljs-keyword">try</span> &#123;<br>		b();<br>	&#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>		<span class="hljs-comment">// 构造友好的错误信息返回</span><br>		TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();<br>	&#125;<br>    <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">b</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>	<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Exception();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="6-TransactionSynchronization"><a href="#6-TransactionSynchronization" class="headerlink" title="6. TransactionSynchronization"></a>6. TransactionSynchronization</h3><p>Spring 事务有可能会提交、回滚、挂起、恢复，所以 Spring 事务提供了一种机制，可以让程序员来监听当前 Spring 事务所处于的状态。</p>
+<h3 id="transactionsynchronization">6. TransactionSynchronization</h3>
+<p>Spring 事务有可能会提交、回滚、挂起、恢复，所以 Spring
+事务提供了一种机制，可以让程序员来监听当前 Spring 事务所处于的状态。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br><br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> JdbcTemplate jdbcTemplate;<br><br>	<span class="hljs-meta">@Autowired</span><br>	<span class="hljs-keyword">private</span> UserService userService;<br><br>	<span class="hljs-meta">@Transactional</span><br>	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span>&#123;<br>		TransactionSynchronizationManager.registerSynchronization(<span class="hljs-keyword">new</span> TransactionSynchronization() &#123;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">suspend</span><span class="hljs-params">()</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test被挂起了&quot;</span>);<br>			&#125;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">resume</span><span class="hljs-params">()</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test被恢复了&quot;</span>);<br>			&#125;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeCommit</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> readOnly)</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test准备要提交了&quot;</span>);<br>			&#125;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeCompletion</span><span class="hljs-params">()</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test准备要提交或回滚了&quot;</span>);<br>			&#125;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterCommit</span><span class="hljs-params">()</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test提交成功了&quot;</span>);<br>			&#125;<br><br>			<span class="hljs-meta">@Override</span><br>			<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterCompletion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> status)</span> </span>&#123;<br>				System.out.println(<span class="hljs-string">&quot;test提交或回滚成功了&quot;</span>);<br>			&#125;<br>		&#125;);<br><br>		jdbcTemplate.execute(<span class="hljs-string">&quot;insert into t1 values(1,1,1,1,&#x27;1&#x27;)&quot;</span>);<br>		System.out.println(<span class="hljs-string">&quot;test&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="7-setGlobalRollbackOnParticipationFailure"><a href="#7-setGlobalRollbackOnParticipationFailure" class="headerlink" title="7. setGlobalRollbackOnParticipationFailure"></a>7. setGlobalRollbackOnParticipationFailure</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> PlatformTransactionManager <span class="hljs-title">platformTransactionManager</span><span class="hljs-params">()</span></span>&#123;<br>    DataSourceTransactionManager transactionManager = <span class="hljs-keyword">new</span> DataSourceTransactionManager(dataSource());<br>    <span class="hljs-comment">// 部分失败是否全局回滚，默认 true</span><br>    transactionManager.setGlobalRollbackOnParticipationFailure(<span class="hljs-keyword">false</span>);<br>    <span class="hljs-keyword">return</span> transactionManager;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<h3 id="setglobalrollbackonparticipationfailure">7.
+setGlobalRollbackOnParticipationFailure</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> PlatformTransactionManager <span class="hljs-title">platformTransactionManager</span><span class="hljs-params">()</span></span>&#123;<br>    DataSourceTransactionManager transactionManager = <span class="hljs-keyword">new</span> DataSourceTransactionManager(dataSource());<br>    <span class="hljs-comment">// 部分失败是否全局回滚，默认 true</span><br>    transactionManager.setGlobalRollbackOnParticipationFailure(<span class="hljs-keyword">false</span>);<br>    <span class="hljs-keyword">return</span> transactionManager;<br>&#125;<br></code></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    UserService userService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    JdbcTemplate jdbcTemplate;<br><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span>  </span>&#123;<br>        jdbcTemplate.update(<span class="hljs-string">&quot;insert into t_user( name, age) VALUES (?,?)&quot;</span>, <span class="hljs-string">&quot;lisi1&quot;</span>, <span class="hljs-number">18</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            userService.add();<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br><br>        &#125;<br>    &#125;<br><br>    <span class="hljs-meta">@Transactional</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span> </span>&#123;<br>        jdbcTemplate.update(<span class="hljs-string">&quot;insert into t_user( name, age) VALUES (?,?)&quot;</span>, <span class="hljs-string">&quot;lisi2&quot;</span>, <span class="hljs-number">18</span>);<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException();<br>    &#125;<br>&#125;<br>````<br><br>为 <span class="hljs-keyword">false</span> 时，执行 test 方法，两条都插入<br>为 <span class="hljs-keyword">true</span> 时，全部回滚<br><br>```java<br><span class="hljs-meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span> </span>&#123;<br>    jdbcTemplate.update(<span class="hljs-string">&quot;insert into t_user( name, age) VALUES (?,?)&quot;</span>, <span class="hljs-string">&quot;lisi2&quot;</span>, <span class="hljs-number">18</span>);<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时为 true 时，test 方法不回滚，add 方法回滚</p>
 <p><strong>一个事务中要么全都回滚，要么全都不回滚</strong></p>
@@ -593,6 +655,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -849,6 +917,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

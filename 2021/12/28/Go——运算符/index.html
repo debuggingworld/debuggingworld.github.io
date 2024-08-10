@@ -16,21 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 算术运算符算术运算符包括： + ，-，*，&#x2F;，%，++，– 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1 s">
+    <meta name="description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——运算符">
 <meta property="og:url" content="http://example.com/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 算术运算符算术运算符包括： + ，-，*，&#x2F;，%，++，– 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1 s">
+<meta property="og:description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228232536.png">
 <meta property="article:published_time" content="2021-12-28T14:34:55.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.306Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -239,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          879 字
+          880 字
         
       </span>
     
@@ -293,49 +290,56 @@
             
             <div class="markdown-body">
               
-              <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="1-算术运算符"><a href="#1-算术运算符" class="headerlink" title="1. 算术运算符"></a>1. 算术运算符</h3><p>算术运算符包括： + ，-，*，/，%，++，–</p>
+              <p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="算术运算符">1. 算术运算符</h3>
+<p>算术运算符包括： + ，-，*，/，%，++，--</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-comment">//+加号：</span><br>	<span class="hljs-comment">//1.正数 2.相加操作  3.字符串拼接</span><br>	<span class="hljs-keyword">var</span> n1 <span class="hljs-keyword">int</span> = +<span class="hljs-number">10</span><br>	fmt.Println(n1)<br>	<span class="hljs-keyword">var</span> n2 <span class="hljs-keyword">int</span> = <span class="hljs-number">4</span> + <span class="hljs-number">7</span><br>	fmt.Println(n2)<br>	<span class="hljs-keyword">var</span> s1 <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;abc&quot;</span> + <span class="hljs-string">&quot;def&quot;</span><br>	fmt.Println(s1)<br><br>	<span class="hljs-comment">// /除号：</span><br>	fmt.Println(<span class="hljs-number">10</span> / <span class="hljs-number">3</span>)   <span class="hljs-comment">//两个int类型数据运算，结果一定为整数类型</span><br>	fmt.Println(<span class="hljs-number">10.0</span> / <span class="hljs-number">3</span>) <span class="hljs-comment">//浮点类型参与运算，结果为浮点类型</span><br><br>	<span class="hljs-comment">// % 取模</span><br>	fmt.Println(<span class="hljs-number">10</span> % <span class="hljs-number">-3</span>) <span class="hljs-comment">// 1</span><br>	<span class="hljs-comment">//++自增操作：</span><br>	<span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span> = <span class="hljs-number">10</span><br>	a++<br>	a--<br>	<span class="hljs-comment">//++ 自增 加1操作，--自减，减1操作</span><br>	<span class="hljs-comment">// 只能单独使用，不能参与到运算中去</span><br>	<span class="hljs-comment">// ++，--只能在变量的后面</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="2-赋值运算符"><a href="#2-赋值运算符" class="headerlink" title="2. 赋值运算符"></a>2. 赋值运算符</h3><p>赋值运算符包括=,+=，-=，*=，/=,%=</p>
+<h3 id="赋值运算符">2. 赋值运算符</h3>
+<p>赋值运算符包括=,+=，-=，*=，/=,%=</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> num1 <span class="hljs-keyword">int</span> = (<span class="hljs-number">10</span> + <span class="hljs-number">20</span>) % <span class="hljs-number">3</span><br>	num1 += <span class="hljs-number">20</span><br>	fmt.Println(num1) <span class="hljs-comment">// 20</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-关系运算符"><a href="#3-关系运算符" class="headerlink" title="3. 关系运算符"></a>3. 关系运算符</h3><p>关系运算符包括：==、!=、&gt;、&lt;、&gt; =、&lt;=</p>
-<h3 id="4-逻辑运算符"><a href="#4-逻辑运算符" class="headerlink" title="4. 逻辑运算符"></a>4. 逻辑运算符</h3><p>逻辑运算符：&amp;&amp;(逻辑与/短路与)，||（逻辑或/短路或），!（逻辑非）</p>
+<h3 id="关系运算符">3. 关系运算符</h3>
+<p>关系运算符包括：==、!=、&gt;、&lt;、&gt; =、&lt;=</p>
+<h3 id="逻辑运算符">4. 逻辑运算符</h3>
+<p>逻辑运算符：&amp;&amp;(逻辑与/短路与)，||（逻辑或/短路或），!（逻辑非）</p>
 <p>【注】&amp; 不能作为逻辑运算</p>
-<h3 id="5-位运算符"><a href="#5-位运算符" class="headerlink" title="5. 位运算符"></a>5. 位运算符</h3><table>
+<h3 id="位运算符">5. 位运算符</h3>
+<table>
 <thead>
 <tr>
-<th align="center">运算符</th>
-<th align="center">描述</th>
+<th style="text-align: center;">运算符</th>
+<th style="text-align: center;">描述</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">&amp;</td>
-<td align="center">按位与</td>
+<tbody>
+<tr>
+<td style="text-align: center;">&amp;</td>
+<td style="text-align: center;">按位与</td>
 </tr>
 <tr>
-<td align="center">|</td>
-<td align="center">按位或</td>
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">按位或</td>
 </tr>
 <tr>
-<td align="center">^</td>
-<td align="center">按位异或</td>
+<td style="text-align: center;">^</td>
+<td style="text-align: center;">按位异或</td>
 </tr>
 <tr>
-<td align="center">&lt;&lt;</td>
-<td align="center">左移运算符（高位丢弃，低位补0）</td>
+<td style="text-align: center;">&lt;&lt;</td>
+<td style="text-align: center;">左移运算符（高位丢弃，低位补0）</td>
 </tr>
 <tr>
-<td align="center">&gt;&gt;</td>
-<td align="center">右移运算符</td>
+<td style="text-align: center;">&gt;&gt;</td>
+<td style="text-align: center;">右移运算符</td>
 </tr>
-</tbody></table>
-<p>【注】没有无符号右移</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> c <span class="hljs-keyword">int8</span> = <span class="hljs-number">127</span><br>	fmt.Println(c &lt;&lt; <span class="hljs-number">1</span>) <span class="hljs-comment">// -2</span><br>	<br>	<span class="hljs-comment">// 01111111			// 127</span><br>	<span class="hljs-comment">// 11111110			// 补码</span><br>	<span class="hljs-comment">// 10000001			// 反码</span><br>	<span class="hljs-comment">// 10000010			// 原码</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="6-其他运算符"><a href="#6-其他运算符" class="headerlink" title="6. 其他运算符"></a>6. 其他运算符</h3><p>&amp; ：返回变量的存储地址<br>* ：返回针变量对应的值</p>
-<h3 id="7-运算符优先级"><a href="#7-运算符优先级" class="headerlink" title="7. 运算符优先级"></a>7. 运算符优先级</h3><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228232536.png" srcset="/img/loading.gif" lazyload></p>
+</tbody>
+</table>
+<p>【注】没有无符号右移 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> c <span class="hljs-keyword">int8</span> = <span class="hljs-number">127</span><br>	fmt.Println(c &lt;&lt; <span class="hljs-number">1</span>) <span class="hljs-comment">// -2</span><br>	<br>	<span class="hljs-comment">// 01111111			// 127</span><br>	<span class="hljs-comment">// 11111110			// 补码</span><br>	<span class="hljs-comment">// 10000001			// 反码</span><br>	<span class="hljs-comment">// 10000010			// 原码</span><br><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<h3 id="其他运算符">6. 其他运算符</h3>
+<p>&amp; ：返回变量的存储地址 * ：返回针变量对应的值</p>
+<h3 id="运算符优先级">7. 运算符优先级</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228232536.png" srcset="/img/loading.gif" lazyload /></p>
 
               
             </div>
@@ -520,6 +524,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -776,6 +786,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

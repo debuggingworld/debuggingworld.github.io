@@ -16,33 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Swagger21.1 使用依赖： 123456789101112&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;io.springfox&lt;&#x2F;groupId&gt;        &lt;artifactId&gt;springfox-swagger2&lt;&#x2F;artifactId&gt;">
+    <meta name="description" content="1. Swagger2 1.1 使用 依赖： 123456789101112&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;io.springfox&lt;&#x2F;groupId&gt;        &lt;artifactId&gt;springfox-swagger2&lt;&#x2F;artifactId&gt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swagger">
 <meta property="og:url" content="http://example.com/2023/04/08/Swagger/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Swagger21.1 使用依赖： 123456789101112&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;io.springfox&lt;&#x2F;groupId&gt;        &lt;artifactId&gt;springfox-swagger2&lt;&#x2F;artifactId&gt;">
+<meta property="og:description" content="1. Swagger2 1.1 使用 依赖： 123456789101112&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;io.springfox&lt;&#x2F;groupId&gt;        &lt;artifactId&gt;springfox-swagger2&lt;&#x2F;artifactId&gt;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090033563.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090038141.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090103163.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092339074.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091110565.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091119092.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091156831.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091204746.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091207238.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092309045.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091244743.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091245156.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092326405.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090014174.png">
 <meta property="article:published_time" content="2023-04-08T15:55:48.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.856Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Swagger">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090033563.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -251,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6k 字
+          6.1k 字
         
       </span>
     
@@ -305,110 +290,124 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-Swagger2"><a href="#1-Swagger2" class="headerlink" title="1. Swagger2"></a>1. Swagger2</h2><h3 id="1-1-使用"><a href="#1-1-使用" class="headerlink" title="1.1 使用"></a>1.1 使用</h3><p>依赖：</p>
+              <h2 id="swagger2">1. Swagger2</h2>
+<h3 id="使用">1.1 使用</h3>
+<p>依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.springfox<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springfox-swagger2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.springfox<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.9.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>启动类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableSwagger2</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Application</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(Application.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>访问：</p>
-<p><a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090033563.png" srcset="/img/loading.gif" lazyload></p>
-<p>【注】当的 spring-boot 版本是 2.6.x 的时候，项目启动会报错 Failed to start bean ‘documentationPluginsBootstrapper’; nested exception is java.lang.NullPointerException</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090038141.png" srcset="/img/loading.gif" lazyload></p>
+<p>http://localhost:8080/swagger-ui.html</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090033563.png" srcset="/img/loading.gif" lazyload /></p>
+<p>【注】当的 spring-boot 版本是 2.6.x 的时候，项目启动会报错 Failed to
+start bean 'documentationPluginsBootstrapper'; nested exception is
+java.lang.NullPointerException</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090038141.png" srcset="/img/loading.gif" lazyload /></p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">mvc:</span><br>  <span class="hljs-attr">pathmatch:</span><br>    <span class="hljs-attr">matching-strategy:</span> <span class="hljs-string">ANT_PATH_MATCHER</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="1-2-配置"><a href="#1-2-配置" class="headerlink" title="1.2 配置"></a>1.2 配置</h3><h4 id="1-基础信息配置"><a href="#1-基础信息配置" class="headerlink" title="1. 基础信息配置"></a>1. 基础信息配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Docket 是 Swagger 中的全局配置对象</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Docket <span class="hljs-title">docket</span><span class="hljs-params">()</span></span>&#123;<br>    Docket docket = <span class="hljs-keyword">new</span> Docket(DocumentationType.SWAGGER_2);<br>    <span class="hljs-comment">// API文档描述信息</span><br>    ApiInfo apiInfo = <span class="hljs-keyword">new</span> ApiInfoBuilder()<br>            <span class="hljs-comment">// 文档主体信息</span><br>            .contact(<span class="hljs-keyword">new</span> Contact(<span class="hljs-string">&quot;debuggingWorld文档&quot;</span>,<span class="hljs-string">&quot;https://debuggingworld.github.io&quot;</span>,<span class="hljs-string">&quot;admin@debug.com&quot;</span>))<br>            .title(<span class="hljs-string">&quot;debuggingWorld开发文档&quot;</span>)<br>            .description(<span class="hljs-string">&quot;debuggingWorld开发文档详细描述&quot;</span>)<br>            .version(<span class="hljs-string">&quot;2.1&quot;</span>)<br>            .build();<br>    docket.apiInfo(apiInfo);<br>    <span class="hljs-keyword">return</span> docket;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<h3 id="配置">1.2 配置</h3>
+<h4 id="基础信息配置">1. 基础信息配置</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Docket 是 Swagger 中的全局配置对象</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Docket <span class="hljs-title">docket</span><span class="hljs-params">()</span></span>&#123;<br>    Docket docket = <span class="hljs-keyword">new</span> Docket(DocumentationType.SWAGGER_2);<br>    <span class="hljs-comment">// API文档描述信息</span><br>    ApiInfo apiInfo = <span class="hljs-keyword">new</span> ApiInfoBuilder()<br>            <span class="hljs-comment">// 文档主体信息</span><br>            .contact(<span class="hljs-keyword">new</span> Contact(<span class="hljs-string">&quot;debuggingWorld文档&quot;</span>,<span class="hljs-string">&quot;https://debuggingworld.github.io&quot;</span>,<span class="hljs-string">&quot;admin@debug.com&quot;</span>))<br>            .title(<span class="hljs-string">&quot;debuggingWorld开发文档&quot;</span>)<br>            .description(<span class="hljs-string">&quot;debuggingWorld开发文档详细描述&quot;</span>)<br>            .version(<span class="hljs-string">&quot;2.1&quot;</span>)<br>            .build();<br>    docket.apiInfo(apiInfo);<br>    <span class="hljs-keyword">return</span> docket;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>效果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090103163.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-开关设置"><a href="#2-开关设置" class="headerlink" title="2. 开关设置"></a>2. 开关设置</h4><p>生产环境需要关闭。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090103163.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="开关设置">2. 开关设置</h4>
+<p>生产环境需要关闭。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Docket <span class="hljs-title">docket</span><span class="hljs-params">()</span></span>&#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Docket(DocumentationType.SWAGGER_2).enable(<span class="hljs-keyword">false</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092339074.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="3-扫描包配置"><a href="#3-扫描包配置" class="headerlink" title="3. 扫描包配置"></a>3. 扫描包配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">docket<br>        .select()   <span class="hljs-comment">// 获取 Docket 中的选择器，返回 ApiSelectorBuilder 选择器构建器</span><br>        <span class="hljs-comment">// 设定扫描哪些包的注解</span><br>        .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.debuggingWorld.controller&quot;</span>)).build();<br></code></pre></td></tr></table></figure>
-
-<h4 id="4-设置自定义注解不生成接口文档"><a href="#4-设置自定义注解不生成接口文档" class="headerlink" title="4. 设置自定义注解不生成接口文档"></a>4. 设置自定义注解不生成接口文档</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@NotIncludeSwagger</span><br><span class="hljs-meta">@RequestMapping(&quot;/req&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">req</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;req&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092339074.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="扫描包配置">3. 扫描包配置</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">docket<br>        .select()   <span class="hljs-comment">// 获取 Docket 中的选择器，返回 ApiSelectorBuilder 选择器构建器</span><br>        <span class="hljs-comment">// 设定扫描哪些包的注解</span><br>        .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.debuggingWorld.controller&quot;</span>)).build();<br></code></pre></td></tr></table></figure>
+<h4 id="设置自定义注解不生成接口文档">4.
+设置自定义注解不生成接口文档</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@NotIncludeSwagger</span><br><span class="hljs-meta">@RequestMapping(&quot;/req&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">req</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;req&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">docket<br>        .select()   <span class="hljs-comment">// 获取 Docket 中的选择器，返回 ApiSelectorBuilder 选择器构建器</span><br>        <span class="hljs-comment">// 设定扫描哪些包的注解</span><br>        .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.debuggingWorld.controller&quot;</span>))<br>        <span class="hljs-comment">// 包含 NotIncludeSwagger 注解时不生成接口文档</span><br>        .apis(Predicates.not(RequestHandlerSelectors.withMethodAnnotation(NotIncludeSwagger.class))).build();;<br></code></pre></td></tr></table></figure>
-
-<h4 id="5-路径范围配置"><a href="#5-路径范围配置" class="headerlink" title="5. 路径范围配置"></a>5. 路径范围配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">docket.select()<br>        <span class="hljs-comment">// 使用正则表达式约束生成接口文档的路径范围</span><br>        .paths(<br>                Predicates.or(<br>                        PathSelectors.regex(<span class="hljs-string">&quot;/debugging/.*&quot;</span>),<br>                        PathSelectors.regex(<span class="hljs-string">&quot;/debugging2/.*&quot;</span>)<br>                )).build();<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="1-3-常用注解"><a href="#1-3-常用注解" class="headerlink" title="1.3 常用注解"></a>1.3 常用注解</h3><h4 id="1-Api"><a href="#1-Api" class="headerlink" title="1. Api"></a>1. Api</h4><p>作用域：类</p>
+<h4 id="路径范围配置">5. 路径范围配置</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java">docket.select()<br>        <span class="hljs-comment">// 使用正则表达式约束生成接口文档的路径范围</span><br>        .paths(<br>                Predicates.or(<br>                        PathSelectors.regex(<span class="hljs-string">&quot;/debugging/.*&quot;</span>),<br>                        PathSelectors.regex(<span class="hljs-string">&quot;/debugging2/.*&quot;</span>)<br>                )).build();<br></code></pre></td></tr></table></figure>
+<h3 id="常用注解">1.3 常用注解</h3>
+<h4 id="api">1. Api</h4>
+<p>作用域：类</p>
 <p>属性：</p>
 <ul>
-<li>tags：给当前类定义别名，几个别名就在 UI 中显示几个控制器访问菜单</li>
+<li>tags：给当前类定义别名，几个别名就在 UI
+中显示几个控制器访问菜单</li>
 <li>description：当前类描述信息</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Api(tags = &#123;&quot;MyController&quot;, &quot;Swagger控制器&quot;&#125;,description = &quot;MyController 描述信息&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyController</span> </span>&#123;<br>    <span class="hljs-meta">@PostMapping(&quot;/debugging/post&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">post</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;post&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>UI 显示效果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091110565.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-ApiOperation"><a href="#2-ApiOperation" class="headerlink" title="2. ApiOperation"></a>2. ApiOperation</h4><p>作用域：类、方法</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091110565.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="apioperation">2. ApiOperation</h4>
+<p>作用域：类、方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/debugging/post&quot;)</span><br><span class="hljs-meta">@ApiOperation(value = &quot;post 方法，用于数据新增&quot;,notes = &quot;MyController post 方法&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">post</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;post&quot;</span>;<br>&#125;<br><br><span class="hljs-meta">@PostMapping(&quot;/debugging/debug&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">debug</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;debug&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091119092.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091156831.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="3-ApiParam"><a href="#3-ApiParam" class="headerlink" title="3. ApiParam"></a>3. ApiParam</h4><p>作用域：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091119092.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091156831.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="apiparam">3. ApiParam</h4>
+<p>作用域：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD<br></code></pre></td></tr></table></figure>
-
 <p>示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/debugging/post&quot;)</span><br><span class="hljs-meta">@ApiOperation(value = &quot;post 方法，用于数据新增&quot;, notes = &quot;MyController post 方法&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">post</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-meta">@ApiParam(name = &quot;用户名(name)&quot;, value = &quot;新增用户名称&quot;)</span> String name,</span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-meta">@ApiParam(name = &quot;密码(pwd)&quot;, value = &quot;新增用户密码&quot;)</span> String pwd)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;post&quot;</span>;<br>&#125;<br><br><span class="hljs-meta">@PostMapping(&quot;/debugging/debug&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">debug</span><span class="hljs-params">(String name, String pwd)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;debug&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>效果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091204746.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091207238.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="4-ApiIgnore"><a href="#4-ApiIgnore" class="headerlink" title="4. ApiIgnore"></a>4. ApiIgnore</h4><p>作用域：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091204746.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091207238.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="apiignore">4. ApiIgnore</h4>
+<p>作用域：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">&#123;ElementType.METHOD, ElementType.TYPE, ElementType.PARAMETER&#125;<br></code></pre></td></tr></table></figure>
-
 <p>忽略当前方法或类型不生成接口文档。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ApiIgnore</span><br><span class="hljs-meta">@GetMapping(&quot;/debugging/get&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">get</span><span class="hljs-params">(String name, String pwd)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;get&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="5-ApiImplicitParam"><a href="#5-ApiImplicitParam" class="headerlink" title="5. ApiImplicitParam"></a>5. ApiImplicitParam</h4><p>作用域：方法</p>
+<h4 id="apiimplicitparam">5. ApiImplicitParam</h4>
+<p>作用域：方法</p>
 <p>参数说明：</p>
 <ul>
 <li>name：参数名</li>
 <li>value：参数描述</li>
 <li>required：是否必须参数</li>
-<li>paramType：参数位置<ul>
-<li>header：请求参数的获取 –&gt; @RequestHeader</li>
-<li>query：请求参数的获取 –&gt; @RequestParam（get 方法默认值）</li>
-<li>body ：请求参数的获取 –&gt;@RequestBody （post 方法默认值）</li>
-<li>path：请求参数的获取 –&gt; @PathVariable（用于 restful 接口）</li>
+<li>paramType：参数位置
+<ul>
+<li>header：请求参数的获取 --&gt; <span class="citation"
+data-cites="RequestHeader">@RequestHeader</span></li>
+<li>query：请求参数的获取 --&gt; <span class="citation"
+data-cites="RequestParam">@RequestParam</span>（get 方法默认值）</li>
+<li>body ：请求参数的获取 --&gt;<span class="citation"
+data-cites="RequestBody">@RequestBody</span> （post 方法默认值）</li>
+<li>path：请求参数的获取 --&gt; <span class="citation"
+data-cites="PathVariable">@PathVariable</span>（用于 restful 接口）</li>
 <li>div</li>
 <li>form</li>
-</ul>
-</li>
+</ul></li>
 <li>dataType：参数类型，默认值：String</li>
 <li>defaultValue：参数默认值</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/debugging/debug&quot;)</span><br><span class="hljs-comment">//@ApiImplicitParam( name = &quot;name&quot;, value = &quot;新增用户名称&quot;,required = true,paramType = &quot;query&quot;,dataType = &quot;string&quot;)</span><br><span class="hljs-meta">@ApiImplicitParams(value = &#123;</span><br><span class="hljs-meta">        @ApiImplicitParam(name = &quot;name&quot;, value = &quot;新增用户名称&quot;, required = true, paramType = &quot;query&quot;, dataType = &quot;string&quot;),</span><br><span class="hljs-meta">        @ApiImplicitParam(name = &quot;pwd&quot;, value = &quot;新增用户密码&quot;, paramType = &quot;query&quot;, dataType = &quot;string&quot;)</span><br><span class="hljs-meta">&#125;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">debug</span><span class="hljs-params">(String name, String pwd)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;debug&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092309045.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="6-ApiModel、ApiModelProperty"><a href="#6-ApiModel、ApiModelProperty" class="headerlink" title="6. ApiModel、ApiModelProperty"></a>6. ApiModel、ApiModelProperty</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 描述生成接口文档返回值类型</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@ApiModel(value = &quot;用户实体&quot;,description = &quot;保存用户数据&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserEntity</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;主键&quot;,name = &quot;主键(id)&quot;,required = false,example = &quot;1&quot;,hidden = true)</span><br>    <span class="hljs-keyword">private</span> String id;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;姓名&quot;,name = &quot;姓名(name)&quot;,required = true,example = &quot;debuggingWorld&quot;,hidden = false)</span><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;密码&quot;,name = &quot;密码(pwd)&quot;,required = true,example = &quot;admin&quot;,hidden = false)</span><br>    <span class="hljs-keyword">private</span> String pwd;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092309045.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="apimodelapimodelproperty">6. ApiModel、ApiModelProperty</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 描述生成接口文档返回值类型</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@ApiModel(value = &quot;用户实体&quot;,description = &quot;保存用户数据&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserEntity</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;主键&quot;,name = &quot;主键(id)&quot;,required = false,example = &quot;1&quot;,hidden = true)</span><br>    <span class="hljs-keyword">private</span> String id;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;姓名&quot;,name = &quot;姓名(name)&quot;,required = true,example = &quot;debuggingWorld&quot;,hidden = false)</span><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-meta">@ApiModelProperty(value = &quot;密码&quot;,name = &quot;密码(pwd)&quot;,required = true,example = &quot;admin&quot;,hidden = false)</span><br>    <span class="hljs-keyword">private</span> String pwd;<br>&#125;<br></code></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/debugging/user&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> UserEntity <span class="hljs-title">getUser</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> UserEntity();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>UI显示：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091244743.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091245156.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="7-ApiResponses、ApiResponse"><a href="#7-ApiResponses、ApiResponse" class="headerlink" title="7. ApiResponses、ApiResponse"></a>7. ApiResponses、ApiResponse</h4><p>描述响应信息</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091244743.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304091245156.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="apiresponsesapiresponse">7. ApiResponses、ApiResponse</h4>
+<p>描述响应信息</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/debugging/user/&#123;id&#125;&quot;)</span><br><span class="hljs-meta">@ApiOperation(&quot;根据用户ID获取用户信息&quot;)</span><br><span class="hljs-meta">@ApiImplicitParam(name = &quot;id&quot;,value = &quot;用户编号&quot;,required = true,paramType = &quot;path&quot;)</span><br><span class="hljs-meta">@ApiResponses(&#123;</span><br><span class="hljs-meta">        @ApiResponse(code = 400,message = &quot;参数不合法&quot;),</span><br><span class="hljs-meta">        @ApiResponse(code = 410,message = &quot;获取用户信息失败&quot;),</span><br><span class="hljs-meta">&#125;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> UserEntity <span class="hljs-title">getUser</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable</span> String id)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> UserEntity(id,<span class="hljs-string">&quot;debuggingWorld&quot;</span>,<span class="hljs-string">&quot;admin&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092326405.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="2-Swagger3"><a href="#2-Swagger3" class="headerlink" title="2. Swagger3"></a>2. Swagger3</h2><p>添加依赖：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304092326405.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="swagger3">2. Swagger3</h2>
+<p>添加依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.springfox<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springfox-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>启动类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableOpenApi</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Application</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(Application.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>访问：</p>
-<p><a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui/index.html">http://localhost:8080/swagger-ui/index.html</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090014174.png" srcset="/img/loading.gif" lazyload></p>
+<p>http://localhost:8080/swagger-ui/index.html</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304090014174.png" srcset="/img/loading.gif" lazyload /></p>
 
               
             </div>
@@ -593,6 +592,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -849,6 +854,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

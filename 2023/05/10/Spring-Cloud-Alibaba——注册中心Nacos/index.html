@@ -16,33 +16,13 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 注册中心1.1 注册中心的作用服务注册中心的作用就是服务注册与发现  服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip 和端口）注册到一个公共的组件上去。 服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。     实现服务发现的设计思路：  1.2 注册中心设计思路分析https:&#x2F;&#x2F;www.processon.com&#x2F;v">
+    <meta name="description" content="1. 注册中心 1.1 注册中心的作用 服务注册中心的作用就是服务注册与发现  服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip 和端口）注册到一个公共的组件上去。 服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。  实现服务发现的设计思路：  1.2 注册中心设计思路分析 https:&#x2F;&#x2F;www.processon.com&#x2F;v">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud Alibaba——注册中心Nacos">
 <meta property="og:url" content="http://example.com/2023/05/10/Spring-Cloud-Alibaba%E2%80%94%E2%80%94%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83Nacos/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 注册中心1.1 注册中心的作用服务注册中心的作用就是服务注册与发现  服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip 和端口）注册到一个公共的组件上去。 服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。     实现服务发现的设计思路：  1.2 注册中心设计思路分析https:&#x2F;&#x2F;www.processon.com&#x2F;v">
+<meta property="og:description" content="1. 注册中心 1.1 注册中心的作用 服务注册中心的作用就是服务注册与发现  服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip 和端口）注册到一个公共的组件上去。 服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。  实现服务发现的设计思路：  1.2 注册中心设计思路分析 https:&#x2F;&#x2F;www.processon.com&#x2F;v">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100029676.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100045698.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100053608.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100111058.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100155240.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100209397.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110002671.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305102257075.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110009140.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132353346.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132357297.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140001034.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140005347.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140013477.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140026153.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140039637.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140041268.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140044281.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140051776.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140052003.png">
 <meta property="article:published_time" content="2023-05-09T16:17:39.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.853Z">
 <meta property="article:author" content="debuggingWorld">
@@ -50,7 +30,6 @@
 <meta property="article:tag" content="Nacos">
 <meta property="article:tag" content="注册中心">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100029676.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -313,18 +292,29 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-注册中心"><a href="#1-注册中心" class="headerlink" title="1. 注册中心"></a>1. 注册中心</h3><h4 id="1-1-注册中心的作用"><a href="#1-1-注册中心的作用" class="headerlink" title="1.1 注册中心的作用"></a>1.1 注册中心的作用</h4><p>服务注册中心的作用就是服务注册与发现</p>
+              <h3 id="注册中心">1. 注册中心</h3>
+<h4 id="注册中心的作用">1.1 注册中心的作用</h4>
+<p>服务注册中心的作用就是服务注册与发现</p>
 <ul>
-<li>服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip 和端口）注册到一个公共的组件上去。</li>
-<li>服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。   </li>
+<li>服务注册：就是将提供某个服务的模块信息（通常是这个服务的 ip
+和端口）注册到一个公共的组件上去。</li>
+<li>服务发现：就是新注册的这个服务模块能够及时的被其他调用者发现。不管是服务新增和服务删减都能实现自动发现。</li>
 </ul>
 <p>实现服务发现的设计思路：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100029676.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="1-2-注册中心设计思路分析"><a href="#1-2-注册中心设计思路分析" class="headerlink" title="1.2 注册中心设计思路分析"></a>1.2 注册中心设计思路分析</h4><p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/5e71cc85e4b011fcce9d604d">https://www.processon.com/view/link/5e71cc85e4b011fcce9d604d</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100045698.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="1-3-注册中心对比"><a href="#1-3-注册中心对比" class="headerlink" title="1.3 注册中心对比"></a>1.3 注册中心对比</h4><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100053608.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-什么是-Nacos"><a href="#2-什么是-Nacos" class="headerlink" title="2. 什么是 Nacos"></a>2. 什么是 Nacos</h3><p>Nacos 是 Dynamic Naming and Configuration Service 的首字母简称；一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
-<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100029676.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="注册中心设计思路分析">1.2 注册中心设计思路分析</h4>
+<p>https://www.processon.com/view/link/5e71cc85e4b011fcce9d604d</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100045698.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="注册中心对比">1.3 注册中心对比</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100053608.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="什么是-nacos">2. 什么是 Nacos</h3>
+<p>Nacos 是 Dynamic Naming and Configuration Service
+的首字母简称；一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos
+提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
 <p>Nacos 的关键特性包括:</p>
 <ul>
 <li>服务发现和服务健康监测</li>
@@ -332,58 +322,90 @@
 <li>动态 DNS 服务</li>
 <li>服务及其元数据管理</li>
 </ul>
-<p>官方文档： <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/what-is-nacos.html">https://nacos.io/zh-cn/docs/what-is-nacos.html</a></p>
-<p>OpenAPI文档：<a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/open-api.html">https://nacos.io/zh-cn/docs/open-api.html</a></p>
-<p><strong>Nacos 优势</strong> </p>
+<p>官方文档： https://nacos.io/zh-cn/docs/what-is-nacos.html</p>
+<p>OpenAPI文档：https://nacos.io/zh-cn/docs/open-api.html</p>
+<p><strong>Nacos 优势</strong></p>
 <ul>
-<li><strong>易用</strong>：简单的数据模型，标准的 restfulAPI，易用的控制台，丰富的使用文档。</li>
-<li><strong>稳定</strong>：99.9% 高可用，脱胎于历经阿里巴巴 10 年生产验证的内部产品，支持具有数百万服务的大规模场景，具备企业级 SLA 的开源产品。 </li>
-<li><strong>实时</strong>：数据变更毫秒级推送生效；1w 级，SLA 承诺 1w 实例上下线 1s，99.9% 推送完成；10w 级，SLA 承诺 1w 实例上下线 3s，99.9% 推送完成；100w 级别，SLA 承诺 1w 实例上下线 9s 99.9% 推送完成。 </li>
+<li><strong>易用</strong>：简单的数据模型，标准的
+restfulAPI，易用的控制台，丰富的使用文档。</li>
+<li><strong>稳定</strong>：99.9% 高可用，脱胎于历经阿里巴巴 10
+年生产验证的内部产品，支持具有数百万服务的大规模场景，具备企业级 SLA
+的开源产品。</li>
+<li><strong>实时</strong>：数据变更毫秒级推送生效；1w 级，SLA 承诺 1w
+实例上下线 1s，99.9% 推送完成；10w 级，SLA 承诺 1w 实例上下线 3s，99.9%
+推送完成；100w 级别，SLA 承诺 1w 实例上下线 9s 99.9% 推送完成。</li>
 <li><strong>规模：</strong>十万级服务/配置，百万级连接，具备强大扩展性。</li>
 </ul>
-<h3 id="3-Nacos-作为注册中心"><a href="#3-Nacos-作为注册中心" class="headerlink" title="3. Nacos 作为注册中心"></a>3. Nacos 作为注册中心</h3><h4 id="3-1-Nacos-注册中心架构和基本概念"><a href="#3-1-Nacos-注册中心架构和基本概念" class="headerlink" title="3.1 Nacos 注册中心架构和基本概念"></a>3.1 Nacos 注册中心架构和基本概念</h4><p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100111058.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="nacos-作为注册中心">3. Nacos 作为注册中心</h3>
+<h4 id="nacos-注册中心架构和基本概念">3.1 Nacos
+注册中心架构和基本概念</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100111058.png" srcset="/img/loading.gif" lazyload /></p>
 <ul>
 <li><p><strong>服务 (Service)</strong></p>
-<p>服务是指一个或一组软件功能（例如特定信息的检索或一组操作的执行），其目的是不同的客户端可以为不同的目的重用（例如通过跨进程的网络调用）。Nacos 支持主流的服务生态，如 Kubernetes Service、gRPC|Dubbo RPC Service 或者 Spring Cloud RESTful Service。</p>
-</li>
+<p>服务是指一个或一组软件功能（例如特定信息的检索或一组操作的执行），其目的是不同的客户端可以为不同的目的重用（例如通过跨进程的网络调用）。Nacos
+支持主流的服务生态，如 Kubernetes Service、gRPC|Dubbo RPC Service 或者
+Spring Cloud RESTful Service。</p></li>
 <li><p><strong>服务注册中心 (Service Registry)</strong></p>
-<p>服务注册中心，它是服务及其实例和元数据的数据库。服务实例在启动时注册到服务注册表，并在关闭时注销。服务和路由器的客户端查询服务注册表以查找服务的可用实例。服务注册中心可能会调用服务实例的健康检查 API 来验证它是否能够处理请求。</p>
-</li>
+<p>服务注册中心，它是服务及其实例和元数据的数据库。服务实例在启动时注册到服务注册表，并在关闭时注销。服务和路由器的客户端查询服务注册表以查找服务的可用实例。服务注册中心可能会调用服务实例的健康检查
+API 来验证它是否能够处理请求。</p></li>
 <li><p><strong>服务元数据 (Service Metadata)</strong></p>
-<p>服务元数据是指包括服务端点(endpoints)、服务标签、服务版本号、服务实例权重、路由规则、安全策略等描述服务的数据。</p>
-</li>
+<p>服务元数据是指包括服务端点(endpoints)、服务标签、服务版本号、服务实例权重、路由规则、安全策略等描述服务的数据。</p></li>
 <li><p><strong>服务提供方 (Service Provider)</strong></p>
-<p>是指提供可复用和可调用服务的应用方。</p>
-</li>
+<p>是指提供可复用和可调用服务的应用方。</p></li>
 <li><p><strong>服务消费方 (Service Consumer)</strong></p>
-<p>是指会发起对某个服务调用的应用方。</p>
-</li>
+<p>是指会发起对某个服务调用的应用方。</p></li>
 </ul>
-<h4 id="3-2-Nacos-注册中心核心功能"><a href="#3-2-Nacos-注册中心核心功能" class="headerlink" title="3.2 Nacos 注册中心核心功能"></a>3.2 Nacos 注册中心核心功能</h4><p><strong>服务注册</strong>：Nacos Client 会通过发送 REST 请求的方式向 Nacos Server 注册自己的服务，提供自身的元数据，比如 ip 地址、端口等信息。Nacos Server 接收到注册请求后，就会把这些元数据信息存储在一个双层的内存 Map 中。</p>
-<p><strong>服务心跳</strong>：在服务注册后，Nacos Client 会维护一个定时心跳来持续通知 Nacos Server，说明服务一直处于可用状态，防止被剔除。默认5s发送一次心跳。</p>
-<p><strong>服务同步</strong>：Nacos Server 集群之间会互相同步服务实例，用来保证服务信息的一致性。    </p>
-<p><strong>服务发现</strong>：服务消费者（Nacos Client）在调用服务提供者的服务时，会发送一个 REST 请求给 Nacos Server，获取上面注册的服务清单，并且缓存在 Nacos Client 本地，同时会在 Nacos Client 本地开启一个定时任务定时拉取服务端最新的注册表信息更新到本地缓存。</p>
-<p><strong>服务健康检查</strong>：Nacos Server 会开启一个定时任务用来检查注册服务实例的健康情况，对于超过 15s 没有收到客户端心跳的实例会将它的 healthy 属性置为false(客户端服务发现时不会发现)，如果某个实例超过30秒没有收到心跳，直接剔除该实例(被剔除的实例如果恢复发送心跳则会重新注册)</p>
-<h4 id="3-3-Nacos-注册中心（Nacos-Server）环境搭建"><a href="#3-3-Nacos-注册中心（Nacos-Server）环境搭建" class="headerlink" title="3.3 Nacos 注册中心（Nacos Server）环境搭建"></a>3.3 Nacos 注册中心（Nacos Server）环境搭建</h4><p>Nacos 版本： v2.1.0</p>
-<h5 id="1-单机模式"><a href="#1-单机模式" class="headerlink" title="1. 单机模式"></a>1. 单机模式</h5><p>官方文档： <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/deployment.html">https://nacos.io/zh-cn/docs/deployment.html</a></p>
-<p>安装包下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz">https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz</a></p>
+<h4 id="nacos-注册中心核心功能">3.2 Nacos 注册中心核心功能</h4>
+<p><strong>服务注册</strong>：Nacos Client 会通过发送 REST 请求的方式向
+Nacos Server 注册自己的服务，提供自身的元数据，比如 ip
+地址、端口等信息。Nacos Server
+接收到注册请求后，就会把这些元数据信息存储在一个双层的内存 Map 中。</p>
+<p><strong>服务心跳</strong>：在服务注册后，Nacos Client
+会维护一个定时心跳来持续通知 Nacos
+Server，说明服务一直处于可用状态，防止被剔除。默认5s发送一次心跳。</p>
+<p><strong>服务同步</strong>：Nacos Server
+集群之间会互相同步服务实例，用来保证服务信息的一致性。</p>
+<p><strong>服务发现</strong>：服务消费者（Nacos
+Client）在调用服务提供者的服务时，会发送一个 REST 请求给 Nacos
+Server，获取上面注册的服务清单，并且缓存在 Nacos Client 本地，同时会在
+Nacos Client
+本地开启一个定时任务定时拉取服务端最新的注册表信息更新到本地缓存。</p>
+<p><strong>服务健康检查</strong>：Nacos Server
+会开启一个定时任务用来检查注册服务实例的健康情况，对于超过 15s
+没有收到客户端心跳的实例会将它的 healthy
+属性置为false(客户端服务发现时不会发现)，如果某个实例超过30秒没有收到心跳，直接剔除该实例(被剔除的实例如果恢复发送心跳则会重新注册)</p>
+<h4 id="nacos-注册中心nacos-server环境搭建">3.3 Nacos 注册中心（Nacos
+Server）环境搭建</h4>
+<p>Nacos 版本： v2.1.0</p>
+<h5 id="单机模式">1. 单机模式</h5>
+<p>官方文档： https://nacos.io/zh-cn/docs/deployment.html</p>
+<p>安装包下载地址：https://github.com/alibaba/nacos/releases/download/2.1.0/nacos-server-2.1.0.tar.gz</p>
 <p>解压，进入 nacos 目录，单机模式启动 nacos：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">单机模式启动nacos</span><br>sh startup.sh -m standalone<br></code></pre></td></tr></table></figure>
-
 <p>也可以修改启动脚本方式：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100155240.png" srcset="/img/loading.gif" lazyload></p>
-<p>访问 nacos 的管理端：192.168.60.10:8848/nacos/ ，默认的用户名/密码：nacos/nacos</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100209397.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="2-集群模式"><a href="#2-集群模式" class="headerlink" title="2. 集群模式"></a>2. 集群模式</h5><p>官网文档： <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html">https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html</a></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100155240.png" srcset="/img/loading.gif" lazyload /></p>
+<p>访问 nacos 的管理端：192.168.60.10:8848/nacos/
+，默认的用户名/密码：nacos/nacos</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305100209397.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="集群模式">2. 集群模式</h5>
+<p>官网文档：
+https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html</p>
 <p><strong>1）环境准备</strong></p>
 <ul>
 <li>JDK：需要 1.8 及其以上版本</li>
 <li>建议: 2核 CPU / 4G 内存 及其以上</li>
 <li>建议: 生产环境 3 个节点 及其以上</li>
 </ul>
-<p>注意：在单台服务器上搭建伪集群不能使用连续端口号（比如 8848,8849,8850）， 因为使用 8848（grpc会占用 9848，9849），8849（grpc会占用9849,9850），会导致端口冲突。</p>
-<p>原因：Nacos2.x 版本相比 1.X 新增了 gRPC 的通信方式，因此需要增加 2 个端口。新增端口是在配置的主端口（server.port）基础上，进行一定偏移量自动生成。</p>
+<p>注意：在单台服务器上搭建伪集群不能使用连续端口号（比如
+8848,8849,8850）， 因为使用 8848（grpc会占用
+9848，9849），8849（grpc会占用9849,9850），会导致端口冲突。</p>
+<p>原因：Nacos2.x 版本相比 1.X 新增了 gRPC 的通信方式，因此需要增加 2
+个端口。新增端口是在配置的主端口（server.port）基础上，进行一定偏移量自动生成。</p>
 <table>
+
 <thead>
 <tr>
 <th>端口</th>
@@ -391,7 +413,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>9848</td>
 <td>1000</td>
 <td>客户端 gRPC 请求服务端端口，用于客户端向服务端发起连接和请求</td>
@@ -401,37 +424,42 @@
 <td>1001</td>
 <td>服务端 gRPC 请求服务端端口，用于服务间同步等</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 准备三台服务器</span><br>192.168.60.10:8848<br>192.168.60.10:8858<br>192.168.60.10:8868<br></code></pre></td></tr></table></figure>
-
 <p><strong>2）以 192.168.60.10:8848 为例，进入nacos目录</strong></p>
-<ol>
+<ol type="1">
 <li><p>修改 conf/application.properties，使用外置数据源</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">## If use MySQL as datasource:</span></span><br>spring.datasource.platform=mysql<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">## Count of DB:</span></span><br>db.num=1<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">## Connect URL of DB:</span></span><br>db.url.0=jdbc:mysql://192.168.60.1:3306/nacos_config?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC<br>db.user.0=root<br>db.password.0=mysql<br></code></pre></td></tr></table></figure></li>
 <li><p>将 conf/cluster.conf.example 改为 cluster.conf，添加节点配置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">it is ip</span><br>192.168.60.10:8848<br>192.168.60.10:8858<br>192.168.60.10:8868        <br></code></pre></td></tr></table></figure>
-
-<p>注意：不要使用 localhost 或 127.0.0.1，针对多网卡环境，nacos 可以指定网卡或 ip</p>
+<p>注意：不要使用 localhost 或 127.0.0.1，针对多网卡环境，nacos
+可以指定网卡或 ip</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">多网卡选择</span><br><span class="hljs-meta">#</span><span class="bash">ip-address参数可以直接设置nacos的ip</span><br><span class="hljs-meta">#</span><span class="bash">该参数设置后，将会使用这个IP去cluster.conf里进行匹配，请确保这个IP的值在cluster.conf里是存在的</span><br>nacos.inetutils.ip-address=192.168.65.206<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">use-only-site-local-interfaces参数可以让nacos使用局域网ip，这个在nacos部署的机器有多网卡时很有用，可以让nacos选择局域网网卡</span><br>nacos.inetutils.use-only-site-local-interfaces=true<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">ignored-interfaces支持网卡数组，可以让nacos忽略多个网卡</span><br>nacos.inetutils.ignored-interfaces[0]=eth0<br>nacos.inetutils.ignored-interfaces[1]=eth1<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">preferred-networks参数可以让nacos优先选择匹配的ip，支持正则匹配和前缀匹配</span><br>nacos.inetutils.preferred-networks[0]=30.5.124.             <br></code></pre></td></tr></table></figure>
-
-<p>192.168.60.10:8858、192.168.60.10:8868 按同样的方式配置</p>
-</li>
+<p>192.168.60.10:8858、192.168.60.10:8868 按同样的方式配置</p></li>
 </ol>
 <p><strong>3) mysql 中创建 nacos 配置数据库</strong></p>
-<p>sql脚本：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos/blob/2.1.0/distribution/conf/nacos-mysql.sql">https://github.com/alibaba/nacos/blob/2.1.0/distribution/conf/nacos-mysql.sql</a></p>
-<p><strong>4)  如果内存不够，可以调整jvm参数</strong></p>
+<p>sql脚本：https://github.com/alibaba/nacos/blob/2.1.0/distribution/conf/nacos-mysql.sql</p>
+<p><strong>4) 如果内存不够，可以调整jvm参数</strong></p>
 <p>startup.sh：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110002671.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>5)  分别启动三个 nacos 实例</strong></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110002671.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>5) 分别启动三个 nacos 实例</strong></p>
 <p>以 192.168.60.10:8848 为例，启动 nacos：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">./bin/startup.sh<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305102257075.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305102257075.png" srcset="/img/loading.gif" lazyload /></p>
 <p><strong>6) 访问 nacos 管理界面</strong></p>
-<p>登录 <a target="_blank" rel="noopener" href="http://192.168.60.10:8848/nacos%EF%BC%8C%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81%E9%83%BD%E6%98%AF">http://192.168.60.10:8848/nacos，用户名和密码都是</a> nacos</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110009140.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="3-4-Spring-Cloud-Alibaba-Nacos-快速开始"><a href="#3-4-Spring-Cloud-Alibaba-Nacos-快速开始" class="headerlink" title="3.4 Spring Cloud Alibaba Nacos 快速开始"></a>3.4 Spring Cloud Alibaba Nacos 快速开始</h4><h5 id="1-Spring-Cloud-Alibaba-版本选型"><a href="#1-Spring-Cloud-Alibaba-版本选型" class="headerlink" title="1. Spring Cloud Alibaba 版本选型"></a>1. Spring Cloud Alibaba 版本选型</h5><p>版本说明：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E">https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E</a></p>
+<p>登录 http://192.168.60.10:8848/nacos，用户名和密码都是 nacos</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305110009140.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="spring-cloud-alibaba-nacos-快速开始">3.4 Spring Cloud Alibaba
+Nacos 快速开始</h4>
+<h5 id="spring-cloud-alibaba-版本选型">1. Spring Cloud Alibaba
+版本选型</h5>
+<p>版本说明：https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E</p>
 <table>
+
 <thead>
 <tr>
 <th>Spring Cloud Alibaba Version</th>
@@ -440,26 +468,30 @@
 <th>Nacos Version</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>2.2.8.RELEASE</td>
 <td>Spring Cloud Hoxton.SR12</td>
 <td>2.3.12.RELEASE</td>
 <td>2.1.0</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p><strong>父pom配置</strong></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">spring-cloud.version</span>&gt;</span>Hoxton.SR12<span class="hljs-tag">&lt;/<span class="hljs-name">spring-cloud.version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">spring-cloud-alibaba.version</span>&gt;</span>2.2.8.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">spring-cloud-alibaba.version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">dependencyManagement</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;spring-cloud-alibaba.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencyManagement</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h5 id="2-微服务（Nacos-Client）整合-Nacos-注册中心（Nacos-Server）"><a href="#2-微服务（Nacos-Client）整合-Nacos-注册中心（Nacos-Server）" class="headerlink" title="2. 微服务（Nacos Client）整合 Nacos 注册中心（Nacos Server）"></a>2. 微服务（Nacos Client）整合 Nacos 注册中心（Nacos Server）</h5><p><strong>配置服务提供者 mall-order</strong></p>
-<p>服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos server 上。</p>
-<ol>
+<h5 id="微服务nacos-client整合-nacos-注册中心nacos-server">2.
+微服务（Nacos Client）整合 Nacos 注册中心（Nacos Server）</h5>
+<p><strong>配置服务提供者 mall-order</strong></p>
+<p>服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos
+server 上。</p>
+<ol type="1">
 <li><p>引入依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
 <li><p>配置 nacos 注册中心</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8050</span><br><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">mall-order</span>  <span class="hljs-comment">#微服务名称</span><br><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.60</span><span class="hljs-number">.10</span><span class="hljs-string">:8848</span><br></code></pre></td></tr></table></figure>
-
-<p>更多配置：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery">https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery</a></p>
+<p>更多配置：https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery</p>
 <table>
+
 <thead>
 <tr>
 <th>配置项</th>
@@ -468,7 +500,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>服务端地址</code></td>
 <td><code>spring.cloud.nacos.discovery.server-addr</code></td>
 <td><code>无</code></td>
@@ -570,63 +603,99 @@
 <td><code>IPv4</code></td>
 <td><code>可以配置IPv4和IPv6两种类型</code></td>
 </tr>
-</tbody></table>
-</li>
+</tbody>
+</table></li>
 <li><p>启动服务，查看是否注册成功</p>
-<p>【注】启动类不需要：@EnableDiscoveryClient</p>
+<p>【注】启动类不需要：<span class="citation"
+data-cites="EnableDiscoveryClient">@EnableDiscoveryClient</span></p>
 <p>启动两个实例：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132353346.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132353346.png" srcset="/img/loading.gif" lazyload /></p>
 <p>nacos 管理端界面查看是否成功注册：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132357297.png" srcset="/img/loading.gif" lazyload></p>
-<p>通过 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/open-api.html">Open API</a> 查询实例列表：</p>
-<p><a target="_blank" rel="noopener" href="http://192.168.60.10:8848/nacos/v1/ns/instance/list?serviceName=mall-order">http://192.168.60.10:8848/nacos/v1/ns/instance/list?serviceName=mall-order</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140001034.png" srcset="/img/loading.gif" lazyload></p>
-</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305132357297.png" srcset="/img/loading.gif" lazyload /></p>
+<p>通过 <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/open-api.html">Open API</a>
+查询实例列表：</p>
+<p>http://192.168.60.10:8848/nacos/v1/ns/instance/list?serviceName=mall-order</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140001034.png" srcset="/img/loading.gif" lazyload /></p></li>
 </ol>
 <p><strong>配置服务消费者 mall-user</strong></p>
-<p>服务消费者可以通过 Nacos 的服务发现功能从 Nacos server 上获取到它要调用的服务。</p>
-<ol>
+<p>服务消费者可以通过 Nacos 的服务发现功能从 Nacos server
+上获取到它要调用的服务。</p>
+<ol type="1">
 <li><p>引入依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
-<li><p>配置 nacos 注册中心 </p>
+<li><p>配置 nacos 注册中心</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8060</span><br><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">mall-user</span>  <span class="hljs-comment">#微服务名称</span><br><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.60</span><span class="hljs-number">.10</span><span class="hljs-string">:8848</span><br></code></pre></td></tr></table></figure></li>
 <li><p>启动 mall-user，nacos 管理端界面查看是否成功注册</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140005347.png" srcset="/img/loading.gif" lazyload></p>
-</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140005347.png" srcset="/img/loading.gif" lazyload /></p></li>
 <li><p>使用 RestTemplate 进行服务调用</p>
-<p>给 RestTemplate 实例添加 @LoadBalanced 注解，开启 @LoadBalanced 与 Ribbon 的集成。</p>
+<p>给 RestTemplate 实例添加 <span class="citation"
+data-cites="LoadBalanced">@LoadBalanced</span> 注解，开启 <span
+class="citation" data-cites="LoadBalanced">@LoadBalanced</span> 与
+Ribbon 的集成。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestConfig</span> </span>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span>  <span class="hljs-comment">// 微服务名替换为具体的ip:port</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>使用示例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/user&quot;)</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>&#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RestTemplate restTemplate;<br><br>    <span class="hljs-meta">@RequestMapping(value = &quot;/getOrderByUserId/&#123;id&#125;&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity <span class="hljs-title">findOrderByUserId</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span> </span>&#123;<br>        log.info(<span class="hljs-string">&quot;根据userId:&quot;</span> + id + <span class="hljs-string">&quot;查询订单信息&quot;</span>);<br>        <span class="hljs-comment">// mall-order  ip:port</span><br>        String url = <span class="hljs-string">&quot;http://mall-order/order/findOrderByUserId/&quot;</span> + id;<br>        <span class="hljs-keyword">return</span> restTemplate.getForObject(url, ResponseEntity.class);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>测试</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140013477.png" srcset="/img/loading.gif" lazyload></p>
-</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140013477.png" srcset="/img/loading.gif" lazyload /></p></li>
 </ol>
-<h4 id="3-5-Nacos-注册中心常见配置"><a href="#3-5-Nacos-注册中心常见配置" class="headerlink" title="3.5 Nacos 注册中心常见配置"></a>3.5 Nacos 注册中心常见配置</h4><h5 id="1-服务分级存储模型"><a href="#1-服务分级存储模型" class="headerlink" title="1. 服务分级存储模型"></a>1. 服务分级存储模型</h5><p>​    注册中心的核心数据是服务的名字和它对应的网络地址，当服务注册了多个实例时，我们需要对不健康的实例进行过滤或者针对实例的某些特征进行流量的分配，那么就需要在实例上存储一些例如：健康状态、权重等属性。随着服务规模的扩大，渐渐的又需要在整个服务级别设定一些权限规则、 以及对所有实例都生效的一些开关，于是在服务级别又会设立一些属性。再往后，我们又发现单个服务的实例又会有划分为多个子集的需求，例如一个服务是多机房部署的，那么可能需要对每个机房的实例做不同的配置，这样又需要在服务和实例之间再设定一个数据级别。</p>
-<p>Nacos 在经过内部多年生产经验后提炼出的数据模型，则是一种：服务-集群-实例的三层模型。这样基本可以满足服务在所有场景下的数据存储和管理。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140026153.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="2-服务逻辑隔离"><a href="#2-服务逻辑隔离" class="headerlink" title="2. 服务逻辑隔离"></a>2. 服务逻辑隔离</h5><p>Nacos 数据模型 Key 由三元组唯一确定, Namespace 默认是空串，公共命名空间（public），分组默认是 DEFAULT_GROUP。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140039637.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="3-Namespace-隔离设计"><a href="#3-Namespace-隔离设计" class="headerlink" title="3. Namespace 隔离设计"></a>3. Namespace 隔离设计</h5><p>命名空间（Namespace）用于进行租户（用户）粒度的隔离，Namespace 的常用场景之一是不同环境的隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。</p>
+<h4 id="nacos-注册中心常见配置">3.5 Nacos 注册中心常见配置</h4>
+<h5 id="服务分级存储模型">1. 服务分级存储模型</h5>
+<p>​
+注册中心的核心数据是服务的名字和它对应的网络地址，当服务注册了多个实例时，我们需要对不健康的实例进行过滤或者针对实例的某些特征进行流量的分配，那么就需要在实例上存储一些例如：健康状态、权重等属性。随着服务规模的扩大，渐渐的又需要在整个服务级别设定一些权限规则、
+以及对所有实例都生效的一些开关，于是在服务级别又会设立一些属性。再往后，我们又发现单个服务的实例又会有划分为多个子集的需求，例如一个服务是多机房部署的，那么可能需要对每个机房的实例做不同的配置，这样又需要在服务和实例之间再设定一个数据级别。</p>
+<p>Nacos
+在经过内部多年生产经验后提炼出的数据模型，则是一种：服务-集群-实例的三层模型。这样基本可以满足服务在所有场景下的数据存储和管理。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140026153.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="服务逻辑隔离">2. 服务逻辑隔离</h5>
+<p>Nacos 数据模型 Key 由三元组唯一确定, Namespace
+默认是空串，公共命名空间（public），分组默认是 DEFAULT_GROUP。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140039637.png" srcset="/img/loading.gif" lazyload /></p>
+<h5 id="namespace-隔离设计">3. Namespace 隔离设计</h5>
+<p>命名空间（Namespace）用于进行租户（用户）粒度的隔离，Namespace
+的常用场景之一是不同环境的隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。</p>
 <p>新建命名空间：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140041268.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140044281.png" srcset="/img/loading.gif" lazyload></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140041268.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140044281.png" srcset="/img/loading.gif" lazyload /></p>
 <p>修改 yml 配置：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">mall-user</span><br><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.60</span><span class="hljs-number">.10</span><span class="hljs-string">:8848</span><br>        <span class="hljs-attr">namespace:</span> <span class="hljs-string">0bf30700-cc40-48d9-83a1-83262a36324a</span><br></code></pre></td></tr></table></figure>
+<p>启动 mall-user，进入 nacos 控制台可以看到 mall-user 注册成功，所属
+namespace 是 debug：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140051776.png" srcset="/img/loading.gif" lazyload /></p>
+<p>测试：http://127.0.0.1:8060/user/getOrderByUserId/1，报错</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140052003.png" srcset="/img/loading.gif" lazyload /></p>
+<p>原因：mall-order 和 mall-user 使用了不同的
+namespace，导致服务隔离。</p>
+<h5 id="group-服务分组">4. group 服务分组</h5>
+<p>不同的服务可以归类到同一分组，group 也可以起到服务隔离的作用。yml
+中可以通过 spring.cloud.nacos.discovery.group 参数配置</p>
+<h5 id="设置集群">5. 设置集群</h5>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">spring.cloud.nacos.discovery.cluster-name</span>: <span class="hljs-string">debug</span><br></code></pre></td></tr></table></figure>
+<h5 id="临时实例和持久化实例">6. 临时实例和持久化实例</h5>
+<p>​ 在定义上区分临时实例和持久化
+实例的关键是健康检查的方式。临时实例使用客户端上报模式，而持久化实例使用服务端反向探测模式。临时实例需要能够自动摘除不健康实例，而且无需持久化存储实例。持久化实例使用服务端探测的健康检查方式，因为客户端不会上报心跳，
+所以不能自动摘除下线的实例。</p>
+<p>​
+在大中型的公司里，这两种类型的服务往往都有。一些基础的组件例如数据库、缓存等，这些往往不能上报心跳，这种类型的服务在注册时，就需要作为持久化实例注册。而上层的业务服务，例如
+微服务或者 Dubbo 服务，服务的 Provider
+端支持添加汇报心跳的逻辑，此时就可以使用动态服务的注册方式。</p>
+<p>​ Nacos 1.x
+中持久化及非持久化的属性是作为实例的一个元数据进行存储和识别。Nacos 2.x
+中继续沿用了持久化及非持久化的设定，但是有了一些调整。在Nacos2.0
+中将是否持久化的数据抽象至服务级别，
+且不再允许一个服务同时存在持久化实例和非持久化实例，实例的持久化属性继承自服务的持久化属性。</p>
+<p><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-comment"># 持久化实例</span><br><span class="hljs-meta">spring.cloud.nacos.discovery.ephemeral</span>: <span class="hljs-string">false </span><br></code></pre></td></tr></table></figure></p>
 
-<p>启动 mall-user，进入 nacos 控制台可以看到 mall-user 注册成功，所属 namespace 是 debug：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140051776.png" srcset="/img/loading.gif" lazyload></p>
-<p>测试：<a target="_blank" rel="noopener" href="http://127.0.0.1:8060/user/getOrderByUserId/1%EF%BC%8C%E6%8A%A5%E9%94%99">http://127.0.0.1:8060/user/getOrderByUserId/1，报错</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202305140052003.png" srcset="/img/loading.gif" lazyload></p>
-<p>原因：mall-order 和 mall-user 使用了不同的 namespace，导致服务隔离。</p>
-<h5 id="4-group-服务分组"><a href="#4-group-服务分组" class="headerlink" title="4. group 服务分组"></a>4. group 服务分组</h5><p>不同的服务可以归类到同一分组，group 也可以起到服务隔离的作用。yml 中可以通过 spring.cloud.nacos.discovery.group 参数配置</p>
-<h5 id="5-设置集群"><a href="#5-设置集群" class="headerlink" title="5. 设置集群"></a>5. 设置集群</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">spring.cloud.nacos.discovery.cluster-name</span>: <span class="hljs-string">debug</span><br></code></pre></td></tr></table></figure>
-
-<h5 id="6-临时实例和持久化实例"><a href="#6-临时实例和持久化实例" class="headerlink" title="6. 临时实例和持久化实例"></a>6. 临时实例和持久化实例</h5><p>​    在定义上区分临时实例和持久化 实例的关键是健康检查的方式。临时实例使用客户端上报模式，而持久化实例使用服务端反向探测模式。临时实例需要能够自动摘除不健康实例，而且无需持久化存储实例。持久化实例使用服务端探测的健康检查方式，因为客户端不会上报心跳， 所以不能自动摘除下线的实例。</p>
-<p>​    在大中型的公司里，这两种类型的服务往往都有。一些基础的组件例如数据库、缓存等，这些往往不能上报心跳，这种类型的服务在注册时，就需要作为持久化实例注册。而上层的业务服务，例如 微服务或者 Dubbo 服务，服务的 Provider 端支持添加汇报心跳的逻辑，此时就可以使用动态服务的注册方式。</p>
-<p>​    Nacos 1.x 中持久化及非持久化的属性是作为实例的一个元数据进行存储和识别。Nacos 2.x 中继续沿用了持久化及非持久化的设定，但是有了一些调整。在Nacos2.0 中将是否持久化的数据抽象至服务级别， 且不再允许一个服务同时存在持久化实例和非持久化实例，实例的持久化属性继承自服务的持久化属性。   </p>
- <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-comment"># 持久化实例</span><br><span class="hljs-meta">spring.cloud.nacos.discovery.ephemeral</span>: <span class="hljs-string">false </span><br></code></pre></td></tr></table></figure>
               
             </div>
             <hr/>
@@ -814,6 +883,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -1070,6 +1145,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

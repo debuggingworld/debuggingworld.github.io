@@ -16,23 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. AOP 概念面向切面编程（Aspect-oriented Programming 简称 AOP），是相对面向对象编程（Object-oriented Programming 简称OOP）的框架，作为 OOP 的一种功能补充.。OOP 主要的模块单元是类（class）。而 AOP 则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP 的语义中，这类关注点">
+    <meta name="description" content="1. AOP 概念 面向切面编程（Aspect-oriented Programming 简称 AOP），是相对面向对象编程（Object-oriented Programming 简称OOP）的框架，作为 OOP 的一种功能补充.。OOP 主要的模块单元是类（class）。而 AOP 则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP 的语义中，这类关注">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring——AOP的使用">
 <meta property="og:url" content="http://example.com/2022/08/06/Spring%E2%80%94%E2%80%94AOP%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. AOP 概念面向切面编程（Aspect-oriented Programming 简称 AOP），是相对面向对象编程（Object-oriented Programming 简称OOP）的框架，作为 OOP 的一种功能补充.。OOP 主要的模块单元是类（class）。而 AOP 则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP 的语义中，这类关注点">
+<meta property="og:description" content="1. AOP 概念 面向切面编程（Aspect-oriented Programming 简称 AOP），是相对面向对象编程（Object-oriented Programming 简称OOP）的框架，作为 OOP 的一种功能补充.。OOP 主要的模块单元是类（class）。而 AOP 则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP 的语义中，这类关注">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809212859.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224055.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224141.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809220528.png">
 <meta property="article:published_time" content="2022-08-06T15:07:58.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.854Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809212859.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -241,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          11k 字
+          12k 字
         
       </span>
     
@@ -253,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          36 分钟
+          37 分钟
         
       </span>
     
@@ -295,88 +290,166 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-AOP-概念"><a href="#1-AOP-概念" class="headerlink" title="1. AOP 概念"></a>1. AOP 概念</h3><p>面向切面编程（Aspect-oriented Programming 简称 AOP），是相对面向对象编程（Object-oriented Programming 简称OOP）的框架，作为 OOP 的一种功能补充.。OOP 主要的模块单元是类（class）。而 AOP 则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP 的语义中，这类关注点被称为横切关注点（crosscutting））。</p>
-<h4 id="1-1-切面（Aspect）"><a href="#1-1-切面（Aspect）" class="headerlink" title="1.1 切面（Aspect）"></a>1.1 切面（Aspect）</h4><p>指关注点模块化，这个关注点可能会横切多个对象。 在 Spring AOP 中，切面可以用普通类基于 schema 的方式或者以 @Aspect 注解来实现。</p>
-<p>它是通知（Advice）和切点（Pointcut）合起来的抽象，它定义了一个切点（Pointcut）用来匹配连接点（Join point），也就是需要对需要拦截的那些方法进行定义；它定义了一系列的通知（Advice）用来对拦截到的方法进行增强。</p>
-<h4 id="1-2-连接点（Join-point）"><a href="#1-2-连接点（Join-point）" class="headerlink" title="1.2 连接点（Join point）"></a>1.2 连接点（Join point）</h4><p>在程序执行过程中某个特定的点，例如某个方法调用的时间点或者处理异常的时间点。在Spring AOP中，一个连接点总是代表一个方法的执行。</p>
-<p>org.aspectj.lang.JoinPoint 接口表示目标类连接点对象，它定义这些主要方法。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809212859.png" srcset="/img/loading.gif" lazyload></p>
-<p>org.aspectj.lang.ProceedingJoinPoint 继承了 JoinPoint 接口，该对象只用在 @Around 的切面方法中,添加了以下两个方法。</p>
+              <h3 id="aop-概念">1. AOP 概念</h3>
+<p>面向切面编程（Aspect-oriented Programming 简称
+AOP），是相对面向对象编程（Object-oriented Programming
+简称OOP）的框架，作为 OOP 的一种功能补充.。OOP
+主要的模块单元是类（class）。而 AOP
+则是切面（aspect）。切面会将诸如事务管理这样跨越多个类型和对象的关注点模块化（在AOP
+的语义中，这类关注点被称为横切关注点（crosscutting））。</p>
+<h4 id="切面aspect">1.1 切面（Aspect）</h4>
+<p>指关注点模块化，这个关注点可能会横切多个对象。 在 Spring AOP
+中，切面可以用普通类基于 schema 的方式或者以 <span class="citation"
+data-cites="Aspect">@Aspect</span> 注解来实现。</p>
+<p>它是通知（Advice）和切点（Pointcut）合起来的抽象，它定义了一个切点（Pointcut）用来匹配连接点（Join
+point），也就是需要对需要拦截的那些方法进行定义；它定义了一系列的通知（Advice）用来对拦截到的方法进行增强。</p>
+<h4 id="连接点join-point">1.2 连接点（Join point）</h4>
+<p>在程序执行过程中某个特定的点，例如某个方法调用的时间点或者处理异常的时间点。在Spring
+AOP中，一个连接点总是代表一个方法的执行。</p>
+<p>org.aspectj.lang.JoinPoint
+接口表示目标类连接点对象，它定义这些主要方法。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809212859.png" srcset="/img/loading.gif" lazyload /></p>
+<p>org.aspectj.lang.ProceedingJoinPoint 继承了 JoinPoint
+接口，该对象只用在 <span class="citation"
+data-cites="Around">@Around</span> 的切面方法中,添加了以下两个方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 执行目标方法</span><br><span class="hljs-function">Object <span class="hljs-title">proceed</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable </span><br><span class="hljs-function"> <span class="hljs-comment">// 传入的新的参数去执行目标方法 </span></span><br><span class="hljs-function">Object <span class="hljs-title">proceed</span><span class="hljs-params">(Object[] var1)</span> <span class="hljs-keyword">throws</span> Throwable</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="1-3-通知（Advice）"><a href="#1-3-通知（Advice）" class="headerlink" title="1.3 通知（Advice）"></a>1.3 通知（Advice）</h4><p>在切面的某个特定的连接点上执行的动作。许多 AOP 框架，包括 Spring 在内，都是以拦截器做通知模型的，并维护着一个以连接点为中心的拦截器链。</p>
-<p>Spring AOP 包含以下类型的通知：</p>
-<ul>
-<li>前置通知（Before advice）: 在连接点之前运行但无法阻止执行流程进入连接点的通知（除非它引发异常）。</li>
-<li>后置返回通知（After returning advice）:在连接点正常完成后执行的通知（例如，当方法没有抛出任何异常并正常返回时）。</li>
-<li>后置异常通知（After throwing advice）: 在方法抛出异常退出时执行的通知。</li>
-<li>后置通知（总会执行）（After (finally) advice）: 当连接点退出的时候执行的通知（无论是正常返回还是异常退出）。</li>
-<li>环绕通知（Around Advice）:环绕连接点的通知，例如方法调用。这是最强大的一种通知类型。环绕通知可以在方法调用前后完成自定义的行为。它可以选择是否继续执行连接点或直接返回自定义的返回值又或抛出异常将执行结束。</li>
-</ul>
-<p>通知方法的执行顺序：<br>1、正常执行：@Before—&gt;@After—&gt;@AfterReturning<br>2、异常执行：@Before—&gt;@After—&gt;@AfterThrowing</p>
-<p><strong><font color="red">Spring 在 5.2.7 之后就改变的 advice 的执行顺序。</font></strong><br>1、正常执行：@Before—&gt;@AfterReturning—&gt;@After<br>2、异常执行：@Before—&gt;@AfterThrowing—&gt;@After</p>
-<h4 id="1-4-切点（Pointcut）"><a href="#1-4-切点（Pointcut）" class="headerlink" title="1.4 切点（Pointcut）"></a>1.4 切点（Pointcut）</h4><p>匹配连接点的断言。通知和切点表达式相关联，并在满足这个切点的连接点上运行（例如当执行某个特定名称的方法时）。切点表达式如何和连接点匹配是 AOP 的核心，Spring 默认使用 AspectJ 切点语义。</p>
-<p>Spring AOP 支持使用以下 AspectJ 切点标识符(PCD)，用于切点表达式：</p>
-<ul>
-<li>execution：用于匹配<strong>方法</strong>执行连接点。</li>
-<li>within: 限制匹配<strong>类</strong>中的连接点。</li>
-<li>this:  匹配代理对象实现了某个接口的连接点。</li>
-<li>target: 匹配目标对象实现了某个接口的连接点。</li>
-<li>args: 限制与连接点的匹配，其中变量是给定类型的实例。</li>
-<li>@target: 限制与连接点的匹配，其中执行对象的类具有给定类型的注解。</li>
-<li>@args: 限制匹配连接点，其中传递的实际参数的运行时类型具有给定类型的注解。</li>
-<li>@within: 限制与具有给定注解的类型中的连接点匹配。</li>
-<li>@annotation:限制匹配连接点（在Spring AOP中执行的方法具有给定的注解）。</li>
-</ul>
+<h4 id="通知advice">1.3 通知（Advice）</h4>
+<p>在切面的某个特定的连接点上执行的动作。许多 AOP 框架，包括 Spring
+在内，都是以拦截器做通知模型的，并维护着一个以连接点为中心的拦截器链。</p>
+<p>Spring AOP 包含以下类型的通知： + 前置通知（Before advice）:
+在连接点之前运行但无法阻止执行流程进入连接点的通知（除非它引发异常）。 +
+后置返回通知（After returning
+advice）:在连接点正常完成后执行的通知（例如，当方法没有抛出任何异常并正常返回时）。
++ 后置异常通知（After throwing advice）:
+在方法抛出异常退出时执行的通知。 + 后置通知（总会执行）（After (finally)
+advice）: 当连接点退出的时候执行的通知（无论是正常返回还是异常退出）。 +
+环绕通知（Around
+Advice）:环绕连接点的通知，例如方法调用。这是最强大的一种通知类型。环绕通知可以在方法调用前后完成自定义的行为。它可以选择是否继续执行连接点或直接返回自定义的返回值又或抛出异常将执行结束。</p>
+<p>通知方法的执行顺序： 1、正常执行：<span class="citation"
+data-cites="Before">@Before</span>---&gt;<span class="citation"
+data-cites="After">@After</span>---&gt;<span class="citation"
+data-cites="AfterReturning">@AfterReturning</span> 2、异常执行：<span
+class="citation" data-cites="Before">@Before</span>---&gt;<span
+class="citation" data-cites="After">@After</span>---&gt;<span
+class="citation" data-cites="AfterThrowing">@AfterThrowing</span></p>
+<p><strong><font color="red">Spring 在 5.2.7 之后就改变的
+advice 的执行顺序。</font></strong> 1、正常执行：<span class="citation"
+data-cites="Before">@Before</span>---&gt;<span class="citation"
+data-cites="AfterReturning">@AfterReturning</span>---&gt;<span
+class="citation" data-cites="After">@After</span> 2、异常执行：<span
+class="citation" data-cites="Before">@Before</span>---&gt;<span
+class="citation"
+data-cites="AfterThrowing">@AfterThrowing</span>---&gt;<span
+class="citation" data-cites="After">@After</span></p>
+<h4 id="切点pointcut">1.4 切点（Pointcut）</h4>
+<p>匹配连接点的断言。通知和切点表达式相关联，并在满足这个切点的连接点上运行（例如当执行某个特定名称的方法时）。切点表达式如何和连接点匹配是
+AOP 的核心，Spring 默认使用 AspectJ 切点语义。</p>
+<p>Spring AOP 支持使用以下 AspectJ 切点标识符(PCD)，用于切点表达式： +
+execution：用于匹配<strong>方法</strong>执行连接点。 +
+within: 限制匹配<strong>类</strong>中的连接点。 +
+this:  匹配代理对象实现了某个接口的连接点。 +
+target: 匹配目标对象实现了某个接口的连接点。 +
+args: 限制与连接点的匹配，其中变量是给定类型的实例。 + <span
+class="citation"
+data-cites="target">@target</span>: 限制与连接点的匹配，其中执行对象的类具有给定类型的注解。
++ <span class="citation"
+data-cites="args">@args</span>: 限制匹配连接点，其中传递的实际参数的运行时类型具有给定类型的注解。
++ <span class="citation"
+data-cites="within">@within</span>: 限制与具有给定注解的类型中的连接点匹配。
++ <span class="citation"
+data-cites="annotation:限制匹配连接点">@annotation:限制匹配连接点</span>（在Spring AOP中执行的方法具有给定的注解）。</p>
 <p>表达式语法：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224055.png" srcset="/img/loading.gif" lazyload></p>
-<p>除返回类型模式（ret-type-pattern ）以外的所有部件、名称模式和参数模式都是可选的。通常，可以使用 * 作为返回类型模式，它匹配任何返回类型。只有当方法返回给定类型时，完全限定的类型名称才会匹配。名称模式与方法名称匹配，可以将 * 通配符用作名称模式的全部或部分。 如果指定声明类型模式，则需要有后缀 <strong>.</strong> 将其加入到名称模式组件中。参数模式稍微复杂一点。() 匹配没有参数的方法。(..) 匹配任意个数的参数（0个或多个）。 (*) 匹配任何类型的单个参数。(*,String) 匹配有两个参数而且第一个参数是任意类型，第二个必须是 String 的方法。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224141.png" srcset="/img/loading.gif" lazyload></p>
-<ol>
-<li>within 表达式<br>通过类名进行匹配，粗粒度的切入点表达式。<br>在 within 表达式中可以使用 * 号通配符，例如匹配指定包下所有的类：</li>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224055.png" srcset="/img/loading.gif" lazyload /></p>
+<p>除返回类型模式（ret-type-pattern
+）以外的所有部件、名称模式和参数模式都是可选的。通常，可以使用 *
+作为返回类型模式，它匹配任何返回类型。只有当方法返回给定类型时，完全限定的类型名称才会匹配。名称模式与方法名称匹配，可以将
+* 通配符用作名称模式的全部或部分。 如果指定声明类型模式，则需要有后缀
+<strong>.</strong> 将其加入到名称模式组件中。参数模式稍微复杂一点。()
+匹配没有参数的方法。(..) 匹配任意个数的参数（0个或多个）。 (*)
+匹配任何类型的单个参数。(*,String)
+匹配有两个参数而且第一个参数是任意类型，第二个必须是 String 的方法。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809224141.png" srcset="/img/loading.gif" lazyload /></p>
+<ol type="1">
+<li>within 表达式 通过类名进行匹配，粗粒度的切入点表达式。 在 within
+表达式中可以使用 * 号通配符，例如匹配指定包下所有的类：</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;within(cn.tulingxueyuan.service.*)&quot;</span></span><br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>execution 表达式<br>细粒度的切入点表达式，可以以方法为单位定义切入点规则</li>
+<ol start="2" type="1">
+<li>execution 表达式
+细粒度的切入点表达式，可以以方法为单位定义切入点规则</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* cn.tulingxueyuan.service.*.query())&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;pc1&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>合并切点表达式<br>可以使用 &amp;&amp;, || 和 ! 等符号进行合并操作。也可以通过名字来指向切点表达式。 </li>
+<ol start="3" type="1">
+<li>合并切点表达式 可以使用 &amp;&amp;, || 和 !
+等符号进行合并操作。也可以通过名字来指向切点表达式。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(&quot;execution(public * *(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">anyPublicOperation</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br><span class="hljs-meta">@Pointcut(&quot;within(com.xyz.someapp.trading..*)&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">inTrading</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br><span class="hljs-meta">@Pointcut(&quot;anyPublicOperation() &amp;&amp; inTrading()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tradingOperation</span><span class="hljs-params">()</span> </span>&#123;&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="1-5-引入（Introduction）"><a href="#1-5-引入（Introduction）" class="headerlink" title="1.5 引入（Introduction）"></a>1.5 引入（Introduction）</h4><p>声明额外的方法或者某个类型的字段。Spring 允许引入新的接口（以及一个对应的实现）到任何被通知的对象上。例如，可以使用引入来使 bean 实现  IsModified 接口， 以便简化缓存机制（在 AspectJ 社区，引入也被称为内部类型声明（inter））。</p>
-<p>@DeclareParents<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/swh1234567/article/details/116454743">https://blog.csdn.net/swh1234567/article/details/116454743</a></p>
-<h4 id="1-6-目标对象（Target-object）"><a href="#1-6-目标对象（Target-object）" class="headerlink" title="1.6 目标对象（Target object）"></a>1.6 目标对象（Target object）</h4><p>被一个或者多个切面所通知的对象。也被称作被通知（advised）对象。既然 Spring AOP 是通过运行时代理实现的，那么这个对象永远是一个被代理（proxied）的对象。</p>
-<h4 id="1-7-AOP代理（AOP-proxy）"><a href="#1-7-AOP代理（AOP-proxy）" class="headerlink" title="1.7 AOP代理（AOP proxy）"></a>1.7 AOP代理（AOP proxy）</h4><p>AOP 框架创建的对象，用来实现切面契约（aspect contract）（包括通知方法执行等功能）。在 Spring 中，AOP 代理可以是 JDK 动态代理或 CGLIB 代理。</p>
-<h4 id="1-8-织入（Weaving）"><a href="#1-8-织入（Weaving）" class="headerlink" title="1.8 织入（Weaving）"></a>1.8 织入（Weaving）</h4><p>把切面连接到其它的应用程序类型或者对象上，并创建一个被通知的对象的过程。这个过程可以在编译时（例如使用 AspectJ 编译器）、类加载时或运行时中完成。 Spring 和其他纯 Java AOP 框架一样，是在运行时完成织入的。</p>
-<p>一个连接点可以同时匹配多个切点，而切点所对应的增强在连接点上织入顺序的规则是这样的：<br>①如果在同一个切面类中声明的增强，则按照增强在切面类中定义的顺序进行织入；<br>②如果增强位于不同的切面类中，并且这些切面类都实现了org.springframework.core.Ordered 接口，则由 Ordered 方法的顺序号决定(顺序号小的先织入)；<br>③如果增强位于不同的切面类中，但这些切面类没有实现org.springframework.core.Ordered 接口，织入的顺序是不确定的。</p>
-<p>两个切面类 A 与 B，都实现了 Ordered 接口，A 的顺序号为 1，B 的顺序号为 2。切面类 A 与 B 都定义了 3 个增强，那么同时匹配这 6 个增强的织入顺序如下图所示：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809220528.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-基于-AspectJ的AOP支持"><a href="#2-基于-AspectJ的AOP支持" class="headerlink" title="2. 基于@AspectJ的AOP支持"></a>2. 基于@AspectJ的AOP支持</h3><p>添加依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-aspects<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.3.21<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="2-1-启用-AspectJ支持"><a href="#2-1-启用-AspectJ支持" class="headerlink" title="2.1 启用@AspectJ支持"></a>2.1 启用@AspectJ支持</h4><ol>
-<li>使用 Java @Configuration 启用 @AspectJ 支持</li>
+<h4 id="引入introduction">1.5 引入（Introduction）</h4>
+<p>声明额外的方法或者某个类型的字段。Spring
+允许引入新的接口（以及一个对应的实现）到任何被通知的对象上。例如，可以使用引入来使
+bean 实现 IsModified 接口， 以便简化缓存机制（在 AspectJ
+社区，引入也被称为内部类型声明（inter））。</p>
+<p><span class="citation"
+data-cites="DeclareParents">@DeclareParents</span>
+https://blog.csdn.net/swh1234567/article/details/116454743</p>
+<h4 id="目标对象target-object">1.6 目标对象（Target object）</h4>
+<p>被一个或者多个切面所通知的对象。也被称作被通知（advised）对象。既然
+Spring AOP
+是通过运行时代理实现的，那么这个对象永远是一个被代理（proxied）的对象。</p>
+<h4 id="aop代理aop-proxy">1.7 AOP代理（AOP proxy）</h4>
+<p>AOP 框架创建的对象，用来实现切面契约（aspect
+contract）（包括通知方法执行等功能）。在 Spring 中，AOP 代理可以是 JDK
+动态代理或 CGLIB 代理。</p>
+<h4 id="织入weaving">1.8 织入（Weaving）</h4>
+<p>把切面连接到其它的应用程序类型或者对象上，并创建一个被通知的对象的过程。这个过程可以在编译时（例如使用
+AspectJ 编译器）、类加载时或运行时中完成。 Spring 和其他纯 Java AOP
+框架一样，是在运行时完成织入的。</p>
+<p>一个连接点可以同时匹配多个切点，而切点所对应的增强在连接点上织入顺序的规则是这样的：
+①如果在同一个切面类中声明的增强，则按照增强在切面类中定义的顺序进行织入；
+②如果增强位于不同的切面类中，并且这些切面类都实现了org.springframework.core.Ordered
+接口，则由 Ordered 方法的顺序号决定(顺序号小的先织入)；
+③如果增强位于不同的切面类中，但这些切面类没有实现org.springframework.core.Ordered
+接口，织入的顺序是不确定的。</p>
+<p>两个切面类 A 与 B，都实现了 Ordered 接口，A 的顺序号为 1，B
+的顺序号为 2。切面类 A 与 B 都定义了 3 个增强，那么同时匹配这 6
+个增强的织入顺序如下图所示：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220809220528.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="基于aspectj的aop支持">2. 基于@AspectJ的AOP支持</h3>
+<p>添加依赖 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-aspects<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.3.21<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<h4 id="启用aspectj支持">2.1 启用@AspectJ支持</h4>
+<ol type="1">
+<li>使用 Java <span class="citation"
+data-cites="Configuration">@Configuration</span> 启用 <span
+class="citation" data-cites="AspectJ">@AspectJ</span> 支持</li>
 </ol>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>&#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p> <br> 2. 使用 XML 配置启用 @AspectJ 支持</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableAspectJAutoProxy</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>&#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>   2. 使用 XML 配置启用 <span class="citation"
+data-cites="AspectJ">@AspectJ</span> 支持</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:aspectj-autoproxy</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="2-2-声明切面"><a href="#2-2-声明切面" class="headerlink" title="2.2 声明切面"></a>2.2 声明切面</h4><p>启用了 @AspectJ 支持后，在应用程序上下文中定义的 有 @Aspect 注解的 bean 都将被 Spring 自动检测用于配置 Spring AOP。</p>
+<h4 id="声明切面">2.2 声明切面</h4>
+<p>启用了 <span class="citation" data-cites="AspectJ">@AspectJ</span>
+支持后，在应用程序上下文中定义的 有 <span class="citation"
+data-cites="Aspect">@Aspect</span> 注解的 bean 都将被 Spring
+自动检测用于配置 Spring AOP。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAspect</span> </span>&#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-3-声明切点"><a href="#2-3-声明切点" class="headerlink" title="2.3 声明切点"></a>2.3 声明切点</h4><p>切点决定了匹配的连接点，从而能够控制通知何时执行。Spring AOP 只支持使用 Spring bean 的方法执行连接点，所以可以将切点看做是匹配 Spring bean 上方法的执行。 切点的声明包含两个部分：包含名称和任意参数的签名，以及明确需要匹配的方式执行的切点表达式。</p>
+<h4 id="声明切点">2.3 声明切点</h4>
+<p>切点决定了匹配的连接点，从而能够控制通知何时执行。Spring AOP
+只支持使用 Spring bean 的方法执行连接点，所以可以将切点看做是匹配 Spring
+bean 上方法的执行。
+切点的声明包含两个部分：包含名称和任意参数的签名，以及明确需要匹配的方式执行的切点表达式。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(* com.zth.debugSpring.service..*(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span></span>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><strong>表达式的抽取</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(&quot;execution(* com.zth.debugSpring.service..*(..))&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">allService</span><span class="hljs-params">()</span></span>&#123;&#125;<br>	<br><span class="hljs-meta">@Before(&quot;allService()&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span></span>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="2-4-声明通知"><a href="#2-4-声明通知" class="headerlink" title="2.4 声明通知"></a>2.4 声明通知</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAspect</span> </span>&#123;<br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">allService</span><span class="hljs-params">()</span> </span>&#123;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 前置通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Before(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before 执行&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置返回通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterReturning(pointcut = &quot;allService()&quot;, returning = &quot;revalue&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturning</span><span class="hljs-params">(Object revalue)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;AfterReturning,返回值：&quot;</span> + revalue);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置异常通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterThrowing(pointcut = &quot;allService()&quot;, throwing = &quot;ex&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Exception ex)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;afterThrowing,返回异常：&quot;</span> + ex);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置通知(总会执行)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@After(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">After</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;After 执行&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 使用 <span class="hljs-doctag">@Around</span>注解来定义环绕通知，第一个参数必须是 ProceedingJoinPoint类型的。</span><br><span class="hljs-comment">     * 在通知中调用 ProceedingJoinPoint中的 proceed()方法来引用执行的方法。</span><br><span class="hljs-comment">     * proceed 方法也可以被调用传递数组对象- 数组的值将会被当作参数在方法执行时被使用。</span><br><span class="hljs-comment">     * proceed 方法也可以传入 Object[]。 数组中的值在进行时用作方法执行的参数。</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-meta">@Around(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Around before&quot;</span>);<br>        pjp.proceed();<br>        System.out.println(<span class="hljs-string">&quot;Around after&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<h5 id="通知的参数"><a href="#通知的参数" class="headerlink" title="通知的参数"></a>通知的参数</h5><p>任何通知方法都可以声明一个类型为 org.aspectj.lang.JoinPoint 的参数作为其第一个参数（注意，需要使用 ProceedingJoinPoint  来声明 around advice  的第一个参数， 它是JoinPoint的一个子类）。JoinPoint接口提供很多有用的方法：:</p>
+<h4 id="声明通知">2.4 声明通知</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAspect</span> </span>&#123;<br>    <span class="hljs-meta">@Pointcut(&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">allService</span><span class="hljs-params">()</span> </span>&#123;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 前置通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Before(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before 执行&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置返回通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterReturning(pointcut = &quot;allService()&quot;, returning = &quot;revalue&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterReturning</span><span class="hljs-params">(Object revalue)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;AfterReturning,返回值：&quot;</span> + revalue);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置异常通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@AfterThrowing(pointcut = &quot;allService()&quot;, throwing = &quot;ex&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterThrowing</span><span class="hljs-params">(Exception ex)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;afterThrowing,返回异常：&quot;</span> + ex);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 后置通知(总会执行)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@After(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">After</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;After 执行&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 使用 <span class="hljs-doctag">@Around</span>注解来定义环绕通知，第一个参数必须是 ProceedingJoinPoint类型的。</span><br><span class="hljs-comment">     * 在通知中调用 ProceedingJoinPoint中的 proceed()方法来引用执行的方法。</span><br><span class="hljs-comment">     * proceed 方法也可以被调用传递数组对象- 数组的值将会被当作参数在方法执行时被使用。</span><br><span class="hljs-comment">     * proceed 方法也可以传入 Object[]。 数组中的值在进行时用作方法执行的参数。</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-meta">@Around(&quot;allService()&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">around</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Around before&quot;</span>);<br>        pjp.proceed();<br>        System.out.println(<span class="hljs-string">&quot;Around after&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="通知的参数">通知的参数</h5>
+<p>任何通知方法都可以声明一个类型为 org.aspectj.lang.JoinPoint
+的参数作为其第一个参数（注意，需要使用 ProceedingJoinPoint 来声明 around
+advice 的第一个参数，
+它是JoinPoint的一个子类）。JoinPoint接口提供很多有用的方法：:</p>
 <ul>
 <li>getArgs(): 返回方法参数.</li>
 <li>getThis(): 返回代理对象.</li>
@@ -384,42 +457,66 @@
 <li>getSignature():返回正在通知的方法的描述.</li>
 <li>toString(): 打印方法被通知的有用描述.</li>
 </ul>
-<h5 id="传递参数给通知"><a href="#传递参数给通知" class="headerlink" title="传递参数给通知"></a>传递参数给通知</h5><p>上面已经看到了如何绑定返回的值或异常值（在返回之后和抛出通知之后使用）。为了在通知代码段中使用参数值，可以使用绑定 args 的形式。如果在参数表达式中使用参数名代替类型名称， 则在调用通知时，要将相关的参数值当作参数传递。</p>
+<h5 id="传递参数给通知">传递参数给通知</h5>
+<p>上面已经看到了如何绑定返回的值或异常值（在返回之后和抛出通知之后使用）。为了在通知代码段中使用参数值，可以使用绑定
+args 的形式。如果在参数表达式中使用参数名代替类型名称，
+则在调用通知时，要将相关的参数值当作参数传递。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..)) &amp;&amp; args(userId)&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testArgs</span><span class="hljs-params">(Integer userId)</span></span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Before 执行,args:&quot;</span>+userId);<br>&#125;<br><br><span class="hljs-meta">@Pointcut(&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..)) &amp;&amp; args(userId)&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">argsPointcut</span><span class="hljs-params">(Integer userId)</span></span>&#123;<br><br>&#125;<br><span class="hljs-meta">@Before(value = &quot;argsPointcut(userId)&quot;, argNames = &quot;userId&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testArgs2</span><span class="hljs-params">(Integer userId)</span></span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;Before 执行,args:&quot;</span>+userId);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>代理对象( this)，目标对象 ( target)和注解 ( @within, @target, @annotation, and @args)都可以以类似的方式绑定。</p>
-<h5 id="声明参数的名字"><a href="#声明参数的名字" class="headerlink" title="声明参数的名字"></a>声明参数的名字</h5><p>参数在通知中的绑定依赖于名字匹配，重点在切点表达式中定义的参数名的方法签名上（通知和切点）。</p>
+<p>代理对象( this)，目标对象 ( target)和注解 ( <span class="citation"
+data-cites="within">@within</span>, <span class="citation"
+data-cites="target">@target</span>, <span class="citation"
+data-cites="annotation">@annotation</span>, and <span class="citation"
+data-cites="args">@args</span>)都可以以类似的方式绑定。</p>
+<h5 id="声明参数的名字">声明参数的名字</h5>
+<p>参数在通知中的绑定依赖于名字匹配，重点在切点表达式中定义的参数名的方法签名上（通知和切点）。</p>
 <ul>
-<li>如果用户已明确指定参数名称，则使用指定的参数名称。通知和切点注解都有一个可选的argNames属性，您可以使用该属性指定带注解的方法的参数名称。 这些参数名称在运行时可用。</li>
+<li>如果用户已明确指定参数名称，则使用指定的参数名称。通知和切点注解都有一个可选的argNames属性，您可以使用该属性指定带注解的方法的参数名称。
+这些参数名称在运行时可用。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(value=&quot;com.xyz.lib.Pointcuts.anyPublicMethod() &amp;&amp; target(bean) &amp;&amp; @annotation(auditable)&quot;,</span><br><span class="hljs-meta">        argNames=&quot;bean,auditable&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">audit</span><span class="hljs-params">(Object bean, Auditable auditable)</span> </span>&#123;<br>    AuditCode code = auditable.value();<br>    <span class="hljs-comment">// ... use code and bean</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
-<li>使用’argNames’属性有点笨拙，所以如果没有指定’argNames’属性，Spring AOP会查看该类的调试信息，并尝试从局部变量表中确定参数名称。</li>
-<li>如果代码是在没有必要的调试信息的情况下编译的，那么Spring AOP将尝试推断绑定变量与参数的配对（例如，如果在切点表达式中只绑定了一个变量，并且该通知方法只需要一个参数，此时两者匹配是明显的）。 如果给定了可用信息，变量的绑定是不明确的话，则会引发 AmbiguousBindingException 异常。</li>
+<li>使用'argNames'属性有点笨拙，所以如果没有指定'argNames'属性，Spring
+AOP会查看该类的调试信息，并尝试从局部变量表中确定参数名称。</li>
+<li>如果代码是在没有必要的调试信息的情况下编译的，那么Spring
+AOP将尝试推断绑定变量与参数的配对（例如，如果在切点表达式中只绑定了一个变量，并且该通知方法只需要一个参数，此时两者匹配是明显的）。
+如果给定了可用信息，变量的绑定是不明确的话，则会引发
+AmbiguousBindingException 异常。</li>
 <li>如果上述所有策略都失败，则抛出 IllegalArgumentException 异常。</li>
 </ul>
-<h4 id="2-5-引入"><a href="#2-5-引入" class="headerlink" title="2.5 引入"></a>2.5 引入</h4><p>引入（作为 AspectJ 中内部类型的声明）允许切面定义通知的对象实现给定的接口，并代表这些对象提供该接口的实现.。</p>
-<p>引入使用 @DeclareParents 注解来定义，这个注解用于声明匹配拥有新的父类的类型。例如， 给定名为 UsageTracked 的接口和名为 DefaultUsageTracked 的接口的实现，以下切面声明服务接口的所有实现者也实现 UsageTracked 接口。</p>
+<h4 id="引入">2.5 引入</h4>
+<p>引入（作为 AspectJ
+中内部类型的声明）允许切面定义通知的对象实现给定的接口，并代表这些对象提供该接口的实现.。</p>
+<p>引入使用 <span class="citation"
+data-cites="DeclareParents">@DeclareParents</span>
+注解来定义，这个注解用于声明匹配拥有新的父类的类型。例如， 给定名为
+UsageTracked 的接口和名为 DefaultUsageTracked
+的接口的实现，以下切面声明服务接口的所有实现者也实现 UsageTracked
+接口。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UsageTracking</span> </span>&#123;<br><br>    <span class="hljs-meta">@DeclareParents(value=&quot;com.xzy.myapp.service.*+&quot;, defaultImpl=DefaultUsageTracked.class)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> UsageTracked mixin;<br><br>    <span class="hljs-meta">@Before(&quot;com.xyz.myapp.SystemArchitecture.businessService() &amp;&amp; this(usageTracked)&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">recordUsage</span><span class="hljs-params">(UsageTracked usageTracked)</span> </span>&#123;<br>        usageTracked.incrementUseCount();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>要实现的接口由注解属性的类型来确定。 @DeclareParents注解的value值是AspectJ类型模式引过来的。服务 bean 可以直接作为 UsageTracked 接口的实现，等同于：</p>
+<p>要实现的接口由注解属性的类型来确定。 <span class="citation"
+data-cites="DeclareParents注解的value值是AspectJ类型模式引过来的">@DeclareParents注解的value值是AspectJ类型模式引过来的</span>。服务
+bean 可以直接作为 UsageTracked 接口的实现，等同于：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">UsageTracked usageTracked = (UsageTracked) context.getBean(<span class="hljs-string">&quot;myService&quot;</span>);<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-基于Schema的AOP支持"><a href="#3-基于Schema的AOP支持" class="headerlink" title="3. 基于Schema的AOP支持"></a>3. 基于Schema的AOP支持</h3><p>在 Spring 配置中，所有 aspect 和 advisor 元素必须放在 &lt;aop:config&gt; 元素中（在应用程序上下文配置中可以有多个 &lt;aop:config&gt;元素）。 &lt;aop:config&gt; 元素可以包含切点，通知者和切面元素。</p>
-<h4 id="3-1-声明切面"><a href="#3-1-声明切面" class="headerlink" title="3.1 声明切面"></a>3.1 声明切面</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;debugAspect&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.zth.debugSpring.DebugAspect&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;debugAspect&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-
-<h4 id="3-2-声明切点"><a href="#3-2-声明切点" class="headerlink" title="3.2 声明切点"></a>3.2 声明切点</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userPointCut&quot;</span></span><br><span class="hljs-tag">                          <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-<h4 id="3-3-声明通知"><a href="#3-3-声明通知" class="headerlink" title="3.3  声明通知"></a>3.3  声明通知</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;debugAspect&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.zth.debugSpring.DebugAspect&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userPointCut&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;debugAspect&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--前置通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:before</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugBefore&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置返回通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-returning</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfterReturning&quot;</span> <span class="hljs-attr">returning</span>=<span class="hljs-string">&quot;revalue&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置异常通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-throwing</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfterThrowing&quot;</span> <span class="hljs-attr">throwing</span>=<span class="hljs-string">&quot;ex&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置通知(总会执行的)--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfter&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--环绕通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:around</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAround&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="基于schema的aop支持">3. 基于Schema的AOP支持</h3>
+<p>在 Spring 配置中，所有 aspect 和 advisor 元素必须放在
+&lt;aop:config&gt; 元素中（在应用程序上下文配置中可以有多个
+&lt;aop:config&gt;元素）。 &lt;aop:config&gt;
+元素可以包含切点，通知者和切面元素。</p>
+<h4 id="声明切面-1">3.1 声明切面</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;debugAspect&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.zth.debugSpring.DebugAspect&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;debugAspect&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="声明切点-1">3.2 声明切点</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userPointCut&quot;</span></span><br><span class="hljs-tag">                          <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="声明通知-1">3.3 声明通知</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;debugAspect&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.zth.debugSpring.DebugAspect&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userPointCut&quot;</span></span><br><span class="hljs-tag">                  <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.zth.debugSpring.service.UserService.getUser(..))&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;debugAspect&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--前置通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:before</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugBefore&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置返回通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-returning</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfterReturning&quot;</span> <span class="hljs-attr">returning</span>=<span class="hljs-string">&quot;revalue&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置异常通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-throwing</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfterThrowing&quot;</span> <span class="hljs-attr">throwing</span>=<span class="hljs-string">&quot;ex&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--后置通知(总会执行的)--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAfter&quot;</span>/&gt;</span><br>        <span class="hljs-comment">&lt;!--环绕通知--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:around</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugAround&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DebugAspect</span> </span>&#123;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugBefore</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;before 执行&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugAfterReturning</span><span class="hljs-params">(Object revalue)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;AfterReturning,返回值：&quot;</span> + revalue);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugAfterThrowing</span><span class="hljs-params">(Exception ex)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;afterThrowing,返回异常：&quot;</span> + ex);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugAfter</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;After 执行&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugAround</span><span class="hljs-params">(ProceedingJoinPoint pjp)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Around before&quot;</span>);<br>        pjp.proceed();<br>        System.out.println(<span class="hljs-string">&quot;Around after&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><strong>通知参数</strong></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;myAspect&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;debugAspect&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userPointCut&quot;</span></span><br><span class="hljs-tag">                      <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* com.zth.debugSpring.service.UserService.getUser(Integer)) and args(userId)&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:before</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;userPointCut&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;debugArgs&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">debugArgs</span><span class="hljs-params">(Integer userId)</span> </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;debugArgs userId:&quot;</span>+userId);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="3-4-引入"><a href="#3-4-引入" class="headerlink" title="3.4 引入"></a>3.4 引入</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;aop:aspect id=<span class="hljs-string">&quot;usageTrackerAspect&quot;</span> ref=<span class="hljs-string">&quot;usageTracking&quot;</span>&gt;<br><br>    &lt;aop:declare-parents<br>        types-matching=<span class="hljs-string">&quot;com.xzy.myapp.service.*+&quot;</span><br>        implement-<span class="hljs-class"><span class="hljs-keyword">interface</span></span>=<span class="hljs-string">&quot;com.xyz.myapp.service.tracking.UsageTracked&quot;</span><br>        <span class="hljs-keyword">default</span>-impl=<span class="hljs-string">&quot;com.xyz.myapp.service.tracking.DefaultUsageTracked&quot;</span>/&gt;<br><br>    &lt;aop:before<br>        pointcut=<span class="hljs-string">&quot;com.xyz.myapp.SystemArchitecture.businessService()</span><br><span class="hljs-string">            and this(usageTracked)&quot;</span><br>            method=<span class="hljs-string">&quot;recordUsage&quot;</span>/&gt;<br><br>&lt;/aop:aspect&gt;<br></code></pre></td></tr></table></figure>
+<h4 id="引入-1">3.4 引入</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;aop:aspect id=<span class="hljs-string">&quot;usageTrackerAspect&quot;</span> ref=<span class="hljs-string">&quot;usageTracking&quot;</span>&gt;<br><br>    &lt;aop:declare-parents<br>        types-matching=<span class="hljs-string">&quot;com.xzy.myapp.service.*+&quot;</span><br>        implement-<span class="hljs-class"><span class="hljs-keyword">interface</span></span>=<span class="hljs-string">&quot;com.xyz.myapp.service.tracking.UsageTracked&quot;</span><br>        <span class="hljs-keyword">default</span>-impl=<span class="hljs-string">&quot;com.xyz.myapp.service.tracking.DefaultUsageTracked&quot;</span>/&gt;<br><br>    &lt;aop:before<br>        pointcut=<span class="hljs-string">&quot;com.xyz.myapp.SystemArchitecture.businessService()</span><br><span class="hljs-string">            and this(usageTracked)&quot;</span><br>            method=<span class="hljs-string">&quot;recordUsage&quot;</span>/&gt;<br><br>&lt;/aop:aspect&gt;<br></code></pre></td></tr></table></figure>
 <p>然后，支持usageTrackingbean的类将包含以下方法:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">recordUsage</span><span class="hljs-params">(UsageTracked usageTracked)</span> </span>&#123;<br>    usageTracked.incrementUseCount();<br>&#125;<br><br><br>UsageTracked usageTracked = (UsageTracked) context.getBean(<span class="hljs-string">&quot;myService&quot;</span>);<br></code></pre></td></tr></table></figure>
+
               
             </div>
             <hr/>
@@ -603,6 +700,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -859,6 +962,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

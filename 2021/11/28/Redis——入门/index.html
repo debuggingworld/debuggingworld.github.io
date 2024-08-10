@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.  NoSQL介绍NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。 2. 为什么需要NoSQL主要应对以下问题时，传统关系型数据库力不从心   高并发读写  海量数据的高效率存储和访">
+    <meta name="description" content="1. NoSQL介绍 NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。 2. 为什么需要NoSQL 主要应对以下问题时，传统关系型数据库力不从心 高并发读写 海量数据的高效率存储和访问">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis——入门">
 <meta property="og:url" content="http://example.com/2021/11/28/Redis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.  NoSQL介绍NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。 2. 为什么需要NoSQL主要应对以下问题时，传统关系型数据库力不从心   高并发读写  海量数据的高效率存储和访">
+<meta property="og:description" content="1. NoSQL介绍 NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。 2. 为什么需要NoSQL 主要应对以下问题时，传统关系型数据库力不从心 高并发读写 海量数据的高效率存储和访问">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-27T16:02:32.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.307Z">
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          604 字
+          606 字
         
       </span>
     
@@ -290,11 +290,25 @@
             
             <div class="markdown-body">
               
-              <h2 id="1-NoSQL介绍"><a href="#1-NoSQL介绍" class="headerlink" title="1.  NoSQL介绍"></a>1.  NoSQL介绍</h2><p>NoSQL （Not Only SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql ,oracle ,sql server 等 都是关系型数据库。</p>
-<h2 id="2-为什么需要NoSQL"><a href="#2-为什么需要NoSQL" class="headerlink" title="2. 为什么需要NoSQL"></a>2. 为什么需要NoSQL</h2><p>主要应对以下问题时，传统关系型数据库力不从心</p>
-<p>  高并发读写<br>  海量数据的高效率存储和访问<br>  高可扩展性和高可用性</p>
-<h2 id="3-Redis-简介"><a href="#3-Redis-简介" class="headerlink" title="3. Redis 简介"></a>3. Redis 简介</h2><p>Redis 是一个高性能的 key-value 数据库。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。</p>
-<p>Redis 与其他 key - value 缓存产品相比有以下三个特点：<br>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。<br>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。<br>Redis支持数据的备份，即master-slave模式的数据备份。<br>Redis的应用场景<br>缓存<br>任务队列<br>网站访问统计<br>数据过期处理<br>应用排行榜<br>分布式集群架构中的session分离<br>Redis 支持的五种数据类型：<br>字符串（String）<br>字符串列表（list）<br>哈希（hash）<br>字符串集合（set）<br>有序字符串集合（zset）</p>
+              <h2 id="nosql介绍">1. NoSQL介绍</h2>
+<p>NoSQL （Not Only
+SQL）指的是非关系型的数据库，是对不同于传统的关系型数据库的数据库管理系统的统称。NoSQL用于超大规模数据的存储。Redis就属于非关系型数据库,传统的Mysql
+,oracle ,sql server 等 都是关系型数据库。</p>
+<h2 id="为什么需要nosql">2. 为什么需要NoSQL</h2>
+<p>主要应对以下问题时，传统关系型数据库力不从心</p>
+<p>高并发读写 海量数据的高效率存储和访问 高可扩展性和高可用性 ## 3.
+Redis 简介 Redis 是一个高性能的 key-value
+数据库。它通常被称为数据结构服务器，因为值（value）可以是
+字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted
+sets)等类型。</p>
+<p>Redis 与其他 key - value 缓存产品相比有以下三个特点：
+Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
+Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
+Redis支持数据的备份，即master-slave模式的数据备份。 Redis的应用场景 缓存
+任务队列 网站访问统计 数据过期处理 应用排行榜
+分布式集群架构中的session分离 Redis 支持的五种数据类型：
+字符串（String） 字符串列表（list） 哈希（hash） 字符串集合（set）
+有序字符串集合（zset）</p>
 
               
             </div>
@@ -473,6 +487,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -729,6 +749,44 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

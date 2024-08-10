@@ -1,0 +1,1008 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 　　目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 　　具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP——Encoder-Decoder &amp; Attention 机制">
+<meta property="og:url" content="http://example.com/2024/08/10/NLP%E2%80%94%E2%80%94Attention-%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 　　目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 　　具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101812406.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110009932.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110021709.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110029239.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110033730.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110035322.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110041387.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110045703.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110047508.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110050506.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110051647.png">
+<meta property="article:published_time" content="2024-08-10T09:40:10.000Z">
+<meta property="article:modified_time" content="2024-08-10T16:59:17.582Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>NLP——Encoder-Decoder &amp; Attention 机制 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NLP——Encoder-Decoder &amp; Attention 机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-10 17:40" pubdate>
+          2024年8月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">NLP——Encoder-Decoder &amp; Attention 机制</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="encoder-decoder">1. Encoder-Decoder</h3>
+<h4 id="encoder-decoder结构">1.1 Encoder-Decoder结构</h4>
+<p>　　目前大多数的注意力模型都是依附在 Encoder-Decoder
+框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。</p>
+<p>　　具体实现 Encoder-Decoder
+的时候，编码器和解码器都不是固定的，可选的有 CNN/RNN/BiRNN/GRU/LSTM
+等等，你可以自由组合。比如说，你在编码时使用
+BiRNN，解码时使用RNN，或者在编码时使用 RNN，解码时使用 LSTM 等等。例如在
+Image Caption 的应用中 Encoder-Decoder 就是 CNN-RNN 的编码 -
+解码框架；在神经网络机器翻译中 Encoder-Decoder 往往就是 LSTM-LSTM 的编码
+- 解码框架，在机器翻译中也被叫做 <a
+target="_blank" rel="noopener" href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf">Sequence
+to Sequence learning</a> 。</p>
+<blockquote>
+<p>所谓编码，就是将输入的序列编码成一个固定长度的向量；解码，就是将之前生成的固定向量再解码成输出序列。这里的输入序列和输出序列正是机器翻译的结果和输出。</p>
+</blockquote>
+<p>　　为了说明 Attention 机制的作用，以 Encoder-Decoder
+框架下的机器翻译的应用为例，该框架的抽象表示如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　为了方便阐述，在选取 Encoder 和 Decoder 时都假设其为 RNN。在 RNN
+中，当前时刻隐藏状态 h<sub>t</sub> 是由上一时刻的隐藏状态
+h<sub>t−1</sub> 和当前时刻的输入 x<sub>t</sub>
+决定的，如下公式所示：</p>
+<p><span class="math display">\[
+h_t=f(h_{t−1},x_t)
+\]</span></p>
+<p>　　在
+<strong>编码阶段</strong>，获得各个时刻的隐藏层状态后，通过把这些隐藏层的状态进行汇总，可以生成最后的语义编码向量
+C，如下公式所示，其中 q 表示某种非线性神经网络，此处表示多层 RNN 。
+<span class="math display">\[
+C=q(h_1,h_2,⋯,h_{T_x})
+\]</span>
+　　在一些应用中，也可以直接将最后的隐藏层编码状态作为最终的语义编码
+<span class="math inline">\(C\)</span>，即满足： <span
+class="math display">\[
+C=q(h1,h2,⋯,h_{T_x})=h_{T_x}
+\]</span> 　　在 <strong>解码阶段</strong>，需要根据给定的语义向量 C
+和之前已经生成的输出序列 $ y1,y2,⋯,y_{t−1}$ 来预测下一个输出的单词 <span
+class="math inline">\(y_t\)</span>，即满足公式： <span
+class="math display">\[
+y_t=arg\ maxP(y_t)=∏^T_{t=1}p(y_t|y_1,y_2,⋯,y_{t−1},C)
+\]</span> 　　由于我们此处使用的 Decoder 是 RNN
+，所以当前状态的输出只与上一状态和当前的输入相关，所以可以将公式简写成如下形式：
+<span class="math display">\[
+y_t=g(y_{t−1},s_{t−1},C)
+\]</span> 　　在上面公式中，<span class="math inline">\(s_{t−1}\)</span>
+表示 Decoder 中 RNN 神经元的隐藏层状态，<span
+class="math inline">\(y_{t−1}\)</span> 表示前一时刻的输出，C
+代表的是编码后的语义向量，而 <span class="math inline">\(g(⋅)\)</span>
+则是一个非线性的多层神经网络，可以输出 <span
+class="math inline">\(y_t\)</span> 的概率，一般情况下是由多层 RNN 和
+softmax 层组成。</p>
+<h4 id="局限性">1.2 局限性</h4>
+<p>　　Encoder-Decoder
+框架虽然应用广泛，但是其存在的局限性也比较大。最大的局限性就是 Encoder
+和 Decoder 之间只通过一个固定长度的语义向量 C
+来唯一联系。也就是说，Encoder
+必须要将输入的整个序列的信息都压缩进一个固定长度的向量中，存在两个弊端：</p>
+<ol type="1">
+<li>语义向量 C 可能无法完全表示整个序列的信息。</li>
+<li>先输入到网络的内容携带的信息会被后输入的信息覆盖掉，输入的序列越长，该现象就越严重。</li>
+</ol>
+<p>这两个弊端使得 Decoder
+在解码时一开始就无法获得输入序列最够多的信息，因此导致解码的精确度不够准确。</p>
+<h3 id="attention-机制">2. Attention 机制</h3>
+<h4 id="什么是注意力机制">2.1 什么是注意力机制</h4>
+<p>　　注意力机制是指人类的神经系统在面对复杂的感知信息时，通过选择性的关注和集中注意力来处理特定的刺激。注意力机制可以帮助我们过滤掉不相关或无用的信息，并专注于重要的刺激、任务或目标。这种机制可以通过自主调控或受到外界环境的影响而发生变化。例如，注意力可以集中于一个特定的刺激或任务，也可以在多个刺激之间进行转移和分配。注意力机制在认知过程中起着重要的作用，影响感知、思维、决策和行为等方面的表现。</p>
+<p>　　<strong>基于注意力机制的深度学习，核心在于让机器学会去感知数据中的重要和不重要的部分</strong>。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101812406.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h4 id="attention-机制的作用">2.2 Attention 机制的作用</h4>
+<p>　　在上述的模型中，Encoder-Decoder 框架将输入 X 都编码转化为语义表示
+C，这就导致翻译出来的序列的每一个字都是同权地考虑了输入中的所有的词。例如输入的英文句子是：<code>Tom chase Jerry</code>，目标的翻译结果是：<code>汤姆追逐杰瑞</code>。在未考虑注意力机制的模型当中，模型认为
+<code>汤姆</code> 这个词的翻译受到 <code>Tom</code>，<code>chase</code>
+和 <code>Jerry</code>
+这三个词的同权重的影响。但是实际上显然不应该是这样处理的，<code>汤姆</code>
+这个词应该受到输入的 <code>Tom</code>
+这个词的影响最大，而其它输入的词的影响则应该是非常小的。显然，在未考虑注意力机制的
+Encoder-Decoder
+模型中，这种不同输入的重要程度并没有体现处理，一般称这样的模型为
+<strong>分心模型</strong>。</p>
+<p>　　而带有 Attention 机制的 Encoder-Decoder
+模型则是要从序列中学习到每一个元素的重要程度，然后按重要程度将元素合并。因此，注意力机制可以看作是
+Encoder 和 Decoder 之间的接口，它向 Decoder 提供来自每个 Encoder
+隐藏状态的信息。通过该设置，模型能够选择性地关注输入序列的有用部分，从而学习它们之间的“对齐”。这就表明，在
+Encoder 将输入的序列元素进行编码时，得到的不在是一个固定的语义编码 C
+，而是存在多个语义编码，且不同的语义编码由不同的序列元素以不同的权重参数组合而成。一个简单地体现
+Attention 机制运行的示意图如下：</p>
+<blockquote>
+<p><strong>定义：对齐</strong></p>
+<p>对齐是指将原文的片段与其对应的译文片段进行匹配。</p>
+</blockquote>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110009932.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　在 Attention 机制下，语义编码 C 就不在是输入序列 X
+的直接编码了，而是各个元素按其重要程度加权求和得到的，即： <span
+class="math display">\[
+Ci=∑^{T_x}_{j=0}a_{ij}f(x_j)
+\]</span> 　　上面公式中，参数 i 表示时刻， j 表示序列中的第 j 个元素，
+<span class="math inline">\(T_x\)</span> 表示序列的长度， <span
+class="math inline">\(f(⋅)\)</span> 表示对元素 <span
+class="math inline">\(x_j\)</span> 的编码。<span
+class="math inline">\(a_{ij}\)</span> 可以看作是一个概率，反映了元素
+<span class="math inline">\(h_j\)</span> 对 <span
+class="math inline">\(C_i\)</span> 的重要性，可以使用 softmax 来表示：
+<span class="math display">\[
+a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}_{k=1}exp(e_{ik})}
+\]</span> 　　这里 <span class="math inline">\(e_{ij}\)</span>
+正是反映了待编码的元素和其它元素之间的匹配度，当匹配度越高时，说明该元素对其的影响越大，则
+<span class="math inline">\(a_{ij}\)</span> 的值也就越大。</p>
+<p>　　因此，得出 aijaij 的过程如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110021709.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　其中，<span class="math inline">\(h_i\)</span> 表示 Encoder
+的转换函数，<span class="math inline">\(F(h_j,H_i)\)</span>
+表示预测与目标的匹配打分函数。将以上过程串联起来，则注意力模型的结构如下图所示：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110024233.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="attention-原理">2.3 Attention 原理</h4>
+<p>　　Attention 机制的一个重点就是获得 attention
+value，即机器翻译中的语义编码 <span
+class="math inline">\(C_i\)</span>。在上一节中我们知道该值是通过输入元素按照不同的权重参数组合而成的，所以我们可以将其定义为一个
+attention 函数，比较主流的 attention
+函数的机制是采用键值对查询的方式，其工作实质如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110029239.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　在自然语言任务中，往往 Key 和 Value
+是相同的。需要注意的是，计算出来的 attention value
+是一个向量，代表序列元素 <span class="math inline">\(x_j\)</span>
+的编码向量，包含了元素 <span class="math inline">\(x_j\)</span>
+的上下文关系，即同时包含全局联系和局部联系。全局联系很好理解，因为在计算时考虑了该元素与其他所有元素的相似度计算；而局部联系则是因为在对元素
+<span class="math inline">\(x_j\)</span>
+进行编码时，重点考虑与其相似度较高的局部元素，尤其是其本身。</p>
+<p>　　阅读到一篇有关 <a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMTkyMg==&amp;mid=2247485860&amp;idx=1&amp;sn=e926a739784090b3779711164217b968&amp;chksm=c06981f9f71e08efb5f57441444f71a09f1d27fc667af656a5ad1173e32ad394201d02195a3a&amp;mpshare=1&amp;scene=1&amp;srcid=0618HMAYi4gzzwWfedLoOuSD&amp;key=cb6098335ab487a8ec84c95399379f16f975d33ce91588d73ecf857c54b543666b5927e231ad3a9b17bff0c20fff20fc49c262912dca050dee9465801de8a4cdc79e3d8f4fbc058345331fb691bcbacb&amp;ascene=1&amp;uin=MTE3NTM4MTY0NA%3D%3D&amp;devicetype=Windows+10&amp;version=62060833&amp;lang=zh_CN&amp;pass_ticket=ikhBXxX7PL%2Fal9hbIGXbRFA96ei74EF%2BcP8KdbP6UcV6mIpOfPWzVuju%2Bqw86q5r">动画图解Attention机制</a>
+的文章，这里主要是对 Attention
+层的实现做下总结，详细内容请查看原文。注意力机制可以看作是神经网络架构中的一层神经网络，注意力层的实现可以分为
+6 个步骤。</p>
+<p>　　<strong>Step 0：准备隐藏状态</strong></p>
+<p>　　首先准备第一个 Decoder 的隐藏层状态（红色）和所有可用的 Encoder
+隐藏层状态（绿色）。在示例中，有 4 个 Encoder 隐藏状态和 1 个 Decoder
+隐藏状态。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110033730.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　<strong>Step 1：得到每一个 Encoder 隐藏状态的得分</strong></p>
+<p>　　分值（score）由 <code>score</code>
+函数来获得，最简单的方法是直接用 Decoder 隐藏状态和 Encoder
+中的每一个隐藏状态进行点积。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110035322.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　假设 Decoder 中的隐藏状态为 <code>[5, 0, 1]</code>，分别与
+Encoder
+中的每个隐藏状态做点积，得到第二个隐藏状态的分值最高，说明下一个要解码的元素将受到当前这种隐藏状态的严重影响。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs inform7">decoder_hidden = <span class="hljs-comment">[10, 5, 10]</span><br>encoder_hidden score<br>---------------------<br>     <span class="hljs-comment">[0, 1, 1]</span>     15 (= 10×0 + 5×1 + 10×1, the dot product)<br>     <span class="hljs-comment">[5, 0, 1]</span>     60<br>     <span class="hljs-comment">[1, 1, 0]</span>     15<br>     <span class="hljs-comment">[0, 5, 1]</span>     35<br></code></pre></td></tr></table></figure>
+<p><strong>Step 2：将所有得分送入 softmax 层</strong></p>
+<p>　　该部分实质上就是对得到的所有分值进行归一化，这样
+<code>softmax</code> 之后得到的所有分数相加为
+1。而且能够使得原本分值越高的隐藏状态，其对应的概率也越大，从而抑制那些无效或者噪音信息。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110041387.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　通过 softmax
+层后，可以得到一组新的隐藏层状态分数，其计算方法即为公式 <span
+class="math inline">\(a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}_{k=1}exp(e_{ik})}\)</span>。注意，此处得到的分值应该是浮点数，但是由于无限接近于
+0 和 1，所以做了近似。</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">encoder_hidden score score^</span><br><span class="hljs-section">-----------------------------</span><br><span class="hljs-code">     [0, 1, 1]     15       0</span><br><span class="hljs-code">     [5, 0, 1]     60       1</span><br><span class="hljs-code">     [1, 1, 0]     15       0</span><br><span class="hljs-code">     [0, 5, 1]     35       0</span><br></code></pre></td></tr></table></figure>
+<p><strong>Step 3：用每个 Encoder 的隐藏状态乘以 softmax
+之后的得分</strong></p>
+<p>　　通过将每个编码器的隐藏状态与其 softmax
+之后的分数(标量)相乘，我们得到 对齐向量
+或标注向量。这正是对齐产生的机制</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110045703.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css">encoder score score^ alignment<br> ---------------------------------<br> <span class="hljs-selector-attr">[0, 1, 1]</span>   <span class="hljs-number">15</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br> <span class="hljs-selector-attr">[5, 0, 1]</span>   <span class="hljs-number">60</span>     <span class="hljs-number">1</span>   <span class="hljs-selector-attr">[5, 0, 1]</span><br> <span class="hljs-selector-attr">[1, 1, 0]</span>   <span class="hljs-number">15</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br> <span class="hljs-selector-attr">[0, 5, 1]</span>   <span class="hljs-number">35</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br></code></pre></td></tr></table></figure>
+<p><strong>Step 4：将所有对齐的向量进行累加</strong></p>
+<p>　　对对齐向量进行求和，生成 <em>上下文向量</em>
+。上下文向量是前一步的对齐向量的聚合信息。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110047508.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　该步骤其实就对应了公式<span
+class="math inline">\(Ci=∑^{T_x}_{j=0}a_{ij}f(x_j)\)</span>，得到最终的编码后的向量来作为
+Decoder 的输入，其编码后的向量为 <code>[5, 0, 1]</code>。</p>
+<p><strong>Step 5：把上下文向量送到 Decoder 中</strong></p>
+<p>　　通过将上下文向量和 Decoder
+的上一个隐藏状态一起送入当前的隐藏状态，从而得到解码后的输出。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110050506.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　最终得到完整的注意力层结构如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110051647.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<h4 id="attention-机制的优劣">2.4 Attention 机制的优劣</h4>
+<p>　　相比于传统的 RNN 和 CNN，attention 机制具有如下优点：</p>
+<ul>
+<li>一步到位的全局联系捕捉，且关注了元素的局部联系；attention 函数在计算
+attention value
+时，是进行序列的每一个元素和其它元素的对比，在这个过程中每一个元素间的距离都是一；而在时间序列
+RNNs
+中，元素的值是通过一步步递推得到的长期依赖关系获取的，而越长的序列捕捉长期依赖关系的能力就会越弱。</li>
+<li>并行计算减少模型训练时间；Attention
+机制每一步的计算都不依赖于上一步的计算结果，因此可以并行处理。</li>
+<li>模型复杂度小，参数少</li>
+</ul>
+<p>　　但 attention
+机制的缺点也比较明显，因为是对序列的所有元素并行处理的，所以无法考虑输入序列的元素顺序，这在自然语言处理任务中比较糟糕。因为在自然语言中，语言的顺序是包含了十分多的信息的，如果缺失了该部分的信息，则得到的结果往往会大大折扣。</p>
+<h4 id="总结">2.5 总结</h4>
+<p>　　简而言之，Attention
+机制就是对输入的每个元素考虑不同的权重参数，从而更加关注与输入的元素相似的部分，而抑制其它无用的信息。其最大的优势就是能一步到位的考虑全局联系和局部联系，且能并行化计算，这在大数据的环境下尤为重要。同时，我们需要注意的是
+Attention 机制作为一种思想，并不是只能依附在 Encoder-Decoder
+框架下的，而是可以根据实际情况和多种模型进行结合。</p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/NLP/">#NLP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NLP——Encoder-Decoder &amp; Attention 机制</div>
+      <div>http://example.com/2024/08/10/NLP——Attention-机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月10日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/10/NLP%E2%80%94%E2%80%94RNN%E3%80%81LSTM%E3%80%81GRU%E3%80%81CNN%E3%80%81Seq2Seq/" title="NLP——RNN、LSTM、GRU、CNN、Seq2Seq">
+                        <span class="hidden-mobile">NLP——RNN、LSTM、GRU、CNN、Seq2Seq</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
