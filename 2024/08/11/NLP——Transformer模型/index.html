@@ -39,8 +39,13 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112341659.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120006778.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120007651.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122059434.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122100526.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122102816.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122115214.gif">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122121219.gif">
 <meta property="article:published_time" content="2024-08-11T13:11:47.000Z">
-<meta property="article:modified_time" content="2024-08-11T16:10:07.784Z">
+<meta property="article:modified_time" content="2024-08-12T13:51:33.900Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="NLP">
@@ -254,7 +259,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.5k 字
+          4.7k 字
         
       </span>
     
@@ -266,7 +271,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          15 分钟
         
       </span>
     
@@ -474,6 +479,44 @@ k+p 的位置向量可以表示为位置 k
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120007651.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>　　嵌入大小为 512（列）的 20
 个字（行）的位置编码的真实示例。你可以看到它在中心区域分成两半。这是因为左半部分的值由一个函数（使用正弦）生成，而右半部分由另一个函数（使用余弦）生成。然后将它们连接起来以形成每个位置编码矢量。</p>
+<h3 id="残差结构">6. 残差结构</h3>
+<p>　　到目前为止，我们计算得到了 self-attention 的输出向量。而单层
+encoder
+里后续还有两个重要的操作：残差链接、标准化。编码器的每个子层（Self
+Attention 层和
+FFNN）都有一个残差连接和层标准化（layer-normalization），如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122059434.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　将 Self-Attention
+层的层标准化（layer-normalization）和涉及的向量计算细节都进行可视化，如下所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122100526.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>　　编码器和和解码器的子层里面都有层标准化（layer-normalization）。假设一个
+Transformer 是由 2
+层编码器和两层解码器组成的，将全部内部细节展示起来如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122102816.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<h3 id="解码器结构">7. 解码器结构</h3>
+<p>　　现在我们已经介绍了编码器中的大部分概念，我们也基本知道了编码器的原理。现在让我们来看下，
+编码器和解码器是如何协同工作的。</p>
+<p>　　编码器一般有多层，第一个编码器的输入是一个序列文本，最后一个编码器输出是一组序列向量，这组序列向量会作为解码器的K、V输入，其中
+K = V =解码器输出的序列向量表示。这些注意力向量将会输入到每个解码器的
+Encoder-Decoder Attention
+层，这有助于解码器把注意力集中到输入序列的合适位置，如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122115214.gif" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　解码（decoding
+）阶段的每一个时间步都输出一个翻译后的单词（这里的例子是英语翻译），解码器当前时间步的输出又重新作为输入Q和编码器的输出K、V共同作为下一个时间步解码器的输入。然后重复这个过程，直到输出一个结束符。如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122121219.gif" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<p>　　解码器中的 Self Attention 层，和编码器中的 Self Attention
+层的区别：</p>
+<ol type="1">
+<li>在解码器里，Self Attention
+层只允许关注到输出序列中早于当前位置之前的单词。具体做法是：在 Self
+Attention 分数经过 Softmax 层之前，屏蔽当前位置之后的那些位置（将
+attention score
+设置成负无穷）（编码器中的自注意力层中的每个单词在进行注意力运算时，可以看到整个序列中所有的单词）。</li>
+<li>解码器 self-attention 层是使用前一层的输出来构造 Query 矩阵，而 Key
+矩阵和 Value 矩阵来自于编码器最终的输出。</li>
+</ol>
+<p>https://www.cnblogs.com/liuxiaochong/p/14380224.html#26-%E6%AE%8B%E5%B7%AE%E7%BB%93%E6%9E%84</p>
+<p>https://github.com/datawhalechina/learn-nlp-with-transformers/blob/main/docs/%E7%AF%87%E7%AB%A02-Transformer%E7%9B%B8%E5%85%B3%E5%8E%9F%E7%90%86/2.2-%E5%9B%BE%E8%A7%A3transformer.md</p>
 
               
             </div>
