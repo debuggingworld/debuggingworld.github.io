@@ -310,7 +310,7 @@
       <a class="index-excerpt" href="/2022/07/13/Spring%E2%80%94%E2%80%94%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 ### 1.概述 通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefi
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;62e0189b63768979df38f399 1.概述 通常，我们说的 Spring 启动，就是构造 ApplicationContext 对象以及调用 refresh() 方法的过程。 首先，Spring 启动过程主要做了这么几件事情：  构造一个 BeanFactory 对象 解析配置类，得到 BeanDefiniti
         </div>
       </a>
 
@@ -373,7 +373,7 @@
       <a class="index-excerpt" href="/2022/07/08/Spring%E2%80%94%E2%80%94%E6%8E%A8%E6%96%AD%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b 1. 推断构造的场景  默认情况下，使用无参构造方法或者唯一的构造方法 如果通过 getBean() 或者 beanDefinition.getConstructorArgumentValues().addIndexedArgumentValue(1,new UserServi
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b 1. 推断构造的场景  默认情况下，使用无参构造方法或者唯一的构造方法 如果通过 getBean()  或者  beanDefinition.getConstructorArgumentValues().addIndexedArgumentValue(1,new UserSer
         </div>
       </a>
 
@@ -436,7 +436,7 @@
       <a class="index-excerpt" href="/2022/07/02/Spring%E2%80%94%E2%80%94%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b ## 1. 什么是循环依赖？ 就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;629e0d260791293c9388933b 1. 什么是循环依赖？ 就是A对象依赖了B对象，B对象依赖了A对象。 123456789&#x2F;&#x2F; A依赖了Bclass A&amp;#123;	public B b;&amp;#125;&#x2F;&#x2F; B依赖了Aclass B&amp;#123;	public A a;&amp;#125; 那么循环依赖是个问题吗？ 如果不
         </div>
       </a>
 
@@ -749,7 +749,7 @@
       <a class="index-excerpt" href="/2022/04/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" target="_blank">
         <div>
           
-          1. 模式定义 用一个已经创建的实例作为原型，通过复制该原型对象来创建一个和原型相同或相似的新对象。在这里，原型实例指定了要创建的对象的种类。  优点： 1. 可以不耦合具体类的情况下克隆对象 2. 避免重复的初始化代码 3. 更方便的构建复杂对象 应用场景： + 对象之间相同或相似，即只是个别的几个属性不同的时候。 + 创建对象成本较大，例如初始化时间长，占用CPU太多，或者占用网络资源太多等，
+          1. 模式定义 用一个已经创建的实例作为原型，通过复制该原型对象来创建一个和原型相同或相似的新对象。在这里，原型实例指定了要创建的对象的种类。  优点：  可以不耦合具体类的情况下克隆对象 避免重复的初始化代码 更方便的构建复杂对象  应用场景：  对象之间相同或相似，即只是个别的几个属性不同的时候。 创建对象成本较大，例如初始化时间长，占用CPU太多，或者占用网络资源太多等，需要优化资源。 创建
         </div>
       </a>
 
@@ -812,7 +812,7 @@
       <a class="index-excerpt" href="/2022/04/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_blank">
         <div>
           
-          1. 模式定义 保证一个类只有一个实例，并且提供一个全局访问点。 优点： + 保证内存里只有一个实例，减少了内存的开销。 + 避免对资源的多重占用。 + 设置全局访问点，可以优化和共享资源的访问。 缺点： + 单例模式一般没有接口，扩展困难。违背开闭原则。 + 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。 场景: 重量级的对象，不需要多个实例，如线程池，数据库
+          1. 模式定义 保证一个类只有一个实例，并且提供一个全局访问点。 优点：  保证内存里只有一个实例，减少了内存的开销。 避免对资源的多重占用。 设置全局访问点，可以优化和共享资源的访问。  缺点：  单例模式一般没有接口，扩展困难。违背开闭原则。 单例模式的功能代码通常写在一个类中，如果功能设计不合理，则很容易违背单一职责原则。  场景:  重量级的对象，不需要多个实例，如线程池，数据库连接池
         </div>
       </a>
 

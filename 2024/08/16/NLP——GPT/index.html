@@ -16,23 +16,31 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. GPT发展史 　　NLP 语言模型技术发展一览：  　　GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google 在 2018 年提出的一种预训练语言模型。  2.GPT1 2.1模型结构 　　Transformer Decoder 和 GPT Decoder对比：  　　在模型结构方面， GPT 仅使用了 Transformer">
+    <meta name="description" content="1. GPT 1.1 GPT发展史 NLP 语言模型技术发展一览：  GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google 在 2018 年提出的一种预训练语言模型。  1.2 GPT1 Improving Language Understanding by Generative Pre-Training 1. 模型结构 Transf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP——GPT">
 <meta property="og:url" content="http://example.com/2024/08/16/NLP%E2%80%94%E2%80%94GPT/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. GPT发展史 　　NLP 语言模型技术发展一览：  　　GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google 在 2018 年提出的一种预训练语言模型。  2.GPT1 2.1模型结构 　　Transformer Decoder 和 GPT Decoder对比：  　　在模型结构方面， GPT 仅使用了 Transformer">
+<meta property="og:description" content="1. GPT 1.1 GPT发展史 NLP 语言模型技术发展一览：  GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google 在 2018 年提出的一种预训练语言模型。  1.2 GPT1 Improving Language Understanding by Generative Pre-Training 1. 模型结构 Transf">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408170652074.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408162112282.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408181036364.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408191014373.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192030710.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192037299.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192121089.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192125147.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408201129123.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202027656.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202034965.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202102667.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202119185.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202105184.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202140065.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202144588.png">
 <meta property="article:published_time" content="2024-08-16T12:46:50.000Z">
-<meta property="article:modified_time" content="2024-08-20T03:39:45.983Z">
+<meta property="article:modified_time" content="2024-08-20T13:55:56.855Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="NLP">
@@ -246,7 +254,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          7.3k 字
+          10k 字
         
       </span>
     
@@ -258,7 +266,7 @@
         
         
           <!-- compatible with older versions-->
-          23 分钟
+          33 分钟
         
       </span>
     
@@ -300,319 +308,252 @@
             
             <div class="markdown-body">
               
-              <h3 id="gpt发展史">1. GPT发展史</h3>
-<p>　　<strong>NLP</strong> 语言模型技术发展一览：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408170652074.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p>　　GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google
-在 2018 年提出的一种预训练语言模型。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408162112282.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h3 id="gpt1">2.GPT1</h3>
-<h4 id="模型结构">2.1模型结构</h4>
-<p>　　Transformer Decoder 和 GPT Decoder对比：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408181036364.png" srcset="/img/loading.gif" lazyload style="zoom:35%"/></p>
-<p>　　在模型结构方面， GPT 仅使用了 Transformer 的 Decoder 结构，并对
-Transformer Decoder 进行了一些改动。如上图所示，原本的 Decoder 包含了
-MHA 和 MMHA，而 GPT 只保留了 MMHA，这确保了 GPT
-只能关注上文的信息，从而达到单向模型的目的。</p>
-<p>　　它使用了掩码多头注意力和前馈神经网络两种层，并且增加了网络的规模。它的层数从原来的6层增加到了12层，注意力的维度从原来的
-512 增加到了 768，注意力的头数从原来的 8 个增加到了 12
-个，前馈层的隐层维度从原来的 2048 增加到了 3072 ，总参数达到了 1.5
-亿。</p>
-<p>　　除了上面提到的，GPT-1 和 Transformer 还有以下三点差异：</p>
-<ol type="1">
+              <h3 id="1-GPT">1. GPT</h3>
+<h4 id="1-1-GPT发展史">1.1 GPT发展史</h4>
+<p><strong>NLP</strong> 语言模型技术发展一览：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408170652074.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>GPT 发展史：GPT 即 Generative Pre-training Transformer，是 Google 在 2018 年提出的一种预训练语言模型。</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408162112282.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<h4 id="1-2-GPT1">1.2 GPT1</h4>
+<p><a target="_blank" rel="noopener" href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">Improving Language Understanding by Generative Pre-Training</a></p>
+<h5 id="1-模型结构">1. 模型结构</h5>
+<p>Transformer Decoder 和 GPT Decoder对比：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408181036364.png" srcset="/img/loading.gif" lazyload style="zoom:35%"/>
+<p>在模型结构方面， GPT 仅使用了 Transformer 的 Decoder 结构，并对 Transformer Decoder 进行了一些改动。如上图所示，原本的 Decoder 包含了 MHA 和 MMHA，而 GPT 只保留了 MMHA，这确保了 GPT 只能关注上文的信息，从而达到单向模型的目的。</p>
+<p>它使用了掩码多头注意力和前馈神经网络两种层，并且增加了网络的规模。它的层数从原来的6层增加到了12层，注意力的维度从原来的 512 增加到了 768，注意力的头数从原来的 8 个增加到了 12 个，前馈层的隐层维度从原来的 2048 增加到了 3072 ，总参数达到了 1.5 亿。</p>
+<p>除了上面提到的，GPT-1 和 Transformer 还有以下三点差异：</p>
+<ol>
 <li>GPT-1是一种单向的语言模型，它只利用上文来预测当前位置的值。为了实现这一点，GPT-1采用了掩码多头注意力，它可以屏蔽掉下文的信息。</li>
-<li>Transforme
-需要对输入的词嵌入加入位置嵌入，以便捕获文本的位置信息。Transformer
-使用了正弦和余弦函数来计算位置嵌入，而 GPT-1
-则使用了一种不同的方法。GPT-1
-的位置嵌入是随机初始化的，并且可以在训练过程中进行更新，这使得它更像词向量。</li>
-<li>GPT-1 的训练分为两个阶段：预训练和微调。在预训练阶段，GPT-1
-模型学习文本的语义向量；在微调阶段，GPT-1
-模型根据具体任务进行调整，以解决下游任务。</li>
+<li>Transforme 需要对输入的词嵌入加入位置嵌入，以便捕获文本的位置信息。Transformer 使用了正弦和余弦函数来计算位置嵌入，而 GPT-1 则使用了一种不同的方法。GPT-1 的位置嵌入是随机初始化的，并且可以在训练过程中进行更新，这使得它更像词向量。</li>
+<li>GPT-1 的训练分为两个阶段：预训练和微调。在预训练阶段，GPT-1 模型学习文本的语义向量；在微调阶段，GPT-1 模型根据具体任务进行调整，以解决下游任务。</li>
 </ol>
-<h4 id="无监督-pre-training">2.1 无监督 Pre-training</h4>
-<p>　　初代 GPT 的无监督 Pre-training
-是基于语言模型进行的，给定一个无监督语料 <span class="math display">\[
-u=\{u_1,...,u_n\}
-\]</span> 　　GPT 利用标准的语言建模目标最大化以下似然： <span
-class="math display">\[
-L_1(u)=∑_i㏒P(u_i|u_{i-k},...,u_{i-1};θ)　　(1)
-\]</span> 　　其中 <span class="math inline">\(k\)</span>
-是上下文窗口的大小。</p>
-<p>　　GPT-1 模型由 12 个 Transformer 模块组成，每个 Transformer
-模块只包含解码器中的掩码多头注意力和后面的前馈层，它们的计算公式如下所示：
-<span class="math display">\[
-h_0=UW_e+W_p
-\]</span></p>
+<h5 id="2-无监督-Pre-training">2. 无监督 Pre-training</h5>
+<p>初代 GPT 的无监督 Pre-training 是基于语言模型进行的，给定一个无监督语料<br>
+$$<br>
+u={u_1,…,u_n}<br>
+$$<br>
+　　GPT 利用标准的语言建模目标最大化以下似然：<br>
+$$<br>
+L_1(u)=∑_i㏒P(u_i|u_{i-k},…,u_{i-1};θ)　　(1)<br>
+$$<br>
+　　其中 $k$ 是上下文窗口的大小。</p>
+<p>GPT-1 模型由 12 个 Transformer 模块组成，每个 Transformer 模块只包含解码器中的掩码多头注意力和后面的前馈层，它们的计算公式如下所示：<br>
+$$<br>
+h_0=UW_e+W_p<br>
+$$</p>
 <blockquote>
-<p>这个是嵌入层的计算，其中 <span
-class="math inline">\(U=(u_k,...,u_1)\)</span> 是当前单词 <span
-class="math inline">\(u\)</span> 的上文单词向量，<span
-class="math inline">\(W_e\)</span> 是词向量矩阵， <span
-class="math inline">\(W_P\)</span> 是 position embedding。<span
-class="math inline">\(h_0\)</span>
-是嵌入层的输出，也是模型的输入。嵌入层本质上是将离散的输入符号映射到连续的向量空间，同时考虑了每个符号在序列中的位置。</p>
+<p>这个是嵌入层的计算，其中 $U=(u_k,…,u_1)$ 是当前单词 $u$ 的上文单词向量，$W_e$ 是词向量矩阵， $W_P$ 是 position embedding。$h_0$ 是嵌入层的输出，也是模型的输入。嵌入层本质上是将离散的输入符号映射到连续的向量空间，同时考虑了每个符号在序列中的位置。</p>
 </blockquote>
-<p><span class="math display">\[
-h_l=transformer\_block(h_{l−1})∀i∈[1,n]
-\]</span></p>
+<p>$$<br>
+h_l=transformer_block(h_{l−1})∀i∈[1,n]<br>
+$$</p>
 <blockquote>
-<p>这是 Transformer 模块的计算过程，其中 n 是 Transformer 层数，<span
-class="math inline">\(h_{l−1}\)</span> 是第 l-1 层的输出，<span
-class="math inline">\(h_l\)</span> 是第 l 层的输出。transformer_block
-指的是 Transformer
-模型的主要组成部分，包含了自注意力机制和前馈神经网络。每一层都会对输入进行处理并产生输出，然后这个输出变成下一层的输入。</p>
+<p>这是 Transformer 模块的计算过程，其中 n 是 Transformer 层数，$h_{l−1}$ 是第 l-1 层的输出，$h_l$ 是第 l 层的输出。transformer_block 指的是 Transformer 模型的主要组成部分，包含了自注意力机制和前馈神经网络。每一层都会对输入进行处理并产生输出，然后这个输出变成下一层的输入。</p>
 </blockquote>
-<p><span class="math display">\[
-P(u)=softmax(h_nW_e^T)
-\]</span></p>
+<p>$$<br>
+P(u)=softmax(h_nW_e^T)<br>
+$$</p>
 <blockquote>
-<p>这个公式表示了最后的输出层，其中 <span
-class="math inline">\(h_n\)</span> 是最后一个 Transformer
-模块的输出，<span class="math inline">\(W_e^T\)</span>
-是嵌入矩阵的转置。(为了保持权重一致，输出层通常与嵌入层共享权重。) 应用
-softmax 函数使得输出变成概率分布，以此预测下一个词。</p>
+<p>这个公式表示了最后的输出层，其中 $h_n$ 是最后一个 Transformer 模块的输出，$W_e^T$ 是嵌入矩阵的转置。(为了保持权重一致，输出层通常与嵌入层共享权重。) 应用 softmax 函数使得输出变成概率分布，以此预测下一个词。</p>
 </blockquote>
-<p>　　概率描述的是已知模型参数，预测特定结果的可能性，而似然则是已知特定结果，推测模型参数的可能性。</p>
-<p>　　“似然”是指在训练过程中用来评估模型参数好坏的一种度量。上面似然
-<span class="math inline">\(L_1(u)\)</span> 被定义为基于无监督语料 <span
-class="math inline">\(u\)</span>
-训练语言模型时所使用的损失函数。在这个场景中，似然实际上指的是<strong>负对数似然</strong>（Negative
-Log Likelihood,
-NLL），它是用来衡量模型预测概率分布与实际数据之间的匹配程度的一个指标。</p>
-<h4 id="有监督fine-tuning">2.2 有监督Fine-tuning</h4>
-<p>　　在利用无监督 Pre-training
-得到模型后，将其直接应用到有监督任务中。假设有一个有标注的数据集 <span
-class="math inline">\(C\)</span>，其中每个样本的 inputs 包含一系列的
-token，即 <span class="math inline">\(x^1,...,x^m\)</span> 和一个 label
-<span class="math inline">\(y\)</span>。将 inputs 输入 Pre-training
-的模型得到最后一个 transformer decoder block 的状态表征（state
-representation） <span
-class="math inline">\(h^m_l\)</span>，然后将状态表征输入到在 Fine-tuning
-阶段新加入的线性输出层预测 <span class="math inline">\(y\)</span>: <span
-class="math display">\[
-P(y|x^1,...,x^m)=softmax(h_l^mW_y)
-\]</span></p>
+<p>概率描述的是已知模型参数，预测特定结果的可能性，而似然则是已知特定结果，推测模型参数的可能性。</p>
+<p>“似然”是指在训练过程中用来评估模型参数好坏的一种度量。上面似然 $L_1(u)$  被定义为基于无监督语料 $u$ 训练语言模型时所使用的损失函数。在这个场景中，似然实际上指的是<strong>负对数似然</strong>（Negative Log Likelihood, NLL），它是用来衡量模型预测概率分布与实际数据之间的匹配程度的一个指标。</p>
+<h5 id="3-有监督Fine-tuning">3. 有监督Fine-tuning</h5>
+<p>在利用无监督 Pre-training 得到模型后，将其直接应用到有监督任务中。假设有一个有标注的数据集 $C$，其中每个样本的 inputs 包含一系列的 token，即 $x^1,…,x^m$ 和一个 label $y$。将 inputs 输入 Pre-training 的模型得到最后一个 transformer decoder block 的状态表征（state representation） $h^m_l$，然后将状态表征输入到在 Fine-tuning 阶段新加入的线性输出层预测 $y$:<br>
+$$<br>
+P(y|x^1,…,x^m)=softmax(h_l^mW_y)<br>
+$$</p>
 <blockquote>
-<ol type="1">
-<li><span class="math inline">\(h_l^m\)</span>：表示经过 m 个 token
-后的最终状态表征，即最后一个 token 的状态表征。这个状态包含了输入序列
-<span class="math inline">\(x_1,...,x_m\)</span> 的信息。<span
-class="math inline">\(l\)</span> 表示最后一个解码器块（last decoder
-block）,<span class="math inline">\(m\)</span> 表示输入序列中的最后一个
-token 的位置，即 <span
-class="math inline">\(x^m\)</span>。状态表征是一个向量。</li>
-<li><span
-class="math inline">\(W_y\)</span>：是一个可学习的权重矩阵，它连接了预训练模型的输出
-<span class="math inline">\(h_l^m\)</span>
-和最终的分类输出。这个权重矩阵在微调阶段被引入，并通过反向传播进行更新。</li>
-<li>softmax：是一个非线性激活函数，通常用于多分类任务中，将模型的输出转换为概率分布。它确保输出是一个有效的概率分布，即所有类别的概率之和为
-1。</li>
+<ol>
+<li>$h_l^m$：表示经过 m 个 token 后的最终状态表征，即最后一个 token 的状态表征。这个状态包含了输入序列 $x_1,…,x_m$ 的信息。$l$ 表示最后一个解码器块（last decoder block）,$m$ 表示输入序列中的最后一个 token 的位置，即 $x^m$。状态表征是一个向量。</li>
+<li>$W_y$：是一个可学习的权重矩阵，它连接了预训练模型的输出 $h_l^m$ 和最终的分类输出。这个权重矩阵在微调阶段被引入，并通过反向传播进行更新。</li>
+<li>softmax：是一个非线性激活函数，通常用于多分类任务中，将模型的输出转换为概率分布。它确保输出是一个有效的概率分布，即所有类别的概率之和为 1。</li>
 </ol>
 </blockquote>
-<p>　　因此，Fine-tuning 阶段最大化以下目标： <span
-class="math display">\[
-L_2(C)=\sum\limits_{(x,y)}㏒P(y|x^1,...,x^m)
-\]</span> 　　此外，初代 GPT 将语言建模作为微调的辅助目标以帮助
-Fine-tuning
-阶段<strong>提升泛化性</strong>，<strong>加速模型收敛</strong>。具体地，整个
-Fine-tuning 阶段的优化目标为： <span class="math display">\[
-L_3(C)=L_2(C)+λ*L_1(C)
-\]</span> 　　相比 Pre-training 阶段，Fine-tuning 引入了额外的参数包含
-delimiter tokens（分隔符） 的 embeddings。而 delimiter tokens 是针对
-Fine-tuning 阶段不同的下游 tasks 进行设计的，目的是为了使得 Pre-training
-得到的模型能在 Fine-tuning 的时候适配不同的 tasks。</p>
+<p>因此，Fine-tuning 阶段最大化以下目标：<br>
+$$<br>
+L_2©=\sum\limits_{(x,y)}㏒P(y|x^1,…,x^m)<br>
+$$<br>
+　　此外，初代 GPT 将语言建模作为微调的辅助目标以帮助 Fine-tuning 阶段<strong>提升泛化性</strong>，<strong>加速模型收敛</strong>。具体地，整个 Fine-tuning 阶段的优化目标为：<br>
+$$<br>
+L_3©=L_2©+λ*L_1©<br>
+$$<br>
+　　相比 Pre-training 阶段，Fine-tuning 引入了额外的参数包含 delimiter tokens（分隔符） 的 embeddings。而 delimiter tokens 是针对 Fine-tuning 阶段不同的下游 tasks 进行设计的，目的是为了使得 Pre-training 得到的模型能在 Fine-tuning 的时候适配不同的 tasks。</p>
 <p><strong>微调过程</strong>:</p>
-<ol type="1">
-<li><strong>前向传播</strong>：将输入序列 <span
-class="math inline">\(x^1,...,x^m\)</span>
-送入预训练模型，得到最后一个解码器块的状态表征 <span
-class="math inline">\(h_l^m\)</span>。</li>
-<li><strong>计算损失</strong>：使用 softmax 函数和权重矩阵 <span
-class="math inline">\(W_y\)</span> 得到预测概率分布，并与真实的标签 y
-计算交叉熵损失。</li>
-<li><strong>反向传播</strong>：通过计算梯度来更新权重矩阵 <span
-class="math inline">\(W_y\)</span> 以及其他需要微调的参数。</li>
+<ol>
+<li><strong>前向传播</strong>：将输入序列 $x^1,…,x^m$ 送入预训练模型，得到最后一个解码器块的状态表征 $h_l^m$。</li>
+<li><strong>计算损失</strong>：使用 softmax 函数和权重矩阵 $W_y$ 得到预测概率分布，并与真实的标签 y 计算交叉熵损失。</li>
+<li><strong>反向传播</strong>：通过计算梯度来更新权重矩阵 $W_y$ 以及其他需要微调的参数。</li>
 </ol>
-<h4 id="下游任务微调">2.3 下游任务微调</h4>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408191014373.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
-<p>　　某些任务（如文本分类），GPT
-可以对其进行直接如上所述的模型微调。而某些其他任务（如问答或文本蕴涵）和具有结构化输入的任务，如有序的句子对或文档、问题和答案的三元组，由于
-GPT
-的预训练模型是在连续的文本序列上训练的，因此需要一些修改才能将其应用于这些任务。初代
-GPT 之前的工作提出了基于 transferred representations
-的学习任务特定的结构。这种方法重新引入了大量特定于任务的定制，并且不对这些额外的结构组件使用迁移学习。相反，GPT
-使用遍历式方法（traversal-style approach）将结构化输入转换为
-Pre-training
-模型可以处理的有序序列。这种输入转换避免了针对不同任务对模型结构进行大量更改。</p>
-<p>　　所有的输入转换都包含了随机初始化的起始（Start）和结尾（End）token，分别用
-<span class="math inline">\(&lt;S&gt;\)</span> 和 <span
-class="math inline">\(&lt;e&gt;\)</span> 表示。具体于不同任务：</p>
+<h5 id="4-下游任务微调">4. 下游任务微调</h5>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408191014373.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" />
+<p>某些任务（如文本分类），GPT 可以对其进行直接如上所述的模型微调。而某些其他任务（如问答或文本蕴涵）和具有结构化输入的任务，如有序的句子对或文档、问题和答案的三元组，由于 GPT 的预训练模型是在连续的文本序列上训练的，因此需要一些修改才能将其应用于这些任务。初代 GPT 之前的工作提出了基于 transferred representations 的学习任务特定的结构。这种方法重新引入了大量特定于任务的定制，并且不对这些额外的结构组件使用迁移学习。相反，GPT 使用遍历式方法（traversal-style approach）将结构化输入转换为 Pre-training 模型可以处理的有序序列。这种输入转换避免了针对不同任务对模型结构进行大量更改。</p>
+<p>所有的输入转换都包含了随机初始化的起始（Start）和结尾（End）token，分别用 $<S>$ 和 $<e>$ 表示。具体于不同任务：</p>
 <ul>
-<li>对于文本蕴含任务，GPT 在 Fine-tuning 阶段将前提 p（premise ）和假设
-h （hypothesis）的 token 序列拼接，并在二者中间添加分隔（delimiter）
-token ,用 $ 表示。</li>
-<li>对于相似度任务，两个句子之间没有固有的顺序。为了反映这一点，GPT
-将输入的两个句子以两个可能的排列顺序拼接两次，同样需要将 delimiter token
-添加在两个句子中间。这样两个句子就能获得两个不同顺序的输入转换。然后将两个转换后的输入独立地输入
-Pre-trianing 得到的模型，再将得到两个序列表征进行 element-wise
-加法得到最终的表征 <span
-class="math inline">\(h_l^m\)</span>，最后将其输入到线性输出层。</li>
-<li>Question Answering and Commonsense Reasoning 对于这两个任务，给定
-context document <span class="math inline">\(z\)</span>，question <span
-class="math inline">\(q\)</span> 和可能的 answer 集合 <span
-class="math inline">\({a_k}\)</span>，GPT 先将 document context 和
-question 拼接（二者中间没有 delimiter），然后再将其与每个 answer
-进行拼接（中间有 delimiter），得到 <span
-class="math inline">\(k\)</span> 个序列 <span
-class="math inline">\([z;q;a_k]\)</span>。每个序列都被 Pre-training 模型
-+ Linear 层独立地处理得到相应的分数，最终通过 softmax
-层进行归一化，以产生可能答案的输出分布。</li>
+<li>对于文本蕴含任务，GPT 在 Fine-tuning 阶段将前提 p（premise ）和假设 h （hypothesis）的 token 序列拼接，并在二者中间添加分隔（delimiter） token ,用 $ 表示。</li>
+<li>对于相似度任务，两个句子之间没有固有的顺序。为了反映这一点，GPT 将输入的两个句子以两个可能的排列顺序拼接两次，同样需要将 delimiter token 添加在两个句子中间。这样两个句子就能获得两个不同顺序的输入转换。然后将两个转换后的输入独立地输入 Pre-trianing 得到的模型，再将得到两个序列表征进行 element-wise 加法得到最终的表征 $h_l^m$，最后将其输入到线性输出层。</li>
+<li>Question Answering and Commonsense Reasoning 对于这两个任务，给定 context document $z$，question $q$ 和可能的 answer 集合 ${a_k}$，GPT 先将 document context 和 question 拼接（二者中间没有 delimiter），然后再将其与每个 answer 进行拼接（中间有 delimiter），得到 $k$ 个序列 $[z;q;a_k]$。每个序列都被 Pre-training 模型 + Linear 层独立地处理得到相应的分数，最终通过 softmax 层进行归一化，以产生可能答案的输出分布。</li>
 </ul>
-<h3 id="gpt2">3.GPT2</h3>
-<h4 id="背景">3.1 背景</h4>
-<p>　　GPT-2 论文：<a
-target="_blank" rel="noopener" href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language
-Models are Unsupervised Multitask
-Learners</a>，语言模型是一种无监督多任务学习。</p>
-<p>　　这里的多任务学习与有监督学习中的多任务不太一样，指模型从大规模数据中学到的能力能够直接在多个任务之间进行迁移，而不需要额外提供特定任务的数据，因此引出了
-GPT-2 的主要观点：zero-shot。</p>
-<p>　　不论是 GPT-1 还是 BERT，NLP 任务中比较主流的 pre-train +
-fine-tuning
-始终还是需要一定量的下游任务有监督数据去进行额外的训练，在模型层面也需要额外的模块去进行预测，仍然存在较多人工干预的成本。GPT-2
-通过
-zero-shot，在迁移到其他任务上的时候不需要额外的标注数据，也不需要额外的模型训练。</p>
-<p>　　在 GPT-1
-中，下游任务需要对不同任务的输入序列进行改造，在序列中加入了开始符、分隔符和结束符之类的特殊标识符，但是在
-zero-shot
-前提下，我们无法根据不同的下游任务去添加这些标识符，因为不进行额外的微调训练，模型在预测的时候根本不认识这些特殊标记。所以在
-zero-shot
-的设定下，不同任务的输入序列应该与训练时见到的文本长得一样，也就是以自然语言的形式去作为输入。</p>
-<p>　　GPT-2
-的核心思想就是，<strong>当模型的容量非常大且数据量足够丰富时，仅仅靠语言模型的学习便可以完成其他有监督学习的任务，不需要在下游任务微调</strong>。</p>
-<h4 id="模型结构-1">3.2 模型结构</h4>
-<p>　　在模型结构方面，整个 GPT-2 的模型框架与 GPT-1
-相同，只是做了几个地方的调整：</p>
-<ol type="1">
+<h4 id="1-3-GPT2">1.3 GPT2</h4>
+<h5 id="1-背景">1. 背景</h5>
+<p>GPT-2 论文：<a target="_blank" rel="noopener" href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a>，语言模型是一种无监督多任务学习。</p>
+<p>这里的多任务学习与有监督学习中的多任务不太一样，指模型从大规模数据中学到的能力能够直接在多个任务之间进行迁移，而不需要额外提供特定任务的数据，因此引出了 GPT-2 的主要观点：zero-shot。</p>
+<p>不论是 GPT-1 还是 BERT，NLP 任务中比较主流的 pre-train + fine-tuning 始终还是需要一定量的下游任务有监督数据去进行额外的训练，在模型层面也需要额外的模块去进行预测，仍然存在较多人工干预的成本。GPT-2 通过 zero-shot，在迁移到其他任务上的时候不需要额外的标注数据，也不需要额外的模型训练。</p>
+<p>在 GPT-1 中，下游任务需要对不同任务的输入序列进行改造，在序列中加入了开始符、分隔符和结束符之类的特殊标识符，但是在 zero-shot 前提下，我们无法根据不同的下游任务去添加这些标识符，因为不进行额外的微调训练，模型在预测的时候根本不认识这些特殊标记。所以在 zero-shot 的设定下，不同任务的输入序列应该与训练时见到的文本长得一样，也就是以自然语言的形式去作为输入。</p>
+<p>GPT-2 的核心思想就是，<strong>当模型的容量非常大且数据量足够丰富时，仅仅靠语言模型的学习便可以完成其他有监督学习的任务，不需要在下游任务微调</strong>。</p>
+<h5 id="2-模型结构">2. 模型结构</h5>
+<p>在模型结构方面，整个 GPT-2 的模型框架与 GPT-1 相同，只是做了几个地方的调整：</p>
+<ol>
 <li>后置层归一化（ post-norm ）改为前置层归一化（ pre-norm ）;</li>
-<li>在模型最后一个自注意力层之后，额外增加一个层归一化（Layer
-Normalization）；</li>
-<li>调整参数的初始化方式，按残差层个数进行缩放，缩放比例为 <span
-class="math inline">\(1 : \sqrt n\)</span> ;</li>
-<li>输入序列的最大长度从 512 扩充到 1024，batch_size 从 64 增加到
-512;</li>
+<li>在模型最后一个自注意力层之后，额外增加一个层归一化（Layer Normalization）；</li>
+<li>调整参数的初始化方式，按残差层个数进行缩放，缩放比例为 $1 : \sqrt n$ ;</li>
+<li>输入序列的最大长度从 512 扩充到 1024，batch_size 从 64 增加到 512;</li>
 </ol>
-<p>　　其中，关于 post-norm 和 pre-norm 可以参考《Learning Deep
-Transformer Models for Machine
-Translation》。两者的主要区别在于，post-norm 将 transformer 中每一个
-block 的层归一化放在了残差层之后，而 pre-norm 将层归一化放在了每个 block
-的输入位置，如下图所示：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192030710.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p>　　最终 GPT-2 提供了四种规模的模型：</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192037299.png" srcset="/img/loading.gif" lazyload /></p>
-<p>　　GPT-2
-的核心是一个语言模型，语言具有天然的顺序性。和监督模型类似，语言模型是对序列的条件概率建模，通常可以表示为如下形式。
-<span class="math display">\[
-p(x)=\prod_{i=1}^{n}p(s_n|s_1,...,s_{n−1})
-\]</span> 　　可以泛化为： <span class="math display">\[
-p(s_{n−k},...,s_n|s_1,...,s_{n−k−1})
-\]</span></p>
-<p>　　任何有监督的任务，都是在估计：<em>P</em>(output|input)。通常我们会用特定的网络结构去给任务建模，但如果要做通用模型，它需要对下面的目标进行建模：<em>P</em>(output|input,
-task)。</p>
-<p>　　有很多方法可以建模 <em>P</em>(output|input,
-task)，比如特定任务的编码器和解码器。语言模型提供了一种灵活的方式来指定任务、输入、输出。比如对于机器翻译任务，训练样本可以表示为序列（翻译为法语,
-英语文本, 法语文本）；对于阅读理解任务，训练样本可以表示为（回答问题,
-文档,
-问题，答案）。可以训练单一模型，使用这种格式的样本，对不同的任务做推断。按照上面的方法，语言模型也能够学习某些监督任务，并且不需要明确具体的监督符号。</p>
-<h3 id="gpt3">4. GPT3</h3>
-<h4 id="背景-1">4.1 背景</h4>
-<p>　　GPT-3
-不再去追求那种极致的不需要任何样本就可以表现很好的模型，而是考虑像人类的学习方式那样，仅仅使用<strong>极少数样本</strong>就可以掌握某一个任务，GPT-3论文：
-<a
-target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf"><em>Language
-Models are <strong>Few-Shot</strong> Learners</em></a>。</p>
-<p>　　few-shot
-不是像之前的方式那样，使用少量样本在下游任务上去做微调。</p>
-<h4 id="模型结构-2">4.2 模型结构</h4>
-<p>　　在模型结构上，GPT-3 延续使用 GPT 模型结构，但是引入了 Sparse
-Transformer 中的 sparse attention 模块（稀疏注意力）。</p>
-<p>　　sparse attention 与传统 self-attention（称为 dense attention）
-的区别在于：</p>
+<p>其中，关于 post-norm 和 pre-norm 可以参考《Learning Deep Transformer Models for Machine Translation》。两者的主要区别在于，post-norm 将 transformer 中每一个 block 的层归一化放在了残差层之后，而 pre-norm 将层归一化放在了每个 block 的输入位置，如下图所示：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192030710.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>最终 GPT-2 提供了四种规模的模型：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192037299.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>GPT-2 的核心是一个语言模型，语言具有天然的顺序性。和监督模型类似，语言模型是对序列的条件概率建模，通常可以表示为如下形式。<br>
+$$<br>
+p(x)=\prod_{i=1}^{n}p(s_n|s_1,…,s_{n−1})<br>
+$$<br>
+　　可以泛化为：<br>
+$$<br>
+p(s_{n−k},…,s_n|s_1,…,s_{n−k−1})<br>
+$$</p>
+<p>任何有监督的任务，都是在估计：<em>P</em>(output|input)。通常我们会用特定的网络结构去给任务建模，但如果要做通用模型，它需要对下面的目标进行建模：<em>P</em>(output|input, task)。</p>
+<p>有很多方法可以建模 <em>P</em>(output|input, task)，比如特定任务的编码器和解码器。语言模型提供了一种灵活的方式来指定任务、输入、输出。比如对于机器翻译任务，训练样本可以表示为序列（翻译为法语, 英语文本, 法语文本）；对于阅读理解任务，训练样本可以表示为（回答问题, 文档, 问题，答案）。可以训练单一模型，使用这种格式的样本，对不同的任务做推断。按照上面的方法，语言模型也能够学习某些监督任务，并且不需要明确具体的监督符号。</p>
+<h4 id="1-4-GPT3">1.4 GPT3</h4>
+<h5 id="1-背景-2">1. 背景</h5>
+<p>GPT-3 不再去追求那种极致的不需要任何样本就可以表现很好的模型，而是考虑像人类的学习方式那样，仅仅使用<strong>极少数样本</strong>就可以掌握某一个任务，GPT-3论文： <a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf"><em>Language Models are <strong>Few-Shot</strong> Learners</em></a>。</p>
+<p>few-shot 不是像之前的方式那样，使用少量样本在下游任务上去做微调。</p>
+<h5 id="2-模型结构-2">2. 模型结构</h5>
+<p>在模型结构上，GPT-3 延续使用 GPT 模型结构，但是引入了 Sparse Transformer 中的 sparse attention 模块（稀疏注意力）。</p>
+<p>sparse attention 与传统 self-attention（称为 dense attention） 的区别在于：</p>
 <blockquote>
-<p>dense attention：每个 token 之间两两计算 attention，复杂度 O(n²)
-sparse attention：每个 token 只与其他 token 的一个子集计算
-attention，复杂度 O(n*logn)</p>
+<p>dense attention：每个 token 之间两两计算 attention，复杂度 O(n²)<br>
+sparse attention：每个 token 只与其他 token 的一个子集计算 attention，复杂度 O(n*logn)</p>
 </blockquote>
-<p>　　具体来说，sparse attention 除了相对距离不超过 k 以及相对距离为
-k，2k，3k，... 的 token，其他所有 token 的注意力都设为
-0，如下图所示：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192121089.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
-<p>　　使用 sparse attention 的好处主要有以下两点：</p>
-<ol type="1">
+<p>具体来说，sparse attention 除了相对距离不超过 k 以及相对距离为 k，2k，3k，… 的 token，其他所有 token 的注意力都设为 0，如下图所示：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192121089.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
+<p>使用 sparse attention 的好处主要有以下两点：</p>
+<ol>
 <li><strong>减少注意力层的计算复杂度</strong>，节约显存和耗时，从而能够处理更长的输入序列；</li>
 <li><strong>具有“局部紧密相关和远程稀疏相关”的特性</strong>，对于距离较近的上下文关注更多，对于距离较远的上下文关注较少；</li>
 </ol>
-<h4 id="下游任务评估方法">4.3 下游任务评估方法</h4>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192125147.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<p>　　如上图所示，GPT-3
-在下游任务的评估与预测时，提供了三种不同的方法：</p>
+<h5 id="3-下游任务评估方法">3. 下游任务评估方法</h5>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408192125147.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>如上图所示，GPT-3 在下游任务的评估与预测时，提供了三种不同的方法：</p>
 <blockquote>
-<p><strong>Zero-shot</strong>：仅使用当前任务的自然语言描述，不进行任何梯度更新；
-<strong>One-shot</strong>：当前任务的自然语言描述，加上一个简单的输入输出样例，不进行任何梯度更新；
+<p><strong>Zero-shot</strong>：仅使用当前任务的自然语言描述，不进行任何梯度更新；<br>
+<strong>One-shot</strong>：当前任务的自然语言描述，加上一个简单的输入输出样例，不进行任何梯度更新；<br>
 <strong>Few-shot</strong>：当前任务的自然语言描述，加上几个简单的输入输出样例，不进行任何梯度更新；</p>
 </blockquote>
-<p>　　其中 Few-shot 也被称为 in-context learning，虽然它与 fine-tuning
-一样都需要一些有监督标注数据，但是两者的区别是：</p>
-<ol type="1">
-<li>fine-tuning 基于标注数据对模型参数进行更新，而 in-context learning
-使用标注数据时不做任何的梯度回传，模型参数不更新；</li>
-<li>in-context learning 依赖的数据量（10～100）远远小于 fine-tuning
-一般的数据量；</li>
+<p>其中 Few-shot 也被称为 in-context learning，虽然它与 fine-tuning 一样都需要一些有监督标注数据，但是两者的区别是：</p>
+<ol>
+<li>fine-tuning 基于标注数据对模型参数进行更新，而 in-context learning 使用标注数据时不做任何的梯度回传，模型参数不更新；</li>
+<li>in-context learning 依赖的数据量（10～100）远远小于 fine-tuning 一般的数据量；</li>
 </ol>
-<p>　　最终通过大量下游任务实验验证，Few-shot 效果最佳，One-shot
-效果次之，Zero-shot 效果最差：</p>
-<h3 id="instructgpt">5. InstructGPT</h3>
-<p>　　InstructGPT 是为解决 LM
-有时不能遵循用户意图而诞生的。“不能遵循用户意图”表示LM
-可能会生成不真实或对用户毫无帮助的输出。主要原因是 LM
-的训练目标是预测下一个 token
-而不是有帮助地和安全地遵循用户的指令。换句话说，这些模型与其用户没有对齐。这是由于模型的偏见性和数据中存在的一些有毒内容导致模型会输出无用的、有毒的输出（LM并没有对输出是否无用、是否有毒的监督）。因此，InstructGPT
-要做的就是是模型的输出符合人类的意图。具体而言，InstructGPT
-的优化目标有三个（3H）：</p>
+<p>最终通过大量下游任务实验验证，Few-shot 效果最佳，One-shot 效果次之，Zero-shot 效果最差：</p>
+<h4 id="1-5-InstructGPT">1.5 InstructGPT</h4>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.02155">Training language models to follow instructions with human feedback</a></p>
+<p>InstructGPT 是为解决 LM 有时不能遵循用户意图而诞生的。“不能遵循用户意图”表示LM 可能会生成不真实或对用户毫无帮助的输出。主要原因是 LM 的训练目标是预测下一个 token 而不是有帮助地和安全地遵循用户的指令。换句话说，这些模型与其用户没有对齐。这是由于模型的偏见性和数据中存在的一些有毒内容导致模型会输出无用的、有毒的输出（LM并没有对输出是否无用、是否有毒的监督）。因此，InstructGPT 要做的就是是模型的输出符合人类的意图。具体而言，InstructGPT 的优化目标有三个（3H）：</p>
 <ul>
 <li>Helpful，模型应该帮助用户解决他们的任务；</li>
 <li>Honest，模型不应该编造信息来误导用户；</li>
 <li>Harmless，模型不应对人或环境造成身体、心理或社会伤害。</li>
 </ul>
-<p>　　关于 InstructGPT
-的技术方案，分为了三个步骤：有监督微调，奖励模型训练，强化学习训练；实际上可以把它拆分成两种技术方案，一个是有监督微调（SFT），一个是基于人类反馈的强化学习（RLHF）。</p>
-<h4 id="instruct-learning-和-prompt-learning">5.1 Instruct Learning 和
-Prompt Learning</h4>
-<p>　　Instruct Learning 和 Prompt Learning
-的目的都是去深入挖掘已经具备的知识，并激发出更强的能力。不同的是，Prompt
-是激发LM 的补全能力，例如根据上半句生成下半句，或者是 Cloze；而 Instruct
-Learning
-是激发语言模型的理解力，通过给出明显的指令，让模型去做出正确的行动。</p>
+<p>关于 InstructGPT 的技术方案，分为了三个步骤：有监督微调，奖励模型训练，强化学习训练；实际上可以把它拆分成两种技术方案，一个是有监督微调（SFT），一个是基于人类反馈的强化学习（RLHF）。</p>
+<h5 id="1-Instruct-Learning-和-Prompt-Learning">1. Instruct Learning 和 Prompt Learning</h5>
+<p>Instruct Learning 和 Prompt Learning 的目的都是去深入挖掘已经具备的知识，并激发出更强的能力。不同的是，Prompt 是激发LM 的补全能力，例如根据上半句生成下半句，或者是 Cloze；而 Instruct Learning 是激发语言模型的理解力，通过给出明显的指令，让模型去做出正确的行动。</p>
 <ul>
-<li><strong>Prompt
-Learning</strong>：给女朋友买了这个项链，她很喜欢，这个项链太__了。</li>
-<li><strong>Instruct
-Learning</strong>：判断这句话的情感：给女朋友买了这个项链，她很喜欢。选项：A=好；B=一般；C=差。</li>
+<li><strong>Prompt Learning</strong>：给女朋友买了这个项链，她很喜欢，这个项链太__了。</li>
+<li><strong>Instruct Learning</strong>：判断这句话的情感：给女朋友买了这个项链，她很喜欢。选项：A=好；B=一般；C=差。</li>
 </ul>
-<p>　　Fine-tuning、Prompt Learning 和 Instruction tuning 的对比：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408201129123.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<p>Fine-tuning、Prompt Learning 和 Instruction tuning 的对比：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408201129123.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
 <ul>
-<li><strong>传统Fine-tuning</strong>：需要大量任务特定的样本；每个任务都需要
-Fine-tuning 一个特别的模型；</li>
+<li><strong>传统Fine-tuning</strong>：需要大量任务特定的样本；每个任务都需要 Fine-tuning 一个特别的模型；</li>
 <li><strong>Prompt</strong>：通过少数示例或 prompt 工程提升性能；</li>
-<li><strong>Instruction
-tuning</strong>：通过自然语言指令学习执行多个任务。</li>
+<li><strong>Instruction tuning</strong>：通过自然语言指令学习执行多个任务。</li>
 </ul>
-<p>https://zhuanlan.zhihu.com/p/613698929</p>
-<p>https://zhuanlan.zhihu.com/p/678912290</p>
-<p>https://zhuanlan.zhihu.com/p/609716668</p>
-<p>https://zhuanlan.zhihu.com/p/623879917</p>
+<h5 id="2-有监督微调SFT">2. 有监督微调SFT</h5>
+<p>Supervised Fine-Tuning</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202027656.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<p>本质上来说，SFT 可以理解为人工标注了一批数据，然后去微调 GPT-3。</p>
+<h5 id="3-训练奖励模型">3. 训练奖励模型</h5>
+<p>这个阶段的主要目的是通过人工标注数据来训练奖励模型（Reward Model, RM）。具体而言，从用户提交的问题中随机抽取一部分（大部分和第一阶段的相同），使用第一阶段微调好的模型，对每个问题生成 <em>K</em> 个不同的答案（这里 <em>K</em> 是 4 到 9 之间的一个数）。这样就得到了&lt;问题, 回答1&gt;, &lt;问题, 回答2&gt;,…,&lt; 问题, 回答<em>K</em>&gt;数据。然后，标注人员根据多个标准（例如相关性、信息量、有害性等）综合考虑，对 <em>K</em> 个回答进行排序，给出 <em>K</em>  个回答的排名顺序，这就是这个阶段人工标注的数据。</p>
+<p>接下来，利用这个排序数据来训练奖励模型，采用的训练方法是成对学习（pair-wise learning）。对于 <em>K</em> 个排序结果，两两组合，形成训练数据对，ChatGPT 采用成对学习损失值来训练奖励模型。奖励模型接受一个输入&lt;问题, 回答&gt;，输出一个评价答案质量高低的分数（score）。对于一对训练数据&lt;回答1, 回答2&gt;，假设人工排序中回答1排在回答2前面，那么损失函数就鼓励奖励模型对&lt;问题, 回答1&gt; 的分数要高于&lt;问题, 回答2&gt;的分数。</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202034965.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<p>奖励模型的损失值可以表示为如下的形式：<br>
+$$<br>
+loss(θ)=−\frac{1}{\binom{k}{2}}E_{(x,y_w,y_l)∼D}[log(σ(r_θ(x,y_w)−r_θ(x,y_l)))]<br>
+$$<br>
+　　其中：</p>
+<ul>
+<li>
+<p>$r_θ(x,y)$ 表示奖励模型的输出</p>
+</li>
+<li>
+<p>$y_w$ ：偏好的语句（wanted）。</p>
+</li>
+<li>
+<p>$y_l$ ：不偏好的语句（less wanted）。</p>
+</li>
+<li>
+<p>σ ：Sigmoid 函数，将实数映射到 (0, 1) 之间。如果奖励模型认为 $y_w$ 应该排在 $ y_l$ 的前面，那么 σ( rθ(x,yw) - rθ(x,yl) ) 就接近 1，反之则接近 0。</p>
+</li>
+<li>
+<p>-log：使之单调递减（损失越小越好）。</p>
+</li>
+<li>
+<p>K ：一组样本的数量，在计算损失前，样本是以组存在的，从组中抽样一对。</p>
+</li>
+<li>
+<p>$\binom{k}{2}$：组合的另一种表达，从 K 中选择 2 个组合，中学课本排列组合中的 C（combination）</p>
+</li>
+</ul>
+<p>总结第二阶段的过程，首先，监督模型根据每个提示生成 <em>K</em> 个回答，并按照质量从高到低排序。然后，人工将这些回答作为训练数据，采用成对学习的方法来训练奖励模型。最后，对于训练好的奖励模型，它可以接收&lt;问题, 回答&gt;作为输入，输出回答的质量得分。得分越高，说明回答的质量越高。</p>
+<h5 id="4-RLHF（Reinforcement-Learning-from-Human-Feedback）">4. RLHF（Reinforcement Learning from Human Feedback）</h5>
+<p>第三阶段是使用强化学习微调预训练模型，无需人工标注数据，只需借助上一阶段训练好的奖励模型作为奖励函数。</p>
+<p>首先，从用户提交的问题中随机抽取一些新的命令（即与前两个阶段不同的问题），并用第一阶段经过监督微调的模型初始化近端策略优化（Proximal Policy Optimization, PPO）模型的参数。然后，对于每个抽取的问题，用近端策略优化模型生成回答，并用奖励模型评估回答的质量得分。这个得分就是奖励模型给出的回答的整体收益。</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202102667.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>强化学习的优化目标可以表示为如下形式:</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202119185.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>第一项是最大化奖励模型的得分，第二项是让强化学习的输出不要偏离有监督微调（SFT）太多，最后一项是保证微调效果的同时，原有语言模型的效果不会变差。</p>
+<p>RLHF 的流程如下图所示：</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202105184.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<ul>
+<li><strong>Initial Language Model</strong>：Pre-trianing 或者 Instruct tuning 后的模型；</li>
+<li><strong>Tuned Language Model</strong>：Initial Lanugage Model 的副本，将在 RLHF 中更新参数，也是RL中的Policy；</li>
+<li><strong>Policy</strong>：是给Tuned LM（例如GPT-3）输入文本后输出结果的过程；</li>
+<li>**Action Space：**全词表，大约 50K；</li>
+<li><strong>Observation Space</strong>：输入的文本序列空间；</li>
+<li><strong>Reward Function</strong>：一个打分模型 Reward Model，和一个 KL 的梯度惩罚项</li>
+</ul>
+<p>$$<br>
+λ_{KL}D_{KL}(π_{ppo}(y|x)||π_{base}(y|x))<br>
+$$</p>
+<p>，目的是为了使 Policy 的输出文本不要和 Initial LM 差太多，防止模型为了迎合 Reward 模型输出不连贯的文本或着胡言乱语。</p>
+<h3 id="2-BERT">2. BERT</h3>
+<h4 id="2-1-模型结构">2.1 模型结构</h4>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202140065.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<p>BERT（Bidirectional Encoder Representations from Transformers ） 的模型结构采用了原始 Transformer 的 Encoder（如图六所示）。由于没有 MMHA，因此在建模时允许每个 token 访问其前后两个方向的 context，因此 BERT 是双向的语言模型。</p>
+<p>为什么需要选择支持双向的 Encoder，在这里引用作者原文的话*：“The major limitation is that standard language models are unidirectional, and this limits the choice of architectures that can be used during pre-training. For example, in OpenAI GPT, the authors use a left-to-right architecture, where every token can only attend to previous tokens in the self-attention layers of the Transformer. Such restrictions are sub-optimal for sentence-level tasks and could be very harmful when applying finetuning-based approaches to token-level tasks such as question answering, where it is crucial to incorporate context from both directions.”*<br>
+　　大概的意思是：**标准语言模型是单向的，这限制了在预训练期间可以使用的结构选择。**例如，在 OpenAI GPT 中，作者使用从左到右的架构，其中在 Self-attention 中每个 token 只能访问先前的 token。这种限制对于句子级任务来说是次优的，并且在将基于微调的方法应用于 token-level 任务（如问题回答）时可能非常有害，因为在这些任务中，从两个方向结合上下文是至关重要的。</p>
+<h4 id="2-2-BERT-输入构造">2.2 BERT 输入构造</h4>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408202144588.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p>为了使 BERT 能够处理不同的下游任务，对于每一个输入的 Sequence（在BERT的原文中，作者用&quot; Sentence “表示任意跨度的连续文本，而不是语言意义上的句子；用” Sequence &quot;表示输入 BERT 的 tokens 序列，可以是一个句子也可以是被打包在一起的两个句子），在其最前面拼接一个特殊的分类 token $[CLS]$，$[CLS]$ 对应位置的最后一层的 Hidden state 将被用作分类任务的序列聚合表征。</p>
+<p>对于被打包成一个 Sequence 的 Sentence pair, 通过两种机制来区分不同句子</p>
+<ul>
+<li>用特殊 token $[SEP]$ 将两个句子分隔</li>
+<li>为每个 token 添加一个可学习的 Embedding（Segment Embedding），来指示其属于前句还是后句。</li>
+</ul>
+<p>如上图所示，对于每一个 token，其 Input representation 通过将其对应的 Token embedding、Position embedding 和 Segment embedding 求和得到。值得注意的是，特殊 token $[CLS]$ 和 $[SEP]$ 是在预训练的时候就引入了，并且参与预训练中的参数更新，而初代 GPT 的特殊 token 只有在 Fine-tuning 阶段才引入。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/613698929">https://zhuanlan.zhihu.com/p/613698929</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678912290">https://zhuanlan.zhihu.com/p/678912290</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/609716668">https://zhuanlan.zhihu.com/p/609716668</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/623879917">https://zhuanlan.zhihu.com/p/623879917</a></p>
 
               
             </div>
