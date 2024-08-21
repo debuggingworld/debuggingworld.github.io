@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Transformer整体结构 以机器翻译为例子详细剖析 Transformer 的结构，在机器翻译中，Transformer 可概括为如下图：  Transformer　的本质上是一个 Encoder-Decoder 的结构。  如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6 个解码 block 组成。与所有的生成模型相同的是，编码器的输出会作为解码器的输入，图">
+    <meta name="description" content="1. Transformer整体结构 　　以机器翻译为例子详细剖析 Transformer 的结构，在机器翻译中，Transformer 可概括为如下图：  　　Transformer　的本质上是一个 Encoder-Decoder 的结构。  　　如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6 个解码 block 组成。与所有的生成模型相同的是，编码器的输出会作为解码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP——Transformer模型">
 <meta property="og:url" content="http://example.com/2024/08/11/NLP%E2%80%94%E2%80%94Transformer%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Transformer整体结构 以机器翻译为例子详细剖析 Transformer 的结构，在机器翻译中，Transformer 可概括为如下图：  Transformer　的本质上是一个 Encoder-Decoder 的结构。  如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6 个解码 block 组成。与所有的生成模型相同的是，编码器的输出会作为解码器的输入，图">
+<meta property="og:description" content="1. Transformer整体结构 　　以机器翻译为例子详细剖析 Transformer 的结构，在机器翻译中，Transformer 可概括为如下图：  　　Transformer　的本质上是一个 Encoder-Decoder 的结构。  　　如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6 个解码 block 组成。与所有的生成模型相同的是，编码器的输出会作为解码">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112114679.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112116285.png">
@@ -30,14 +30,12 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112137552.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112141059.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112148546.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112149420.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112205174.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112224146.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112226087.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112231745.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112237118.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112326772.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112329630.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112341659.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120006778.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120007651.png">
@@ -319,145 +317,274 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-Transformer整体结构">1. Transformer整体结构</h3>
-<p>以机器翻译为例子详细剖析 Transformer 的结构，在机器翻译中，Transformer 可概括为如下图：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112114679.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>Transformer　的本质上是一个 Encoder-Decoder 的结构。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112116285.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6 个解码 block 组成。与所有的生成模型相同的是，编码器的输出会作为解码器的输入，图下所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112119323.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" />
-<p>每个 encoder 的详细结构：在 Transformer 的 encoder 中，数据首先会经过一个叫做 <code>self-attention</code>的模块得到一个加权之后的特征向量 $Z$，这个$Z$便是论文中的 $Attension(Q,K,V)$ 公式：<br>
-$$<br>
-Attension(Q,K,V)=softmax(\frac{QK^T}{d^{1/2}_k})V<br>
-$$<br>
-　　【备注】$K^T$ 表示对 K 进行转置。</p>
-<p>得到 $Z$ 之后，它会被送到 encoder 的下一个模块，即 Feed Forward Neural Network。这个全连接有两层，第一层的激活函数是 ReLU，第二层是一个线性激活函数，可以表示为：<br>
-$$<br>
-FFN=max(0,ZW_1+b_1)W_2+b_2<br>
-$$<br>
-　　Encoder的结构下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112134556.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
-<p>Decoder 的结构如下图所示，它和 encoder 的不同之处在于 Decoder 多了一个 Encoder-Decoder Attention，两个 Attention 分别用于计算输入和输出的权值：</p>
-<ol>
+              <h3 id="transformer整体结构">1. Transformer整体结构</h3>
+<p>　　以机器翻译为例子详细剖析 Transformer
+的结构，在机器翻译中，Transformer 可概括为如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112114679.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　Transformer　的本质上是一个 Encoder-Decoder 的结构。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112116285.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　如论文中所设置的，编码器由 6 个编码 block 组成，同样解码器是 6
+个解码 block
+组成。与所有的生成模型相同的是，编码器的输出会作为解码器的输入，图下所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112119323.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<p>　　每个 encoder 的详细结构：在 Transformer 的 encoder
+中，数据首先会经过一个叫做
+<code>self-attention</code>的模块得到一个加权之后的特征向量 <span
+class="math inline">\(Z\)</span>，这个<span
+class="math inline">\(Z\)</span>便是论文中的 <span
+class="math inline">\(Attension(Q,K,V)\)</span> 公式： <span
+class="math display">\[
+Attension(Q,K,V)=softmax(\frac{QK^T}{d^{1/2}_k})V
+\]</span> 　　【备注】<span class="math inline">\(K^T\)</span> 表示对 K
+进行转置。</p>
+<p>　　得到 <span class="math inline">\(Z\)</span> 之后，它会被送到
+encoder 的下一个模块，即 Feed Forward Neural
+Network。这个全连接有两层，第一层的激活函数是
+ReLU，第二层是一个线性激活函数，可以表示为： <span
+class="math display">\[
+FFN=max(0,ZW_1+b_1)W_2+b_2
+\]</span> 　　Encoder的结构下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112134556.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　Decoder 的结构如下图所示，它和 encoder 的不同之处在于 Decoder
+多了一个 Encoder-Decoder Attention，两个 Attention
+分别用于计算输入和输出的权值：</p>
+<ol type="1">
 <li>Self-Attention：当前翻译和已经翻译的前文之间的关系；</li>
 <li>Encoder-Decoder Attention：当前翻译和编码的特征向量之间的关系。</li>
 </ol>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112137552.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<h3 id="2-输入编码">2. 输入编码</h3>
-<p>输入编码如下图所示，首先通过 Word2Vec 等词嵌入方法将输入语料转化成特征向量，论文中使用的词嵌入的维度为 $d_{model}=512$</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112141059.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<p>在最底层的 block 中，$x$ 将直接作为 Transformer 的输入，而在其他层中，输入则是上一个 block 的输出。为了画图更简单，我们使用更简单的例子来表示接下来的过程，如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112148546.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<h3 id="3-Self-Attention">3 Self-Attention</h3>
-<p>Self-Attention 是 Transformer 最核心的内容。回想 Bahdanau 等人提出的用 Attention，其核心内容是为输入向量的每个单词学习一个权重，例如在下面的例子中我们判断 it 代指的内容</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112137552.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<h3 id="输入编码">2. 输入编码</h3>
+<p>　　输入编码如下图所示，首先通过 Word2Vec
+等词嵌入方法将输入语料转化成特征向量，论文中使用的词嵌入的维度为 <span
+class="math inline">\(d_{model}=512\)</span></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112141059.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　在最底层的 block 中，<span class="math inline">\(x\)</span>
+将直接作为 Transformer 的输入，而在其他层中，输入则是上一个 block
+的输出。为了画图更简单，我们使用更简单的例子来表示接下来的过程，如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112148546.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="self-attention">3 Self-Attention</h3>
+<p>　　Self-Attention 是 Transformer 最核心的内容。回想 Bahdanau
+等人提出的用
+Attention，其核心内容是为输入向量的每个单词学习一个权重，例如在下面的例子中我们判断
+it 代指的内容</p>
 <blockquote>
-<p>The animal didn’t cross the street because it was too tired</p>
+<p>The animal didn't cross the street because it was too tired</p>
 </blockquote>
-<p>通过加权之后可以得到类似下图的加权情况，在讲解 self-attention 的时候我们也会使用下图类似的表示方式：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112149420.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>在 self-attention 中，每个单词有 3 个不同的向量，它们分别是 Query 向量（Q），Key 向量（K）和 Value 向量（V），长度均是 64。它们是通过嵌入向量 X 乘以三个不同的权值矩阵 $W^Q$, $W^K$, $W^V$ 得到，其中三个矩阵的尺寸也是相同的，均是512×64 。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112205174.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
-<p>那么 Query，Key，Value 是什么意思呢？它们在 Attention 的计算中扮演着什么角色呢？我们先看一下 Attention 的计算方法，整个过程可以分成7步：</p>
-<ol>
+<p>　　通过加权之后可以得到类似下图的加权情况，在讲解 self-attention
+的时候我们也会使用下图类似的表示方式：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112149420.png" srcset="/img/loading.gif" lazyload /></p>
+<p>　　在 self-attention 中，每个单词有 3 个不同的向量，它们分别是 Query
+向量（Q），Key 向量（K）和 Value 向量（V），长度均是
+64。它们是通过嵌入向量 X 乘以三个不同的权值矩阵 <span
+class="math inline">\(W^Q\)</span>, <span
+class="math inline">\(W^K\)</span>, <span
+class="math inline">\(W^V\)</span>
+得到，其中三个矩阵的尺寸也是相同的，均是512×64 。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112205174.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<p>　　那么 Query，Key，Value 是什么意思呢？它们在 Attention
+的计算中扮演着什么角色呢？我们先看一下 Attention
+的计算方法，整个过程可以分成7步：</p>
+<ol type="1">
 <li>如上文，将输入单词转化成嵌入向量；</li>
-<li>根据嵌入向量得到 $q, k, v$ 三个向量；</li>
-<li>为每个向量计算一个 score：$score=q∗k$；</li>
-<li>为了梯度的稳定，Transformer 使用了 score 归一化，即除以 $d^{1/2}_k$；</li>
+<li>根据嵌入向量得到 <span class="math inline">\(q, k, v\)</span>
+三个向量；</li>
+<li>为每个向量计算一个 score：<span
+class="math inline">\(score=q∗k\)</span>；</li>
+<li>为了梯度的稳定，Transformer 使用了 score 归一化，即除以 <span
+class="math inline">\(d^{1/2}_k\)</span>；</li>
 <li>对 score 施以 softmax 激活函数；</li>
-<li>softmax 点乘 Value 值 $v$ ，得到加权的每个输入向量的评分 $v$ ；</li>
-<li>相加之后得到最终的输出结果 $z=∑v$。</li>
+<li>softmax 点乘 Value 值 <span class="math inline">\(v\)</span>
+，得到加权的每个输入向量的评分 <span class="math inline">\(v\)</span>
+；</li>
+<li>相加之后得到最终的输出结果 <span
+class="math inline">\(z=∑v\)</span>。</li>
 </ol>
-<p>上面步骤的可以表示为下图的形式。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112224146.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<p>实际计算过程中是采用基于矩阵的计算方式，那么论文中的 $Q, V, K$ 的计算方式如下图：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112226087.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" />
-<p>softmax归一化过程：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112231745.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" />
-<p>softmax 分数决定了每个单词对编码当下位置（“Thinking”）的贡献。显然，已经在这个位置上的单词将获得最高的 softmax 分数，上述第 3 步和第 4 步是将分数除以 8 (8 是论文中使用的键向量的维数 64 的平方根，这会让梯度更稳定。这里也可以使用其它值，8 只是默认值)，然后通过 softmax 传递结果。softmax 的作用是使所有单词的分数归一化，得到的分数都是正值且和为 1。</p>
-<p>这里也就是 $Attension$ 公式的计算方式。在 self-attention 需要强调的最后一点是其采用了残差网络中的 short-cut 结构，目的当然是解决深度学习中的退化问题，得到的最终结果下图（Self-Attention 中的 short-cut连接）:</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112237118.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
-<h3 id="4-Multi-Head-Attention">4 Multi-Head Attention</h3>
-<p>Multi-Head Attention 相当于 h 个不同的 self-attention的 集成（ensemble），在这里我们以 h=8 举例说明。Multi-Head Attention 的输出分成 3 步：</p>
-<ol>
-<li>将数据 $X$ 分别输入到上图所示的 8 个 self-attention 中，得到 8 个加权后的特征矩阵 $Z_i,i∈1,2,…,8。</li>
-<li>将 8 个 $Z_i$ 按列拼成一个大的特征矩阵 $512,64×8$。</li>
-<li>特征矩阵经过一层全连接后得到输出 $Z$。</li>
+<p>　　上面步骤的可以表示为下图的形式。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112224146.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　实际计算过程中是采用基于矩阵的计算方式，那么论文中的 <span
+class="math inline">\(Q, V, K\)</span> 的计算方式如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112226087.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>　　softmax归一化过程：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112231745.png" srcset="/img/loading.gif" lazyload style="zoom:55%;" /></p>
+<p>　　softmax
+分数决定了每个单词对编码当下位置（“Thinking”）的贡献。显然，已经在这个位置上的单词将获得最高的
+softmax 分数，上述第 3 步和第 4 步是将分数除以 8 (8
+是论文中使用的键向量的维数 64
+的平方根，这会让梯度更稳定。这里也可以使用其它值，8
+只是默认值)，然后通过 softmax 传递结果。softmax
+的作用是使所有单词的分数归一化，得到的分数都是正值且和为 1。</p>
+<p>　　这里也就是 <span class="math inline">\(Attension\)</span>
+公式的计算方式。在 self-attention
+需要强调的最后一点是其采用了残差网络中的 short-cut
+结构，目的当然是解决深度学习中的退化问题，得到的最终结果下图（Self-Attention
+中的 short-cut连接）:</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112237118.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<h3 id="multi-head-attention">4 Multi-Head Attention</h3>
+<p>　　Multi-Head Attention 相当于 h 个不同的 self-attention的
+集成（ensemble），在这里我们以 h=8 举例说明。Multi-Head Attention
+的输出分成 3 步：</p>
+<ol type="1">
+<li>将数据 <span class="math inline">\(X\)</span> 分别输入到上图所示的 8
+个 self-attention 中，得到 8 个加权后的特征矩阵 $Z_i,i∈1,2,...,8。</li>
+<li>将 8 个 <span class="math inline">\(Z_i\)</span>
+按列拼成一个大的特征矩阵 <span
+class="math inline">\(512,64×8\)</span>。</li>
+<li>特征矩阵经过一层全连接后得到输出 <span
+class="math inline">\(Z\)</span>。</li>
 </ol>
-<p>整个过程如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112326772.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>同 self-attention 一样，multi-head attention 也加入了 short-cut 机制。现在我们已经触及了注意力的头，让我们重新审视之前的例子，不同的 attention heads （注意力头）对应的 “it” attention 了哪些内容。下图中的绿色和橙色线条分别表示 2 组不同的 attentin heads：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112329630.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>当我们编码单词 “it” 时，其中一个 attention head （橙色注意力头）最关注的是&quot;the animal&quot;，另外一个绿色 attention head 关注的是 “tired”。因此在某种意义上，“it” 在模型中的表示，融合了 “animal” 和 “tire” 的部分表达。</p>
-<h3 id="5-位置编码">5 位置编码</h3>
-<p>截止目前为止，我们介绍的 Transformer 模型并没有捕捉顺序序列的能力，也就是说无论句子的结构怎么打乱，Transformer 都会得到类似的结果。换句话说，Transformer 只是一个功能更强大的词袋模型而已。</p>
-<p>为了解决这个问题，论文中在编码词向量时引入了位置编码（Position Embedding）的特征。具体地说，位置编码会在词向量中加入了单词的位置信息，这样 Transformer 就能区分不同位置的单词了。</p>
-<p>那么怎么编码这个位置信息呢？常见的模式有：a. 根据数据学习；b. 自己设计编码规则。在这里作者采用了第二种方式。那么这个位置编码该是什么样子呢？通常位置编码是一个长度为 $d_{model}$ 的特征向量，这样便于和词向量进行单位加的操作，如下图：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112341659.png" srcset="/img/loading.gif" lazyload style="zoom:25%;" />
-<p>论文给出的编码公式如下：<br>
-$$<br>
-PE(pos,2i)=sin(\frac{pos}{10000^\frac{2i}{d_{model}}})<br>
-$$</p>
-<p>$$<br>
-PE(pos,2i+1)=cos(\frac{pos}{10000^\frac{2i}{d_{model}}})<br>
-$$</p>
-<p>在上式中，$pos$ 表示单词的位置， $i$ 表示单词的维度。关于位置编码的实现可在 Google 开源的算法中<code>get_timing_signal_1d()</code>函数找到对应的代码。</p>
-<p>自己设计编码规则的优点是不需要训练参数，而且即使在训练集中没有出现过的句子长度上也能用。作者这么设计的原因是考虑到在 NLP 任务中，除了单词的绝对位置，单词的相对位置也非常重要。根据公式 $sin(α+β)=sinαcosβ+cosαsinβ$ 以及 $cos(α+β)=cosαcosβ−sinαsinβ$ ，这表明位置 k+p 的位置向量可以表示为位置 k 的特征向量的线性变化，这为模型捕捉单词之间的相对位置关系提供了非常大的便利。并且**由于三角公式不受序列长度的限制，**因此可以允许模型推断比训练期间遇到的更长的序列。（偶数位置用正弦，奇数位置用余弦）</p>
-<p>如果我们假设嵌入的维数为 4，那么实际的位置编码将如下所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120006778.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<p>在下图中，每行对应矢量的位置编码。因此第一行将是我们添加到输入序列中嵌入第一个单词的向量。每行包含 512 个值 ，每个值介于 1 和 -1 之间。我们对它们进行了颜色编码，使图案可见。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120007651.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>嵌入大小为 512（列）的 20 个字（行）的位置编码的真实示例。你可以看到它在中心区域分成两半。这是因为左半部分的值由一个函数（使用正弦）生成，而右半部分由另一个函数（使用余弦）生成。然后将它们连接起来以形成每个位置编码矢量。</p>
-<h3 id="6-残差结构">6. 残差结构</h3>
-<p>到目前为止，我们计算得到了 self-attention 的输出向量。而单层 encoder 里后续还有两个重要的操作：残差链接、标准化。编码器的每个子层（Self Attention 层和 FFNN）都有一个残差连接和层标准化（layer-normalization），如下图所示。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122059434.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<p>将 Self-Attention 层的层标准化（layer-normalization）和涉及的向量计算细节都进行可视化，如下所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122100526.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" />
-<p>编码器和和解码器的子层里面都有层标准化（layer-normalization）。假设一个 Transformer 是由 2 层编码器和两层解码器组成的，将全部内部细节展示起来如下图所示。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122102816.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<h3 id="7-解码器结构">7. 解码器结构</h3>
-<p>现在我们已经介绍了编码器中的大部分概念，我们也基本知道了编码器的原理。现在让我们来看下， 编码器和解码器是如何协同工作的。</p>
-<p>编码器一般有多层，第一个编码器的输入是一个序列文本，最后一个编码器输出是一组序列向量，这组序列向量会作为解码器的K、V输入，其中 K = V =解码器输出的序列向量表示。这些注意力向量将会输入到每个解码器的 Encoder-Decoder Attention 层，这有助于解码器把注意力集中到输入序列的合适位置，如下图所示。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122115214.gif" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>解码（decoding ）阶段的每一个时间步都输出一个翻译后的单词（这里的例子是英语翻译），解码器当前时间步的输出又重新作为输入Q和编码器的输出K、V共同作为下一个时间步解码器的输入。然后重复这个过程，直到输出一个结束符。如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122121219.gif" srcset="/img/loading.gif" lazyload style="zoom:45%;" />
-<p>解码器中的 Self Attention 层，和编码器中的 Self Attention 层的区别：</p>
-<ol>
-<li>在解码器里，Self Attention 层只允许关注到输出序列中早于当前位置之前的单词。具体做法是：在 Self Attention 分数经过 Softmax 层之前，屏蔽当前位置之后的那些位置（将 attention score 设置成负无穷）（编码器中的自注意力层中的每个单词在进行注意力运算时，可以看到整个序列中所有的单词）。</li>
-<li>解码器 self-attention 层是使用前一层的输出来构造 Query 矩阵，而 Key 矩阵和 Value 矩阵来自于编码器最终的输出。</li>
+<p>　　整个过程如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112326772.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　同 self-attention 一样，multi-head attention 也加入了 short-cut
+机制。现在我们已经触及了注意力的头，让我们重新审视之前的例子，不同的
+attention heads （注意力头）对应的 “it” attention
+了哪些内容。下图中的绿色和橙色线条分别表示 2 组不同的 attentin
+heads：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112329630.png" srcset="/img/loading.gif" lazyload /></p>
+<p>　　当我们编码单词 "it" 时，其中一个 attention head
+（橙色注意力头）最关注的是"the animal"，另外一个绿色 attention head
+关注的是 "tired"。因此在某种意义上，"it" 在模型中的表示，融合了 "animal"
+和 "tire" 的部分表达。</p>
+<h3 id="位置编码">5 位置编码</h3>
+<p>　　截止目前为止，我们介绍的 Transformer
+模型并没有捕捉顺序序列的能力，也就是说无论句子的结构怎么打乱，Transformer
+都会得到类似的结果。换句话说，Transformer
+只是一个功能更强大的词袋模型而已。</p>
+<p>　　为了解决这个问题，论文中在编码词向量时引入了位置编码（Position
+Embedding）的特征。具体地说，位置编码会在词向量中加入了单词的位置信息，这样
+Transformer 就能区分不同位置的单词了。</p>
+<p>　　那么怎么编码这个位置信息呢？常见的模式有：a. 根据数据学习；b.
+自己设计编码规则。在这里作者采用了第二种方式。那么这个位置编码该是什么样子呢？通常位置编码是一个长度为
+<span class="math inline">\(d_{model}\)</span>
+的特征向量，这样便于和词向量进行单位加的操作，如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408112341659.png" srcset="/img/loading.gif" lazyload style="zoom:25%;" /></p>
+<p>　　论文给出的编码公式如下： <span class="math display">\[
+PE(pos,2i)=sin(\frac{pos}{10000^\frac{2i}{d_{model}}})
+\]</span></p>
+<p><span class="math display">\[
+PE(pos,2i+1)=cos(\frac{pos}{10000^\frac{2i}{d_{model}}})
+\]</span></p>
+<p>　　在上式中，<span class="math inline">\(pos\)</span>
+表示单词的位置， <span class="math inline">\(i\)</span>
+表示单词的维度。关于位置编码的实现可在 Google
+开源的算法中<code>get_timing_signal_1d()</code>函数找到对应的代码。</p>
+<p>　　自己设计编码规则的优点是不需要训练参数，而且即使在训练集中没有出现过的句子长度上也能用。作者这么设计的原因是考虑到在
+NLP 任务中，除了单词的绝对位置，单词的相对位置也非常重要。根据公式 <span
+class="math inline">\(sin(α+β)=sinαcosβ+cosαsinβ\)</span> 以及 <span
+class="math inline">\(cos(α+β)=cosαcosβ−sinαsinβ\)</span> ，这表明位置
+k+p 的位置向量可以表示为位置 k
+的特征向量的线性变化，这为模型捕捉单词之间的相对位置关系提供了非常大的便利。并且<strong>由于三角公式不受序列长度的限制，</strong>因此可以允许模型推断比训练期间遇到的更长的序列。（偶数位置用正弦，奇数位置用余弦）</p>
+<p>　　如果我们假设嵌入的维数为 4，那么实际的位置编码将如下所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120006778.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　在下图中，每行对应矢量的位置编码。因此第一行将是我们添加到输入序列中嵌入第一个单词的向量。每行包含
+512 个值 ，每个值介于 1 和 -1
+之间。我们对它们进行了颜色编码，使图案可见。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408120007651.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　嵌入大小为 512（列）的 20
+个字（行）的位置编码的真实示例。你可以看到它在中心区域分成两半。这是因为左半部分的值由一个函数（使用正弦）生成，而右半部分由另一个函数（使用余弦）生成。然后将它们连接起来以形成每个位置编码矢量。</p>
+<h3 id="残差结构">6. 残差结构</h3>
+<p>　　到目前为止，我们计算得到了 self-attention 的输出向量。而单层
+encoder
+里后续还有两个重要的操作：残差链接、标准化。编码器的每个子层（Self
+Attention 层和
+FFNN）都有一个残差连接和层标准化（layer-normalization），如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122059434.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　将 Self-Attention
+层的层标准化（layer-normalization）和涉及的向量计算细节都进行可视化，如下所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122100526.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<p>　　编码器和和解码器的子层里面都有层标准化（layer-normalization）。假设一个
+Transformer 是由 2
+层编码器和两层解码器组成的，将全部内部细节展示起来如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122102816.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<h3 id="解码器结构">7. 解码器结构</h3>
+<p>　　现在我们已经介绍了编码器中的大部分概念，我们也基本知道了编码器的原理。现在让我们来看下，
+编码器和解码器是如何协同工作的。</p>
+<p>　　编码器一般有多层，第一个编码器的输入是一个序列文本，最后一个编码器输出是一组序列向量，这组序列向量会作为解码器的K、V输入，其中
+K = V =解码器输出的序列向量表示。这些注意力向量将会输入到每个解码器的
+Encoder-Decoder Attention
+层，这有助于解码器把注意力集中到输入序列的合适位置，如下图所示。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122115214.gif" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　解码（decoding
+）阶段的每一个时间步都输出一个翻译后的单词（这里的例子是英语翻译），解码器当前时间步的输出又重新作为输入Q和编码器的输出K、V共同作为下一个时间步解码器的输入。然后重复这个过程，直到输出一个结束符。如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408122121219.gif" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<p>　　解码器中的 Self Attention 层，和编码器中的 Self Attention
+层的区别：</p>
+<ol type="1">
+<li>在解码器里，Self Attention
+层只允许关注到输出序列中早于当前位置之前的单词。具体做法是：在 Self
+Attention 分数经过 Softmax 层之前，屏蔽当前位置之后的那些位置（将
+attention score
+设置成负无穷）（编码器中的自注意力层中的每个单词在进行注意力运算时，可以看到整个序列中所有的单词）。</li>
+<li>解码器 self-attention 层是使用前一层的输出来构造 Query 矩阵，而 Key
+矩阵和 Value 矩阵来自于编码器最终的输出。</li>
 </ol>
-<h3 id="8-线性层和softmax">8. 线性层和softmax</h3>
-<p>Decoder 最终的输出是一个向量，其中每个元素是浮点数。我们怎么把这个向量转换为单词呢？这是线性层和 softmax 完成的。</p>
-<p>线性层就是一个普通的全连接神经网络，可以把解码器输出的向量，映射到一个更大的向量，这个向量称为 logits 向量：假设我们的模型有 10000 个英语单词（模型的输出词汇表），此 logits 向量便会有 10000 个数字，每个数表示一个单词的分数。然后，Softmax 层会把这些分数转换为概率（把所有的分数转换为正数，并且加起来等于 1）。然后选择最高概率的那个数字对应的词，就是这个时间步的输出单词。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131014310.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
-<h3 id="9-损失函数">9. 损失函数</h3>
-<p>损失函数（Loss Function）是一种衡量模型预测输出与实际目标之间的不匹配程度的方法，它将预测误差转化为一个非负实数值，这个值越小，说明模型的预测效果越好。在机器学习和深度学习中，通过优化算法（如梯度下降）最小化损失函数来调整模型参数，从而提升模型的性能。</p>
-<p>Transformer 训练的时候，需要将解码器的输出和 labe l一同送入损失函数，以获得 loss，最终模型根据 loss 进行方向传播。我们用一个简单的例子来说明训练过程的loss计算：把“merci”翻译为“thanks”。</p>
-<p>我们希望模型解码器最终输出的概率分布，会指向单词 ”thanks“（在 “thanks” 这个词的概率最高）。但是，一开始模型还没训练好，它输出的概率分布可能和我们希望的概率分布相差甚远，如下图所示，正确的概率分布应该是 “thanks” 单词的概率最大。但是，由于模型的参数都是随机初始化的，所示一开始模型预测所有词的概率几乎都是随机的。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131040981.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
-<p>只要 Transformer 解码器预测了组概率，我们就可以把这组概率和正确的输出概率做对比，然后使用反向传播来调整模型的权重，使得输出的概率分布更加接近整数输出。</p>
-<p>那我们要怎么比较两个概率分布呢？：我们可以简单的用两组概率向量的空间距离作为 loss（向量相减，然后求平方和，再开方），当然也可以使用交叉熵 (cross-entropy) 和 KL 散度(Kullback–Leibler divergence)。</p>
-<p>我们可以再看一个复杂一点的句子。句子输入是：“je suis étudiant” ，输出是：“i am a student”。这意味着，我们的 transformer 模型解码器要多次输出概率分布向量：</p>
+<h3 id="线性层和softmax">8. 线性层和softmax</h3>
+<p>　　Decoder
+最终的输出是一个向量，其中每个元素是浮点数。我们怎么把这个向量转换为单词呢？这是线性层和
+softmax 完成的。</p>
+<p>　　线性层就是一个普通的全连接神经网络，可以把解码器输出的向量，映射到一个更大的向量，这个向量称为
+logits 向量：假设我们的模型有 10000 个英语单词（模型的输出词汇表），此
+logits 向量便会有 10000 个数字，每个数表示一个单词的分数。然后，Softmax
+层会把这些分数转换为概率（把所有的分数转换为正数，并且加起来等于
+1）。然后选择最高概率的那个数字对应的词，就是这个时间步的输出单词。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131014310.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<h3 id="损失函数">9. 损失函数</h3>
+<p>　　损失函数（Loss
+Function）是一种衡量模型预测输出与实际目标之间的不匹配程度的方法，它将预测误差转化为一个非负实数值，这个值越小，说明模型的预测效果越好。在机器学习和深度学习中，通过优化算法（如梯度下降）最小化损失函数来调整模型参数，从而提升模型的性能。</p>
+<p>　　Transformer 训练的时候，需要将解码器的输出和 labe
+l一同送入损失函数，以获得 loss，最终模型根据 loss
+进行方向传播。我们用一个简单的例子来说明训练过程的loss计算：把“merci”翻译为“thanks”。</p>
+<p>　　我们希望模型解码器最终输出的概率分布，会指向单词 ”thanks“（在
+“thanks”
+这个词的概率最高）。但是，一开始模型还没训练好，它输出的概率分布可能和我们希望的概率分布相差甚远，如下图所示，正确的概率分布应该是
+“thanks”
+单词的概率最大。但是，由于模型的参数都是随机初始化的，所示一开始模型预测所有词的概率几乎都是随机的。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131040981.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>　　只要 Transformer
+解码器预测了组概率，我们就可以把这组概率和正确的输出概率做对比，然后使用反向传播来调整模型的权重，使得输出的概率分布更加接近整数输出。</p>
+<p>　　那我们要怎么比较两个概率分布呢？：我们可以简单的用两组概率向量的空间距离作为
+loss（向量相减，然后求平方和，再开方），当然也可以使用交叉熵
+(cross-entropy) 和 KL 散度(Kullback–Leibler divergence)。</p>
+<p>　　我们可以再看一个复杂一点的句子。句子输入是：“je suis étudiant”
+，输出是：“i am a student”。这意味着，我们的 transformer
+模型解码器要多次输出概率分布向量：</p>
 <ul>
 <li>每次输出的概率分布都是一个向量，长度是 vocab_size</li>
 <li>第1次输出的概率分布中，最高概率对应的单词是 “i”</li>
 <li>第2次输出的概率分布中，最高概率对应的单词是 “am”</li>
-<li>以此类推，直到第 5 个概率分布中，最高概率对应的单词是 “&lt;eos&gt;”，表示没有下一个单词了</li>
+<li>以此类推，直到第 5 个概率分布中，最高概率对应的单词是
+“&lt;eos&gt;”，表示没有下一个单词了</li>
 </ul>
 <p>于是我们目标的概率分布长下面这个样子：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131044021.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
-<p>我们用例子中的句子训练模型，希望产生图中所示的概率分布，我们的模型在一个足够大的数据集上，经过足够长时间的训练后，希望输出的概率分布如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131046633.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
-<p>我们希望模型经过训练之后可以输出的概率分布也就对应了正确的翻译。当然，如果你要翻译的句子是训练集中的一部分，那输出的结果并不能说明什么。我们希望模型在没见过的句子上也能够准确翻译。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131044021.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<p>　　我们用例子中的句子训练模型，希望产生图中所示的概率分布，我们的模型在一个足够大的数据集上，经过足够长时间的训练后，希望输出的概率分布如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408131046633.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<p>　　我们希望模型经过训练之后可以输出的概率分布也就对应了正确的翻译。当然，如果你要翻译的句子是训练集中的一部分，那输出的结果并不能说明什么。我们希望模型在没见过的句子上也能够准确翻译。</p>
 <p>额外提一下 greedy decoding 和 beam search 的概念：</p>
 <ul>
-<li>Greedy decoding：由于模型每个时间步只产生一个输出，我们这样看待：模型是从概率分布中选择概率最大的词，并且丢弃其他词。这种方法叫做贪婪解码（greedy decoding）。</li>
-<li>Beam search：每个时间步保留 k 个最高概率的输出词，然后在下一个时间步，根据上一个时间步保留的 k 个词来确定当前应该保留哪 k 个词。假设k=2，第一个位置概率最高的两个输出的词是”I“和”a“，这两个词都保留，然后根据第一个词计算第 2 个位置的词的概率分布，再取出第 2 个位置上 2个 概率最高的词。对于第 3 个位置和第 4 个位置，我们也重复这个过程。这种方法称为集束搜索(beam search)。</li>
+<li>Greedy
+decoding：由于模型每个时间步只产生一个输出，我们这样看待：模型是从概率分布中选择概率最大的词，并且丢弃其他词。这种方法叫做贪婪解码（greedy
+decoding）。</li>
+<li>Beam search：每个时间步保留 k
+个最高概率的输出词，然后在下一个时间步，根据上一个时间步保留的 k
+个词来确定当前应该保留哪 k
+个词。假设k=2，第一个位置概率最高的两个输出的词是”I“和”a“，这两个词都保留，然后根据第一个词计算第
+2 个位置的词的概率分布，再取出第 2 个位置上 2个 概率最高的词。对于第 3
+个位置和第 4 个位置，我们也重复这个过程。这种方法称为集束搜索(beam
+search)。</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/14380224.html#26-%E6%AE%8B%E5%B7%AE%E7%BB%93%E6%9E%84">【参考1】</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/datawhalechina/learn-nlp-with-transformers/blob/main/docs/%E7%AF%87%E7%AB%A02-Transformer%E7%9B%B8%E5%85%B3%E5%8E%9F%E7%90%86/2.2-%E5%9B%BE%E8%A7%A3transformer.md">【参考2】</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/liuxiaochong/p/14380224.html#26-%E6%AE%8B%E5%B7%AE%E7%BB%93%E6%9E%84">【参考1】</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/datawhalechina/learn-nlp-with-transformers/blob/main/docs/%E7%AF%87%E7%AB%A02-Transformer%E7%9B%B8%E5%85%B3%E5%8E%9F%E7%90%86/2.2-%E5%9B%BE%E8%A7%A3transformer.md">【参考2】</a></p>
 <ul>
-<li>《Attention Is All You Need》 链接地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></li>
-<li>《Transformer: A Novel Neural Network Architecture for Language Understanding》 链接地址：<a target="_blank" rel="noopener" href="https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html">https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html</a> 阅读《Tensor2Tensor announcement》</li>
+<li>《Attention Is All You Need》
+链接地址：https://arxiv.org/abs/1706.03762</li>
+<li>《Transformer: A Novel Neural Network Architecture for Language
+Understanding》
+链接地址：https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html
+阅读《Tensor2Tensor announcement》</li>
 </ul>
 
               

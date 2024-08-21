@@ -247,7 +247,7 @@
       <a class="index-excerpt" href="/2023/02/08/Zookeeper%E2%80%94%E2%80%94%E9%9B%86%E7%BE%A4/" target="_blank">
         <div>
           
-          1. 集群角色   Leader： 领导者 事务请求（写操作）的唯一调度者和处理者，保证集群事务处理的顺序性；集群内部各个服务器的调度者。对于 create、setData、delete 等有写操作的请求，则要统一转发给 leader 处理，leader 需要决定编号、执行操作，这个过程称为事务。   Follower: 跟随者 处理客户端非事务（读操作）请求（可以直接响应），转发事务请求给 Le
+          1. 集群角色  Leader： 领导者 事务请求（写操作）的唯一调度者和处理者，保证集群事务处理的顺序性；集群内部各个服务器的调度者。对于 create、setData、delete 等有写操作的请求，则要统一转发给 leader 处理，leader 需要决定编号、执行操作，这个过程称为事务。 Follower: 跟随者 处理客户端非事务（读操作）请求（可以直接响应），转发事务请求给 Leade
         </div>
       </a>
 
@@ -491,7 +491,7 @@
       <a class="index-excerpt" href="/2022/12/12/Lombok/" target="_blank">
         <div>
           
-          1. @Getter&#x2F;@Setter 自动生成 getter&#x2F;setter ​     2.  @ToString 自动重写 toString() 方法。  3. @EqualsAndHashCode 自动生成 equals(Object other) 和 hashcode() 方法，包括所有非静态变量和非 transient 的变量。 如果某些变量不想要加进判断，可以透过 exclude 排除，
+          1. @Getter&#x2F;@Setter 自动生成 getter&#x2F;setter ​  2. @ToString 自动重写 toString() 方法。  3. @EqualsAndHashCode 自动生成 equals(Object other) 和 hashcode() 方法，包括所有非静态变量和非 transient 的变量。 如果某些变量不想要加进判断，可以透过 exclude 排除，也可以使
         </div>
       </a>
 
@@ -552,7 +552,7 @@
       <a class="index-excerpt" href="/2022/12/09/SSM%E6%A1%86%E6%9E%B6%E6%95%B4%E5%90%88/" target="_blank">
         <div>
           
-          整合 SSM 框架内容：  SpringMVC  web.xml  前端调度器 DispatcherServlet 编码过滤器 filter 支持 rest 的过滤器   springmvc.xml  扫描 controller 包 添加 &lt;annotation-driver&gt; 视图解析器 静态资源解析   添加控制器类   Spring  web.xml  监听器（在启动web容器时
+          整合 SSM 框架内容：  SpringMVC  web.xml  前端调度器 DispatcherServlet 编码过滤器 filter 支持 rest 的过滤器  springmvc.xml  扫描 controller 包 添加 &lt;annotation-driver&gt; 视图解析器 静态资源解析  添加控制器类  Spring  web.xml  监听器（在启动web容器时加载）
         </div>
       </a>
 
@@ -678,7 +678,7 @@
       <a class="index-excerpt" href="/2022/11/28/Mybatis%E2%80%94%E2%80%94%E5%8A%A8%E6%80%81sql-%E7%BC%93%E5%AD%98/" target="_blank">
         <div>
           
-          1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1  if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;
+          1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;
         </div>
       </a>
 
@@ -739,7 +739,7 @@
       <a class="index-excerpt" href="/2022/11/23/Mybatis%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%A4%84%E7%90%86-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/" target="_blank">
         <div>
           
-          1.  参数处理 1. 1  参数取值方式 sql 语句有两种取值方式，分别是 #{} 和 ${}。  #{} 是预编译处理，${} 是字符串替换。 Mybatis 在处理 #{} 时，会将 sql 中的 #{} 替换为 ? 号，调用 PreparedStatement 的 set 方法来赋值； Mybatis 在处理 ${} 替换成变量的值。 使用 #{} 可以有效的防止 SQL 注入，提高系统
+          1. 参数处理 1. 1 参数取值方式 sql 语句有两种取值方式，分别是 #{} 和 ${}。  #{} 是预编译处理，${} 是字符串替换。 Mybatis 在处理 #{} 时，会将 sql 中的 #{} 替换为 ? 号，调用 PreparedStatement 的 set 方法来赋值； Mybatis 在处理 ${} 替换成变量的值。 使用 #{} 可以有效的防止 SQL 注入，提高系统安全
         </div>
       </a>
 
@@ -800,7 +800,7 @@
       <a class="index-excerpt" href="/2022/11/16/Mybatis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" target="_blank">
         <div>
           
-          1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点：  与 JDBC 相比，减少了50%的代码量 最简单的持久化框架，简单易学 SQL 代
+          1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点： 1. 与 JDBC 相比，减少了50%的代码量 2. 最简单的持久化框架，简单易学
         </div>
       </a>
 
