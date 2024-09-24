@@ -16,24 +16,25 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义   从数组或切片">
+    <meta name="description" content="1. 构造数据 使用 GPT-4 构造销售话术数据 ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 使用 ChatGPT 构造销售数据的 Prompt 示例： 12345你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。每条销售话术以如下格式给出：[客户问题][销">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go——切片">
-<meta property="og:url" content="http://example.com/2022/01/02/Go%E2%80%94%E2%80%94%E5%88%87%E7%89%87/index.html">
+<meta property="og:title" content="LangChain——房产销售聊天机器人">
+<meta property="og:url" content="http://example.com/2024/09/24/LangChain%E2%80%94%E2%80%94%E5%AE%9E%E6%88%98%EF%BC%9A%E6%88%BF%E4%BA%A7%E9%94%80%E5%94%AE%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义   从数组或切片">
+<meta property="og:description" content="1. 构造数据 使用 GPT-4 构造销售话术数据 ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 使用 ChatGPT 构造销售数据的 Prompt 示例： 12345你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。每条销售话术以如下格式给出：[客户问题][销">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-02T02:49:33.000Z">
-<meta property="article:modified_time" content="2024-08-10T02:39:45.301Z">
+<meta property="article:published_time" content="2024-09-24T12:02:44.000Z">
+<meta property="article:modified_time" content="2024-09-24T13:27:08.235Z">
 <meta property="article:author" content="debuggingWorld">
-<meta property="article:tag" content="Golang">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="LangChain">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Go——切片 - Hexo</title>
+  <title>LangChain——房产销售聊天机器人 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Go——切片"></span>
+            <span id="subtitle" data-typed-text="LangChain——房产销售聊天机器人"></span>
           
         </div>
 
@@ -223,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-01-02 10:49" pubdate>
-          2022年1月2日 上午
+        <time datetime="2024-09-24 20:02" pubdate>
+          2024年9月24日 晚上
         </time>
       </span>
     
@@ -236,7 +237,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.7k 字
+          3.5k 字
         
       </span>
     
@@ -248,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          9 分钟
+          11 分钟
         
       </span>
     
@@ -286,62 +287,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Go——切片</h1>
+            <h1 style="display: none">LangChain——房产销售聊天机器人</h1>
             
             <div class="markdown-body">
               
-              <p>切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。</p>
-<p>一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。</p>
-<h3 id="1-切片的定义">1. 切片的定义</h3>
-<ol>
-<li>
-<p>从数组或切片生成新的切片</p>
-<p>语法：slice [开始位置 : 结束位置]</p>
-</li>
-</ol>
-<blockquote>
-<p>从数组或切片生成新的切片拥有如下特性：</p>
-<ul>
-<li>取出的元素数量为：结束位置 - 开始位置；</li>
-<li>取出元素不包含结束位置对应的索引，切片最后一个元素使用 slice[len(slice)] 获取；</li>
-<li>当缺省开始位置时，表示从连续区域开头到结束位置；</li>
-<li>当缺省结束位置时，表示从开始位置到整个连续区域末尾；</li>
-<li>两者同时缺省时，与切片本身等效；</li>
-<li>两者同时为 0 时，等效于空切片，一般用于切片复位。</li>
-</ul>
-</blockquote>
-   <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go">   <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">/* 数组长度为 5 */</span><br>	<span class="hljs-keyword">var</span>  array = [<span class="hljs-number">5</span>]<span class="hljs-keyword">int</span> &#123;<span class="hljs-number">1000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">17</span>, <span class="hljs-number">50</span>&#125;<br><br>	slice := array[<span class="hljs-number">0</span>:<span class="hljs-number">4</span>]<br>	<span class="hljs-comment">// [1000 2 3 17]</span><br>	slice2 := slice[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>]<br>	<span class="hljs-comment">// [1000 2 3]</span><br><br>	fmt.Printf(<span class="hljs-string">&quot;%T&quot;</span>,slice)<br>	<span class="hljs-comment">// []int</span><br>	fmt.Printf(<span class="hljs-string">&quot;%v,%v&quot;</span>,<span class="hljs-built_in">len</span>(slice2),<span class="hljs-built_in">cap</span>(slice2))<br>	<span class="hljs-comment">// 3,5</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用 make() 函数构造切片</li>
-</ol>
-<blockquote>
-<p>语法：make( []Type, size, cap )</p>
-</blockquote>
-<p>make 底层创建一个数组，对外不可见</p>
- <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"> <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	slice := <span class="hljs-built_in">make</span>([]<span class="hljs-keyword">int</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>)<br>	fmt.Println(slice)<br>	<span class="hljs-comment">//[0 0 0 0 0]</span><br><br>	fmt.Printf(<span class="hljs-string">&quot;长度：%v，容量：%v&quot;</span>, <span class="hljs-built_in">len</span>(slice), <span class="hljs-built_in">cap</span>(slice))<br>	<span class="hljs-comment">// 长度：5，容量：10</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<ol start="3">
-<li>直接声明新的切片</li>
-</ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	slice := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">23</span>, <span class="hljs-number">45</span>, <span class="hljs-number">67</span>&#125;<br>	fmt.Println(slice)<br>	<span class="hljs-comment">//[23 45 67]</span><br><br>	fmt.Printf(<span class="hljs-string">&quot;长度：%v，容量：%v&quot;</span>, <span class="hljs-built_in">len</span>(slice), <span class="hljs-built_in">cap</span>(slice))<br>	<span class="hljs-comment">// 长度：3，容量：3</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="2-切片的遍历">2. 切片的遍历</h3>
-<p>方式1：for循环常规方式遍历<br>
-方式2：for-range 结构遍历切片</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	slice := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">23</span>, <span class="hljs-number">45</span>, <span class="hljs-number">67</span>&#125;<br><br>	<span class="hljs-comment">//方式1：普通for循环</span><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(slice); i++ &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;slice[%v] = %v \t&quot;</span>, i, slice[i])<br>	&#125;<br>	fmt.Println(<span class="hljs-string">&quot;\n------------------------------&quot;</span>)<br>	<span class="hljs-comment">//方式2：for-range循环：</span><br>	<span class="hljs-keyword">for</span> i, v := <span class="hljs-keyword">range</span> slice &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;下标：%v ，元素：%v\n&quot;</span>, i, v)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="3-切片的操作">3. 切片的操作</h3>
-<h4 id="3-1-添加元素">3.1 添加元素</h4>
-<p>用 append() 函数为切片动态添加元素时，如果空间不足，切片就会进行“扩容”。切片在扩容时，容量的扩展规律是按容量的 2 倍数进行扩充。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> a []<span class="hljs-keyword">int</span><br>	a = <span class="hljs-built_in">append</span>(a, <span class="hljs-number">1</span>)                 <span class="hljs-comment">// 追加1个元素</span><br>	a = <span class="hljs-built_in">append</span>(a, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)           <span class="hljs-comment">// 追加多个元素, 手写解包方式</span><br>	a = <span class="hljs-built_in">append</span>(a, []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;...) <span class="hljs-comment">// 追加一个切片, 切片需要解包</span><br><br>	fmt.Println(a)<br>	<span class="hljs-comment">// [1 1 2 3 1 2 3]</span><br><br>	<span class="hljs-keyword">var</span> b = []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>	b = <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>&#125;, b...)          <span class="hljs-comment">// 在开头添加1个元素</span><br>	b = <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">-3</span>, <span class="hljs-number">-2</span>, <span class="hljs-number">-1</span>&#125;, b...) <span class="hljs-comment">// 在开头添加1个切片</span><br>	fmt.Println(b)<br>	<span class="hljs-comment">// [-3 -2 -1 0 1 2 3]</span><br><br>	<span class="hljs-keyword">var</span> c []<span class="hljs-keyword">int</span> = []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br>	c = <span class="hljs-built_in">append</span>(c[:<span class="hljs-number">1</span>], <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">100</span>&#125;, c[<span class="hljs-number">1</span>:]...)...)     <span class="hljs-comment">// 在第i个位置插入x</span><br>	c = <span class="hljs-built_in">append</span>(c[:<span class="hljs-number">2</span>], <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;, c[<span class="hljs-number">2</span>:]...)...) <span class="hljs-comment">// 在第i个位置插入切片</span><br>	fmt.Println(c)<br>	<span class="hljs-comment">// [1 100 0 0 0 2 3]</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
-<p>在切片开头添加元素一般都会导致内存的重新分配，而且会导致已有元素全部被复制 1 次，因此，从切片的开头添加元素的性能要比从尾部追加元素的性能差很多。</p>
-<h4 id="3-2-切片复制">3.2 切片复制</h4>
-<blockquote>
-<p>语法：copy( destSlice, srcSlice []T) int<br>
-将 srcSlice 复制到 destSlice</p>
-</blockquote>
-<p>copy() 可以将一个数组切片复制到另一个数组切片中，如果加入的两个数组切片不一样大，就会按照其中较小的那个数组切片的元素个数进行复制。</p>
-<p>来源和目标的类型必须一致，copy() 函数的返回值表示实际发生复制的元素个数。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	slice1 := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;<br>	slice2 := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>&#125;<br>	<span class="hljs-built_in">copy</span>(slice2, slice1) <span class="hljs-comment">// 只会复制slice1的前3个元素到slice2中</span><br>	fmt.Println(slice2)<br>	<span class="hljs-comment">// [1 2 3]</span><br><br>	<span class="hljs-built_in">copy</span>(slice1, slice2) <span class="hljs-comment">// 只会复制slice2的3个元素到slice1的前3个位置</span><br>	fmt.Println(slice1)<br>	<span class="hljs-comment">// [1 2 3 4 5]</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="3-3-删除元素">3.3 删除元素</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	a := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br>	a = a[<span class="hljs-number">2</span>:] <span class="hljs-comment">// 删除开头N个元素</span><br>	a = <span class="hljs-built_in">append</span>(a[:<span class="hljs-number">0</span>], a[<span class="hljs-number">3</span>:]...) <span class="hljs-comment">// 删除开头N个元素</span><br><br>	fmt.Println(a)<br>	<span class="hljs-comment">// [6 7 8 9]</span><br><br>	a = <span class="hljs-built_in">append</span>(a[:<span class="hljs-number">1</span>], a[<span class="hljs-number">1</span>+<span class="hljs-number">1</span>:]...) <span class="hljs-comment">// 删除中间N个元素</span><br>	<br>	a = a[:<span class="hljs-built_in">len</span>(a)<span class="hljs-number">-2</span>] <span class="hljs-comment">// 删除尾部N个元素</span><br>	<br>	fmt.Println(a)<br>	<span class="hljs-comment">// [6]</span><br>&#125;<br></code></pre></td></tr></table></figure>
+              <h3 id="1-构造数据">1. 构造数据</h3>
+<p>使用 GPT-4 构造销售话术数据</p>
+<p>ChatGPT 分享链接：<a target="_blank" rel="noopener" href="https://chat.openai.com/share/f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91">https://chat.openai.com/share/f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91</a></p>
+<p>使用 ChatGPT 构造销售数据的 Prompt 示例：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">你是中国顶级的房地产销售，现在培训职场新人，请给出<span class="hljs-number">100</span>条实用的销售话术。<br><br>每条销售话术以如下格式给出：<br><span class="hljs-string">[客户问题]</span><br><span class="hljs-string">[销售回答]</span><br></code></pre></td></tr></table></figure>
+<p>GPT-4 回复结果：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs prolog">在房地产销售行业中，精心准备的销售话术可以极大地提高成交率。以下是一些适用于中国房地产销售的实用话术：<br><br><span class="hljs-number">1.</span>  <br>[客户问题] 这个小区交通便利吗？<br>[销售回答] 当然了，这个小区距离地铁站只有几分钟的步行距离，而且附近有多条公交线路，非常方便。<br><br><span class="hljs-number">2.</span>  <br>[客户问题] 我担心楼下太吵。<br>[销售回答] 这个小区特别注重居住体验，我们有良好的隔音设计，并且小区内部规划了绿化区域，可以有效降低噪音。<br><br><span class="hljs-number">3.</span>  <br>[客户问题] 我看房价还在涨，这个投资回报怎么样？<br>[销售回答] 这个区域未来有大量的商业和基础设施建设，所以从长期来看，投资回报非常有保证。<br><br>.....<br></code></pre></td></tr></table></figure>
+<h3 id="2-数据处理">2. 数据处理</h3>
+<p>使用 Document Transformers 模块来处理原始数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;real_estate_sales_data.txt&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    real_estate_sales = f.read()<br><br>text_splitter = CharacterTextSplitter(<br>    separator=<span class="hljs-string">r&#x27;\d+\.&#x27;</span>,<br>    chunk_size=<span class="hljs-number">100</span>,<br>    chunk_overlap=<span class="hljs-number">0</span>,<br>    length_function=<span class="hljs-built_in">len</span>,<br>    is_separator_regex=<span class="hljs-literal">True</span>,<br>)<br>docs = text_splitter.create_documents([real_estate_sales])<br></code></pre></td></tr></table></figure>
+<h3 id="3-持久化">3. 持久化</h3>
+<p>使用 Faiss 作为向量数据库，持久化存储房产销售问答对（QA-Pair）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">db = FAISS.from_documents(docs, OpenAIEmbeddings())<br><br>db.save_local(<span class="hljs-string">&quot;real_estates_sale&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="4-查询结果">4. 查询结果</h3>
+<p>使用 retriever 从向量数据库中获取结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">query = <span class="hljs-string">&quot;小区吵不吵&quot;</span><br>answer_list = db.similarity_search(query)<br><span class="hljs-keyword">for</span> ans <span class="hljs-keyword">in</span> answer_list:<br>    <span class="hljs-built_in">print</span>(ans.page_content + <span class="hljs-string">&quot;\n&quot;</span>)<br><br><span class="hljs-comment"># 指定返回结果数量</span><br>topK_retriever = db.as_retriever(search_kwargs=&#123;<span class="hljs-string">&quot;k&quot;</span>: <span class="hljs-number">3</span>&#125;)<br>docs = topK_retriever.get_relevant_documents(query)<br><span class="hljs-keyword">for</span> doc <span class="hljs-keyword">in</span> docs:<br>    <span class="hljs-built_in">print</span>(doc.page_content + <span class="hljs-string">&quot;\n&quot;</span>)<br><br><span class="hljs-comment"># 设置阈值，提升结果的相关性质量</span><br>retriever = db.as_retriever(search_type=<span class="hljs-string">&quot;similarity_score_threshold&quot;</span>, search_kwargs=&#123;<span class="hljs-string">&quot;score_threshold&quot;</span>: <span class="hljs-number">0.8</span>&#125;)<br>docs = retriever.get_relevant_documents(query)<br><span class="hljs-keyword">for</span> doc <span class="hljs-keyword">in</span> docs:<br>    <span class="hljs-built_in">print</span>(doc.page_content + <span class="hljs-string">&quot;\n&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="5-整合大语言模型能力">5. 整合大语言模型能力</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">llm = ChatOpenAI(model_name=<span class="hljs-string">&quot;gpt-3.5-turbo&quot;</span>, temperature=<span class="hljs-number">0.5</span>)<br>qa_chain = RetrievalQA.from_chain_type(llm,<br>                                       retriever=db.as_retriever(search_type=<span class="hljs-string">&quot;similarity_score_threshold&quot;</span>,<br>                                                                 search_kwargs=&#123;<span class="hljs-string">&quot;score_threshold&quot;</span>: <span class="hljs-number">0.8</span>&#125;))<br><span class="hljs-built_in">print</span>(qa_chain(&#123;<span class="hljs-string">&quot;query&quot;</span>: <span class="hljs-string">&quot;小区吵不吵&quot;</span>&#125;))<br></code></pre></td></tr></table></figure>
+<h3 id="6-服务化">6. 服务化</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gradio <span class="hljs-keyword">as</span> gr<br><br><span class="hljs-keyword">from</span> langchain_openai <span class="hljs-keyword">import</span> OpenAIEmbeddings<br><span class="hljs-keyword">from</span> langchain.chains <span class="hljs-keyword">import</span> RetrievalQA<br><span class="hljs-keyword">from</span> langchain_openai <span class="hljs-keyword">import</span> ChatOpenAI<br><span class="hljs-keyword">from</span> langchain_community.vectorstores <span class="hljs-keyword">import</span> FAISS<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize_sales_bot</span>(<span class="hljs-params">vector_store_dir: <span class="hljs-built_in">str</span> = <span class="hljs-string">&quot;real_estates_sale&quot;</span></span>):</span><br>    db = FAISS.load_local(vector_store_dir, OpenAIEmbeddings(), allow_dangerous_deserialization=<span class="hljs-literal">True</span>)<br>    llm = ChatOpenAI(model_name=<span class="hljs-string">&quot;gpt-3.5-turbo&quot;</span>, temperature=<span class="hljs-number">0</span>)<br><br>    <span class="hljs-keyword">global</span> SALES_BOT<br>    SALES_BOT = RetrievalQA.from_chain_type(<br>        llm,<br>        retriever=db.as_retriever(search_type=<span class="hljs-string">&quot;similarity_score_threshold&quot;</span>, search_kwargs=&#123;<span class="hljs-string">&quot;score_threshold&quot;</span>: <span class="hljs-number">0.8</span>&#125;)<br>    )<br>    <span class="hljs-comment"># 返回向量数据库的检索结果</span><br>    SALES_BOT.return_source_documents = <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">return</span> SALES_BOT<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sales_chat</span>(<span class="hljs-params">message, history</span>):</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;[message]<span class="hljs-subst">&#123;message&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;[history]<span class="hljs-subst">&#123;history&#125;</span>&quot;</span>)<br>    <span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> 从命令行参数中获取</span><br>    enable_chat = <span class="hljs-literal">True</span><br><br>    ans = SALES_BOT(&#123;<span class="hljs-string">&quot;query&quot;</span>: message&#125;)<br>    <span class="hljs-comment"># 如果检索出结果，或者开了大模型聊天模式</span><br>    <span class="hljs-comment"># 返回 RetrievalQA combine_documents_chain 整合的结果</span><br>    <span class="hljs-keyword">if</span> ans[<span class="hljs-string">&quot;source_documents&quot;</span>] <span class="hljs-keyword">or</span> enable_chat:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;[result]<span class="hljs-subst">&#123;ans[<span class="hljs-string">&#x27;result&#x27;</span>]&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;[source_documents]<span class="hljs-subst">&#123;ans[<span class="hljs-string">&#x27;source_documents&#x27;</span>]&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> ans[<span class="hljs-string">&quot;result&quot;</span>]<br>    <span class="hljs-comment"># 否则输出套路话术</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;这个问题我要问问领导&quot;</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">launch_gradio</span>():</span><br>    demo = gr.ChatInterface(<br>        fn=sales_chat,<br>        title=<span class="hljs-string">&quot;房产销售&quot;</span>,<br>        <span class="hljs-comment"># retry_btn=None,</span><br>        <span class="hljs-comment"># undo_btn=None,</span><br>        chatbot=gr.Chatbot(height=<span class="hljs-number">600</span>),<br>    )<br><br>    demo.launch(share=<span class="hljs-literal">True</span>, server_name=<span class="hljs-string">&quot;0.0.0.0&quot;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 初始化房产销售机器人</span><br>    initialize_sales_bot()<br>    <span class="hljs-comment"># 启动 Gradio 服务</span><br>    launch_gradio()<br></code></pre></td></tr></table></figure>
 
               
             </div>
@@ -359,7 +328,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
   
   
 
@@ -374,7 +343,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Golang/">#Golang</a>
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/LangChain/">#LangChain</a>
       
     </div>
   
@@ -386,8 +357,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Go——切片</div>
-      <div>http://example.com/2022/01/02/Go——切片/</div>
+      <div>LangChain——房产销售聊天机器人</div>
+      <div>http://example.com/2024/09/24/LangChain——实战：房产销售聊天机器人/</div>
     </div>
     <div class="license-meta">
       
@@ -399,7 +370,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年1月2日</div>
+          <div>2024年9月24日</div>
         </div>
       
       
@@ -429,18 +400,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/02/Go%E2%80%94%E2%80%94Map/" title="Go——Map">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go——Map</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/01/Go%E2%80%94%E2%80%94%E6%95%B0%E7%BB%84/" title="Go——数组">
-                        <span class="hidden-mobile">Go——数组</span>
+                      <a href="/2024/09/14/LangChain%E2%80%94%E2%80%94Agent/" title="LangChain——Agent">
+                        <span class="hidden-mobile">LangChain——Agent</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
