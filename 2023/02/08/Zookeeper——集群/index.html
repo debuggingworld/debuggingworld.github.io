@@ -43,6 +43,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -327,9 +329,17 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082253398.png" srcset=
 </ul>
 <h3 id="集群搭建">3. 集群搭建</h3>
 <p>环境准备：三台虚拟机</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">192.168.65.156<br>192.168.65.190<br>192.168.65.200<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token number">192.168</span>.65.156
+<span class="token number">192.168</span>.65.190
+<span class="token number">192.168</span>.65.200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>1) 修改 zoo.cfg 配置，添加 server 节点配置</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 修改数据存储目录</span><br>dataDir=/data/zookeeper<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">三台虚拟机 zoo.cfg 文件末尾添加配置</span><br>server.1=192.168.65.156:2888:3888<br>server.2=192.168.65.190:2888:3888<br>server.3=192.168.65.200:2888:3888<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 修改数据存储目录</span>
+<span class="token assign-left variable">dataDir</span><span class="token operator">=</span>/data/zookeeper
+
+<span class="token comment">#三台虚拟机 zoo.cfg 文件末尾添加配置</span>
+<span class="token assign-left variable">server.1</span><span class="token operator">=</span><span class="token number">192.168</span>.65.156:2888:3888
+<span class="token assign-left variable">server.2</span><span class="token operator">=</span><span class="token number">192.168</span>.65.190:2888:3888
+<span class="token assign-left variable">server.3</span><span class="token operator">=</span><span class="token number">192.168</span>.65.200:2888:3888<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <blockquote>
 <p>server.A=B:C:D</p>
 <p>A 是一个数字，表示这个是第几号服务器； 集群模式下配置一个文件
@@ -345,12 +355,17 @@ Leader，而这个端口就是用来执行选举时服务器相互通信的端�
 <p><strong>2）创建 myid 文件，配置服务器编号</strong></p>
 <p>在 dataDir 对应目录下创建 myid 文件，内容为对应 ip 的 zookeeper
 服务器编号</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /data/zookeeper<br><span class="hljs-meta">#</span><span class="bash"> 在文件中添加与 server 对应的编号（注意：上下不要有空行，左右不要有空格）</span><br>vim myid<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /data/zookeeper
+<span class="token comment"># 在文件中添加与 server 对应的编号（注意：上下不要有空行，左右不要有空格）</span>
+<span class="token function">vim</span> myid<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082325693.png" srcset="/img/loading.gif" lazyload /></p>
 <p><strong>3）启动 zookeeper server 集群</strong></p>
 <p>启动前需要关闭防火墙(生产环境需要打开对应端口)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 分别启动三个节点的zookeeper server</span><br>bin/zkServer.sh start<br><span class="hljs-meta">#</span><span class="bash"> 查看集群状态</span><br>bin/zkServer.sh status<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 分别启动三个节点的zookeeper server</span>
+bin/zkServer.sh start
+<span class="token comment"># 查看集群状态</span>
+bin/zkServer.sh status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082326970.png" srcset="/img/loading.gif" lazyload /></p>
 <h3 id="zookeeper-四字命令">4. Zookeeper 四字命令</h3>
@@ -358,9 +373,10 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082326970.png" srcset=
 服务的当前状态及相关信息，用户在客户端可以通过 telenet 或者 nc（netcat）
 向 zookeeper 提交相应的命令。</p>
 <p>安装 nc 命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> centos</span><br>yum install nc <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># centos</span>
+yum <span class="token function">install</span> <span class="token function">nc</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>四字命令格式：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo [command] | nc [ip] [port]<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">echo</span> <span class="token punctuation">[</span>command<span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token function">nc</span> <span class="token punctuation">[</span>ip<span class="token punctuation">]</span> <span class="token punctuation">[</span>port<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>ZooKeeper 常用四字命令主要如下：</p>
 <table>
 
@@ -431,11 +447,13 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082326970.png" srcset=
 </table>
 <p><strong>开启四字命令:</strong></p>
 <p>方法1： 在 zoo.cfg 文件里加入配置项让这些指令放行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">开启四字命令</span><br>4lw.commands.whitelist=*<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#开启四字命令</span>
+<span class="token assign-left variable">4lw.commands.whitelist</span><span class="token operator">=</span>*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>方法2：在 zk 的启动脚本 zkServer.sh 中新增放行指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">添加ＶＭ环境变量-Dzookeeper.4lw.commands.whitelist=*</span><br>ZOOMAIN=&quot;-Dzookeeper.4lw.commands.whitelist=* $&#123;ZOOMAIN&#125;&quot;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#添加ＶＭ环境变量-Dzookeeper.4lw.commands.whitelist=*</span>
+<span class="token assign-left variable">ZOOMAIN</span><span class="token operator">=</span><span class="token string">"-Dzookeeper.4lw.commands.whitelist=* <span class="token variable">$&#123;ZOOMAIN&#125;</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-built_in">stat</span> | nc 192.168.65.156 2181</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ <span class="token builtin class-name">echo</span> <span class="token function">stat</span> <span class="token operator">|</span> <span class="token function">nc</span> <span class="token number">192.168</span>.65.156 <span class="token number">2181</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h3 id="leader-选举">5. Leader 选举</h3>
 <p>zookeeper 的 leader 选举存在两个阶段，一个是服务器启动时 leader
 选举，另一个是运行过程中 leader 服务器宕机。</p>
@@ -878,6 +896,8 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302092126584.png" srcset=
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

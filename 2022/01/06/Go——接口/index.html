@@ -43,6 +43,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.9k 字
+          6.1k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          22 分钟
+          20 分钟
         
       </span>
     
@@ -307,7 +309,9 @@
 <li>方法名：当方法名首字母是大写且这个接口类型名首字母也是大写时，这个方法可以被接口所在的包（package）之外的代码访问。</li>
 <li>参数列表、返回值列表：参数列表和返回值列表中的参数变量名可以省略。</li>
 </ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Stringer <span class="hljs-keyword">interface</span> &#123;<br>    String() <span class="hljs-keyword">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Stringer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>实现该接，调用 String() 方法时可以获得对象对应的字符串，功能类似于
 Java 语言里的 toString 的操作。</p>
 <h3 id="接口实现">2. 接口实现</h3>
@@ -325,18 +329,65 @@ Go编译器将自动在需要的时候检查两个类型之间的实现关系。
 <ol start="2" type="1">
 <li>接口中所有方法均被实现</li>
 </ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Eater 定义接口</span><br><span class="hljs-keyword">type</span> Eater <span class="hljs-keyword">interface</span> &#123;<br>	eat()<br>&#125;<br><br><span class="hljs-keyword">type</span> Dog <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-keyword">type</span> Cat <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-comment">// 实现接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;骨头&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> eater Eater = <span class="hljs-built_in">new</span>(Dog)<br>	eater.eat()<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Eater 定义接口</span>
+<span class="token keyword">type</span> Eater <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Dog <span class="token keyword">struct</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Cat <span class="token keyword">struct</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 实现接口</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"骨头"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> eater Eater <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>Dog<span class="token punctuation">)</span>
+	eater<span class="token punctuation">.</span><span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="值接收者实现接口">2.1 值接收者实现接口</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 实现接口</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;骨头&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> eater Eater<br>	eater = Dog&#123;&#125;	<span class="hljs-comment">// Dog 类型</span><br>	eater = <span class="hljs-built_in">new</span>(Dog)	<span class="hljs-comment">// 指针类型</span><br>	eater.eat()<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 实现接口</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"骨头"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> eater Eater
+	eater <span class="token operator">=</span> Dog<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>	<span class="token comment">// Dog 类型</span>
+	eater <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>Dog<span class="token punctuation">)</span>	<span class="token comment">// 指针类型</span>
+	eater<span class="token punctuation">.</span><span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>使用值接收者实现接口，不管是 dog 结构体还是结构体指针 *dog
 类型的变量都可以赋值给该接口变量。因为 Go
 语言中有对指针类型变量求值的语法糖，dog 指针内部会自动求值。</p>
 <h4 id="指针接收者实现接口">2.2 指针接收者实现接口</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Cat)</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;小黄鱼&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> eater Eater<br>	eater = <span class="hljs-built_in">new</span>(Cat) <span class="hljs-comment">// 指针类型</span><br>	<span class="hljs-comment">// eater = Cat&#123;&#125;	// Cat 类型，编译错误</span><br>	eater.eat()<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>Cat<span class="token punctuation">)</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"小黄鱼"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> eater Eater
+	eater <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>Cat<span class="token punctuation">)</span> <span class="token comment">// 指针类型</span>
+	<span class="token comment">// eater = Cat&#123;&#125;	// Cat 类型，编译错误</span>
+	eater<span class="token punctuation">.</span><span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>时实现接口的是 *Cat 类型，所以不把 Cat 类型传给接口类型变量。</p>
 <h3 id="接口变量">3. 接口变量</h3>
 <p>接口类型变量可以存储所有实现了该接口的实例</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> w io.Writer<br>	fmt.Printf(<span class="hljs-string">&quot;%T \n&quot;</span>,w)	<span class="hljs-comment">// &lt;nil&gt;</span><br>	w = os.Stdout<br>	fmt.Printf(<span class="hljs-string">&quot;%T \n&quot;</span>,w)	<span class="hljs-comment">// *os.File</span><br>	w = <span class="hljs-built_in">new</span>(bytes.Buffer)<br>	fmt.Printf(<span class="hljs-string">&quot;%T \n&quot;</span>,w)	<span class="hljs-comment">// *bytes.Buffer</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> w io<span class="token punctuation">.</span>Writer
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T \n"</span><span class="token punctuation">,</span>w<span class="token punctuation">)</span>	<span class="token comment">// &lt;nil></span>
+	w <span class="token operator">=</span> os<span class="token punctuation">.</span>Stdout
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T \n"</span><span class="token punctuation">,</span>w<span class="token punctuation">)</span>	<span class="token comment">// *os.File</span>
+	w <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>bytes<span class="token punctuation">.</span>Buffer<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%T \n"</span><span class="token punctuation">,</span>w<span class="token punctuation">)</span>	<span class="token comment">// *bytes.Buffer</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>一个接口的值（简称接口值）是由一个具体类型和具体类型的值两部分组成的。这两部分分别称为接口的动态类型和动态值。</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220108225046.png" srcset="/img/loading.gif" lazyload /></p>
@@ -344,33 +395,125 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220108225046.png" srcset="
 <ol type="1">
 <li>一个类型实现多个接口</li>
 </ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Sayer <span class="hljs-keyword">interface</span> &#123;<br>	say()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">say</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;汪汪汪~~~&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	dog := Dog&#123;&#125;<br>	dog.say()<br>	dog.eat()<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Sayer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"汪汪汪~~~"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	dog <span class="token operator">:=</span> Dog<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+	dog<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	dog<span class="token punctuation">.</span><span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <ol start="2" type="1">
 <li>多个类型实现同一接口</li>
 </ol>
 <p>并且一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Washer 洗衣</span><br><span class="hljs-keyword">type</span> Washer <span class="hljs-keyword">interface</span> &#123;<br>	wash()<br>	dry()<br>&#125;<br><br><span class="hljs-comment">// 甩干器</span><br><span class="hljs-keyword">type</span> dryer <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-comment">// 实现 Washer 接口的 dry() 方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d dryer)</span> <span class="hljs-title">dry</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;甩一甩&quot;</span>)<br>&#125;<br><br><span class="hljs-comment">// 海尔洗衣机</span><br><span class="hljs-keyword">type</span> haier <span class="hljs-keyword">struct</span> &#123;<br>	dryer <span class="hljs-comment">//嵌入甩干器</span><br>&#125;<br><br><span class="hljs-comment">// 实现 WashingMachine 接口的 wash() 方法</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h haier)</span> <span class="hljs-title">wash</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;洗刷刷&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Washer 洗衣</span>
+<span class="token keyword">type</span> Washer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">wash</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token function">dry</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 甩干器</span>
+<span class="token keyword">type</span> dryer <span class="token keyword">struct</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 实现 Washer 接口的 dry() 方法</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d dryer<span class="token punctuation">)</span> <span class="token function">dry</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"甩一甩"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 海尔洗衣机</span>
+<span class="token keyword">type</span> haier <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	dryer <span class="token comment">//嵌入甩干器</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 实现 WashingMachine 接口的 wash() 方法</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>h haier<span class="token punctuation">)</span> <span class="token function">wash</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"洗刷刷"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="接口嵌套">5. 接口嵌套</h3>
 <p>接口与接口间可以通过嵌套创造出新的接口。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go">/ 接口嵌套<br><span class="hljs-keyword">type</span> animal <span class="hljs-keyword">interface</span> &#123;<br>	Sayer<br>	Eater<br>&#125;<br><br><span class="hljs-comment">// Eater 定义接口</span><br><span class="hljs-keyword">type</span> Eater <span class="hljs-keyword">interface</span> &#123;<br>	eat()<br>&#125;<br><br><span class="hljs-keyword">type</span> Sayer <span class="hljs-keyword">interface</span> &#123;<br>	say()<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token operator">/</span> 接口嵌套
+<span class="token keyword">type</span> animal <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	Sayer
+	Eater
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Eater 定义接口</span>
+<span class="token keyword">type</span> Eater <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Sayer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>实现嵌套接口：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Dog <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;骨头&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">say</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;汪汪汪~~~&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> a animal =  Dog&#123;&#125;<br>	a.say()<br>	a.eat()<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Dog <span class="token keyword">struct</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"骨头"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"汪汪汪~~~"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> a animal <span class="token operator">=</span>  Dog<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+	a<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	a<span class="token punctuation">.</span><span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="空接口">6. 空接口</h3>
 <p>空接口是指没有定义任何方法的接口。因此任何类型都实现了空接口。</p>
 <p>空接口类型的变量可以存储任意类型的变量。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// 定义一个空接口</span><br>	<span class="hljs-keyword">var</span> object <span class="hljs-keyword">interface</span>&#123;&#125;<br><br>	object = <span class="hljs-string">&quot;Hello world&quot;</span><br>	fmt.Printf(<span class="hljs-string">&quot;type:%T   value:%v\n&quot;</span>, object, object)<br>	<span class="hljs-comment">//type:string   value:Hello world</span><br><br>	object = <span class="hljs-number">100</span><br>	fmt.Printf(<span class="hljs-string">&quot;type:%T   value:%v\n&quot;</span>, object, object)<br>	<span class="hljs-comment">// type:int   value:100</span><br>	<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// 定义一个空接口</span>
+	<span class="token keyword">var</span> object <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+	object <span class="token operator">=</span> <span class="token string">"Hello world"</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"type:%T   value:%v\n"</span><span class="token punctuation">,</span> object<span class="token punctuation">,</span> object<span class="token punctuation">)</span>
+	<span class="token comment">//type:string   value:Hello world</span>
+
+	object <span class="token operator">=</span> <span class="token number">100</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"type:%T   value:%v\n"</span><span class="token punctuation">,</span> object<span class="token punctuation">,</span> object<span class="token punctuation">)</span>
+	<span class="token comment">// type:int   value:100</span>
+	
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>空接口的应用</strong></p>
 <ol type="1">
 <li>空接口作为函数的参数</li>
 </ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 空接口作为函数参数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sout</span><span class="hljs-params">(a <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> &#123;<br>	fmt.Printf(<span class="hljs-string">&quot;type:%T value:%v\n&quot;</span>, a, a)<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// 空接口作为函数参数</span>
+<span class="token keyword">func</span> <span class="token function">sout</span><span class="token punctuation">(</span>a <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"type:%T value:%v\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> a<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <ol start="2" type="1">
 <li>空接口作为map的值</li>
 </ol>
 <p>使用空接口实现可以保存任意值的字典。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> studentInfo = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;)<br>	studentInfo[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;张三&quot;</span><br>	studentInfo[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-number">18</span><br>	studentInfo[<span class="hljs-string">&quot;married&quot;</span>] = <span class="hljs-literal">false</span><br>	fmt.Println(studentInfo)<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> studentInfo <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	studentInfo<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"张三"</span>
+	studentInfo<span class="token punctuation">[</span><span class="token string">"age"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">18</span>
+	studentInfo<span class="token punctuation">[</span><span class="token string">"married"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>studentInfo<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="从空接口获取值">6.1 从空接口获取值</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// 声明a变量, 类型int, 初始值为1</span><br>	<span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span> = <span class="hljs-number">1</span><br>	<span class="hljs-comment">// 声明i变量, 类型为interface&#123;&#125;, 初始值为a, 此时i的值变为1</span><br>	<span class="hljs-keyword">var</span> i <span class="hljs-keyword">interface</span>&#123;&#125; = a<br>	<span class="hljs-comment">// 声明b变量, 尝试赋值i</span><br>	<span class="hljs-comment">// var b int = i		// cannot use i (type interface &#123;&#125;) as type int in assignment: need type assertion</span><br><br>	<span class="hljs-keyword">var</span> b <span class="hljs-keyword">int</span> = i.(<span class="hljs-keyword">int</span>)<br>	fmt.Println(b)	<span class="hljs-comment">// 1</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// 声明a变量, 类型int, 初始值为1</span>
+	<span class="token keyword">var</span> a <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">1</span>
+	<span class="token comment">// 声明i变量, 类型为interface&#123;&#125;, 初始值为a, 此时i的值变为1</span>
+	<span class="token keyword">var</span> i <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token operator">=</span> a
+	<span class="token comment">// 声明b变量, 尝试赋值i</span>
+	<span class="token comment">// var b int = i		// cannot use i (type interface &#123;&#125;) as type int in assignment: need type assertion</span>
+
+	<span class="token keyword">var</span> b <span class="token builtin">int</span> <span class="token operator">=</span> i<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>	<span class="token comment">// 1</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>保存到空接口的值，如果直接取出指定类型的值时，会发生编译错误。</p>
 <h4 id="空接口的值比较">6.2 空接口的值比较</h4>
 <p>空接口在保存不同的值后，可以和其他变量值一样使用==进行比较操作。空接口的比较有以下几种特性。</p>
@@ -379,12 +522,26 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220108225046.png" srcset="
 保存有类型不同的值的空接口进行比较时，Go
 语言会优先比较值的类型。因此类型不同，比较结果也是不相同的。</li>
 </ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// a保存整型</span><br>	<span class="hljs-keyword">var</span> a <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-number">100</span><br>	<span class="hljs-comment">// b保存字符串</span><br>	<span class="hljs-keyword">var</span> b <span class="hljs-keyword">interface</span>&#123;&#125; = <span class="hljs-string">&quot;hi&quot;</span><br>	<span class="hljs-comment">// 两个空接口不相等</span><br>	fmt.Println(a == b) 	<span class="hljs-comment">// false</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// a保存整型</span>
+	<span class="token keyword">var</span> a <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token number">100</span>
+	<span class="token comment">// b保存字符串</span>
+	<span class="token keyword">var</span> b <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token string">"hi"</span>
+	<span class="token comment">// 两个空接口不相等</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span> 	<span class="token comment">// false</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <ol start="2" type="1">
 <li>不能比较空接口中的动态值
 当接口中保存有动态类型的值时，运行时将触发错误。</li>
 </ol>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-comment">// c保存包含10的整型切片</span><br>	<span class="hljs-keyword">var</span> c <span class="hljs-keyword">interface</span>&#123;&#125; = []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">10</span>&#125;<br>	<span class="hljs-comment">// d保存包含20的整型切片</span><br>	<span class="hljs-keyword">var</span> d <span class="hljs-keyword">interface</span>&#123;&#125; = []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">20</span>&#125;<br>	<span class="hljs-comment">// 这里会发生崩溃</span><br>	fmt.Println(c == d)		<span class="hljs-comment">// panic: runtime error: comparing uncomparable type []int</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// c保存包含10的整型切片</span>
+	<span class="token keyword">var</span> c <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">10</span><span class="token punctuation">&#125;</span>
+	<span class="token comment">// d保存包含20的整型切片</span>
+	<span class="token keyword">var</span> d <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">20</span><span class="token punctuation">&#125;</span>
+	<span class="token comment">// 这里会发生崩溃</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>c <span class="token operator">==</span> d<span class="token punctuation">)</span>		<span class="token comment">// panic: runtime error: comparing uncomparable type []int</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220109122840.png" srcset="/img/loading.gif" lazyload /></p>
 <h3 id="类型断言">7. 类型断言</h3>
@@ -400,24 +557,132 @@ T。如果检查成功，类型断言返回的结果是 x 的动态值，其类�
 是接口类型，类型断言会检查 x 的动态类型是否满足 T。如果检查成功，x
 的动态值不会被提取，返回值是一个类型为 T 的接口值。 + 无论 T
 是什么类型，如果 x 是 nil 接口值，类型断言都会失败。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Dog <span class="hljs-keyword">struct</span>&#123;<br>	name <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> x <span class="hljs-keyword">interface</span>&#123;&#125;<br><br>	x = <span class="hljs-number">10</span><br>	value, ok := x.(<span class="hljs-keyword">int</span>)<br>	fmt.Print(value, <span class="hljs-string">&quot;,&quot;</span>, ok,<span class="hljs-string">&quot;\n&quot;</span>)<br>	<span class="hljs-comment">// 10,true</span><br><br>	x = Dog&#123;<span class="hljs-string">&quot;旺财&quot;</span>&#125;<br>	v, b := x.(animal)<br>	fmt.Print(v, <span class="hljs-string">&quot;,&quot;</span>, b)<br>	<span class="hljs-comment">// &#123;花花&#125;,true</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Dog <span class="token keyword">struct</span><span class="token punctuation">&#123;</span>
+	name <span class="token builtin">string</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> x <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+	x <span class="token operator">=</span> <span class="token number">10</span>
+	value<span class="token punctuation">,</span> ok <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token string">","</span><span class="token punctuation">,</span> ok<span class="token punctuation">,</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+	<span class="token comment">// 10,true</span>
+
+	x <span class="token operator">=</span> Dog<span class="token punctuation">&#123;</span><span class="token string">"旺财"</span><span class="token punctuation">&#125;</span>
+	v<span class="token punctuation">,</span> b <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token punctuation">(</span>animal<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token string">","</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token comment">// &#123;花花&#125;,true</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>如果不接收第二个参数，断言失败时会直接造成一个 panic。如果 x 为 nil
 同样也会 panic。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> x <span class="hljs-keyword">interface</span>&#123;&#125;<br><br>	x = <span class="hljs-number">10</span><br>	value := x.(<span class="hljs-keyword">int</span>)<br>	fmt.Print(value, <span class="hljs-string">&quot;\n&quot;</span>) <span class="hljs-comment">// 10</span><br><br>	x = <span class="hljs-number">10</span><br>	v := x.(<span class="hljs-keyword">string</span>) <span class="hljs-comment">// panic: interface conversion: interface &#123;&#125; is int, not string</span><br>	fmt.Print(v, <span class="hljs-string">&quot;\n&quot;</span>)<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> x <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+	x <span class="token operator">=</span> <span class="token number">10</span>
+	value <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>value<span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span> <span class="token comment">// 10</span>
+
+	x <span class="token operator">=</span> <span class="token number">10</span>
+	v <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token comment">// panic: interface conversion: interface &#123;&#125; is int, not string</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>类型断言还可以配合 switch 使用：</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span><br>	a = <span class="hljs-number">10</span><br>	getType(a)<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getType</span><span class="hljs-params">(a <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> &#123;<br>	<span class="hljs-keyword">switch</span> a.(<span class="hljs-keyword">type</span>) &#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-keyword">int</span>:<br>		fmt.Println(<span class="hljs-string">&quot;the type of a is int&quot;</span>)<br>	<span class="hljs-keyword">case</span> <span class="hljs-keyword">string</span>:<br>		fmt.Println(<span class="hljs-string">&quot;the type of a is string&quot;</span>)<br>	<span class="hljs-keyword">case</span> <span class="hljs-keyword">float64</span>:<br>		fmt.Println(<span class="hljs-string">&quot;the type of a is float&quot;</span>)<br>	<span class="hljs-keyword">default</span>:<br>		fmt.Println(<span class="hljs-string">&quot;unknown type&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">var</span> a <span class="token builtin">int</span>
+	a <span class="token operator">=</span> <span class="token number">10</span>
+	<span class="token function">getType</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">func</span> <span class="token function">getType</span><span class="token punctuation">(</span>a <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">switch</span> a<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token keyword">type</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">case</span> <span class="token builtin">int</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"the type of a is int"</span><span class="token punctuation">)</span>
+	<span class="token keyword">case</span> <span class="token builtin">string</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"the type of a is string"</span><span class="token punctuation">)</span>
+	<span class="token keyword">case</span> <span class="token builtin">float64</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"the type of a is float"</span><span class="token punctuation">)</span>
+	<span class="token keyword">default</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"unknown type"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="接口和类型之间的转换">8. 接口和类型之间的转换</h3>
 <h4 id="将接口转换为其他接口">8.1 将接口转换为其他接口</h4>
 <p>实现某个接口的类型同时实现了另外一个接口，此时可以在两个接口间转换。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Sayer <span class="hljs-keyword">interface</span> &#123;<br>	say()<br>&#125;<br><br><span class="hljs-keyword">type</span> Eater <span class="hljs-keyword">interface</span> &#123;<br>	eat()<br>&#125;<br><br><span class="hljs-keyword">type</span> Dog <span class="hljs-keyword">struct</span> &#123;<br>	name <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;骨头&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(d Dog)</span> <span class="hljs-title">say</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;汪汪汪~~~&quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> eat Eater = Dog&#123;<span class="hljs-string">&quot;小黄&quot;</span>&#125;<br>	say := eat.(Sayer)<br><br>	fmt.Println(say)<br>	<span class="hljs-comment">// &#123;小黄&#125;</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Sayer <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Eater <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">type</span> Dog <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	name <span class="token builtin">string</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"骨头"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>d Dog<span class="token punctuation">)</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"汪汪汪~~~"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> eat Eater <span class="token operator">=</span> Dog<span class="token punctuation">&#123;</span><span class="token string">"小黄"</span><span class="token punctuation">&#125;</span>
+	say <span class="token operator">:=</span> eat<span class="token punctuation">.</span><span class="token punctuation">(</span>Sayer<span class="token punctuation">)</span>
+
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>say<span class="token punctuation">)</span>
+	<span class="token comment">// &#123;小黄&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="将接口转换为其他类型">8.2 将接口转换为其他类型</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> dog *Dog = <span class="hljs-built_in">new</span>(Dog)<br>	<span class="hljs-keyword">var</span> eat Eater = dog<br><br>	<span class="hljs-comment">// d := eat.(Dog)</span><br>	<span class="hljs-comment">// panic: interface conversion: main.Eater is *main.Dog, not main.Dog</span><br>	d := eat.(*Dog)<br>	fmt.Println(d)<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> dog <span class="token operator">*</span>Dog <span class="token operator">=</span> <span class="token function">new</span><span class="token punctuation">(</span>Dog<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> eat Eater <span class="token operator">=</span> dog
+
+	<span class="token comment">// d := eat.(Dog)</span>
+	<span class="token comment">// panic: interface conversion: main.Eater is *main.Dog, not main.Dog</span>
+	d <span class="token operator">:=</span> eat<span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token operator">*</span>Dog<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>如果接口内保存的实例对应的类型指针，必须是要转换的对应的类型指针。</p>
 <h3 id="error-接口">9. error 接口</h3>
 <p>Go语言中返回的 error 类型接口类型</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> error <span class="hljs-keyword">interface</span> &#123;<br>	Error() <span class="hljs-keyword">string</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> <span class="token builtin">error</span> <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>自定义错误类型：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyError <span class="hljs-keyword">struct</span> &#123;<br>	code     <span class="hljs-keyword">int</span><br>	msg <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(err MyError)</span> <span class="hljs-title">Error</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>	<span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">&quot;error code：%v，error message :%v&quot;</span>, err.code,err.msg)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getUser</span><span class="hljs-params">(id <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">string</span>, error)</span></span> &#123;<br>	<span class="hljs-keyword">if</span> id == <span class="hljs-string">&quot;&quot;</span> &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>, MyError&#123;<span class="hljs-number">400</span>, <span class="hljs-string">&quot;user id is illegal&quot;</span>&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&#123;....&#125;&quot;</span>, <span class="hljs-literal">nil</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	result, err := getUser(<span class="hljs-string">&quot;&quot;</span>)<br>	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>		fmt.Println(err)<br>		<span class="hljs-comment">// error code：400，error message :user id is illegal</span><br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		fmt.Println(result)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MyError <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	code     <span class="token builtin">int</span>
+	msg <span class="token builtin">string</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>err MyError<span class="token punctuation">)</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">"error code：%v，error message :%v"</span><span class="token punctuation">,</span> err<span class="token punctuation">.</span>code<span class="token punctuation">,</span>err<span class="token punctuation">.</span>msg<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">getUser</span><span class="token punctuation">(</span>id <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">if</span> id <span class="token operator">==</span> <span class="token string">""</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">,</span> MyError<span class="token punctuation">&#123;</span><span class="token number">400</span><span class="token punctuation">,</span> <span class="token string">"user id is illegal"</span><span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> <span class="token string">"&#123;....&#125;"</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	result<span class="token punctuation">,</span> err <span class="token operator">:=</span> <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+		<span class="token comment">// error code：400，error message :user id is illegal</span>
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>
@@ -761,6 +1026,8 @@ T。如果检查成功，类型断言返回的结果是 x 的动态值，其类�
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

@@ -43,6 +43,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          9.4k 字
+          8.9k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          30 分钟
+          28 分钟
         
       </span>
     
@@ -328,15 +330,21 @@ commit）时，暂存区的目录树写到版本库（对象库）中，master
 </blockquote>
 <h3 id="创建版本库">2. 创建版本库</h3>
 <h4 id="git-init-初始化仓库">2.1  git init 初始化仓库</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git init<br>Initialized empty Git repository <span class="hljs-keyword">in</span> G:/learngit/.git/<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> init
+Initialized empty Git repository <span class="token keyword">in</span> G:/learngit/.git/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <h4 id="git-add-跟踪文件">2.2 git add 跟踪文件</h4>
 <p>git add &lt;directory&gt; 添加指定目录至暂存区 git add -A           
 添加所有 git  add  &lt;file&gt;   跟踪指定文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git add README.md<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">add</span> README.md<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h4 id="git-commit-提交到仓库">2.3 git commit 提交到仓库</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git commit -m <span class="hljs-string">&quot;wrote a readme file&quot;</span><br>[master (root-commit) 8438389] wrote a readme file<br> 1 file changed, 2 insertions(+)<br> create mode 100644 README.md<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"wrote a readme file"</span>
+<span class="token punctuation">[</span>master <span class="token punctuation">(</span>root-commit<span class="token punctuation">)</span> <span class="token number">8438389</span><span class="token punctuation">]</span> wrote a readme <span class="token function">file</span>
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
+ create mode <span class="token number">100644</span> README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="git-status-查看-git-状态">2.4 git status 查看 git 状态</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git status<br>On branch master<br>nothing to commit, working directory clean<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> status
+On branch master
+nothing to commit, working directory clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="移出暂存区">2.5 移出暂存区</h4>
 <p>git rm --cached target -r 将指定目录及子目录移除出暂存区</p>
 <h3 id="版本管理">3. 版本管理</h3>
@@ -345,15 +353,32 @@ commit）时，暂存区的目录树写到版本库（对象库）中，master
 <li>git diff：比较的是工作区和暂存区之间的差异</li>
 <li>git diff HEAD：比较的是工作区和版本库之间的差异</li>
 <li>git diff --cached：比较的是工作区和版本库之间的差异
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git diff README.md<br>diff --git a/README.md b/README.md<br>index d8036c1..013b5bc 100644<br>--- a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br>-Git is a version control system.<br>+Git is a distributed version control system.<br> Git is free software.<br>\ No newline at end of file<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">diff</span> README.md
+<span class="token function">diff</span> <span class="token parameter variable">--git</span> a/README.md b/README.md
+index d8036c1<span class="token punctuation">..</span>013b5bc <span class="token number">100644</span>
+--- a/README.md
++++ b/README.md
+@@ -1,2 +1,2 @@
+<span class="token parameter variable">-Git</span> is a version control system.
++Git is a distributed version control system.
+ Git is <span class="token function">free</span> software.
+<span class="token punctuation">\</span> No newline at end of <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 </ul>
 <h4 id="git-reset-回退到上一版本">3.2 git reset 回退到上一版本</h4>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git reset --hard HEAD^<br>HEAD is now at 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD^
+HEAD is now at <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>在 Git
 中，用 HEAD 表示当前版本，上一个版本就是HEAD<sup>，上上一个版本就是HEAD，当然往上100个版本写100个</sup>比较容易数不过来，所以写成HEAD~100。</p>
 <h4 id="回到回退之前版本">3.3 回到回退之前版本</h4>
 <p>Git 提供了一个命令 git reflog 用来记录你的每一次命令。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git reflog<br>8438389 HEAD@&#123;0&#125;: reset: moving to HEAD^<br>43597ec HEAD@&#123;1&#125;: commit: add distributed<br>8438389 HEAD@&#123;2&#125;: commit (initial): wrote a readme file<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset --hard 43597ec<br>HEAD is now at 43597ec add distributed<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reflog
+<span class="token number">8438389</span> HEAD@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: reset: moving to HEAD^
+43597ec HEAD@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>: commit: <span class="token function">add</span> distributed
+<span class="token number">8438389</span> HEAD@<span class="token punctuation">&#123;</span><span class="token number">2</span><span class="token punctuation">&#125;</span>: commit <span class="token punctuation">(</span>initial<span class="token punctuation">)</span>: wrote a readme <span class="token function">file</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> 43597ec
+HEAD is now at 43597ec <span class="token function">add</span> distributed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="撤销工作区修改">3.4 撤销工作区修改</h4>
 <p>命令：<strong><font color="red">git checkout  -- 
 file</font></strong></p>
@@ -364,32 +389,84 @@ file</font></strong></p>
 <h4 id="撤销暂存区修改">3.5 撤销暂存区修改</h4>
 <p>命令： git  reset  HEAD  &lt;file&gt;</p>
 <p>作用：把暂存区的修改回退到工作区。HEAD 表示最新的版本。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git reset HEAD README.md<br>Unstaged changes after reset:<br>M       README.md<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reset HEAD README.md
+Unstaged changes after reset:
+M       README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="删除文件">3.6 删除文件</h4>
 <p>先手动删除文件，然后使用 git add &lt;file&gt; 的效果和 git rm
 &lt;file&gt; 是一样的。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git rm test.txt<br>rm <span class="hljs-string">&#x27;test.txt&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git status<br>On branch master<br>Changes to be committed:<br>  (use <span class="hljs-string">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage)<br><br>        deleted:    test.txt<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">rm</span> test.txt
+<span class="token function">rm</span> <span class="token string">'test.txt'</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> status
+On branch master
+Changes to be committed:
+  <span class="token punctuation">(</span>use <span class="token string">"git reset HEAD &lt;file>..."</span> to unstage<span class="token punctuation">)</span>
+
+        deleted:    test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="远程仓库">4. 远程仓库</h3>
 <h4 id="添加远程仓库">4.1 添加远程仓库</h4>
-<p>命令：git  remote  add  origin &lt;URL&gt; <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$  git remote add origin git@github.com:Zhangtao153/learngit.git<br></code></pre></td></tr></table></figure> #### 4.2
+<p>命令：git  remote  add  origin &lt;URL&gt; <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$  <span class="token function">git</span> remote <span class="token function">add</span> origin git@github.com:Zhangtao153/learngit.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div> #### 4.2
 推送本地库内容到远程库 命令：git push origin &lt;branch-name&gt;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git push -u origin master<br>Warning: Permanently added the RSA host key <span class="hljs-keyword">for</span> IP address <span class="hljs-string">&#x27;192.30.255.112&#x27;</span> to the list of known hosts.<br>Counting objects: 10, <span class="hljs-keyword">done</span>.<br>Delta compression using up to 4 threads.<br>Compressing objects: 100% (7/7), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (10/10), 855 bytes | 0 bytes/s, <span class="hljs-keyword">done</span>.<br>Total 10 (delta 1), reused 0 (delta 0)<br>remote: Resolving deltas: 100% (1/1), <span class="hljs-keyword">done</span>.<br>To git@github.com:Zhangtao153/learngit.git<br> * [new branch]      master -&gt; master<br>Branch master <span class="hljs-built_in">set</span> up to track remote branch master from origin.<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> push <span class="token parameter variable">-u</span> origin master
+Warning: Permanently added the RSA <span class="token function">host</span> key <span class="token keyword">for</span> IP address <span class="token string">'192.30.255.112'</span> to the list of known hosts.
+Counting objects: <span class="token number">10</span>, done.
+Delta compression using up to <span class="token number">4</span> threads.
+Compressing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">7</span>/7<span class="token punctuation">)</span>, done.
+Writing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">10</span>/10<span class="token punctuation">)</span>, <span class="token number">855</span> bytes <span class="token operator">|</span> <span class="token number">0</span> bytes/s, done.
+Total <span class="token number">10</span> <span class="token punctuation">(</span>delta <span class="token number">1</span><span class="token punctuation">)</span>, reused <span class="token number">0</span> <span class="token punctuation">(</span>delta <span class="token number">0</span><span class="token punctuation">)</span>
+remote: Resolving deltas: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span>, done.
+To git@github.com:Zhangtao153/learngit.git
+ * <span class="token punctuation">[</span>new branch<span class="token punctuation">]</span>      master -<span class="token operator">></span> master
+Branch master <span class="token builtin class-name">set</span> up to track remote branch master from origin.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>当前分支 master推送到远程</p>
 <h4 id="查看远程仓库">4.3 查看远程仓库</h4>
 <p>git  remote  -v</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git remote<br>origin<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git remote -v<br>origin  git@github.com:Zhangtao153/learngit.git (fetch)<br>origin  git@github.com:Zhangtao153/learngit.git (push)<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git remote show<br>origin<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git remote show origin<br>* remote origin<br>  Fetch URL: git@github.com:Zhangtao153/learngit.git<br>  Push  URL: git@github.com:Zhangtao153/learngit.git<br>  HEAD branch: master<br>  Remote branch:<br>    master tracked<br>  Local branch configured <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;git pull&#x27;</span>:<br>    master merges with remote master<br>  Local ref configured <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;git push&#x27;</span>:<br>    master pushes to master (up to date)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> remote
+origin
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> remote <span class="token parameter variable">-v</span>
+origin  git@github.com:Zhangtao153/learngit.git <span class="token punctuation">(</span>fetch<span class="token punctuation">)</span>
+origin  git@github.com:Zhangtao153/learngit.git <span class="token punctuation">(</span>push<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> remote show
+origin
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> remote show origin
+* remote origin
+  Fetch URL: git@github.com:Zhangtao153/learngit.git
+  Push  URL: git@github.com:Zhangtao153/learngit.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured <span class="token keyword">for</span> <span class="token string">'git pull'</span><span class="token builtin class-name">:</span>
+    master merges with remote master
+  Local ref configured <span class="token keyword">for</span> <span class="token string">'git push'</span><span class="token builtin class-name">:</span>
+    master pushes to master <span class="token punctuation">(</span>up to <span class="token function">date</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="从远程库克隆">4.4 从远程库克隆</h4>
 <p>git clone &lt;url&gt;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> git@github.com:Zhangtao153/learngit.git<br>Cloning into <span class="hljs-string">&#x27;learngit&#x27;</span>...<br>remote: Enumerating objects: 10, <span class="hljs-keyword">done</span>.<br>remote: Counting objects: 100% (10/10), <span class="hljs-keyword">done</span>.<br>remote: Compressing objects: 100% (6/6), <span class="hljs-keyword">done</span>.<br>remote: Total 10 (delta 1), reused 10 (delta 1), pack-reused 0<br>Receiving objects: 100% (10/10), <span class="hljs-keyword">done</span>.<br>Resolving deltas: 100% (1/1), <span class="hljs-keyword">done</span>.<br>Checking connectivity... <span class="hljs-keyword">done</span>.<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> clone git@github.com:Zhangtao153/learngit.git
+Cloning into <span class="token string">'learngit'</span><span class="token punctuation">..</span>.
+remote: Enumerating objects: <span class="token number">10</span>, done.
+remote: Counting objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">10</span>/10<span class="token punctuation">)</span>, done.
+remote: Compressing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">6</span>/6<span class="token punctuation">)</span>, done.
+remote: Total <span class="token number">10</span> <span class="token punctuation">(</span>delta <span class="token number">1</span><span class="token punctuation">)</span>, reused <span class="token number">10</span> <span class="token punctuation">(</span>delta <span class="token number">1</span><span class="token punctuation">)</span>, pack-reused <span class="token number">0</span>
+Receiving objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">10</span>/10<span class="token punctuation">)</span>, done.
+Resolving deltas: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span>, done.
+Checking connectivity<span class="token punctuation">..</span>. done.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4
 id="本地创建和远程分支对应的分支">4.5 本地创建和远程分支对应的分支</h4>
 <p>从远程 clone 的代码库默认只有 master 分支。</p>
 <p>命令：<strong><font color="red">git  checkout  -b  dev 
 origin/dev</font></strong> </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout -b dev origin/dev<br>Switched to a new branch <span class="hljs-string">&#x27;dev&#x27;</span><br>Branch <span class="hljs-string">&#x27;dev&#x27;</span> <span class="hljs-built_in">set</span> up to track remote branch <span class="hljs-string">&#x27;dev&#x27;</span> from <span class="hljs-string">&#x27;origin&#x27;</span>.<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> dev origin/dev
+Switched to a new branch <span class="token string">'dev'</span>
+Branch <span class="token string">'dev'</span> <span class="token builtin class-name">set</span> up to track remote branch <span class="token string">'dev'</span> from <span class="token string">'origin'</span><span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="修改远程仓库">4.6 修改远程仓库</h4>
-<p>方法一： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git remote set-url origin &lt;url&gt;<br></code></pre></td></tr></table></figure> 方法二： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">git remote rm origin<br>git remote add origin [url]<br></code></pre></td></tr></table></figure></p>
+<p>方法一： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote set-url origin <span class="token operator">&lt;</span>url<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div> 方法二： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">rm</span> origin
+<span class="token function">git</span> remote <span class="token function">add</span> origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></p>
 <h4 id="将本地分支与远程建立关联">4.7 将本地分支与远程建立关联</h4>
 <p>git branch --track --set-upstream-to=origin/test test</p>
 <h3 id="分支管理">5. 分支管理</h3>
@@ -412,10 +489,20 @@ origin/dev</font></strong> </p>
 <p>git checkout 命令加上 -b 参数表示创建并切换，相当于以下两条命令：</p>
 <p>$ git  branch  dev $ git  checkout  dev</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout -b dev<br>Switched to a new branch <span class="hljs-string">&#x27;dev&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git branch<br>* dev<br>  master<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> dev
+Switched to a new branch <span class="token string">'dev'</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> branch
+* dev
+  master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="合并分支">5.2 合并分支</h4>
 <p>命令：git  merge &lt;branch&gt;</p>
-<p>作用：合并指定分支到当前分支 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git merge dev<br>Updating 35bc9a6..83ef1fc<br>Fast-forward<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)<br></code></pre></td></tr></table></figure> &gt;
+<p>作用：合并指定分支到当前分支 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> merge dev
+Updating 35bc9a6<span class="token punctuation">..</span>83ef1fc
+Fast-forward
+ README.md <span class="token operator">|</span> <span class="token number">3</span> ++-
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> &gt;
 Fast-forward “快进模式”，就是直接把 master 指向 dev 的当前提交，所以合并速度非常快。</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232219.png" srcset="/img/loading.gif" lazyload /></p>
@@ -427,23 +514,63 @@ forward模式，Git就会在merge时生成一个新的commit，这样，从分�
 </blockquote>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232236.png" srcset="/img/loading.gif" lazyload /></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git merge --no-ff -m <span class="hljs-string">&quot;merge with no-ff&quot;</span> zth<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> README.md | 2 +-<br> 1 file changed, 1 insertion(+), 1 deletion(-)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --graph --pretty=oneline --abbrev-commit<br>*   c5df1ca (HEAD -&gt; master) merge with no-ff<br>|\<br>| * 5db3e3d (zth) delete merge<br>|/<br>* 6707c86 add merge<br>* 7e760b4 add on zth branch<br>*   650cdbc clear on master<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> merge --no-ff <span class="token parameter variable">-m</span> <span class="token string">"merge with no-ff"</span> zth
+Merge made by the <span class="token string">'recursive'</span> strategy.
+ README.md <span class="token operator">|</span> <span class="token number">2</span> +-
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">1</span> insertion<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> log <span class="token parameter variable">--graph</span> <span class="token parameter variable">--pretty</span><span class="token operator">=</span>oneline --abbrev-commit
+*   c5df1ca <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span> merge with no-ff
+<span class="token operator">|</span><span class="token punctuation">\</span>
+<span class="token operator">|</span> * 5db3e3d <span class="token punctuation">(</span>zth<span class="token punctuation">)</span> delete merge
+<span class="token operator">|</span>/
+* 6707c86 <span class="token function">add</span> merge
+* 7e760b4 <span class="token function">add</span> on zth branch
+*   650cdbc <span class="token function">clear</span> on master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="删除分支">5.3 删除分支</h4>
-<p>命令：git   branch  -d   &lt;branch&gt; <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git branch -d dev<br>Deleted branch dev (was 83ef1fc).<br></code></pre></td></tr></table></figure></p>
+<p>命令：git   branch  -d   &lt;branch&gt; <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> branch <span class="token parameter variable">-d</span> dev
+Deleted branch dev <span class="token punctuation">(</span>was 83ef1fc<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></p>
 <h4 id="查看分支合并情况">5.4 查看分支合并情况</h4>
 <p>命令：<font color="red"> git log --graph --pretty=oneline
 --abbrev-commit  或：git log --graph --oneline </font></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">log</span> --graph --pretty=oneline --abbrev-commit<br>*   8e7b6c4 conflict fixed<br>|\<br>| * e920442 update on dev<br>* | e15ba0e update on master<br>|/<br>* 83ef1fc add on dev<br>* 35bc9a6 delete test.txt<br>* fd68a6a add file test.txt<br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> log <span class="token parameter variable">--graph</span> <span class="token parameter variable">--pretty</span><span class="token operator">=</span>oneline --abbrev-commit
+*   8e7b6c4 conflict fixed
+<span class="token operator">|</span><span class="token punctuation">\</span>
+<span class="token operator">|</span> * e920442 update on dev
+* <span class="token operator">|</span> e15ba0e update on master
+<span class="token operator">|</span>/
+* 83ef1fc <span class="token function">add</span> on dev
+* 35bc9a6 delete test.txt
+* fd68a6a <span class="token function">add</span> <span class="token function">file</span> test.txt
+* a8d2e0d 手动删除
+* 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
+* <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="保存现场">5.5 保存现场</h4>
 <p>在创建一个新的分支用来修改 bug
 时，当前分支的工作还没提交，可以通过 stash 功能把当前工作现场“储藏”起来，等以后恢复现场后继续工作。</p>
 <p>原因：<font color="red">所有分支共享工作区和暂存区</font></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git stash<br>Saved working directory and index state WIP on issue-004: c5df1ca merge with no-ff<br></code></pre></td></tr></table></figure>
-<p>git  stash  list <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git stash list<br>stash@&#123;0&#125;: WIP on issue-004: c5df1ca merge with no-ff<br>stash@&#123;1&#125;: WIP on dev: c5df1ca merge with no-ff<br></code></pre></td></tr></table></figure> 恢复现场方法：</p>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash
+Saved working directory and index state WIP on issue-004: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+<p>git  stash  list <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash list
+stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: WIP on issue-004: c5df1ca merge with no-ff
+stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div> 恢复现场方法：</p>
 <p>一： git stash apply 恢复，但是恢复后，stash内容并不删除，需要用git
 stash drop来删除；</p>
-<p>二： git stash pop，恢复的同时把stash内容也删了： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git stash pop<br>On branch issue-004<br>Changes not staged <span class="hljs-keyword">for</span> commit:<br>  (use <span class="hljs-string">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed)<br>  (use <span class="hljs-string">&quot;git restore &lt;file&gt;...&quot;</span> to discard changes <span class="hljs-keyword">in</span> working directory)<br>        modified:   README.md<br><br>no changes added to commit (use <span class="hljs-string">&quot;git add&quot;</span> and/or <span class="hljs-string">&quot;git commit -a&quot;</span>)<br>Dropped refs/stash@&#123;0&#125; (020a507cf2c1cd55460d17081db6671b7e075ed6)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issue-004)<br>$ git stash list<br>stash@&#123;0&#125;: WIP on dev: c5df1ca merge with no-ff<br></code></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git stash apply stash@&#123;0&#125;<br></code></pre></td></tr></table></figure>
+<p>二： git stash pop，恢复的同时把stash内容也删了： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash pop
+On branch issue-004
+Changes not staged <span class="token keyword">for</span> commit:
+  <span class="token punctuation">(</span>use <span class="token string">"git add &lt;file>..."</span> to update what will be committed<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span>use <span class="token string">"git restore &lt;file>..."</span> to discard changes <span class="token keyword">in</span> working directory<span class="token punctuation">)</span>
+        modified:   README.md
+
+no changes added to commit <span class="token punctuation">(</span>use <span class="token string">"git add"</span> and/or <span class="token string">"git commit -a"</span><span class="token punctuation">)</span>
+Dropped refs/stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span> <span class="token punctuation">(</span>020a507cf2c1cd55460d17081db6671b7e075ed6<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issue-004<span class="token punctuation">)</span>
+$ <span class="token function">git</span> stash list
+stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash apply stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h4 id="git-cherry-pick">5.6 git cherry-pick</h4>
 <p>作用：合并不同分支的若干个 commit 到当前分支</p>
 <p><img
@@ -468,23 +595,76 @@ origin/&lt;branch-name&gt;。</p>
 <p>命令：git  tag  &lt;name&gt;  [commit]</p>
 <p>-a 指定标签名，-m 指定说明文字</p>
 <p>首先选择分支，默认在最新提交的 commit 上。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git tag v1.0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git tag v0.9 add2dbd<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag v1.0
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> tag v0.9 add2dbd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="查看所有标签">7.2 查看所有标签</h4>
-<p>git  tag <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git tag<br>v0.9<br>v1.0<br></code></pre></td></tr></table></figure> #### 7.3 查看标签信息 git  show 
+<p>git  tag <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag
+v0.9
+v1.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div> #### 7.3 查看标签信息 git  show 
 &lt;tagname&gt;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git tag -a v0.8 -m <span class="hljs-string">&quot;version 0.8 release&quot;</span> 94b83a0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git show v0.8<br>tag v0.8<br>Tagger: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Oct 21 23:51:54 2020 +0800<br><br>version 0.8 release<br><br>commit 94b83a06c04b8b3a5ca5af4443dda614bc3b1441 (tag: v0.8)<br>Author: Zhangtao153 &lt;13289265979@163.com&gt;<br>Date:   Wed Oct 21 21:32:49 2020 +0800<br><br>    commit on issue-005<br><br>diff --git a/README.md b/README.md<br>index 25ed040..af0e009 100644<br>--- a/README.md<br>+++ b/README.md<br>@@ -1,2 +1,2 @@<br> Git is a version control system.<br>-Git is free software.哈哈zth  delete and update<br>+Git is free software.哈哈zth  delete and update on issue-005<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag <span class="token parameter variable">-a</span> v0.8 <span class="token parameter variable">-m</span> <span class="token string">"version 0.8 release"</span> 94b83a0
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> show v0.8
+tag v0.8
+Tagger: Zhangtao153 <span class="token operator">&lt;</span><span class="token number">13289265979</span>@163.com<span class="token operator">></span>
+Date:   Wed Oct <span class="token number">21</span> <span class="token number">23</span>:51:54 <span class="token number">2020</span> +0800
+
+version <span class="token number">0.8</span> release
+
+commit 94b83a06c04b8b3a5ca5af4443dda614bc3b1441 <span class="token punctuation">(</span>tag: v0.8<span class="token punctuation">)</span>
+Author: Zhangtao153 <span class="token operator">&lt;</span><span class="token number">13289265979</span>@163.com<span class="token operator">></span>
+Date:   Wed Oct <span class="token number">21</span> <span class="token number">21</span>:32:49 <span class="token number">2020</span> +0800
+
+    commit on issue-005
+
+<span class="token function">diff</span> <span class="token parameter variable">--git</span> a/README.md b/README.md
+index 25ed040<span class="token punctuation">..</span>af0e009 <span class="token number">100644</span>
+--- a/README.md
++++ b/README.md
+@@ -1,2 +1,2 @@
+ Git is a version control system.
+<span class="token parameter variable">-Git</span> is <span class="token function">free</span> software.哈哈zth  delete and update
++Git is <span class="token function">free</span> software.哈哈zth  delete and update on issue-005<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="删除标签">7.4 删除标签</h4>
 <p>删除本地标签： </p>
 <p>git   tag   -d  &lt;tagname&gt;</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git tag -d v0.9<br>Deleted tag <span class="hljs-string">&#x27;v0.9&#x27;</span> (was add2dbd)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag <span class="token parameter variable">-d</span> v0.9
+Deleted tag <span class="token string">'v0.9'</span> <span class="token punctuation">(</span>was add2dbd<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>删除远程标签（先删除本地，再删除远程）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git tag -d v0.8<br>Deleted tag <span class="hljs-string">&#x27;v0.8&#x27;</span> (was 120a8d2)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin  :refs/tags/v0.8<br>To github.com:Zhangtao153/learngit.git<br> - [deleted]         v0.8<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag <span class="token parameter variable">-d</span> v0.8
+Deleted tag <span class="token string">'v0.8'</span> <span class="token punctuation">(</span>was 120a8d2<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> push origin  :refs/tags/v0.8
+To github.com:Zhangtao153/learngit.git
+ - <span class="token punctuation">[</span>deleted<span class="token punctuation">]</span>         v0.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="推送标签到远程">7.5 推送标签到远程</h4>
 <p> 推送指定标签：</p>
 <p>git push origin &lt;tagname&gt;</p>
 <p>推送全部尚未推送到远程的本地标签：</p>
 <p>git push origin --tags</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git push origin v1.0<br>Enumerating objects: 28, <span class="hljs-keyword">done</span>.<br>Counting objects: 100% (28/28), <span class="hljs-keyword">done</span>.<br>Delta compression using up to 4 threads<br>Compressing objects: 100% (18/18), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (26/26), 1.95 KiB | 667.00 KiB/s, <span class="hljs-keyword">done</span>.<br>Total 26 (delta 12), reused 0 (delta 0), pack-reused 0<br>remote: Resolving deltas: 100% (12/12), <span class="hljs-keyword">done</span>.<br>To github.com:Zhangtao153/learngit.git<br> * [new tag]         v1.0 -&gt; v1.0<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (dev)<br>$ git push origin --tags<br>Enumerating objects: 1, <span class="hljs-keyword">done</span>.<br>Counting objects: 100% (1/1), <span class="hljs-keyword">done</span>.<br>Writing objects: 100% (1/1), 167 bytes | 167.00 KiB/s, <span class="hljs-keyword">done</span>.<br>Total 1 (delta 0), reused 0 (delta 0), pack-reused 0<br>To github.com:Zhangtao153/learngit.git<br> * [new tag]         v0.8 -&gt; v0.8<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> push origin v1.0
+Enumerating objects: <span class="token number">28</span>, done.
+Counting objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">28</span>/28<span class="token punctuation">)</span>, done.
+Delta compression using up to <span class="token number">4</span> threads
+Compressing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">18</span>/18<span class="token punctuation">)</span>, done.
+Writing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">26</span>/26<span class="token punctuation">)</span>, <span class="token number">1.95</span> KiB <span class="token operator">|</span> <span class="token number">667.00</span> KiB/s, done.
+Total <span class="token number">26</span> <span class="token punctuation">(</span>delta <span class="token number">12</span><span class="token punctuation">)</span>, reused <span class="token number">0</span> <span class="token punctuation">(</span>delta <span class="token number">0</span><span class="token punctuation">)</span>, pack-reused <span class="token number">0</span>
+remote: Resolving deltas: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">12</span>/12<span class="token punctuation">)</span>, done.
+To github.com:Zhangtao153/learngit.git
+ * <span class="token punctuation">[</span>new tag<span class="token punctuation">]</span>         v1.0 -<span class="token operator">></span> v1.0
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
+$ <span class="token function">git</span> push origin <span class="token parameter variable">--tags</span>
+Enumerating objects: <span class="token number">1</span>, done.
+Counting objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span>, done.
+Writing objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span>, <span class="token number">167</span> bytes <span class="token operator">|</span> <span class="token number">167.00</span> KiB/s, done.
+Total <span class="token number">1</span> <span class="token punctuation">(</span>delta <span class="token number">0</span><span class="token punctuation">)</span>, reused <span class="token number">0</span> <span class="token punctuation">(</span>delta <span class="token number">0</span><span class="token punctuation">)</span>, pack-reused <span class="token number">0</span>
+To github.com:Zhangtao153/learngit.git
+ * <span class="token punctuation">[</span>new tag<span class="token punctuation">]</span>         v0.8 -<span class="token operator">></span> v0.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>
@@ -828,6 +1008,8 @@ origin/&lt;branch-name&gt;。</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

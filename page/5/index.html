@@ -239,6 +239,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2023/02/02/Zookeeper%E2%80%94%E2%80%94%E7%89%B9%E6%80%A7%E4%B8%8E%E8%8A%82%E7%82%B9%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_blank">
+          Zookeeper——特性与节点数据类型
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2023/02/02/Zookeeper%E2%80%94%E2%80%94%E7%89%B9%E6%80%A7%E4%B8%8E%E8%8A%82%E7%82%B9%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_blank">
+        <div>
+          
+          1. CAP&amp;Base 理论 1. 1 CAP 理论 CAP 理论指出对于一个分布式计算系统来说，不可能同时满足以下三点：  一致性：在分布式环境中，一致性是指数据在多个副本之间是否能够保持一致的特性，等同于所有节点访问同一份最新的数据副本。在一致性的需求下，当一个系统在数据一致的状态下执行更新操作后，应该保证系统的数据仍然处于一致的状态。 可用性：每次请求都能获取到正确的响应，但是不保证
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-02-02 21:11" pubdate>
+              2023-02-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Zookeeper/" class="category-chain-item">Zookeeper</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Zookeeper/">#Zookeeper</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/12/28/Mybatis-Plus%E2%80%94%E2%80%94%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4-SQL%E5%88%86%E6%9E%90-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%BF%9D%E6%8A%A4-%E4%B9%90%E8%A7%82%E9%94%81-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/" target="_blank">
           Mybatis-Plus——逻辑删除&amp;自动填充&amp;SQL分析&amp;数据安全保护&amp;乐观锁&amp;代码生成器
         </a>
@@ -247,7 +308,7 @@
       <a class="index-excerpt" href="/2022/12/28/Mybatis-Plus%E2%80%94%E2%80%94%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4-SQL%E5%88%86%E6%9E%90-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%BF%9D%E6%8A%A4-%E4%B9%90%E8%A7%82%E9%94%81-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/" target="_blank">
         <div>
           
-          1. 逻辑删除 逻辑删除： 从逻辑层面控制删除，通常会在表里添加一个逻辑删除的字段比如 enabled 、is_delete ，数据默认是有效的（值为1），当用户删除时将数据修改为 0， 在查询的时候就只查 where enabled&#x3D;1 的数据。 1、局部单表逻辑删除，需要在对应的 pojo 类加入对应的逻辑删除标识字段。 1234567891011121314@Data@NoArgsConst
+          1. 逻辑删除 逻辑删除： 从逻辑层面控制删除，通常会在表里添加一个逻辑删除的字段比如 enabled 、is_delete ，数据默认是有效的（值为1），当用户删除时将数据修改为 0， 在查询的时候就只查 where enabled&#x3D;1 的数据。 1、局部单表逻辑删除，需要在对应的 pojo 类加入对应的逻辑删除标识字段。 @Data @NoArgsConstructor @AllArgsCon
         </div>
       </a>
 
@@ -556,7 +617,7 @@
       <a class="index-excerpt" href="/2022/11/28/Mybatis%E2%80%94%E2%80%94%E5%8A%A8%E6%80%81sql-%E7%BC%93%E5%AD%98/" target="_blank">
         <div>
           
-          1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;
+          1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if &lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;     SELECT * FROM t_user WHERE     &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;         create_time &gt;&#x3D; #&amp;#123;createTime&amp;#125;
         </div>
       </a>
 
@@ -749,69 +810,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-11-06 22:19" pubdate>
               2022-11-06
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/SpringMVC/">#SpringMVC</a>
-            
-              <a href="/tags/%E6%BA%90%E7%A0%81/">#源码</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/11/03/SpringMVC%E2%80%94%E2%80%94%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
-          SpringMVC——请求过程源码解析
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2022/11/03/SpringMVC%E2%80%94%E2%80%94%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
-        <div>
-          
-          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6367b742e401fd612f4d38c6 1. 从 Servlet 到 SpringMVC 传统Servlet：  弊端： 1.xml 下配置 servlet 映射非常麻烦，开发效率低。 2.必须要继承父类、重写方法，侵入性强。 3.参数解析麻烦 4.数据响应麻烦，手动转成 json 并设置 Content-type
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-11-03 20:58" pubdate>
-              2022-11-03
             </time>
           </div>
         
