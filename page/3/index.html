@@ -247,7 +247,7 @@
       <a class="index-excerpt" href="/2023/10/11/Netty%E2%80%94%E2%80%94%E7%B2%98%E5%8C%85-%E5%8D%8A%E5%8C%85%E3%80%81%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E3%80%81%E5%BA%8F%E5%88%97%E5%8C%96/" target="_blank">
         <div>
           
-          1. 粘包半包 1.1 什么是TCP粘包半包 　　假设客户端分别发送了两个数据包 D1 和 D2 给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下 4 种情况。  服务端分两次读取到了两个独立的数据包，分别是 D1 和 D2，没有粘包和拆包； 服务端一次接收到了两个数据包，D1 和 D2 粘合在一起，被称为 TCP 粘包； 服务端分两次读取到了两个数据包，第一次读取到了完整的 D1
+          1. 粘包半包 1.1 什么是TCP粘包半包 假设客户端分别发送了两个数据包 D1 和 D2 给服务端，由于服务端一次读取到的字节数是不确定的，故可能存在以下 4 种情况。  服务端分两次读取到了两个独立的数据包，分别是 D1 和 D2，没有粘包和拆包； 服务端一次接收到了两个数据包，D1 和 D2 粘合在一起，被称为 TCP 粘包； 服务端分两次读取到了两个数据包，第一次读取到了完整的 D1 包
         </div>
       </a>
 
@@ -308,7 +308,7 @@
       <a class="index-excerpt" href="/2023/10/08/Netty%E2%80%94%E2%80%94Netty%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6/" target="_blank">
         <div>
           
-          1. EventLoop和EventLoopGroup 　　回想一下在 NIO 中是如何处理我们关心的事件的？在一个 while 循环中 select 出事件，然后依次处理每种事件。我们可以把它称为事件循环，这就是 EventLoop。interface io.netty.channel. EventLoop 定义了Netty 的核心抽象，用于处理网络连接的生命周期中所发生的事件。 　　io.ne
+          1.  EventLoop和EventLoopGroup 回想一下在 NIO 中是如何处理我们关心的事件的？在一个 while 循环中 select 出事件，然后依次处理每种事件。我们可以把它称为事件循环，这就是 EventLoop。interface io.netty.channel. EventLoop 定义了Netty 的核心抽象，用于处理网络连接的生命周期中所发生的事件。 io.netty
         </div>
       </a>
 
@@ -430,7 +430,7 @@
       <a class="index-excerpt" href="/2023/10/04/Netty%E2%80%94%E2%80%94%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98%E3%80%81%E9%9B%B6%E6%8B%B7%E8%B4%9D%E3%80%81epoll%E6%A8%A1%E5%9E%8B/" target="_blank">
         <div>
           
-          1. 直接内存 　　在所有的网络通信和应用程序中，每个 TCP 的 Socket 内核中都有一个发送缓冲区（SO_SNDBUF）和一个接收缓冲区（SO_RECVBUF），可以使用相关套接字选项来更改该缓冲区大小。    　　当某个应用进程调用 write时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。如果该套接字的发送缓冲区容不下该应用进程的所有数据(或是应用进程的缓冲区大于套
+          1. 直接内存 在所有的网络通信和应用程序中，每个 TCP 的 Socket 内核中都有一个发送缓冲区（SO_SNDBUF）和一个接收缓冲区（SO_RECVBUF），可以使用相关套接字选项来更改该缓冲区大小。    当某个应用进程调用 write时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。如果该套接字的发送缓冲区容不下该应用进程的所有数据(或是应用进程的缓冲区大于套接字的发
         </div>
       </a>
 
@@ -674,7 +674,7 @@
       <a class="index-excerpt" href="/2023/05/16/Spring-Cloud-Alibaba%E2%80%94%E2%80%94%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8Feign-Dubbo/" target="_blank">
         <div>
           
-          1. RPC 概述 RPC 全称是 Remote Procedure Call ，即远程过程调用，与其对应的是本地调用。RPC 的目的是：让调用远程方法像调用本地方法一样。 RPC框架架构：  2. Spring Cloud 整合 Feign Feign 是 Netflix 开发的声明式、模板化的 HTTP 客户端，Feign 可帮助我们更加便捷、优雅地调用 HTTP API。 Feign 可以做
+          1. RPC  概述 RPC 全称是 Remote Procedure Call ，即远程过程调用，与其对应的是本地调用。RPC 的目的是：让调用远程方法像调用本地方法一样。 RPC框架架构：  2.  Spring Cloud 整合 Feign Feign 是 Netflix 开发的声明式、模板化的 HTTP 客户端，Feign 可帮助我们更加便捷、优雅地调用 HTTP API。 Feign 可
         </div>
       </a>
 

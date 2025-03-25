@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 生成 Embedding  　　基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 　　该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消">
+    <meta name="description" content="1. 生成 Embedding  基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消极。每个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenAI——embedding">
 <meta property="og:url" content="http://example.com/2024/08/22/OpenAI%E2%80%94%E2%80%94embedding/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 生成 Embedding  　　基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 　　该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消">
+<meta property="og:description" content="1. 生成 Embedding  基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消极。每个">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222057053.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222107847.png">
@@ -297,11 +297,10 @@
             
             <div class="markdown-body">
               
-              <h3 id="生成-embedding">1. 生成 Embedding</h3>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222057053.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
-<p>　　基于 text-embedding-ada-002
-模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。</p>
-<p>　　该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消极。每个评论都有一个产品ID、用户ID、评分、标题（摘要）和正文。</p>
+              <h3 id="1-生成-Embedding">1. 生成 Embedding</h3>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222057053.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" />
+<p>基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。</p>
+<p>该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消极。每个评论都有一个产品ID、用户ID、评分、标题（摘要）和正文。</p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
 <span class="token keyword">import</span> ast
 <span class="token keyword">import</span> matplotlib
@@ -365,9 +364,8 @@ client <span class="token operator">=</span> OpenAI<span class="token punctuatio
     input_datapath <span class="token operator">=</span> <span class="token string">"../data/fine_food_reviews_1k.csv"</span>
     embedding_datapath <span class="token operator">=</span> <span class="token string">"../data/fine_food_reviews_with_embeddings_1k_1126.csv"</span>
     embedding_to_vector<span class="token punctuation">(</span>input_datapath<span class="token punctuation">,</span> embedding_datapath<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><a
-target="_blank" rel="noopener" href="https://github.com/DjangoPeng/openai-quickstart/blob/main/openai_api/data/fine_food_reviews_1k.csv">fine_food_reviews_1k.csv</a></p>
-<h3 id="读取向量">2. 读取向量</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/DjangoPeng/openai-quickstart/blob/main/openai_api/data/fine_food_reviews_1k.csv">fine_food_reviews_1k.csv</a></p>
+<h3 id="2-读取向量">2. 读取向量</h3>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">read_embedding</span><span class="token punctuation">(</span>embedding_file_path<span class="token punctuation">)</span><span class="token punctuation">:</span>
     df_embedded <span class="token operator">=</span> pd<span class="token punctuation">.</span>read_csv<span class="token punctuation">(</span>embedding_file_path<span class="token punctuation">,</span> index_col<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>df_embedded<span class="token punctuation">[</span><span class="token string">"embedding"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -380,8 +378,7 @@ target="_blank" rel="noopener" href="https://github.com/DjangoPeng/openai-quicks
     <span class="token comment"># pandas.core.series.Series</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>df_embedded<span class="token punctuation">[</span><span class="token string">"embedding_vec"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> df_embedded<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="使用-t-sne-可视化-1536-维-embedding">3. 使用 t-SNE 可视化 1536
-维 Embedding</h3>
+<h3 id="3-使用-t-SNE-可视化-1536-维-Embedding">3. 使用 t-SNE 可视化 1536 维 Embedding</h3>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">show_embedding</span><span class="token punctuation">(</span>df_embedded<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># 确保嵌入向量都是等长的</span>
     <span class="token keyword">assert</span> df_embedded<span class="token punctuation">[</span><span class="token string">'embedding_vec'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">apply</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">)</span><span class="token punctuation">.</span>nunique<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span>
@@ -420,9 +417,8 @@ target="_blank" rel="noopener" href="https://github.com/DjangoPeng/openai-quicks
     <span class="token comment"># 为图形添加标题</span>
     plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">"Amazon ratings visualized in language using t-SNE"</span><span class="token punctuation">)</span>
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222107847.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
-<h3 id="使用-k-means-聚类然后使用-t-sne-可视化">4. 使用 K-Means
-聚类，然后使用 t-SNE 可视化</h3>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222107847.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<h3 id="4-使用-K-Means-聚类，然后使用-t-SNE-可视化">4. 使用 K-Means 聚类，然后使用 t-SNE 可视化</h3>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">k_means_show_embedding</span><span class="token punctuation">(</span>df_embedded<span class="token punctuation">)</span><span class="token punctuation">:</span>
     matrix <span class="token operator">=</span> np<span class="token punctuation">.</span>vstack<span class="token punctuation">(</span>df_embedded<span class="token punctuation">[</span><span class="token string">'embedding_vec'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">)</span>
 
@@ -461,8 +457,8 @@ target="_blank" rel="noopener" href="https://github.com/DjangoPeng/openai-quicks
 
     <span class="token comment"># 显示图形</span>
     plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222133685.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
-<h3 id="使用-embedding-进行文本搜索">5. 使用 Embedding 进行文本搜索</h3>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408222133685.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<h3 id="5-使用-Embedding-进行文本搜索">5. 使用 Embedding 进行文本搜索</h3>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># cosine_similarity 函数计算两个嵌入向量之间的余弦相似度。</span>
 <span class="token keyword">def</span> <span class="token function">cosine_similarity</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">return</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>linalg<span class="token punctuation">.</span>norm<span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">*</span> np<span class="token punctuation">.</span>linalg<span class="token punctuation">.</span>norm<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>

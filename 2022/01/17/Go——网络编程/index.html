@@ -16,18 +16,21 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Go 语言实现 TCP 通信 TCP&#x2F;IP(Transmission Control Protocol&#x2F;Internet Protocol) 即传输控制协议&#x2F;网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport layer）通信协议。 1.1 服务端 TCP 服务端程序的处理流程： 1. 监听端口 2. 接收客户端请求建立链接 3. 创建 goroutine">
+    <meta name="description" content="1. Go 语言实现 TCP 通信 TCP&#x2F;IP(Transmission Control Protocol&#x2F;Internet Protocol) 即传输控制协议&#x2F;网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport layer）通信协议。 1.1 服务端 TCP 服务端程序的处理流程：  监听端口 接收客户端请求建立链接 创建 goroutine 处理链接。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——socket 编程">
 <meta property="og:url" content="http://example.com/2022/01/17/Go%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Go 语言实现 TCP 通信 TCP&#x2F;IP(Transmission Control Protocol&#x2F;Internet Protocol) 即传输控制协议&#x2F;网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport layer）通信协议。 1.1 服务端 TCP 服务端程序的处理流程： 1. 监听端口 2. 接收客户端请求建立链接 3. 创建 goroutine">
+<meta property="og:description" content="1. Go 语言实现 TCP 通信 TCP&#x2F;IP(Transmission Control Protocol&#x2F;Internet Protocol) 即传输控制协议&#x2F;网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport layer）通信协议。 1.1 服务端 TCP 服务端程序的处理流程：  监听端口 接收客户端请求建立链接 创建 goroutine 处理链接。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118204607.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118213857.png">
 <meta property="article:published_time" content="2022-01-17T14:19:03.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.306Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118204607.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,13 +295,15 @@
             
             <div class="markdown-body">
               
-              <h3 id="go-语言实现-tcp-通信">1. Go 语言实现 TCP 通信</h3>
-<p>TCP/IP(Transmission Control Protocol/Internet Protocol)
-即传输控制协议/网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport
-layer）通信协议。</p>
-<h4 id="服务端">1.1 服务端</h4>
-<p>TCP 服务端程序的处理流程： 1. 监听端口 2. 接收客户端请求建立链接 3.
-创建 goroutine 处理链接。</p>
+              <h3 id="1-Go-语言实现-TCP-通信">1. Go 语言实现 TCP 通信</h3>
+<p>TCP/IP(Transmission Control Protocol/Internet Protocol) 即传输控制协议/网间协议，是一种面向连接（连接导向）的、可靠的、基于字节流的传输层（Transport layer）通信协议。</p>
+<h4 id="1-1-服务端">1.1 服务端</h4>
+<p>TCP 服务端程序的处理流程：</p>
+<ol>
+<li>监听端口</li>
+<li>接收客户端请求建立链接</li>
+<li>创建 goroutine 处理链接。</li>
+</ol>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	listen<span class="token punctuation">,</span> err <span class="token operator">:=</span> net<span class="token punctuation">.</span><span class="token function">Listen</span><span class="token punctuation">(</span><span class="token string">"tcp"</span><span class="token punctuation">,</span> <span class="token string">":28001"</span><span class="token punctuation">)</span>
 	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
@@ -333,9 +338,9 @@ layer）通信协议。</p>
 		conn<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">byte</span><span class="token punctuation">(</span><span class="token string">"收到"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="客户端">1.2 客户端</h4>
+<h4 id="1-2-客户端">1.2 客户端</h4>
 <p>一个 TCP 客户端进行 TCP 通信的流程如下：</p>
-<ol type="1">
+<ol>
 <li>建立与服务端的链接</li>
 <li>进行数据收发</li>
 <li>关闭链接</li>
@@ -371,7 +376,7 @@ layer）通信协议。</p>
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token function">string</span><span class="token punctuation">(</span>buf<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="tcp黏包">2. TCP黏包</h3>
+<h3 id="2-TCP黏包">2. TCP黏包</h3>
 <p><strong>服务端代码：</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	listen<span class="token punctuation">,</span> err <span class="token operator">:=</span> net<span class="token punctuation">.</span><span class="token function">Listen</span><span class="token punctuation">(</span><span class="token string">"tcp"</span><span class="token punctuation">,</span> <span class="token string">":28001"</span><span class="token punctuation">)</span>
@@ -421,22 +426,15 @@ layer）通信协议。</p>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>执行结果：</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118204607.png" srcset="/img/loading.gif" lazyload /></p>
-<h4 id="粘包的原因">2.1 粘包的原因</h4>
-<p>主要原因就是 tcp
-数据传递模式是流模式，在保持长连接的时候可以进行多次的收和发。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118204607.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h4 id="2-1-粘包的原因">2.1 粘包的原因</h4>
+<p>主要原因就是 tcp 数据传递模式是流模式，在保持长连接的时候可以进行多次的收和发。</p>
 <p>“粘包”可发生在发送端也可发生在接收端：</p>
-<ol type="1">
-<li>由 Nagle 算法造成的发送端的粘包：Nagle
-算法是一种改善网络传输效率的算法。简单来说就是当提交一段数据给 TCP
-发送时，TCP
-并不立刻发送此段数据，而是等待一小段时间看看在等待期间是否还有要发送的数据，若有则会一次把这两段数据发送出去。</li>
-<li>接收端接收不及时造成的接收端粘包：TCP
-会把接收到的数据存在自己的缓冲区中，然后通知应用层取数据。当应用层由于某些原因不能及时的把
-TCP 的数据取出来，就会造成 TCP 缓冲区中存放了几段数据。</li>
+<ol>
+<li>由 Nagle 算法造成的发送端的粘包：Nagle 算法是一种改善网络传输效率的算法。简单来说就是当提交一段数据给 TCP 发送时，TCP 并不立刻发送此段数据，而是等待一小段时间看看在等待期间是否还有要发送的数据，若有则会一次把这两段数据发送出去。</li>
+<li>接收端接收不及时造成的接收端粘包：TCP 会把接收到的数据存在自己的缓冲区中，然后通知应用层取数据。当应用层由于某些原因不能及时的把 TCP 的数据取出来，就会造成 TCP 缓冲区中存放了几段数据。</li>
 </ol>
-<h4 id="解决办法">2.2 解决办法</h4>
+<h4 id="2-2-解决办法">2.2 解决办法</h4>
 <p>出现”粘包”的关键在于接收方不确定将要传输的数据包的大小，因此我们可以对数据包进行封包和拆包的操作。</p>
 <p>封包：封包就是给一段数据加上包头，这样一来数据包就分为包头和包体两部分内容了(过滤非法包时封包会加入”包尾”内容)。包头部分的长度是固定的，并且它存储了包体的长度，根据包头长度固定以及包头中含有包体长度的变量就能正确的拆分出一个完整的数据包。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> proto
@@ -524,7 +522,8 @@ TCP 的数据取出来，就会造成 TCP 缓冲区中存放了几段数据。</
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"server 接收消息："</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>客户端代码：</strong> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p><strong>客户端代码：</strong></p>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> net<span class="token punctuation">.</span><span class="token function">Dial</span><span class="token punctuation">(</span><span class="token string">"tcp"</span><span class="token punctuation">,</span> <span class="token string">"127.0.0.1:28001"</span><span class="token punctuation">)</span>
 	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">&#123;</span>
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"client connection error:"</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
@@ -540,12 +539,10 @@ TCP 的数据取出来，就会造成 TCP 缓冲区中存放了几段数据。</
 		<span class="token punctuation">&#125;</span>
 		conn<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118213857.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="go语言实现udp通信">3. Go语言实现UDP通信</h3>
-<p>UDP 协议（User Datagram Protocol）中文名称是用户数据报协议，是
-OSI（Open System
-Interconnection，开放式系统互联）参考模型中一种无连接的传输层协议，不需要建立连接就能直接进行数据发送和接收，属于不可靠的、没有时序的通信，但是UDP协议的实时性比较好，通常用于视频直播相关领域。</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220118213857.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="3-Go语言实现UDP通信">3. Go语言实现UDP通信</h3>
+<p>UDP 协议（User Datagram Protocol）中文名称是用户数据报协议，是 OSI（Open System Interconnection，开放式系统互联）参考模型中一种无连接的传输层协议，不需要建立连接就能直接进行数据发送和接收，属于不可靠的、没有时序的通信，但是UDP协议的实时性比较好，通常用于视频直播相关领域。</p>
 <p><strong>服务端</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	conn<span class="token punctuation">,</span> err <span class="token operator">:=</span> net<span class="token punctuation">.</span><span class="token function">ListenUDP</span><span class="token punctuation">(</span><span class="token string">"udp"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>net<span class="token punctuation">.</span>UDPAddr<span class="token punctuation">&#123;</span>

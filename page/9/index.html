@@ -369,7 +369,7 @@
       <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
         <div>
           
-          1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1. 每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 2. 规范统一了 maven 的执行路径。 可以通过命令 mvn ${
+          1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：  每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 规范统一了 maven 的执行路径。  可以通过命令 mvn ${phas
         </div>
       </a>
 
@@ -430,7 +430,7 @@
       <a class="index-excerpt" href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
         <div>
           
-          1. maven 安装与核心概念 maven 的功能：编译、打包、测试、依赖管理 1.1 安装  官网下载 Maven （http:&#x2F;&#x2F;maven.apache.org&#x2F;download.cgi） 解压指定目录 配置环境变量 检查安装是否成功 （mvn -version）  安装参考 1.2 maven 编译  创建 maven 项目 创建 src 文件 编写 pom 文件 执行编译命令  &amp;lt
+          1. maven  安装与核心概念 maven 的功能：编译、打包、测试、依赖管理 1.1 安装  官网下载 Maven （http:&#x2F;&#x2F;maven.apache.org&#x2F;download.cgi） 解压指定目录 配置环境变量 检查安装是否成功 （mvn -version）  安装参考 1.2 maven 编译  创建 maven 项目 创建 src 文件 编写  pom 文件 执行编译命令  &amp;
         </div>
       </a>
 
@@ -552,7 +552,7 @@
       <a class="index-excerpt" href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/" target="_blank">
         <div>
           
-          1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r
+          1. reset 的三种模式   –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。   –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。   –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2.
         </div>
       </a>
 
@@ -735,7 +735,7 @@
       <a class="index-excerpt" href="/2022/02/13/Git%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">
         <div>
           
-          1. 基本概念    工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：    图中左侧为工作区，右侧为版本库。&quot;index&quot; 为是暂存区（stage&#x2F;index）， &quot;master&quot; 是 master 分支所代表的目录树。
+          1. 基本概念   工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：   图中左侧为工作区，右侧为版本库。“index” 为是暂存区（stage&#x2F;index）， “master” 是 master 分支所代表的目录树。   图
         </div>
       </a>
 
@@ -796,7 +796,7 @@
       <a class="index-excerpt" href="/2022/02/04/idea%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" target="_blank">
         <div>
           
-          1. 代码模板 1.1 fori &#x2F; forr &#x2F; (int.fori&#x2F;forr) 快速生成 for 循环  1.2 sout &#x2F; soutv &#x2F; sout &#x2F; souf &#x2F; soutm &#x2F; serr sout：快速生成 System.out.println(); soutv：输出当前上下文变量 soutm : 打印当前方法签名 soutp：打印当前方法参数 souf：格式化输出字符串 serr：
+          1. 代码模板 1.1  fori &#x2F; forr &#x2F; (int.fori&#x2F;forr) 快速生成 for 循环  1.2 sout &#x2F; soutv &#x2F; sout &#x2F; souf &#x2F; soutm &#x2F; serr sout：快速生成         System.out.println(); soutv：输出当前上下文变量 soutm : 打印当前方法签名 soutp：打印当前方法参数 souf：格式化输出
         </div>
       </a>
 

@@ -16,18 +16,20 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1. 每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 2. 规范统一了 maven 的执行路径。 可以通过命令 mvn ${">
+    <meta name="description" content="1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：  每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 规范统一了 maven 的执行路径。  可以通过命令 mvn ${phas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="maven——生命周期与自定义插件开发">
 <meta property="og:url" content="http://example.com/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1. 每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 2. 规范统一了 maven 的执行路径。 可以通过命令 mvn ${">
+<meta property="og:description" content="1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：  每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 规范统一了 maven 的执行路径。  可以通过命令 mvn ${phas">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220228203832.png">
 <meta property="article:published_time" content="2022-02-28T12:03:04.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.311Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="maven">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220228203832.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,46 +294,38 @@
             
             <div class="markdown-body">
               
-              <h3 id="生命周期">1. 生命周期</h3>
-<h4 id="生命周期的概念与意义">1.1 生命周期的概念与意义</h4>
-<p>在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven
-统一对其进行了整理抽像成三个生命周期
-(lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1.
-每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。
-2. 规范统一了 maven 的执行路径。</p>
-<p>可以通过命令 mvn ${phase name} 直接触发指定阶段的执行如：
+              <h3 id="1-生命周期">1. 生命周期</h3>
+<h4 id="1-1-生命周期的概念与意义">1.1 生命周期的概念与意义</h4>
+<p>在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是：</p>
+<ol>
+<li>每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。</li>
+<li>规范统一了 maven 的执行路径。</li>
+</ol>
+<p>可以通过命令 mvn ${phase name} 直接触发指定阶段的执行如：</p>
 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token comment">#执行清理 phase</span>
 mvn clean
 <span class="token comment">#执行 compile phase</span>
 mvn compile
 <span class="token comment">#也可以同时执行 清理加编译</span>
-mvn clean comile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<h4 id="maven-三大生命周期与其对应的phase">1.2 maven
-三大生命周期与其对应的phase</h4>
-<p>maven 总共包含三大生生命周期 1. clean
-Lifecycle：清理生命周期，用于清理项目 2. default
-Lifecycle：默认生命周期，用于编译、打包、测试、部署等 3. site
-Lifecycle：站点文档生成，用于构建站点文档</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220228203832.png" srcset="/img/loading.gif" lazyload /></p>
-<p>三大生命周期其相互独立执行，也可以合在一起执行。但 lifecycle 中的
-phase 是有严格执行的顺序的，比如必须是先执行完 compile 才能执行 pakcage
-动作，此外 phase 还有包含逻辑存在，即当你执行一个phase 时 其前面的 phase
-会自动执行（同一生命周期中）。</p>
-<p>https://maven.apache.org/ref/3.5.4/maven-core/lifecycles.html</p>
-<h4 id="生命周期与插件的关系">1.3 生命周期与插件的关系</h4>
-<p>生命周期的 phase
-组成了项目构建的完整过程，这些过程具体是由插件来实现的。</p>
-<p>比如：test 阶段就是由 maven-surefire-plugin 实现。在 pom.xml
-中可以设置指定插件目标（gogal）与 phase 绑定，当项目构建到达指定 phase
-时，就会触发这些插件 gogal 的执行。一个插件有时会实现多个 phase
-比如：maven-compiler-plugin 插件分别实现了compile 和 testCompile。</p>
-<p>总结： 生命周期的阶段可以绑定具体的插件及目标
+mvn clean comile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h4 id="1-2-maven-三大生命周期与其对应的phase">1.2 maven 三大生命周期与其对应的phase</h4>
+<p>maven 总共包含三大生生命周期</p>
+<ol>
+<li>clean Lifecycle：清理生命周期，用于清理项目</li>
+<li>default Lifecycle：默认生命周期，用于编译、打包、测试、部署等</li>
+<li>site Lifecycle：站点文档生成，用于构建站点文档</li>
+</ol>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220228203832.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>三大生命周期其相互独立执行，也可以合在一起执行。但 lifecycle 中的 phase 是有严格执行的顺序的，比如必须是先执行完 compile 才能执行 pakcage 动作，此外 phase 还有包含逻辑存在，即当你执行一个phase 时 其前面的 phase 会自动执行（同一生命周期中）。</p>
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/ref/3.5.4/maven-core/lifecycles.html">https://maven.apache.org/ref/3.5.4/maven-core/lifecycles.html</a></p>
+<h4 id="1-3-生命周期与插件的关系">1.3 生命周期与插件的关系</h4>
+<p>生命周期的 phase 组成了项目构建的完整过程，这些过程具体是由插件来实现的。</p>
+<p>比如：test 阶段就是由 maven-surefire-plugin 实现。在 pom.xml 中可以设置指定插件目标（gogal）与 phase 绑定，当项目构建到达指定 phase 时，就会触发这些插件 gogal 的执行。一个插件有时会实现多个 phase 比如：maven-compiler-plugin 插件分别实现了compile 和 testCompile。</p>
+<p>总结：<br>
+生命周期的阶段可以绑定具体的插件及目标<br>
 不同配置下同一个阶段可以对应多个插件和目标</p>
-<h4 id="生命周期与插件的默认绑定">1.4 生命周期与插件的默认绑定</h4>
-<p>在我们的项目当中并没有配置 maven-compiler-plugin 插件,但当执行
-compile 阶段时一样能够执行编译操作，原因是 maven
-默认为指定阶段绑定了插件实现。列如以下两个操作在一定程度上是等价的。</p>
+<h4 id="1-4-生命周期与插件的默认绑定">1.4 生命周期与插件的默认绑定</h4>
+<p>在我们的项目当中并没有配置 maven-compiler-plugin 插件,但当执行 compile 阶段时一样能够执行编译操作，原因是 maven 默认为指定阶段绑定了插件实现。列如以下两个操作在一定程度上是等价的。</p>
 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn compile
 <span class="token comment">#直接执行compile插件目标</span>
 mvn org.apache.maven.plugins:maven-compiler-plugin:3.1:compile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
@@ -362,16 +356,19 @@ mvn org.apache.maven.plugins:maven-compiler-plugin:3.1:compile<span aria-hidden=
     org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>deploy</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>phases</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>https://maven.apache.org/ref/3.5.4/maven-core/default-bindings.html</p>
-<h3 id="maven-自定义插件开发">2. maven 自定义插件开发</h3>
-<h4 id="maven-插件相关概念">2.1 maven 插件相关概念</h4>
-<p><strong>插件坐标定位：</strong> 插件与普通 jar 包一样包含
-一组件坐标定位属性即：groupId、artifactId、version，当使用该插件时会从本地仓库中搜索，如果没有即从远程仓库下载</p>
-<p><strong>插件执行 execution：</strong> execution
-配置包含一组指示插件如何执行的属性： id ： 执行器命名
-phase：在什么阶段执行？ goals：执行一组什么目标或功能？
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/ref/3.5.4/maven-core/default-bindings.html">https://maven.apache.org/ref/3.5.4/maven-core/default-bindings.html</a></p>
+<h3 id="2-maven-自定义插件开发">2. maven 自定义插件开发</h3>
+<h4 id="2-1-maven-插件相关概念">2.1 maven 插件相关概念</h4>
+<p><strong>插件坐标定位：</strong><br>
+插件与普通 jar 包一样包含 一组件坐标定位属性即：groupId、artifactId、version，当使用该插件时会从本地仓库中搜索，如果没有即从远程仓库下载</p>
+<p><strong>插件执行 execution：</strong><br>
+execution 配置包含一组指示插件如何执行的属性：<br>
+id ： 执行器命名<br>
+phase：在什么阶段执行？<br>
+goals：执行一组什么目标或功能？<br>
 configuration：执行目标所需的配置文件？</p>
-<p>【例】将插件依赖拷贝到指定目录 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+<p>【例】将插件依赖拷贝到指定目录</p>
+<div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>maven-dependency-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.1.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
@@ -389,23 +386,31 @@ configuration：执行目标所需的配置文件？</p>
             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>execution</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>executions</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<h4 id="常用插件的使用">2.2 常用插件的使用</h4>
-<p>除了通过配置的方式使用插件以外，Maven
-也提供了通过命令直接调用插件目标其命令格式如下：</p>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h4 id="2-2-常用插件的使用">2.2 常用插件的使用</h4>
+<p>除了通过配置的方式使用插件以外，Maven 也提供了通过命令直接调用插件目标其命令格式如下：</p>
 <p>mvn groupId:artifactId:version:goal -D{参数名}</p>
-<p>【例】展示 pom 的依赖关系树 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:tree<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-也可以直接简化版的命令，但前提必须是 maven 官方插件 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn dependency:tree<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></p>
+<p>【例】展示 pom 的依赖关系树</p>
+<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:tree<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>也可以直接简化版的命令，但前提必须是 maven 官方插件</p>
+<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn dependency:tree<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><strong>查看 pom 文件的最终配置</strong></p>
 <p>mvn help:effective-pom</p>
-<p><strong>原型项目生成</strong> <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">archetype:generate
+<p><strong>原型项目生成</strong></p>
+<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">archetype:generate
 <span class="token comment">#快速创建一个 WEB 程序</span>
 mvn archetype:generate <span class="token parameter variable">-DgroupId</span><span class="token operator">=</span>tuling <span class="token parameter variable">-DartifactId</span><span class="token operator">=</span>simple-webbapp <span class="token parameter variable">-DarchetypeArtifactId</span><span class="token operator">=</span>maven-archetype-webapp <span class="token parameter variable">-DinteractiveMode</span><span class="token operator">=</span>false
 <span class="token comment">#快速创建一个java 项目</span>
-mvn archetype:generate <span class="token parameter variable">-DgroupId</span><span class="token operator">=</span>tuling <span class="token parameter variable">-DartifactId</span><span class="token operator">=</span>simple-java <span class="token parameter variable">-DarchetypeArtifactId</span><span class="token operator">=</span>maven-archetype-quickstart <span class="token parameter variable">-DinteractiveMode</span><span class="token operator">=</span>false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<h4 id="开发一个自定义插件">2.3 开发一个自定义插件</h4>
-<p>实现步骤： + 创建 maven 插件项目 + 设定 packaging 为 maven-plugin +
-添加插件依赖 + 编写插件实现逻辑 + 打包构建插</p>
+mvn archetype:generate <span class="token parameter variable">-DgroupId</span><span class="token operator">=</span>tuling <span class="token parameter variable">-DartifactId</span><span class="token operator">=</span>simple-java <span class="token parameter variable">-DarchetypeArtifactId</span><span class="token operator">=</span>maven-archetype-quickstart <span class="token parameter variable">-DinteractiveMode</span><span class="token operator">=</span>false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h4 id="2-3-开发一个自定义插件">2.3 开发一个自定义插件</h4>
+<p>实现步骤：</p>
+<ul>
+<li>创建 maven 插件项目</li>
+<li>设定 packaging 为 maven-plugin</li>
+<li>添加插件依赖</li>
+<li>编写插件实现逻辑</li>
+<li>打包构建插</li>
+</ul>
 <p>pom.xml：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>project</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://maven.apache.org/POM/4.0.0<span class="token punctuation">"</span></span>
@@ -452,7 +457,8 @@ mvn archetype:generate <span class="token parameter variable">-DgroupId</span><s
     <span class="token punctuation">&#125;</span>
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>打包到本地仓库： <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></p>
+<p>打包到本地仓库：</p>
+<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">mvn <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>其他项目使用此插件：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
@@ -474,7 +480,8 @@ mvn archetype:generate <span class="token parameter variable">-DgroupId</span><s
        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>executions</span><span class="token punctuation">></span></span>
    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>执行结果： <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">PS G:<span class="token punctuation">\</span>tmp<span class="token punctuation">\</span>learnMaven<span class="token operator">></span> mvn compile
+<p>执行结果：</p>
+<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">PS G:<span class="token punctuation">\</span>tmp<span class="token punctuation">\</span>learnMaven<span class="token operator">></span> mvn compile
 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> Scanning <span class="token keyword">for</span> projects<span class="token punctuation">..</span>.
 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> ------------------------------------------------------------------------
 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> Reactor Build Order:
@@ -492,7 +499,7 @@ mvn archetype:generate <span class="token parameter variable">-DgroupId</span><s
 <span class="token punctuation">[</span>INFO<span class="token punctuation">]</span> ---------------------<span class="token operator">&lt;</span> com.debuggingworld:module1 <span class="token operator">></span>---------------------
 
 <span class="token punctuation">..</span><span class="token punctuation">..</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>

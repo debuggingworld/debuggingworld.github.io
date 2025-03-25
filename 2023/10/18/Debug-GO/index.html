@@ -33,6 +33,7 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192254999.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211648358.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211632410.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310212149797.png">
 <meta property="article:published_time" content="2023-10-18T13:17:35.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.803Z">
 <meta property="article:author" content="debuggingWorld">
@@ -304,36 +305,29 @@
             <div class="markdown-body">
               
               <p>面试题汇总：</p>
-<p>https://zhuanlan.zhihu.com/p/519979757</p>
-<p>https://www.zhihu.com/people/itsanmao/posts</p>
-<h3 id="golang-调度器设计思想gmp-协程调度模型详解">1. Golang
-调度器设计思想、GMP 协程调度模型详解</h3>
-<p>https://zhuanlan.zhihu.com/p/617420622</p>
-<ol type="1">
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/519979757">https://zhuanlan.zhihu.com/p/519979757</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/people/itsanmao/posts">https://www.zhihu.com/people/itsanmao/posts</a></p>
+<h3 id="1-Golang-调度器设计思想、GMP-协程调度模型详解">1. Golang 调度器设计思想、GMP 协程调度模型详解</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/617420622">https://zhuanlan.zhihu.com/p/617420622</a></p>
+<ol>
 <li>GM</li>
 <li>GMP</li>
 <li>work stealing 机制和 hand off 机制</li>
 <li>抢占式调度</li>
 </ol>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310182358164.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
-<p>　</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190006013.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
-<h3 id="go内存管理和分配策略">2. Go内存管理和分配策略</h3>
-<p>https://zhuanlan.zhihu.com/p/619865411</p>
-<ol type="1">
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310182358164.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+<p></p>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190006013.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
+<h3 id="2-Go内存管理和分配策略">2. Go内存管理和分配策略</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/619865411">https://zhuanlan.zhihu.com/p/619865411</a></p>
+<ol>
 <li>TCMalloc：Thread Cache Malloc</li>
 <li>Mspan、mcache、mcentral、mheap</li>
 </ol>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190018997.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310190018997.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
 <p>内存对齐：</p>
-<p>https://zhuanlan.zhihu.com/p/621129832</p>
-<h3 id="go-gc分析">3. GO GC分析</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/621129832">https://zhuanlan.zhihu.com/p/621129832</a></p>
+<h3 id="3-GO-GC分析">3. GO GC分析</h3>
 <p>GC触发机制：</p>
 <p>Go语言中有三种GC的触发时机：</p>
 <ul>
@@ -348,20 +342,19 @@
 <li>GO 1.8混合写屏障</li>
 </ul>
 <p><strong>GC 中 stw 时机，各个阶段是如何解决的？</strong></p>
-<p>https://zhuanlan.zhihu.com/p/356930881</p>
-<p>https://blog.51cto.com/u_10983441/5357639</p>
-<h3 id="golang-的-goroutine-是如何实现的">4. Golang 的 goroutine
-是如何实现的？</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/356930881">https://zhuanlan.zhihu.com/p/356930881</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_10983441/5357639">https://blog.51cto.com/u_10983441/5357639</a></p>
+<h3 id="4-Golang-的-goroutine-是如何实现的？">4. Golang 的 goroutine 是如何实现的？</h3>
 <ul>
 <li>GMP</li>
 <li>调度</li>
 <li>内存分配</li>
 <li>GC</li>
 </ul>
-<p>https://www.zhihu.com/question/20862617/answer/921061289</p>
-<h3 id="深入分析golang的mutex">5. 深入分析Golang的Mutex</h3>
-<p>https://zhuanlan.zhihu.com/p/501972241</p>
-<ol type="1">
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20862617/answer/921061289">https://www.zhihu.com/question/20862617/answer/921061289</a></p>
+<h3 id="5-深入分析Golang的Mutex">5. 深入分析Golang的Mutex</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/501972241">https://zhuanlan.zhihu.com/p/501972241</a></p>
+<ol>
 <li>state<code>和</code>sema</li>
 <li><code>state</code>字段为<code>int32</code>类型，其低三位分别代表了锁的一些状态：
 <ul>
@@ -369,21 +362,22 @@
 <li><code>mutexWoken</code>是<code>低2位</code>，用二进制表示为<code>0010</code>，它代表互斥锁上是否有被唤醒的goroutine。</li>
 <li><code>mutexStarving</code>是<code>低3位</code>，用二进制表示为<code>0100</code>，它代表当前互斥锁是否处于饥饿模式。</li>
 <li><code>state</code>剩下的29位用于统计在互斥锁上的等待队列中<code>goroutine</code>数目（<code>waiter</code>）。</li>
-</ul></li>
+</ul>
+</li>
 </ol>
 <p><strong>自旋的条件如下：</strong></p>
 <p>1）还没自旋超过 4 次,</p>
 <p>2）多核处理器，</p>
 <p>3）GOMAXPROCS &gt; 1，</p>
 <p>4）p 上本地 goroutine 队列为空。</p>
-<h3 id="切片">6. 切片</h3>
-<ol type="1">
+<h3 id="6-切片">6. 切片</h3>
+<ol>
 <li>结构</li>
 <li>扩容</li>
 <li>作为函数参数传参</li>
 </ol>
-<p>https://zhuanlan.zhihu.com/p/598973739</p>
-<h3 id="channel">7. channel</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/598973739">https://zhuanlan.zhihu.com/p/598973739</a></p>
+<h3 id="7-channel">7. channel</h3>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> hchan <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
     qcount   <span class="token builtin">uint</span>           <span class="token comment">// 当前队列中剩余元素个数</span>
     dataqsiz <span class="token builtin">uint</span>           <span class="token comment">// 环形队列长度，即可以存放的元素个数</span>
@@ -397,25 +391,18 @@
     sendq    waitq          <span class="token comment">// 等待写消息的goroutine队列，即等待发送队列</span>
     lock     mutex          <span class="token comment">// 互斥锁，chan不允许并发读写</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192212948.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</br></br><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192303076.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192212948.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+  </br></br><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192303076.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
 </center>
 <p>发送流程：</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192237574.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192237574.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
 <p>接受流程：</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192253540.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192253540.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
 <p>关闭流程：</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192254999.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-</center>
-<p>https://zhuanlan.zhihu.com/p/604907917</p>
-<p>https://zhuanlan.zhihu.com/p/605991429</p>
-<h3 id="map">8. Map</h3>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310192254999.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></center>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/604907917">https://zhuanlan.zhihu.com/p/604907917</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/605991429">https://zhuanlan.zhihu.com/p/605991429</a></p>
+<h3 id="8-Map">8. Map</h3>
 <ul>
 <li>任何可比较的类型都可以是键——所有简单的标量类型（布尔、整数、浮点、复数、字符串）、指针、通道、数组、接口。</li>
 <li>不可比较的类型——切片、映射、函数（ slice、map、function）。</li>
@@ -472,24 +459,20 @@
   overflow <span class="token operator">*</span>bmap
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>不使用预分配的溢出桶：</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211648358.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211648358.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
 <p>bmap 的内存布局:</p>
-<center>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211632410.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-</center>
+<center><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310211632410.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></center>
 <p>最上面蓝色区域的HOBHash即为每个对应key的hash值的高8位，也即tophash数组。</p>
-<p>https://zhuanlan.zhihu.com/p/652191566</p>
-<p>https://www.jianshu.com/p/e1f380c4ae48</p>
-<p>https://blog.51cto.com/u_13539/6761128</p>
-<p><strong>不支持缩容</strong>：https://blog.csdn.net/EDDYCJY/article/details/120465701</p>
-<h4 id="map并发安全">8.1 map并发安全</h4>
-<p>https://blog.csdn.net/weixin_43973689/article/details/127986224</p>
-<p>https://www.jb51.net/jiaoben/285704yj5.htm</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/652191566">https://zhuanlan.zhihu.com/p/652191566</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e1f380c4ae48">https://www.jianshu.com/p/e1f380c4ae48</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_13539/6761128">https://blog.51cto.com/u_13539/6761128</a></p>
+<p><strong>不支持缩容</strong>：<a target="_blank" rel="noopener" href="https://blog.csdn.net/EDDYCJY/article/details/120465701">https://blog.csdn.net/EDDYCJY/article/details/120465701</a></p>
+<h4 id="8-1-map并发安全">8.1 map并发安全</h4>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43973689/article/details/127986224">https://blog.csdn.net/weixin_43973689/article/details/127986224</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/jiaoben/285704yj5.htm">https://www.jb51.net/jiaoben/285704yj5.htm</a></p>
 <p>sync.Map 实现：</p>
-<p>https://zhuanlan.zhihu.com/p/599178236</p>
-<h3 id="select">9. select</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599178236">https://zhuanlan.zhihu.com/p/599178236</a></p>
+<h3 id="9-select">9. select</h3>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> scase <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
   c    <span class="token operator">*</span>hchan         <span class="token comment">// case中使用的chan</span>
   elem unsafe<span class="token punctuation">.</span>Pointer <span class="token comment">// 指向case包含数据的指针</span>
@@ -497,72 +480,57 @@
 <p>第一，Go select 语句采用的多路复用思想。</p>
 <p>第二，select的基本用法是：通过多个case监听多个Channel的读写操作，任何一个case可以执行则选择该case执行，否则执行default。如果没有default，且所有的case均不能执行，则当前的goroutine阻塞。</p>
 <p>第三，编译器会对select有不同的case的情况进行优化以提高性能。首先，编译器对select没有case、有单case和单case+default的情况进行单独处理。这些处理或者直接调用运行时函数，或者直接转成对channel的操作，或者以非阻塞的方式访问channel，多种灵活的处理方式能够提高性能，尤其是避免对channel的加锁。</p>
-<p>第四，对最常出现的select有多case的情况，会调用 runtime.selectgo()
-函数来获取执行 case 的索引，并生成 if 语句执行该case的代码。</p>
-<p>第五，selectgo函数的执行分为四个步骤：首先，随机生成一个遍历case的轮询顺序
-pollorder 并根据 channel 地址生成加锁顺序
-lockorder，随机顺序能够避免channel饥饿，保证公平性，加锁顺序能够避免死锁；然后，根据
-pollorder 的顺序查找 scases
-是否有可以立即收发的channel，如果有则获取case索引进行处理；再次，如果pollorder顺序上没有可以直接处理的case，则将当前
-goroutine 加入各 case 的 channel 对应的收发队列上并等待其他 goroutine
-的唤醒；最后，当调度器唤醒当前 goroutine 时，会再次按照 lockorder
-遍历所有的case，从中查找需要被处理的case索引进行读写处理，同时从所有case的发送接收队列中移除掉当前goroutine。</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310212149797.png" srcset="/img/loading.gif" lazyload /></p>
-<p>https://blog.csdn.net/QcloudCommunity/article/details/128556748</p>
-<h3 id="new和make的区别">10. new和make的区别</h3>
-<p>https://zhuanlan.zhihu.com/p/648748855</p>
-<h3 id="逃逸分析">11. 逃逸分析</h3>
-<p>https://cloud.tencent.com/developer/article/2206329</p>
+<p>第四，对最常出现的select有多case的情况，会调用 runtime.selectgo() 函数来获取执行 case 的索引，并生成 if 语句执行该case的代码。</p>
+<p>第五，selectgo函数的执行分为四个步骤：首先，随机生成一个遍历case的轮询顺序 pollorder 并根据 channel 地址生成加锁顺序 lockorder，随机顺序能够避免channel饥饿，保证公平性，加锁顺序能够避免死锁；然后，根据 pollorder 的顺序查找 scases 是否有可以立即收发的channel，如果有则获取case索引进行处理；再次，如果pollorder顺序上没有可以直接处理的case，则将当前 goroutine 加入各 case 的 channel 对应的收发队列上并等待其他 goroutine 的唤醒；最后，当调度器唤醒当前 goroutine 时，会再次按照 lockorder 遍历所有的case，从中查找需要被处理的case索引进行读写处理，同时从所有case的发送接收队列中移除掉当前goroutine。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310212149797.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/QcloudCommunity/article/details/128556748">https://blog.csdn.net/QcloudCommunity/article/details/128556748</a></p>
+<h3 id="10-new和make的区别">10. new和make的区别</h3>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/648748855">https://zhuanlan.zhihu.com/p/648748855</a></p>
+<h3 id="11-逃逸分析">11. 逃逸分析</h3>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2206329">https://cloud.tencent.com/developer/article/2206329</a></p>
 <p>逃逸分析原则：</p>
 <ul>
-<li>不同于JAVA
-JVM的运行时逃逸分析，Go的逃逸分析是在编译期完成的：编译期无法确定的参数类型<strong>必定</strong>放到堆中；</li>
+<li>不同于JAVA JVM的运行时逃逸分析，Go的逃逸分析是在编译期完成的：编译期无法确定的参数类型<strong>必定</strong>放到堆中；</li>
 <li>如果变量在函数外部存在引用，则<strong>必定</strong>放在堆中；</li>
 <li>如果变量占用内存较大时，则<strong>优先</strong>放到堆中；</li>
 <li>如果变量在函数外部没有引用，则<strong>优先</strong>放到栈中；</li>
 </ul>
-<h3 id="内存泄漏">12. 内存泄漏</h3>
-<p>https://blog.51cto.com/u_16099296/6700430</p>
-<h3 id="go-中-uintptr-和-unsafe.pointer-的区别">13. Go 中 uintptr 和
-unsafe.Pointer 的区别</h3>
-<p>https://blog.csdn.net/lengyue1084/article/details/133127480</p>
-<h3 id="go-多返回值怎么实现的">14. Go 多返回值怎么实现的</h3>
-<p>Go 传参和返回值是通过 FP+offset 实现，并且存储在调用函数的栈帧中。FP
-栈底寄存器，指向一个函数栈的顶部;PC 程序计数器，指向下一条执行指令;SB
-指向静态数据的基指针，全局符号;SP 栈顶寄存器。</p>
-<p>http://caibaojian.com/go/03.2.html</p>
-<h3 id="协程池">15. 协程池</h3>
+<h3 id="12-内存泄漏">12. 内存泄漏</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_16099296/6700430">https://blog.51cto.com/u_16099296/6700430</a></p>
+<h3 id="13-Go-中-uintptr-和-unsafe-Pointer-的区别">13.  Go 中 uintptr 和 unsafe.Pointer 的区别</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lengyue1084/article/details/133127480">https://blog.csdn.net/lengyue1084/article/details/133127480</a></p>
+<h3 id="14-Go-多返回值怎么实现的">14. Go 多返回值怎么实现的</h3>
+<p>Go 传参和返回值是通过 FP+offset 实现，并且存储在调用函数的栈帧中。FP 栈底寄存器，指向一个函数栈的顶部;PC 程序计数器，指向下一条执行指令;SB 指向静态数据的基指针，全局符号;SP 栈顶寄存器。</p>
+<p><a target="_blank" rel="noopener" href="http://caibaojian.com/go/03.2.html">http://caibaojian.com/go/03.2.html</a></p>
+<h3 id="15-协程池">15. 协程池</h3>
 <ul>
 <li>channel 实现</li>
 <li>go-playground/pool</li>
 <li><strong>ants</strong></li>
 </ul>
-<p>https://blog.csdn.net/finghting321/article/details/106492915/</p>
-<h3 id="安全读写共享变量">16. 安全读写共享变量</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/finghting321/article/details/106492915/">https://blog.csdn.net/finghting321/article/details/106492915/</a></p>
+<h3 id="16-安全读写共享变量">16. 安全读写共享变量</h3>
 <ul>
-<li><p>将共享变量的读写放到一个 goroutine 中，其它 goroutine 通过
-channel 进行读写操作。</p></li>
-<li><p>可以用个数为 1 的信号量（semaphore）实现互斥</p></li>
-<li><p>通过 Mutex 锁实现</p></li>
+<li>
+<p>将共享变量的读写放到一个 goroutine 中，其它 goroutine 通过 channel 进行读写操作。</p>
+</li>
+<li>
+<p>可以用个数为 1 的信号量（semaphore）实现互斥</p>
+</li>
+<li>
+<p>通过 Mutex 锁实现</p>
+</li>
 </ul>
 <p>semaphore：</p>
-<p>https://zhuanlan.zhihu.com/p/389718532</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/389718532">https://zhuanlan.zhihu.com/p/389718532</a></p>
 <p>WaitGroup：</p>
-<p>https://blog.csdn.net/zhanggqianglovec/article/details/127905793</p>
-<h3 id="context">17. context</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhanggqianglovec/article/details/127905793">https://blog.csdn.net/zhanggqianglovec/article/details/127905793</a></p>
+<h3 id="17-context">17. context</h3>
 <p>context 结构：</p>
-<p>答：Go 的 Context 的数据结构包含 Deadline，Done，Err，Value，Deadline
-方法返回一个 time.Time，表示当前 Context 应该结束的时间，ok
-则表示有结束时间，Done 方法当 Context 被取消或者超时时候返回的一个 close
-的 channel，告诉给 context 相关的函数要停止当前工作然后返回了，Err 表示
-context 被取消的原因，Value 方法表示 context
-实现共享数据存储的地方，是协程安全的。context
-在业务中是经常被使用的，</p>
+<p>答：Go 的 Context 的数据结构包含 Deadline，Done，Err，Value，Deadline 方法返回一个 time.Time，表示当前 Context 应该结束的时间，ok 则表示有结束时间，Done 方法当 Context 被取消或者超时时候返回的一个 close 的 channel，告诉给 context 相关的函数要停止当前工作然后返回了，Err 表示 context 被取消的原因，Value 方法表示 context 实现共享数据存储的地方，是协程安全的。context 在业务中是经常被使用的，</p>
 <p>其主要的应用 ：</p>
-<p>1：上下文控制，2：多个 goroutine
-之间的数据交互等，3：超时控制：到某个时间点超时，过多久超时。</p>
-<p>https://www.cnblogs.com/juanmaofeifei/p/14439957.html</p>
+<p>1：上下文控制，2：多个 goroutine 之间的数据交互等，3：超时控制：到某个时间点超时，过多久超时。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/juanmaofeifei/p/14439957.html">https://www.cnblogs.com/juanmaofeifei/p/14439957.html</a></p>
 
               
             </div>
