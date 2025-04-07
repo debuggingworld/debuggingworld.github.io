@@ -239,6 +239,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/01/02/Go%E2%80%94%E2%80%94Map/" target="_blank">
+          Go——Map
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/01/02/Go%E2%80%94%E2%80%94Map/" target="_blank">
+        <div>
+          
+          1. 定义 Map  var　map_variable　map[key_data_type]　value_data_type  var student map[int]string  key、value的类型：bool、数字、string、指针、channel 、还可以是只包含前面几个类型的接口、结构体、数组 key 通常为 int 、string 类型，value 通常为数字（整数、浮点数）、s
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-02 18:13" pubdate>
+              2022-01-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Golang/">#Golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/01/02/Go%E2%80%94%E2%80%94%E5%88%87%E7%89%87/" target="_blank">
           Go——切片
         </a>
@@ -247,7 +308,7 @@
       <a class="index-excerpt" href="/2022/01/02/Go%E2%80%94%E2%80%94%E5%88%87%E7%89%87/" target="_blank">
         <div>
           
-          切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义   从数组或切片
+          切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义  从数组或切片生
         </div>
       </a>
 
@@ -430,7 +491,7 @@
       <a class="index-excerpt" href="/2021/12/29/Go%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0/" target="_blank">
         <div>
           
-          1. 函数 基本语法： func   函数名（形参列表) [ 返回值类型列表 ] { 　　执行语句… 　　return　返回值列表 } func add(num1 int, num2 int) (int) &amp;#123; &#x2F;&#x2F; 如果返回值类型只有一个，那么()是可以省略不写 	return num1 + num2 &amp;#125;  函数名   驼峰命名 首字母不能是数字 首字母大写该函数可以被本包文件
+          1. 函数 基本语法： func 函数名（形参列表) [ 返回值类型列表 ] { 　　执行语句.. 　　return　返回值列表 } func add(num1 int, num2 int) (int) &amp;#123; &#x2F;&#x2F; 如果返回值类型只有一个，那么()是可以省略不写 	return num1 + num2 &amp;#125;  函数名   驼峰命名  首字母不能是数字 首字母大写该函数可以被本包文件
         </div>
       </a>
 
@@ -491,7 +552,7 @@
       <a class="index-excerpt" href="/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" target="_blank">
         <div>
           
-          1. 分支结构 1.1 if 分支 基本语法： if  条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } … else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    func main()
+          1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    func ma
         </div>
       </a>
 
@@ -552,7 +613,7 @@
       <a class="index-excerpt" href="/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_blank">
         <div>
           
-          1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，– func main() &amp;#123;  	&#x2F;&#x2F;+加号： 	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接 	var n1 int &#x3D; +10 	fmt.Println(n1) 	var n2 int &#x3D; 4 + 7 	fmt.Println(n2) 	var s1 string &#x3D; &quot;abc&quot; + &quot;def&quot; 	fmt.Print
+          1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- func main() &amp;#123;  	&#x2F;&#x2F;+加号： 	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接 	var n1 int &#x3D; +10 	fmt.Println(n1) 	var n2 int &#x3D; 4 + 7 	fmt.Println(n2) 	var s1 string &#x3D; &quot;abc&quot; + &quot;def&quot; 	fmt.Prin
         </div>
       </a>
 
@@ -613,7 +674,7 @@
       <a class="index-excerpt" href="/2021/12/22/Go%E2%80%94%E2%80%94testify/" target="_blank">
         <div>
           
-          testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go  get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOP
+          testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOPR
         </div>
       </a>
 
@@ -674,7 +735,7 @@
       <a class="index-excerpt" href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" target="_blank">
         <div>
           
-          1. 基本测试框架 在 Go 语言中，所有的测试都需要以  _test.go 结尾，这样 go build 不会去编译  _test.go 结尾的文件，而  go test 会去编译  _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestM
+          1. 基本测试框架 在 Go 语言中，所有的测试都需要以 _test.go 结尾，这样 go build 不会去编译 _test.go 结尾的文件，而 go test 会去编译 _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestMain
         </div>
       </a>
 
@@ -735,7 +796,7 @@
       <a class="index-excerpt" href="/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_blank">
         <div>
           
-          1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。  申明变量没有初始化就为零值  数值类型为 0 布尔类型为 false 字符串为 “”（空字符串） 复杂类型为 nil（指针、切片、map 等）   func main() &amp;#123; 	var
+          1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。 &gt;申明变量没有初始化就为零值 &gt; + 数值类型为 0 &gt; + 布尔类型为 false &gt; + 字符串为 &quot;&quot;（空字符串） &gt; + 复杂类型为 nil（指针、切片、ma
         </div>
       </a>
 
@@ -782,74 +843,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——模板模式
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" target="_blank">
-        <div>
-          
-          1. 模式定义 定义一个操作的算法骨架，而将一些步骤延迟到子类中。Template Method 使得子类可以不改变一个算法的结构即可重定义该算法的某些 特定步骤。 优点：  封装不变部分，扩展可变部分。 提取公共代码，便于维护。 行为由父类控制，子类实现。  缺点：  每一个不同的实现都需要一个子类来实现，导致类的个数增加，使得系统更加庞大。   2. 示例 &#x2F;**  * @author 猫和少
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-17 21:42" pubdate>
-              2021-12-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#行为型模式</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/10/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/#board">12</a><a class="extend next" rel="next" href="/page/12/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/10/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/#board">12</a><a class="page-number" href="/page/13/#board">13</a><a class="extend next" rel="next" href="/page/12/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

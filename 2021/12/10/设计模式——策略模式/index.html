@@ -23,17 +23,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 模式定义 定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。  解决场景：一般是具有同类可替代的行为逻辑算法场景。比如；不同类型的交易方式（信用卡、支付宝、微信）、生成唯一 ID 策略（UUID、DB自增、DB+Redis、雪花算法、Leaf 算法）等，都可以使用策略模式进行行为包装，供给外部使用。 2. 示例 场景：模拟在购买商品时使用各种类型优惠券(满减">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211121318.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211125722.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211224848.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211231617.png">
 <meta property="article:published_time" content="2021-12-10T13:03:31.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.314Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="设计模式">
 <meta property="article:tag" content="行为型模式">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211121318.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -298,13 +293,16 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-模式定义">1. 模式定义</h3>
+              <h3 id="模式定义">1. 模式定义</h3>
 <p>定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211121318.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>解决场景：一般是具有同类可替代的行为逻辑算法场景。比如；不同类型的交易方式（信用卡、支付宝、微信）、生成唯一 ID 策略（UUID、DB自增、DB+Redis、雪花算法、Leaf 算法）等，都可以使用策略模式进行行为包装，供给外部使用。</p>
-<h3 id="2-示例">2. 示例</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211121318.png" srcset="/img/loading.gif" lazyload /></p>
+<p>解决场景：一般是具有同类可替代的行为逻辑算法场景。比如；不同类型的交易方式（信用卡、支付宝、微信）、生成唯一
+ID 策略（UUID、DB自增、DB+Redis、雪花算法、Leaf
+算法）等，都可以使用策略模式进行行为包装，供给外部使用。</p>
+<h3 id="示例">2. 示例</h3>
 <p>场景：模拟在购买商品时使用各种类型优惠券(满减、直减、折扣、n元购)，</p>
-<h4 id="2-1-一般实现">2.1 一般实现</h4>
+<h4 id="一般实现">2.1 一般实现</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CouponDiscountService</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">disCountAmount</span><span class="token punctuation">(</span><span class="token keyword">int</span> type<span class="token punctuation">,</span> <span class="token keyword">double</span> typeContent<span class="token punctuation">,</span> <span class="token keyword">double</span> skuPrice<span class="token punctuation">,</span> <span class="token keyword">double</span> typeExt<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token comment">// 直减</span>
@@ -326,9 +324,8 @@
         <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-2-策略模式重构代码">2.2 策略模式重构代码</h4>
-<p><strong>优惠券接口</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+<h4 id="策略模式重构代码">2.2 策略模式重构代码</h4>
+<p><strong>优惠券接口</strong> <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
 
     <span class="token comment">/**
      * 优惠券金额计算
@@ -338,8 +335,7 @@
      */</span>
     <span class="token class-name">BigDecimal</span> <span class="token function">discountAmount</span><span class="token punctuation">(</span><span class="token class-name">T</span> couponInfo<span class="token punctuation">,</span><span class="token class-name">BigDecimal</span> skuPrice<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>优惠券接口实现</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MJCouponDiscount</span> <span class="token keyword">implements</span> <span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+<strong>优惠券接口实现</strong> <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MJCouponDiscount</span> <span class="token keyword">implements</span> <span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Map</span><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
 
     <span class="token comment">/**
      * 满减计算
@@ -407,9 +403,8 @@
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BigDecimal</span><span class="token punctuation">(</span>couponInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>策略控制类</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Context</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p><strong>策略控制类</strong> <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Context</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> couponDiscount<span class="token punctuation">;</span>
 
     <span class="token keyword">public</span> <span class="token class-name">Context</span><span class="token punctuation">(</span><span class="token class-name">CouponDiscount</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> couponDiscount<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -419,8 +414,7 @@
     <span class="token keyword">public</span> <span class="token class-name">BigDecimal</span> <span class="token function">discountAmount</span><span class="token punctuation">(</span><span class="token class-name">T</span> couponInfo<span class="token punctuation">,</span> <span class="token class-name">BigDecimal</span> skuPrice<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> couponDiscount<span class="token punctuation">.</span><span class="token function">discountAmount</span><span class="token punctuation">(</span>couponInfo<span class="token punctuation">,</span> skuPrice<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>测试验证</strong></p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <strong>测试验证</strong>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ContextTest</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Test</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">discountAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
@@ -439,9 +433,10 @@
         <span class="token class-name">Assert</span><span class="token punctuation">.</span><span class="token function">assertTrue</span><span class="token punctuation">(</span>discountAmount1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">BigDecimal</span><span class="token punctuation">(</span><span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>通过策略设计模式的使用可以把方法中的 if 语句优化掉，大量的 if 语句使用会让代码难以扩展，也不好维护，同时在后期遇到各种问题也很难维护。在使用这样的设计模式后可以很好的满足隔离性与和扩展性，对于不断新增的需求也非常方便承接。</p>
-<h3 id="3-JDK中的应用">3. JDK中的应用</h3>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p>通过策略设计模式的使用可以把方法中的 if 语句优化掉，大量的 if
+语句使用会让代码难以扩展，也不好维护，同时在后期遇到各种问题也很难维护。在使用这样的设计模式后可以很好的满足隔离性与和扩展性，对于不断新增的需求也非常方便承接。</p>
+<h3 id="jdk中的应用">3. JDK中的应用</h3>
 <p>排序时通过实现排序接口生成不同的排序类，以达到按不同的属性排序。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ComparatorTest</span> <span class="token punctuation">&#123;</span>
 
@@ -491,17 +486,32 @@
     <span class="token comment">/* getter setter  toString */</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="4-Spring-中的应用">4. Spring 中的应用</h3>
-<h4 id="4-1-InstantiationStrategy">4.1 InstantiationStrategy</h4>
-<p>接口 InstantiationStrategy 是实例化策略接口类，它定义了三种实例化方式，SimpleInstantiationStrategy 实现了该策略，CglibSubclassingInstantiationStrategy 又继承了 SimpleInstantiationStrategy  新增了根据 cglib 生成代理类实例化方法。</p>
-<p><a target="_blank" rel="noopener" href="https://my.oschina.net/chengxiaoyuan/blog/823655">实例化策略 InstantiationStrategy</a></p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211125722.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>如果工厂方法实例化直接用反射创建对象，如果是构造方法实例化的则判断是否有 MethodOverrides，如果没有MethodOverrides 也是直接用反射，如果有 MethodOverrides 就需要用 cglib 实例化对象，SimpleInstantiationStrategy 把通过 cglib 实例化的任务交给了它的子类 CglibSubclassingInstantiationStrategy。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211224848.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="4-2-Aop代理策略">4.2 Aop代理策略</h4>
-<p>首先 AopProxyFactory 接口类提供了 createAopProxy 接口，这个是策略模式的接口方法。DefaultAopProxyFactory 实现了该接口作为策略的实现者。ProxyCreatorSupport 里面引用了 AopProxyFactory，并且提供了 get、set 方法用来运行时改变策略。这里 Spring 只实现了 DefaultAopProxyFactory 这一个策略，如果需要自己也可以实现。</p>
-<p>DefaultAopProxyFactory 里面的 createAopProxy 的逻辑如下，可以在运行时根据参数决定用 Cglib 策略还是 JDK 动态代理策略生成代理类：</p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">AopProxy</span> <span class="token function">createAopProxy</span><span class="token punctuation">(</span><span class="token class-name">AdvisedSupport</span> config<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">AopConfigException</span> <span class="token punctuation">&#123;</span>
+<h3 id="spring-中的应用">4. Spring 中的应用</h3>
+<h4 id="instantiationstrategy">4.1 InstantiationStrategy</h4>
+<p>接口 InstantiationStrategy
+是实例化策略接口类，它定义了三种实例化方式，SimpleInstantiationStrategy
+实现了该策略，CglibSubclassingInstantiationStrategy 又继承了
+SimpleInstantiationStrategy 新增了根据 cglib 生成代理类实例化方法。</p>
+<p><a target="_blank" rel="noopener" href="https://my.oschina.net/chengxiaoyuan/blog/823655">实例化策略
+InstantiationStrategy</a></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211125722.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果工厂方法实例化直接用反射创建对象，如果是构造方法实例化的则判断是否有
+MethodOverrides，如果没有MethodOverrides 也是直接用反射，如果有
+MethodOverrides 就需要用 cglib 实例化对象，SimpleInstantiationStrategy
+把通过 cglib 实例化的任务交给了它的子类
+CglibSubclassingInstantiationStrategy。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211224848.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="aop代理策略">4.2 Aop代理策略</h4>
+<p>首先 AopProxyFactory 接口类提供了 createAopProxy
+接口，这个是策略模式的接口方法。DefaultAopProxyFactory
+实现了该接口作为策略的实现者。ProxyCreatorSupport 里面引用了
+AopProxyFactory，并且提供了 get、set 方法用来运行时改变策略。这里 Spring
+只实现了 DefaultAopProxyFactory 这一个策略，如果需要自己也可以实现。</p>
+<p>DefaultAopProxyFactory 里面的 createAopProxy
+的逻辑如下，可以在运行时根据参数决定用 Cglib 策略还是 JDK
+动态代理策略生成代理类： <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">AopProxy</span> <span class="token function">createAopProxy</span><span class="token punctuation">(</span><span class="token class-name">AdvisedSupport</span> config<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">AopConfigException</span> <span class="token punctuation">&#123;</span>
 
 
         <span class="token comment">//如果XML打开了优化开关，或者设置为了代理目标类，或者目前类没有接口</span>
@@ -524,9 +534,11 @@
             <span class="token comment">//使用jdk动态代理</span>
             <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">JdkDynamicAopProxy</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>另外 AopProxy 也是一个策略接口类，具体实现的策略为 JdkDynamicAopProxy、CglibAopProxy、ObjenesisCglibAopProxy。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211231617.png" srcset="/img/loading.gif" lazyload alt=""></p>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 另外 AopProxy
+也是一个策略接口类，具体实现的策略为
+JdkDynamicAopProxy、CglibAopProxy、ObjenesisCglibAopProxy。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211211231617.png" srcset="/img/loading.gif" lazyload /></p>
 
               
             </div>

@@ -16,20 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1.  整合 Druid 1.1 原生整合   添加依赖 &lt;dependencies&gt;     &lt;dependency&gt;         &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;         &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;     &lt;&#x2F;de">
+    <meta name="description" content="1. 整合 Druid 1.1 原生整合  添加依赖 &lt;dependencies&gt;     &lt;dependency&gt;         &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;         &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;     &lt;&#x2F;depe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot——整合Druid&amp;MyBatis">
 <meta property="og:url" content="http://example.com/2023/04/27/Spring-Boot%E2%80%94%E2%80%94%E6%95%B4%E5%90%88Druid-MyBatis/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.  整合 Druid 1.1 原生整合   添加依赖 &lt;dependencies&gt;     &lt;dependency&gt;         &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;         &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;     &lt;&#x2F;de">
+<meta property="og:description" content="1. 整合 Druid 1.1 原生整合  添加依赖 &lt;dependencies&gt;     &lt;dependency&gt;         &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;         &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;     &lt;&#x2F;depe">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304280051208.png">
 <meta property="article:published_time" content="2023-04-27T12:56:35.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.852Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring Boot">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304280051208.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -294,11 +292,10 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-整合-Druid">1.  整合 Druid</h3>
-<h4 id="1-1-原生整合">1.1 原生整合</h4>
-<ol>
-<li>
-<p>添加依赖</p>
+              <h3 id="整合-druid">1. 整合 Druid</h3>
+<h4 id="原生整合">1.1 原生整合</h4>
+<ol type="1">
+<li><p>添加依赖</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -313,10 +310,8 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>druid<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.2.14<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>application.yml 配置</p>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>application.yml 配置</p>
 <div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token comment"># 数据源</span>
 <span class="token key atrule">spring</span><span class="token punctuation">:</span>
   <span class="token key atrule">datasource</span><span class="token punctuation">:</span>
@@ -347,10 +342,8 @@
   <span class="token key atrule">sql</span><span class="token punctuation">:</span>
     <span class="token key atrule">init</span><span class="token punctuation">:</span>
       <span class="token key atrule">schema-locations</span><span class="token punctuation">:</span> classpath<span class="token punctuation">:</span>sql/schema.sql
-      <span class="token key atrule">mode</span><span class="token punctuation">:</span> always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>配置类 DruidConfig</p>
+      <span class="token key atrule">mode</span><span class="token punctuation">:</span> always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>配置类 DruidConfig</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@ConditionalOnProperty</span><span class="token punctuation">(</span><span class="token string">"spring.datasource.type"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DruidConfig</span> <span class="token punctuation">&#123;</span>
@@ -410,22 +403,18 @@
         filterRegistrationBean<span class="token punctuation">.</span><span class="token function">addInitParameter</span><span class="token punctuation">(</span><span class="token string">"exclusions"</span><span class="token punctuation">,</span> <span class="token string">"*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> filterRegistrationBean<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 </ol>
-<h4 id="1-2-通过启动器整合">1.2 通过启动器整合</h4>
+<h4 id="通过启动器整合">1.2 通过启动器整合</h4>
 <p>使用场景启动器无需配置，开箱即用。</p>
-<ol>
-<li>
-<p>添加依赖</p>
+<ol type="1">
+<li><p>添加依赖</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>druid-spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.2.14<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>添加配置</p>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>添加配置</p>
 <div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
   <span class="token key atrule">datasource</span><span class="token punctuation">:</span>
     <span class="token key atrule">username</span><span class="token punctuation">:</span> root
@@ -440,16 +429,16 @@
         <span class="token key atrule">login-username</span><span class="token punctuation">:</span> admin
         <span class="token key atrule">login-password</span><span class="token punctuation">:</span> <span class="token number">123456</span>
       <span class="token key atrule">web-stat-filter</span><span class="token punctuation">:</span>
-        <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>     <span class="token comment"># 开启过滤</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
+        <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>     <span class="token comment"># 开启过滤</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 </ol>
-<h3 id="2-整合-MyBatis">2. 整合 MyBatis</h3>
-<h4 id="2-1-生成-MyBatis-代码">2.1 生成 MyBatis 代码</h4>
-<p><a target="_blank" rel="noopener" href="https://debuggingworld.github.io/2022/12/28/Mybatis-Plus%E2%80%94%E2%80%94%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4-SQL%E5%88%86%E6%9E%90-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%BF%9D%E6%8A%A4-%E4%B9%90%E8%A7%82%E9%94%81-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/#6-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8">代码生成器</a></p>
-<p><a target="_blank" rel="noopener" href="https://debuggingworld.github.io/2022/12/04/Mybatis%E2%80%94%E2%80%94%E2%80%94%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/#2-MyBatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B">MyBatis逆向工程</a></p>
-<ol>
-<li>
-<p>pom.xml</p>
+<h3 id="整合-mybatis">2. 整合 MyBatis</h3>
+<h4 id="生成-mybatis-代码">2.1 生成 MyBatis 代码</h4>
+<p><a
+target="_blank" rel="noopener" href="https://debuggingworld.github.io/2022/12/28/Mybatis-Plus%E2%80%94%E2%80%94%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4-SQL%E5%88%86%E6%9E%90-%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E4%BF%9D%E6%8A%A4-%E4%B9%90%E8%A7%82%E9%94%81-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/#6-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8">代码生成器</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://debuggingworld.github.io/2022/12/04/Mybatis%E2%80%94%E2%80%94%E2%80%94%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/#2-MyBatis%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B">MyBatis逆向工程</a></p>
+<ol type="1">
+<li><p>pom.xml</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
@@ -477,10 +466,8 @@
             <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>generatorConfig.xml</p>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>generatorConfig.xml</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">generatorConfiguration</span> <span class="token name">PUBLIC</span>
         <span class="token string">"-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"</span>
         <span class="token string">"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"</span><span class="token punctuation">></span></span>
@@ -503,44 +490,37 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span> <span class="token attr-name">tableName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>emp<span class="token punctuation">"</span></span> <span class="token attr-name">domainObjectName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Emp<span class="token punctuation">"</span></span> <span class="token attr-name">mapperName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>EmpMapper<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span> <span class="token attr-name">tableName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dept<span class="token punctuation">"</span></span> <span class="token attr-name">domainObjectName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Dept<span class="token punctuation">"</span></span> <span class="token attr-name">mapperName</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>DeptMapper<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>context</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>generatorConfiguration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>运行插件，生成代码</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304280051208.png" srcset="/img/loading.gif" lazyload alt=""></p>
-</li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>generatorConfiguration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>运行插件，生成代码</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202304280051208.png" srcset="/img/loading.gif" lazyload /></p></li>
 </ol>
-<h4 id="2-2-整合-Mybatis">2.2  整合 Mybatis</h4>
-<h5 id="1-整合方法">1. 整合方法</h5>
-<ol>
-<li>
-<p>添加依赖</p>
+<h4 id="整合-mybatis-1">2.2 整合 Mybatis</h4>
+<h5 id="整合方法">1. 整合方法</h5>
+<ol type="1">
+<li><p>添加依赖</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.mybatis.spring.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mybatis-spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>配置类：MybatisAutoConfiguration</p>
-</li>
-<li>
-<p>配置文件</p>
+<p>配置类：MybatisAutoConfiguration</p></li>
+<li><p>配置文件</p>
 <div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">mybatis</span><span class="token punctuation">:</span>
   <span class="token key atrule">mapper-locations</span><span class="token punctuation">:</span> classpath<span class="token punctuation">:</span>com/debuggingWorld/mapper/<span class="token important">*Mapper.xml</span>
-  <span class="token key atrule">type-aliases-package</span><span class="token punctuation">:</span> com.debuggingWorld.pojo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>启动类</p>
-<p>添加 @MapperScan 注解</p>
+  <span class="token key atrule">type-aliases-package</span><span class="token punctuation">:</span> com.debuggingWorld.pojo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>启动类</p>
+<p>添加 <span class="citation"
+data-cites="MapperScan">@MapperScan</span> 注解</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
 <span class="token annotation punctuation">@MapperScan</span><span class="token punctuation">(</span><span class="token string">"com.debuggingWorld.mapper"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Application</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">Application</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 </ol>
-<h5 id="2-MyBatis-自动配置原理">2. MyBatis 自动配置原理</h5>
+<h5 id="mybatis-自动配置原理">2. MyBatis 自动配置原理</h5>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@org.springframework.context.annotation.Configuration</span>
 <span class="token annotation punctuation">@ConditionalOnClass</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> <span class="token class-name">SqlSessionFactory</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">SqlSessionFactoryBean</span><span class="token punctuation">.</span><span class="token keyword">class</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@ConditionalOnSingleCandidate</span><span class="token punctuation">(</span><span class="token class-name">DataSource</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
@@ -601,14 +581,11 @@
     <span class="token keyword">return</span> factory<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<ol>
-<li>
-<p>如果依然放不下 mybatis 全局配置文件， springboot 还是支持的：</p>
+<ol type="1">
+<li><p>如果依然放不下 mybatis 全局配置文件， springboot 还是支持的：</p>
 <div class="code-wrapper"><pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">mybatis</span><span class="token punctuation">:</span>
-<span class="token key attr-name">  config-location</span><span class="token punctuation">:</span> <span class="token value attr-value">classpath:mybatis-config.xml</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>mybatis-config.xml</p>
+<span class="token key attr-name">  config-location</span><span class="token punctuation">:</span> <span class="token value attr-value">classpath:mybatis-config.xml</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></li>
+<li><p>mybatis-config.xml</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
 <span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">configuration</span>
         <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Config 3.0//EN"</span>
@@ -629,31 +606,24 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>typeAliases</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>package</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.debuggingWorld.pojo<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>typeAliases</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>如果要设置 mybatis 的 settings 怎么设置呢？</p>
-<ol>
-<li>
-<p>可以通过 mybatis 全局配置文件设置</p>
-</li>
-<li>
-<p>也可以通过在 application.yml 中配置 configuration</p>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>如果要设置 mybatis 的 settings 怎么设置呢？</p>
+<ol type="1">
+<li><p>可以通过 mybatis 全局配置文件设置</p></li>
+<li><p>也可以通过在 application.yml 中配置 configuration</p>
 <p>configuration 封装 mybatis 所有信息</p>
 <div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">mybatis</span><span class="token punctuation">:</span>
   <span class="token key atrule">configuration</span><span class="token punctuation">:</span>
-    <span class="token key atrule">map-underscore-to-camel-case</span><span class="token punctuation">:</span> <span class="token boolean important">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-</li>
-</ol>
-</li>
-<li>
-<p>定制 mybatis</p>
-<ol>
+    <span class="token key atrule">map-underscore-to-camel-case</span><span class="token punctuation">:</span> <span class="token boolean important">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></li>
+</ol></li>
+<li><p>定制 mybatis</p>
+<ol type="1">
 <li>使用 mybatis 全局配置文件</li>
-<li>可以使用 application.yml 中配置 configuration + ConfigurationCustomizer</li>
-<li>要么使用 mybatis 的配置，要么使用 springboot 的配置， 只能用一种</li>
-</ol>
-</li>
+<li>可以使用 application.yml 中配置 configuration +
+ConfigurationCustomizer</li>
+<li>要么使用 mybatis 的配置，要么使用 springboot 的配置，
+只能用一种</li>
+</ol></li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">applyConfiguration</span><span class="token punctuation">(</span><span class="token class-name">SqlSessionFactoryBean</span> factory<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token class-name">Configuration</span> configuration <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>properties<span class="token punctuation">.</span><span class="token function">getConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -669,9 +639,8 @@
   <span class="token punctuation">&#125;</span>
   factory<span class="token punctuation">.</span><span class="token function">setConfiguration</span><span class="token punctuation">(</span>configuration<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<ol start="5">
-<li>
-<p>ConfigurationCustomizer 方式配置</p>
+<ol start="5" type="1">
+<li><p>ConfigurationCustomizer 方式配置</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConfigurationCustomizer</span> <span class="token keyword">implements</span> <span class="token class-name">ConfigurationCustomizer</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Override</span>

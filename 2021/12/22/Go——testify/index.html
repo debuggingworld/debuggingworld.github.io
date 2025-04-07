@@ -16,23 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go  get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOP">
+    <meta name="description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOPR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——testify">
 <meta property="og:url" content="http://example.com/2021/12/22/Go%E2%80%94%E2%80%94testify/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go  get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOP">
+<meta property="og:description" content="testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： $ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go get 失败： $ go env -w GO111MODULE&#x3D;on $ go env -w GOPR">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235248.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235641.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226005128.png">
 <meta property="article:published_time" content="2021-12-22T15:39:00.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.300Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -243,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          9.3k 字
+          9.4k 字
         
       </span>
     
@@ -297,22 +292,14 @@
             
             <div class="markdown-body">
               
-              <p>testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！</p>
-<h3 id="1-引入">1. 引入</h3>
-<p>安装 testify 库：</p>
-<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">$ go get -u github.com&#x2F;stretchr&#x2F;testify<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p>如果 go  get 失败：</p>
-<div class="code-wrapper"><pre class="line-numbers language-js" data-language="js"><code class="language-js">$ go env <span class="token operator">-</span>w <span class="token constant">GO111MODULE</span><span class="token operator">=</span>on
-$ go env <span class="token operator">-</span>w <span class="token constant">GOPROXY</span><span class="token operator">=</span>https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>goproxy<span class="token punctuation">.</span>cn<span class="token punctuation">,</span>direct<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<p>estify 模块：</p>
-<ul>
-<li>assert</li>
-<li>http</li>
-<li>mock</li>
-<li>require</li>
-<li>suite</li>
-</ul>
-<h3 id="2-assert">2. assert</h3>
+              <p>testify 扩展了 testing 标准库，断言库 assert，测试替身 mock
+和测试套件 suite 等，让我们编写测试代码更容易！</p>
+<h3 id="引入">1. 引入</h3>
+<p>安装 testify 库： <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">$ go get -u github.com&#x2F;stretchr&#x2F;testify<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></p>
+<p>如果 go get 失败： <div class="code-wrapper"><pre class="line-numbers language-js" data-language="js"><code class="language-js">$ go env <span class="token operator">-</span>w <span class="token constant">GO111MODULE</span><span class="token operator">=</span>on
+$ go env <span class="token operator">-</span>w <span class="token constant">GOPROXY</span><span class="token operator">=</span>https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>goproxy<span class="token punctuation">.</span>cn<span class="token punctuation">,</span>direct<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div> estify 模块： + assert + http + mock
++ require + suite</p>
+<h3 id="assert">2. assert</h3>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">
 <span class="token keyword">func</span> <span class="token function">Equal</span><span class="token punctuation">(</span>t TestingT<span class="token punctuation">,</span> expected<span class="token punctuation">,</span> actual <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> msgAndArgs <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
 <span class="token keyword">func</span> <span class="token function">NotEqual</span><span class="token punctuation">(</span>t TestingT<span class="token punctuation">,</span> expected<span class="token punctuation">,</span> actual <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> msgAndArgs <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
@@ -368,8 +355,7 @@ $ go env <span class="token operator">-</span>w <span class="token constant">GOP
 <span class="token comment">// 断言expected与actual相等，或者可以转换为相同的类型，并且相等</span>
 <span class="token keyword">func</span> <span class="token function">EqualValues</span><span class="token punctuation">(</span>t TestingT<span class="token punctuation">,</span> expected<span class="token punctuation">,</span> actual <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> msgAndArgs <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>示例:</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestSomething</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p><strong>示例:</strong> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestSomething</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
 	<span class="token comment">//断言相等</span>
 	assert<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token number">123</span><span class="token punctuation">,</span> <span class="token number">123</span><span class="token punctuation">,</span> <span class="token string">"they should be equal"</span><span class="token punctuation">)</span>
@@ -384,20 +370,22 @@ $ go env <span class="token operator">-</span>w <span class="token constant">GOP
 		assert<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token string">"hello"</span><span class="token punctuation">,</span> object<span class="token punctuation">)</span>
 
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <p><strong>Assertions 对象</strong></p>
-<p>上面的断言都是以 TestingT 为第一个参数，需要大量使用时比较麻烦。testify 提供了一种方便的方式。先以 * testing.T创建一个* Assertions 对象，Assertions 定义了前面所有的断言方法，只是不需要再传入TestingT参数了。</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestEqual</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p>上面的断言都是以 TestingT
+为第一个参数，需要大量使用时比较麻烦。testify 提供了一种方便的方式。先以
+* testing.T创建一个* Assertions 对象，Assertions
+定义了前面所有的断言方法，只是不需要再传入TestingT参数了。 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestEqual</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   assertions <span class="token operator">:=</span> assert<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
   assertion<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span>
   <span class="token comment">// ...</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-require">3. require</h3>
-<p>require提供了和assert同样的接口，但是遇到错误时，require直接终止测试，而assert返回false。</p>
-<h3 id="4-mock">4. mock</h3>
-<p>testify 提供了对 Mock 的简单支持。Mock 简单来说就是构造一个仿对象，仿对象提供和原对象一样的接口，在测试中用仿对象来替换原对象。</p>
-<p>待测试代码：</p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java">type <span class="token class-name">User</span> struct <span class="token punctuation">&#123;</span>
+### 3. require
+require提供了和assert同样的接口，但是遇到错误时，require直接终止测试，而assert返回false。</p>
+<h3 id="mock">4. mock</h3>
+<p>testify 提供了对 Mock 的简单支持。Mock
+简单来说就是构造一个仿对象，仿对象提供和原对象一样的接口，在测试中用仿对象来替换原对象。</p>
+<p>待测试代码： <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java">type <span class="token class-name">User</span> struct <span class="token punctuation">&#123;</span>
 	<span class="token class-name">Name</span> string
 	<span class="token class-name">Age</span>  <span class="token keyword">int</span>
 <span class="token punctuation">&#125;</span>
@@ -440,9 +428,7 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 	<span class="token keyword">for</span> _<span class="token punctuation">,</span> u <span class="token operator">:</span><span class="token operator">=</span> range users <span class="token punctuation">&#123;</span>
 		<span class="token class-name"><span class="token namespace">fmt<span class="token punctuation">.</span></span>Println</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>测试代码：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MockCrawler <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 测试代码： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MockCrawler <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	mock<span class="token punctuation">.</span>Mock
 <span class="token punctuation">&#125;</span>
 
@@ -467,14 +453,24 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 	<span class="token function">GetAndPrintUsers</span><span class="token punctuation">(</span>crawler<span class="token punctuation">)</span>
 
 	crawler<span class="token punctuation">.</span><span class="token function">AssertExpectations</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>实现 GetUserList() 方法时，需要调用 Mock.Called() 方法，传入参数。Called() 会返回一个 mock.Arguments 对象，该对象中保存着返回的值。它提供了对基本类型和 error 的获取方法 Int()/String()/Bool()/Error()，和通用的获取方法 Get()，通用方法返回 interface{}，需要类型断言为具体类型，它们都接受一个表示索引的参数。</p>
-<p>crawler.On(“GetUserList”).Return(MockUsers, nil) 是 Mock 发挥魔法的地方，这里指示调用 GetUserList() 方法的返回值分别 为MockUsers 和 nil，返回值在上面的 GetUserList() 方法中被 Arguments.Get(0) 和 Arguments.Error(1) 获取。</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 实现
+GetUserList() 方法时，需要调用 Mock.Called() 方法，传入参数。Called()
+会返回一个 mock.Arguments
+对象，该对象中保存着返回的值。它提供了对基本类型和 error 的获取方法
+Int()/String()/Bool()/Error()，和通用的获取方法 Get()，通用方法返回
+interface{}，需要类型断言为具体类型，它们都接受一个表示索引的参数。</p>
+<p>crawler.On("GetUserList").Return(MockUsers, nil) 是 Mock
+发挥魔法的地方，这里指示调用 GetUserList() 方法的返回值分别 为MockUsers
+和 nil，返回值在上面的 GetUserList() 方法中被 Arguments.Get(0) 和
+Arguments.Error(1) 获取。</p>
 <p>最后 crawler.AssertExpectations(t)对 Mock 对象做断言。</p>
 <p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<hr>
-<p>使用 Mock，可以精确断言某方法以特定参数的调用次数，Times(n int)，它有两个便捷函数Once()/Twice()。下面我们要求函数Hello(n int)要以参数 1 调用 1次，参数 2 调用两次，参数 3 调用 3 次：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225233426.png" srcset="/img/loading.gif" lazyload /></p>
+<hr />
+<p>使用 Mock，可以精确断言某方法以特定参数的调用次数，Times(n
+int)，它有两个便捷函数Once()/Twice()。下面我们要求函数Hello(n
+int)要以参数 1 调用 1次，参数 2 调用两次，参数 3 调用 3 次：</p>
 <p>待测试方法:</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> IExample <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
 	<span class="token function">Hello</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span>
@@ -493,8 +489,7 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 		<span class="token punctuation">&#125;</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>测试方法：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MockExample <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<p>测试方法： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MockExample <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	mock<span class="token punctuation">.</span>Mock
 <span class="token punctuation">&#125;</span>
 
@@ -513,33 +508,36 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 	<span class="token function">ExampleFunc</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
 
 	e<span class="token punctuation">.</span><span class="token function">AssertExpectations</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>执行结果</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235248.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>修改 ExampleFunc 将 for i := 0; i &lt;= n; i++  改为 for i := 0; i &lt; n; i++</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 执行结果</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235248.png" srcset="/img/loading.gif" lazyload /></p>
+<p>修改 ExampleFunc 将 for i := 0; i &lt;= n; i++ 改为 for i := 0; i
+&lt; n; i++</p>
 <p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235641.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="5-suite">5. suite</h3>
-<p>testify提供了测试套件的功能（TestSuite），testify测试套件只是一个结构体，内嵌一个匿名的 suite.Suite 结构。测试套件中可以包含多个测试，它们可以共享状态，还可以定义钩子方法执行初始化和清理操作。钩子都是通过接口来定义的，实现了这些接口的测试套件结构在运行到指定节点时会调用对应的方法。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211225235641.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="suite">5. suite</h3>
+<p>testify提供了测试套件的功能（TestSuite），testify测试套件只是一个结构体，内嵌一个匿名的
+suite.Suite
+结构。测试套件中可以包含多个测试，它们可以共享状态，还可以定义钩子方法执行初始化和清理操作。钩子都是通过接口来定义的，实现了这些接口的测试套件结构在运行到指定节点时会调用对应的方法。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> SetupAllSuite <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
   <span class="token function">SetupSuite</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<p>如果定义了SetupSuite()方法（即实现了SetupAllSuite接口），在套件中所有测试开始运行前调用这个方法。</p>
+<p>如果定义了SetupSuite()方法（即实现了SetupAllSuite接口），在套件中所有测试开始运行前调用这个方法。
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> TearDownAllSuite <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
   <span class="token function">TearDownSuite</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<p>如果定义了TearDonwSuite()方法（即实现了TearDownSuite接口），在套件中所有测试运行完成后调用这个方法。</p>
+如果定义了TearDonwSuite()方法（即实现了TearDownSuite接口），在套件中所有测试运行完成后调用这个方法。
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> SetupTestSuite <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
   <span class="token function">SetupTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<p>如果定义了SetupTest()方法（即实现了SetupTestSuite接口），在套件中每个测试执行前都会调用这个方法。</p>
+如果定义了SetupTest()方法（即实现了SetupTestSuite接口），在套件中每个测试执行前都会调用这个方法。
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> TearDownTestSuite <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
   <span class="token function">TearDownTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<p>如果定义了TearDownTest()方法（即实现了TearDownTest接口），在套件中每个测试执行后都会调用这个方法。</p>
+如果定义了TearDownTest()方法（即实现了TearDownTest接口），在套件中每个测试执行后都会调用这个方法。</p>
 <p>还有一对接口BeforeTest/AfterTest，它们分别在每个测试运行前/后调用，接受套件名和测试名作为参数。</p>
-<p><strong>示例</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MyTestSuit <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<p><strong>示例</strong> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MyTestSuit <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	suite<span class="token punctuation">.</span>Suite
 	testCount <span class="token builtin">uint32</span>
 <span class="token punctuation">&#125;</span>
@@ -581,10 +579,10 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 <span class="token comment">// 为了用 go test 运行测试</span>
 <span class="token keyword">func</span> <span class="token function">TestExample</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	suite<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token function">new</span><span class="token punctuation">(</span>MyTestSuit<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226005128.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="6-HTTP-测试">6. HTTP 测试</h3>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 执行结果：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211226005128.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="http-测试">6. HTTP 测试</h3>
 <p>httptest提供了一个ResponseRecorder类型，它实现了http.ResponseWriter接口，但是它只是记录写入的状态码和响应内容，不会发送响应给客户端</p>
 <p>一个简单的 http 服务器：</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">index</span><span class="token punctuation">(</span>w http<span class="token punctuation">.</span>ResponseWriter<span class="token punctuation">,</span> r <span class="token operator">*</span>http<span class="token punctuation">.</span>Request<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -609,8 +607,7 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
     log<span class="token punctuation">.</span><span class="token function">Fatal</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
   <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>测试1</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestIndex</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p><strong>测试1</strong> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestIndex</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	recorder <span class="token operator">:=</span> httptest<span class="token punctuation">.</span><span class="token function">NewRecorder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	request<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> http<span class="token punctuation">.</span><span class="token function">NewRequest</span><span class="token punctuation">(</span><span class="token string">"GET"</span><span class="token punctuation">,</span> <span class="token string">"/"</span><span class="token punctuation">,</span> <span class="token boolean">nil</span><span class="token punctuation">)</span>
 	mux <span class="token operator">:=</span> http<span class="token punctuation">.</span><span class="token function">NewServeMux</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -635,10 +632,9 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 
 	assert<span class="token punctuation">.</span><span class="token function">Equal</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> recorder<span class="token punctuation">.</span>Code<span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token string">"greeting error"</span><span class="token punctuation">)</span>
 	assert<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> recorder<span class="token punctuation">.</span>Body<span class="token punctuation">.</span><span class="token function">String</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"welcome, dj"</span><span class="token punctuation">,</span> <span class="token string">"body error"</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>可以使用 suite，消除 recorder/mux 等对象的创建，处理器函数的注册。</p>
-<p><strong>测试2</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MySuite <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 可以使用 suite，消除
+recorder/mux 等对象的创建，处理器函数的注册。</p>
+<p><strong>测试2</strong> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MySuite <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	suite<span class="token punctuation">.</span>Suite
 	recorder <span class="token operator">*</span>httptest<span class="token punctuation">.</span>ResponseRecorder
 	mux      <span class="token operator">*</span>http<span class="token punctuation">.</span>ServeMux
@@ -672,7 +668,7 @@ func <span class="token class-name">GetAndPrintUsers</span><span class="token pu
 <span class="token comment">// 测试驱动</span>
 <span class="token keyword">func</span> <span class="token function">TestHTTP</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	suite<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token function">new</span><span class="token punctuation">(</span>MySuite<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267341653">拓展</a></p>
 
               

@@ -16,24 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点：  与 JDBC 相比，减少了50%的代码量 最简单的持久化框架，简单易学 SQL 代">
+    <meta name="description" content="1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点： 1. 与 JDBC 相比，减少了50%的代码量 2. 最简单的持久化框架，简单易学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mybatis——入门&amp;日志&amp;配置文件详解">
 <meta property="og:url" content="http://example.com/2022/11/16/Mybatis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点：  与 JDBC 相比，减少了50%的代码量 最简单的持久化框架，简单易学 SQL 代">
+<meta property="og:description" content="1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点： 1. 与 JDBC 相比，减少了50%的代码量 2. 最简单的持久化框架，简单易学">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221116235420.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115202610.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115215302.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221117214922.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221120201234.png">
 <meta property="article:published_time" content="2022-11-16T15:08:28.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.850Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Mybatis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221116235420.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -298,39 +292,43 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-简介">1. 简介</h3>
-<p>MyBatis 是一款优秀的持久层框架/半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。</p>
-<p><strong>优点：</strong></p>
-<ol>
-<li>与 JDBC 相比，减少了50%的代码量</li>
-<li>最简单的持久化框架，简单易学</li>
-<li>SQL 代码从程序代码中彻底分离出来，可以重用</li>
-<li>提供 XML 标签，支持编写动态 SQL</li>
-<li>提供映射标签，支持对象与数据库的 ORM 字段关系映射</li>
-<li>支持缓存、连接池、数据库移植…</li>
-</ol>
-<p><strong>缺点：</strong></p>
-<ol>
-<li>SQL 语句编写工作量大，熟练度要高</li>
-<li>数据库移植性比较差，如果需要切换数据库的话，SQL 语句会有很大的差异</li>
-</ol>
-<h4 id="1-1-执行流程">1.1 执行流程</h4>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221116235420.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<ol>
-<li>加载  mybatis  全局配置文件（数据源、事务、mapper映射文件等），解析配置文件，MyBatis 基于 XML 配置文件生成 Configuration，和一个个 MappedStatement（包括了参数映射配置、动态SQL语句、结果映射配置），其对应着 &lt;select | update | delete | insert&gt; 标签项。</li>
-<li>SqlSessionFactoryBuilder 通过 Configuration 对象生成 SqlSessionFactory，用来开启 SqlSession。</li>
+              <h3 id="简介">1. 简介</h3>
+<p>MyBatis 是一款优秀的持久层框架/半自动的ORM，它支持自定义
+SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC
+代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML
+或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。</p>
+<p><strong>优点：</strong> 1. 与 JDBC 相比，减少了50%的代码量 2.
+最简单的持久化框架，简单易学 3. SQL
+代码从程序代码中彻底分离出来，可以重用 4. 提供 XML 标签，支持编写动态
+SQL 5. 提供映射标签，支持对象与数据库的 ORM 字段关系映射 6.
+支持缓存、连接池、数据库移植....</p>
+<p><strong>缺点：</strong> 1. SQL 语句编写工作量大，熟练度要高 2.
+数据库移植性比较差，如果需要切换数据库的话，SQL 语句会有很大的差异</p>
+<h4 id="执行流程">1.1 执行流程</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221116235420.png" srcset="/img/loading.gif" lazyload /></p>
+<ol type="1">
+<li>加载 mybatis
+全局配置文件（数据源、事务、mapper映射文件等），解析配置文件，MyBatis
+基于 XML 配置文件生成 Configuration，和一个个
+MappedStatement（包括了参数映射配置、动态SQL语句、结果映射配置），其对应着
+&lt;select | update | delete | insert&gt; 标签项。</li>
+<li>SqlSessionFactoryBuilder 通过 Configuration 对象生成
+SqlSessionFactory，用来开启 SqlSession。</li>
 <li>SqlSession 对象完成和数据库的交互：
 <ul>
 <li>用户程序调用 mybatis 接口层 api（即 Mapper 接口中的方法）</li>
-<li>SqlSession 通过调用 api 的 Statement ID 找到对应的 MappedStatemen 对象</li>
-<li>通过 Executor（负责动态SQL的生成和查询缓存的维护）将MappedStatement 对象进行解析，sql 参数转化、动态 sql 拼接，生成 jdbc Statement 对象</li>
+<li>SqlSession 通过调用 api 的 Statement ID 找到对应的 MappedStatemen
+对象</li>
+<li>通过 Executor（负责动态SQL的生成和查询缓存的维护）将MappedStatement
+对象进行解析，sql 参数转化、动态 sql 拼接，生成 jdbc Statement 对象</li>
 <li>JDBC 执行 sql。</li>
-<li>借助 MappedStatement 中的结果映射关系，将返回结果转化成 HashMap、JavaBean 等存储结构并返回。</li>
-</ul>
-</li>
+<li>借助 MappedStatement 中的结果映射关系，将返回结果转化成
+HashMap、JavaBean 等存储结构并返回。</li>
+</ul></li>
 </ol>
-<h3 id="2-基本使用">2. 基本使用</h3>
-<h4 id="2-1-pom-依赖">2.1 pom 依赖</h4>
+<h3 id="基本使用">2. 基本使用</h3>
+<h4 id="pom-依赖">2.1 pom 依赖</h4>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mysql-connector-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
@@ -342,8 +340,10 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.5.10<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>驱动版本和数据库版本对应关系：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115202610.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="2-2-创建数据表以及对应的实体类对象">2.2 创建数据表以及对应的实体类对象</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115202610.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="创建数据表以及对应的实体类对象">2.2
+创建数据表以及对应的实体类对象</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
 <span class="token annotation punctuation">@AllArgsConstructor</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">&#123;</span>
@@ -354,7 +354,7 @@
         <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-3-创建对应的-Mapper-接口">2.3 创建对应的 Mapper 接口</h4>
+<h4 id="创建对应的-mapper-接口">2.3 创建对应的 Mapper 接口</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UserMapper</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">User</span> <span class="token function">selectUser</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -367,9 +367,8 @@
 
     <span class="token class-name">Integer</span> <span class="token function">deleteUser</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-4-编写配置文件">2.4 编写配置文件</h4>
-<p><strong>mybatis-config.xml</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
+<h4 id="编写配置文件">2.4 编写配置文件</h4>
+<p><strong>mybatis-config.xml</strong> <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
 <span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">configuration</span>
         <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Config 3.0//EN"</span>
         <span class="token string">"http://mybatis.org/dtd/mybatis-3-config.dtd"</span><span class="token punctuation">></span></span>
@@ -389,11 +388,10 @@
         <span class="token comment">&lt;!--&lt;mapper resource="com/debuggingWorld/mapper/UserMapper.xml"/>--></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.debuggingWorld.mapper.UserMapper<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>驱动路径</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115215302.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p><strong>UserMapper.xml</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 驱动路径</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221115215302.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>UserMapper.xml</strong> <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8" ?></span>
 <span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">mapper</span>
         <span class="token name">PUBLIC</span> <span class="token string">"-//mybatis.org//DTD Mapper 3.0//EN"</span>
         <span class="token string">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"</span><span class="token punctuation">></span></span>
@@ -414,8 +412,7 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>delete</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>deleteUser<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         delete from t_user where id = #&#123;id&#125;
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>delete</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-5-测试">2.5 测试</h4>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> #### 2.5 测试
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestMybatis</span> <span class="token punctuation">&#123;</span>
     <span class="token class-name">SqlSessionFactory</span> sqlSessionFactory<span class="token punctuation">;</span>
 
@@ -482,11 +479,14 @@
             session<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221117214922.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="3-日志">3. 日志</h3>
-<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/logging.html">mybatis 日志模块文档</a></p>
-<p>Mybatis 通过使用内置的日志工厂提供日志功能。内置日志工厂将会把日志工作委托给下面的实现之一：</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221117214922.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="日志">3. 日志</h3>
+<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/logging.html">mybatis
+日志模块文档</a></p>
+<p>Mybatis
+通过使用内置的日志工厂提供日志功能。内置日志工厂将会把日志工作委托给下面的实现之一：</p>
 <ul>
 <li>SLF4J</li>
 <li>Apache Commons Logging</li>
@@ -494,15 +494,18 @@
 <li>Log4j （3.5.9 起废弃）</li>
 <li>JDK logging</li>
 </ul>
-<p>MyBatis 内置日志工厂基于运行时自省机制选择合适的日志工具。它会使用第一个查找得到的工具（按上文列举的顺序查找）。如果一个都未找到，日志功能就会被禁用。<br>
-如果你的应用部署在一个类路径已经包含 Commons Logging 的环境中，而你又想使用其它日志工具，你可以通过在 MyBatis 配置文件 mybatis-config.xml 里面添加一项 setting 来选择别的日志工具。</p>
+<p>MyBatis
+内置日志工厂基于运行时自省机制选择合适的日志工具。它会使用第一个查找得到的工具（按上文列举的顺序查找）。如果一个都未找到，日志功能就会被禁用。
+如果你的应用部署在一个类路径已经包含 Commons Logging
+的环境中，而你又想使用其它日志工具，你可以通过在 MyBatis 配置文件
+mybatis-config.xml 里面添加一项 setting 来选择别的日志工具。</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span><span class="token punctuation">></span></span>
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>logImpl<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>SLF4J<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-1-SLF4J-Logback">3.1 SLF4J + Logback</h4>
-<p><a target="_blank" rel="noopener" href="https://github.com/YLongo/logback-chinese-manual">logback 中文文档</a></p>
-<p>1、添加依赖</p>
-<div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+<h4 id="slf4j-logback">3.1 SLF4J + Logback</h4>
+<p><a target="_blank" rel="noopener" href="https://github.com/YLongo/logback-chinese-manual">logback
+中文文档</a></p>
+<p>1、添加依赖 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.slf4j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>slf4j-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.7.36<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
@@ -511,9 +514,8 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>ch.qos.logback<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>logback-classic<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.2.11<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>2、配置文件<br>
-应用的类路径中创建一个名称为 logback.xml 的文件</p>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 2、配置文件 应用的类路径中创建一个名称为
+logback.xml 的文件</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appender</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>STDOUT<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ch.qos.logback.core.ConsoleAppender<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>encoder</span><span class="token punctuation">></span></span>
@@ -531,24 +533,18 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>level 属性的值可以为：TRACE、DEBUG、INFO、WARN、ERROR、ALL、OFF。</p>
 <p>3、测试</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221120201234.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="4-配置文件">4. 配置文件</h3>
-<h4 id="4-1-全局配置文件">4.1 全局配置文件</h4>
-<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/configuration.html">mybatis 配置文档</a></p>
-<p>执行器类型：</p>
-<ul>
-<li>SIMPLE：普通的执行器</li>
-<li>REUSE：执行器会重用预处理语句（PreparedStatement）</li>
-<li>BATCH：执行器不仅重用语句还会执行批量更新。</li>
-</ul>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221120201234.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="配置文件">4. 配置文件</h3>
+<h4 id="全局配置文件">4.1 全局配置文件</h4>
+<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/configuration.html">mybatis
+配置文档</a></p>
+<p>执行器类型： + SIMPLE：普通的执行器 +
+REUSE：执行器会重用预处理语句（PreparedStatement） +
+BATCH：执行器不仅重用语句还会执行批量更新。</p>
 <p>内置别名</p>
 <table>
-<thead>
-<tr>
-<th><div style="width:150px">别名</div></th>
-<th><div style="width:150px">映射的类型</div></th>
-</tr>
-</thead>
+
 <tbody>
 <tr>
 <td>_byte</td>
@@ -837,13 +833,15 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="4-2-SQL-映射文件">4.2 SQL 映射文件</h4>
-<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/sqlmap-xml.html">xml 映射文件文档</a></p>
+<h4 id="sql-映射文件">4.2 SQL 映射文件</h4>
+<p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/sqlmap-xml.html">xml
+映射文件文档</a></p>
 <p>SQL 映射文件只有很少的几个顶级元素（按照应被定义的顺序列出）：</p>
 <ul>
 <li>cache – 该命名空间的缓存配置。</li>
 <li>cache-ref – 引用其它命名空间的缓存配置。</li>
-<li>resultMap – 描述如何从数据库结果集中加载对象，是最复杂也是最强大的元素。</li>
+<li>resultMap –
+描述如何从数据库结果集中加载对象，是最复杂也是最强大的元素。</li>
 <li>sql – 可被其它语句引用的可重用语句块。</li>
 <li>insert – 映射插入语句。</li>
 <li>update – 映射更新语句。</li>
@@ -852,6 +850,7 @@
 </ul>
 <p><strong>insert、update、delete元素：</strong></p>
 <table>
+
 <thead>
 <tr>
 <th>属性</th>
@@ -865,11 +864,15 @@
 </tr>
 <tr>
 <td>parameterType</td>
-<td>将会传入这条语句的参数的类全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过类型处理器（TypeHandler）推断出具体传入语句的参数，默认值为未设置（unset）。</td>
+<td>将会传入这条语句的参数的类全限定名或别名。这个属性是可选的，因为
+MyBatis
+可以通过类型处理器（TypeHandler）推断出具体传入语句的参数，默认值为未设置（unset）。</td>
 </tr>
 <tr>
 <td>flushCache</td>
-<td>将其设置为 true 后，只要语句被调用，都会导致本地缓存和二级缓存被清空，默认值：（对 insert、update 和 delete 语句）true。</td>
+<td>将其设置为 true
+后，只要语句被调用，都会导致本地缓存和二级缓存被清空，默认值：（对
+insert、update 和 delete 语句）true。</td>
 </tr>
 <tr>
 <td>timeout</td>
@@ -877,23 +880,33 @@
 </tr>
 <tr>
 <td>statementType</td>
-<td>可选 STATEMENT，PREPARED 或 CALLABLE。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。</td>
+<td>可选 STATEMENT，PREPARED 或 CALLABLE。这会让 MyBatis 分别使用
+Statement，PreparedStatement 或
+CallableStatement，默认值：PREPARED。</td>
 </tr>
 <tr>
 <td>useGeneratedKeys</td>
-<td>（仅适用于 insert 和 update）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系型数据库管理系统的自动递增字段），默认值：false。</td>
+<td>（仅适用于 insert 和 update）这会令 MyBatis 使用 JDBC 的
+getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL
+Server 这样的关系型数据库管理系统的自动递增字段），默认值：false。</td>
 </tr>
 <tr>
 <td>keyProperty</td>
-<td>（仅适用于 insert 和 update）指定能够唯一识别对象的属性，MyBatis 会使用 getGeneratedKeys 的返回值或 insert 语句的 selectKey 子元素设置它的值，默认值：未设置（unset）。如果生成列不止一个，可以用逗号分隔多个属性名称。</td>
+<td>（仅适用于 insert 和 update）指定能够唯一识别对象的属性，MyBatis
+会使用 getGeneratedKeys 的返回值或 insert 语句的 selectKey
+子元素设置它的值，默认值：未设置（unset）。如果生成列不止一个，可以用逗号分隔多个属性名称。</td>
 </tr>
 <tr>
 <td>keyColumn</td>
-<td>（仅适用于 insert 和 update）设置生成键值在表中的列名，在某些数据库（像 PostgreSQL）中，当主键列不是表中的第一列的时候，是必须设置的。如果生成列不止一个，可以用逗号分隔多个属性名称。</td>
+<td>（仅适用于 insert 和
+update）设置生成键值在表中的列名，在某些数据库（像
+PostgreSQL）中，当主键列不是表中的第一列的时候，是必须设置的。如果生成列不止一个，可以用逗号分隔多个属性名称。</td>
 </tr>
 <tr>
 <td>databaseId</td>
-<td>如果配置了数据库厂商标识（databaseIdProvider），MyBatis 会加载所有不带 databaseId 或匹配当前 databaseId 的语句；如果带和不带的语句都有，则不带的会被忽略。</td>
+<td>如果配置了数据库厂商标识（databaseIdProvider），MyBatis
+会加载所有不带 databaseId 或匹配当前 databaseId
+的语句；如果带和不带的语句都有，则不带的会被忽略。</td>
 </tr>
 </tbody>
 </table>
@@ -908,6 +921,7 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>selectKey</span><span class="token punctuation">></span></span>
     insert into user(id,user_name) values(#&#123;id&#125;,#&#123;userName&#125;)
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
               
             </div>
             <hr/>

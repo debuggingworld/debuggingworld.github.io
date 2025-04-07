@@ -293,21 +293,23 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-ChatMemory">1. ChatMemory</h3>
+              <h3 id="chatmemory">1. ChatMemory</h3>
 <p>ChatMemory 是一个接口，默认提供了两个实现类：</p>
-<ol>
+<ol type="1">
 <li>MessageWindowChatMemory</li>
 <li>TokenWindowChatMemory</li>
 </ol>
-<h4 id="1-1-使用">1.1 使用</h4>
+<h4 id="使用">1.1 使用</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ChatLanguageModel</span> model <span class="token operator">=</span> <span class="token class-name">ZhipuChatModelUtil</span><span class="token punctuation">.</span><span class="token function">getZhipuChatModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">ChatMemory</span> chatMemory <span class="token operator">=</span> <span class="token class-name">MessageWindowChatMemory</span><span class="token punctuation">.</span><span class="token function">withMaxMessages</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token class-name">NamingMaster</span> namingMaster <span class="token operator">=</span> <span class="token class-name">AiServices</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token class-name">NamingMaster</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">chatLanguageModel</span><span class="token punctuation">(</span>model<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">chatMemory</span><span class="token punctuation">(</span>chatMemory<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>namingMaster<span class="token punctuation">.</span><span class="token function">naming</span><span class="token punctuation">(</span><span class="token string">"取一个中国文化内涵的男孩名字"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>namingMaster<span class="token punctuation">.</span><span class="token function">naming</span><span class="token punctuation">(</span><span class="token string">"换一个"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-2-消息存储">1.2 消息存储</h4>
-<p>两个实现类内部都有一个 ChatMemoryStore 属性，ChatMemoryStore 也是一个接口，默认有一个 InMemoryChatMemoryStore 实现类，该类的实现比较简单：</p>
+<h4 id="消息存储">1.2 消息存储</h4>
+<p>两个实现类内部都有一个 ChatMemoryStore 属性，ChatMemoryStore
+也是一个接口，默认有一个 InMemoryChatMemoryStore
+实现类，该类的实现比较简单：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">InMemoryChatMemoryStore</span> <span class="token keyword">implements</span> <span class="token class-name">ChatMemoryStore</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token punctuation">&lt;</span><span class="token class-name">ChatMessage</span><span class="token punctuation">></span><span class="token punctuation">></span></span> messagesByMemoryId <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -331,7 +333,8 @@
         messagesByMemoryId<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>memoryId<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>本质上就是一个ConcurrentHashMap，所以我们可以自定义 ChatMemoryStore 的实现类来实现将 ChatMessage 持久化到磁盘。比如：</p>
+<p>本质上就是一个ConcurrentHashMap，所以我们可以自定义 ChatMemoryStore
+的实现类来实现将 ChatMessage 持久化到磁盘。比如：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FileDBPersistentChatMemoryStore</span> <span class="token keyword">implements</span> <span class="token class-name">ChatMemoryStore</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">DB</span> db <span class="token operator">=</span> <span class="token class-name">DBMaker</span><span class="token punctuation">.</span><span class="token function">fileDB</span><span class="token punctuation">(</span><span class="token string">"chat-memory.db"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">transactionEnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">hashMap</span><span class="token punctuation">(</span><span class="token string">"messages"</span><span class="token punctuation">,</span> <span class="token constant">STRING</span><span class="token punctuation">,</span> <span class="token constant">STRING</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">createOrOpen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -367,7 +370,7 @@
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusion</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusions</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-3-消息淘汰机制">1.3 消息淘汰机制</h4>
+<h4 id="消息淘汰机制">1.3 消息淘汰机制</h4>
 <p>MessageWindowChatMemory.add()</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">ChatMessage</span> message<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -392,9 +395,15 @@
     <span class="token comment">// 将改变了的List更新到ChatMemoryStore中</span>
     store<span class="token punctuation">.</span><span class="token function">updateMessages</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> messages<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>TokenWindowChatMemory 和 MessageWindowChatMemory 类似，区别在于计算容量的方式不一样，MessageWindowChatMemory 直接取的是 List&lt;ChatMessage&gt;的大小，而 TokenWindowChatMemory 会利用指定的 Tokenizer 对List&lt;ChatMessage&gt; 对应的 Token 数进行估算，然后和设置的 maxTokens 进行比较，超过 maxTokens 也会进行淘汰，也是淘汰最旧的 ChatMessage。</p>
-<h4 id="1-4-独立ChatMemory">1.4 独立ChatMemory</h4>
-<p>MessageWindowChatMemory 和 TokenWindowChatMemory 还有一个 id 属性，用于区分不同的用户。</p>
+<p>TokenWindowChatMemory 和 MessageWindowChatMemory
+类似，区别在于计算容量的方式不一样，MessageWindowChatMemory 直接取的是
+List&lt;ChatMessage&gt;的大小，而 TokenWindowChatMemory 会利用指定的
+Tokenizer 对List&lt;ChatMessage&gt; 对应的 Token
+数进行估算，然后和设置的 maxTokens 进行比较，超过 maxTokens
+也会进行淘汰，也是淘汰最旧的 ChatMessage。</p>
+<h4 id="独立chatmemory">1.4 独立ChatMemory</h4>
+<p>MessageWindowChatMemory 和 TokenWindowChatMemory 还有一个 id
+属性，用于区分不同的用户。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">NamingMaster</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@SystemMessage</span><span class="token punctuation">(</span><span class="token string">"你是一个资深的取名大师，根据输入的主题取名"</span><span class="token punctuation">)</span>
     <span class="token class-name">String</span> <span class="token function">naming</span><span class="token punctuation">(</span><span class="token annotation punctuation">@MemoryId</span> <span class="token class-name">String</span> userId<span class="token punctuation">,</span> <span class="token annotation punctuation">@UserMessage</span> <span class="token class-name">String</span> desc<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -404,10 +413,13 @@
 
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>namingMaster<span class="token punctuation">.</span><span class="token function">naming</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"取一个中国文化内涵的男孩名字"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>namingMaster<span class="token punctuation">.</span><span class="token function">naming</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">,</span> <span class="token string">"换一个"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-5-AiServices-整合-ChatMemory-源码分析">1.5 AiServices 整合 ChatMemory 源码分析</h4>
-<p>DefaultAiServices 代理对象 invoke() 方法中，<a target="_blank" rel="noopener" href="https://debuggingworld.github.io/2025/02/27/LangChain4j%E2%80%94%E2%80%94AiService/">【传送门】</a>,会执行以下代码：</p>
+<h4 id="aiservices-整合-chatmemory-源码分析">1.5 AiServices 整合
+ChatMemory 源码分析</h4>
+<p>DefaultAiServices 代理对象 invoke() 方法中，<a
+target="_blank" rel="noopener" href="https://debuggingworld.github.io/2025/02/27/LangChain4j%E2%80%94%E2%80%94AiService/">【传送门】</a>,会执行以下代码：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Object</span> memoryId <span class="token operator">=</span> <span class="token function">findMemoryId</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">orElse</span><span class="token punctuation">(</span><span class="token constant">DEFAULT</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p>就是解析方法参数中加了 @MemoryId 注解的参数值。</p>
+<p>就是解析方法参数中加了 <span class="citation"
+data-cites="MemoryId">@MemoryId</span> 注解的参数值。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">hasChatMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 根据memoryId获取或创建ChatMemory</span>
     <span class="token class-name">ChatMemory</span> chatMemory <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">chatMemory</span><span class="token punctuation">(</span>memoryId<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -415,7 +427,9 @@
     systemMessage<span class="token punctuation">.</span><span class="token function">ifPresent</span><span class="token punctuation">(</span>chatMemory<span class="token operator">::</span><span class="token function">add</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     chatMemory<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>userMessage<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>context 为 AiServiceContext，它内部有一个 chatMemories 属性，类型为 Map&lt;Object, ChatMemory&gt; ，就是专门用来存储 memoryId 和 ChatMemory 对象之间的映射关系的。</p>
+<p>context 为 AiServiceContext，它内部有一个 chatMemories 属性，类型为
+Map&lt;Object, ChatMemory&gt; ，就是专门用来存储 memoryId 和 ChatMemory
+对象之间的映射关系的。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ChatMessage</span><span class="token punctuation">></span></span> messages<span class="token punctuation">;</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span>context<span class="token punctuation">.</span><span class="token function">hasChatMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     messages <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">chatMemory</span><span class="token punctuation">(</span>memoryId<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">messages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -424,11 +438,14 @@
     systemMessage<span class="token punctuation">.</span><span class="token function">ifPresent</span><span class="token punctuation">(</span>messages<span class="token operator">::</span><span class="token function">add</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     messages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>userMessage<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>根据 memoryId 把对应的 ChatMemory 中存储的所有 ChatMessage 获取出来，然后传入给大模型就可以了。</p>
-<h3 id="2-Tools">2. Tools</h3>
-<h4 id="2-1-ToolSpecification">2.1 ToolSpecification</h4>
+<p>根据 memoryId 把对应的 ChatMemory 中存储的所有 ChatMessage
+获取出来，然后传入给大模型就可以了。</p>
+<h3 id="tools">2. Tools</h3>
+<h4 id="toolspecification">2.1 ToolSpecification</h4>
 <p>首先需要定义一个工具，其实就是一个方法。</p>
-<p>实例：获取当前时间，并且通过 @Tool 注解来描述该工具，从而使得大模型在需要获取当前时间时能够调用该工具方法得到当前时间。</p>
+<p>实例：获取当前时间，并且通过 <span class="citation"
+data-cites="Tool">@Tool</span>
+注解来描述该工具，从而使得大模型在需要获取当前时间时能够调用该工具方法得到当前时间。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Tool</span><span class="token punctuation">(</span><span class="token string">"获取当前时间"</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">String</span> <span class="token function">dateUtil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token class-name">LocalDateTime</span><span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -461,8 +478,9 @@
     aiMessage <span class="token operator">=</span> model<span class="token punctuation">.</span><span class="token function">chat</span><span class="token punctuation">(</span>chatRequest<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">aiMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"&#123;&#125;"</span><span class="token punctuation">,</span> aiMessage<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-2-AiServices整合Tools">2.2 AiServices整合Tools</h4>
-<p>如果大模型要解决一个复杂问题需要调用多个工具或多轮工具调用，以上代码就更不合适了，而 AiServices 能简化这个过程。</p>
+<h4 id="aiservices整合tools">2.2 AiServices整合Tools</h4>
+<p>如果大模型要解决一个复杂问题需要调用多个工具或多轮工具调用，以上代码就更不合适了，而
+AiServices 能简化这个过程。</p>
 <p>假如有这么一个需求：获取今天注册的所有新用户信息，对于这个需求我们可以这么来实现。</p>
 <p>定义两个Tools：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Tools</span> <span class="token punctuation">&#123;</span>
@@ -511,7 +529,7 @@
 <span class="token punctuation">]</span>
 <span class="token number">11</span>:13:23.748 <span class="token punctuation">[</span>main<span class="token punctuation">]</span> INFO com.debug.ai.spring_ai_test.AiService.Main - userInfo:根据您的要求，我已经获取了今天注册的用户信息。根据API调用结果，今天注册的用户有debug和world两位，他们的年龄都是18岁。
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-3-源码分析">2.3 源码分析</h4>
+<h4 id="源码分析">2.3 源码分析</h4>
 <p>在代理对象的 invoke() 方法中，以下代码会去调用大模型的底层API：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ToolExecutionResult</span> toolExecutionResult <span class="token operator">=</span> context<span class="token punctuation">.</span>toolService<span class="token punctuation">.</span><span class="token function">executeInferenceAndToolsLoop</span><span class="token punctuation">(</span>
         chatResponse<span class="token punctuation">,</span>
@@ -582,8 +600,8 @@
 
     <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ToolExecutionResult</span><span class="token punctuation">(</span>chatResponse<span class="token punctuation">,</span> toolExecutions<span class="token punctuation">,</span> tokenUsageAccumulator<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-Embedding">3. Embedding</h3>
-<h4 id="3-1-文本向量化">3.1 文本向量化</h4>
+<h3 id="embedding">3. Embedding</h3>
+<h4 id="文本向量化">3.1 文本向量化</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EmbeddingModel</span> embeddingModel <span class="token operator">=</span> <span class="token class-name">ZhipuChatModelUtil</span><span class="token punctuation">.</span><span class="token function">getZhipuEmbeddingModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Response</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Embedding</span><span class="token punctuation">></span></span> embed <span class="token operator">=</span> embeddingModel<span class="token punctuation">.</span><span class="token function">embed</span><span class="token punctuation">(</span><span class="token string">"hello,debuggingWorld"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>embed<span class="token punctuation">.</span><span class="token function">content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -591,16 +609,18 @@
 <p>执行结果：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">Embedding <span class="token punctuation">&#123;</span> vector <span class="token operator">=</span> <span class="token punctuation">[</span>-0.013567284, <span class="token number">0.045297697</span>, <span class="token punctuation">..</span><span class="token punctuation">..</span>.<span class="token punctuation">]</span><span class="token punctuation">&#125;</span>
 <span class="token number">1024</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="3-2-向量数据库">3.2 向量数据库</h4>
+<h4 id="向量数据库">3.2 向量数据库</h4>
 <p>对于向量模型生成出来的向量，我们可以持久化到向量数据库，并且能利用向量数据库来计算两个向量之间的相似度，或者根据一个向量查找跟这个向量最相似的向量。</p>
-<p>支持的数据库已支持的操作<a target="_blank" rel="noopener" href="https://docs.langchain4j.dev/integrations/embedding-stores/">【传送门】</a></p>
+<p>支持的数据库已支持的操作<a
+target="_blank" rel="noopener" href="https://docs.langchain4j.dev/integrations/embedding-stores/">【传送门】</a></p>
 <p>以 redis 为例：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>dev.langchain4j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>langchain4j-redis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.0.0-alpha1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>【注】redis 一定要带 **RediSearch **模块，可以用官方镜像：redislabs/redisearch。</p>
+<p>【注】redis 一定要带 <strong>RediSearch
+</strong>模块，可以用官方镜像：redislabs/redisearch。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EmbeddingModel</span> embeddingModel <span class="token operator">=</span> <span class="token class-name">ZhipuChatModelUtil</span><span class="token punctuation">.</span><span class="token function">getZhipuEmbeddingModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token class-name">RedisEmbeddingStore</span> embeddingStore <span class="token operator">=</span> <span class="token class-name">RedisEmbeddingStore</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -612,7 +632,7 @@
 embeddingStore<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>embed<span class="token punctuation">.</span><span class="token function">content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>向量库清空：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">redis-cli FT.DROPINDEX embedding-index DD<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h4 id="3-3-匹配向量">3.3 匹配向量</h4>
+<h4 id="匹配向量">3.3 匹配向量</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EmbeddingModel</span> embeddingModel <span class="token operator">=</span> <span class="token class-name">ZhipuChatModelUtil</span><span class="token punctuation">.</span><span class="token function">getZhipuEmbeddingModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token class-name">RedisEmbeddingStore</span> embeddingStore <span class="token operator">=</span> <span class="token class-name">RedisEmbeddingStore</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>

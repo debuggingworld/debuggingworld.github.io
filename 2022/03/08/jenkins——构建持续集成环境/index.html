@@ -23,15 +23,11 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取 拉取更新流程：  上述流程由 deploy.sh 脚本实现： #!&#x2F;bin&#x2F;bash -e cd &quot;&#96;dirname $0&#96;&quot; . .&#x2F;pom.sh  #1. download war, ready env echo &quot;deploy time: $work_t">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png">
 <meta property="article:published_time" content="2022-03-08T15:32:04.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.310Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="jenkins">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -297,10 +293,11 @@
             <div class="markdown-body">
               
               <p>更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。</p>
-<h3 id="1-手动拉取">1. 手动拉取</h3>
+<h3 id="手动拉取">1. 手动拉取</h3>
 <p>拉取更新流程：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>上述流程由 <a target="_blank" rel="noopener" href="http://deploy.sh">deploy.sh</a> 脚本实现：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220308233636.png" srcset="/img/loading.gif" lazyload /></p>
+<p>上述流程由 deploy.sh 脚本实现：</p>
 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token shebang important">#!/bin/bash -e</span>
 <span class="token builtin class-name">cd</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">dirname</span> $0<span class="token variable">`</span></span>"</span>
 <span class="token builtin class-name">.</span> ./pom.sh
@@ -313,8 +310,7 @@
 <span class="token function">wget</span>  <span class="token variable">$download_path</span> <span class="token parameter variable">-O</span> <span class="token variable">$war</span>
 
 deploy_war<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><a target="_blank" rel="noopener" href="http://pom.sh">pom.sh</a> 脚本内容：</p>
-<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token shebang important">#!/bin/bash -e</span>
+<p>pom.sh 脚本内容： <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token shebang important">#!/bin/bash -e</span>
 <span class="token builtin class-name">.</span> <span class="token punctuation">..</span>/bin/env-set.sh
 
 <span class="token assign-left variable">pom_g</span><span class="token operator">=</span>com.zth
@@ -342,9 +338,8 @@ deploy_war<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 &lt;Context docBase="'</span><span class="token variable">$target_ln</span><span class="token string">'" allowLinking="true">
 &lt;/Context>'</span> <span class="token operator">></span> conf/Catalina/localhost/ROOT.xml
         ./tomcat.sh start
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><a target="_blank" rel="noopener" href="http://tomcat.sh">tomcat.sh</a> 内容：</p>
-<div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token shebang important">#!/bin/bash</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p>tomcat.sh 内容： <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token shebang important">#!/bin/bash</span>
 <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token function">whoami</span><span class="token variable">`</span></span>"</span> <span class="token operator">!=</span> <span class="token string">"root"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">then</span>
                 <span class="token builtin class-name">echo</span> <span class="token string">"Error: You must be apps to run this command."</span>
                 <span class="token builtin class-name">exit</span> <span class="token number">1</span>
@@ -355,9 +350,8 @@ deploy_war<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <span class="token builtin class-name">.</span> ./pom.sh
 
 <span class="token builtin class-name">export</span> <span class="token assign-left variable">CATALINA_BASE</span><span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">`</span><span class="token builtin class-name">pwd</span><span class="token variable">`</span></span>"</span>
-tomcat <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token string">"<span class="token variable">$&#123;pom_a&#125;</span>-<span class="token variable">$&#123;pom_v&#125;</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>文件结构：</p>
- <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none"> ├── apache-tomcat -&gt; &#x2F;usr&#x2F;local&#x2F;apache-maven-3.8.4&#x2F;
+tomcat <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token string">"<span class="token variable">$&#123;pom_a&#125;</span>-<span class="token variable">$&#123;pom_v&#125;</span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p>文件结构： <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none"> ├── apache-tomcat -&gt; &#x2F;usr&#x2F;local&#x2F;apache-maven-3.8.4&#x2F;
 ├── jdk -&gt; &#x2F;usr&#x2F;local&#x2F;jdk1.8.0_211&#x2F;
 └── services
     ├── bin
@@ -394,29 +388,37 @@ tomcat <span class="token string">"<span class="token variable">$1</span>"</span
         └── work
             └── Catalina
                 └── localhost
-                    └── ROOT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>执行 <a target="_blank" rel="noopener" href="http://deploy.sh">deploy.sh</a> 脚本完成更新</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/debuggingworld/jenkinsScript.git">代码地址</a></p>
-<h3 id="2-自动推送">2. 自动推送</h3>
-<p>自动推送方式采用在 jenkins 构建完成之后，执行远程 sh 脚本用于下载本次构建 WAR 包，在自动部署重启。基 jenkins 配置如下：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png" srcset="/img/loading.gif" lazyload alt=""></p>
+                    └── ROOT<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p>执行 deploy.sh 脚本完成更新</p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/debuggingworld/jenkinsScript.git">代码地址</a></p>
+<h3 id="自动推送">2. 自动推送</h3>
+<p>自动推送方式采用在 jenkins 构建完成之后，执行远程 sh
+脚本用于下载本次构建 WAR 包，在自动部署重启。基 jenkins 配置如下：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309012019.png" srcset="/img/loading.gif" lazyload /></p>
 <div class="code-wrapper"><pre class="line-numbers language-sh" data-language="sh"><code class="language-sh"><span class="token assign-left variable">BUILD_ID</span><span class="token operator">=</span>dontKillMe
 <span class="token builtin class-name">echo</span> <span class="token variable">$BUILD_ID</span>
 <span class="token function">ssh</span> root@192.168.60.10 <span class="token assign-left variable">BUILD_URL</span><span class="token operator">=</span><span class="token variable">$BUILD_URL</span> /root/svr/services/hello-debuggingworld/jenkins.sh<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>【注】需要设置免密登录（添加公钥到服务器）</p>
-<h3 id="3-配置文件更新">3. 配置文件更新</h3>
-<p>在跌代的过程中要经过四个环境，每个环境的配置信息是不一样的，如何在更新项目的时候把对应的配置文件也更新了呢? 有一种做法是采用 Disconf 之类的配置系统来管理各个环境 的配置，也可以采用一个简单些的方案: 把当前环境 的配置文件放到 app-conf 目录下，等更新脚本的时候会一同覆盖原来的配置文件。</p>
-<h3 id="4-版本回滚">4. 版本回滚</h3>
+<h3 id="配置文件更新">3. 配置文件更新</h3>
+<p>在跌代的过程中要经过四个环境，每个环境的配置信息是不一样的，如何在更新项目的时候把对应的配置文件也更新了呢?
+有一种做法是采用 Disconf 之类的配置系统来管理各个环境
+的配置，也可以采用一个简单些的方案: 把当前环境 的配置文件放到 app-conf
+目录下，等更新脚本的时候会一同覆盖原来的配置文件。 </p>
+<h3 id="版本回滚">4. 版本回滚</h3>
 <p>之前在部署的时候是通过软链接的形式指向指定程序目录，而且原历史版本不会删除，回滚的时候只要把原软链接指定历史程序目录即可。而且配置文件也会一同回滚。</p>
-<h3 id="5-更新脚本说明">5. 更新脚本说明</h3>
-<p><a target="_blank" rel="noopener" href="http://deploy.sh">deploy.sh</a> 部署脚本中还用到了 <a target="_blank" rel="noopener" href="http://pom.sh">pom.sh</a> 与 <a target="_blank" rel="noopener" href="http://tomcat.sh">tomcat.sh</a> 等脚本，这些脚本的作用是什么呢？整体逻辑如下依赖关系如下:</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="更新脚本说明">5. 更新脚本说明</h3>
+<p>deploy.sh 部署脚本中还用到了 pom.sh 与 tomcat.sh
+等脚本，这些脚本的作用是什么呢？整体逻辑如下依赖关系如下:</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220309001255.png" srcset="/img/loading.gif" lazyload /></p>
 <ul>
-<li><a target="_blank" rel="noopener" href="http://env-set.sh">env-set.sh</a> : 设置 jvm 、Tomcat 等环境参数</li>
-<li><a target="_blank" rel="noopener" href="http://pom.sh">pom.sh</a>: 设置当前项目的 groupid 、artifact、version 信息</li>
-<li><a target="_blank" rel="noopener" href="http://tomcat.sh">tomcat.sh</a>：启动关闭 Tomcat</li>
-<li><a target="_blank" rel="noopener" href="http://deploy.sh">deploy.sh</a> :  下载并部署项目</li>
-<li><a target="_blank" rel="noopener" href="http://jenkins.sh">jenkins.sh</a>:  用于被 jenkins 远程触发下载指定更新版本</li>
+<li>env-set.sh : 设置 jvm 、Tomcat 等环境参数</li>
+<li>pom.sh: 设置当前项目的 groupid 、artifact、version 信息</li>
+<li>tomcat.sh：启动关闭 Tomcat</li>
+<li>deploy.sh : 下载并部署项目</li>
+<li>jenkins.sh: 用于被 jenkins 远程触发下载指定更新版本</li>
 </ul>
 
               
