@@ -733,14 +733,14 @@ go-consumer/proto下，然后进行编译，编译成为 go
 </ol>
 <p>然后在 go-consumer 下新建文件夹 api，进入到
 go-consumer/proto下，运行：</p>
-<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">go env -w GO111MODULE&#x3D;on
-go env -w GOPROXY&#x3D;https:&#x2F;&#x2F;goproxy.cn,direct
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">go <span class="token function">env</span> <span class="token parameter variable">-w</span> <span class="token assign-left variable">GO111MODULE</span><span class="token operator">=</span>on
+go <span class="token function">env</span> <span class="token parameter variable">-w</span> <span class="token assign-left variable">GOPROXY</span><span class="token operator">=</span>https://goproxy.cn,direct
 
-go get -u github.com&#x2F;dubbogo&#x2F;tools&#x2F;cmd&#x2F;protoc-gen-go-triple
-go install github.com&#x2F;golang&#x2F;protobuf&#x2F;protoc-gen-go
-go install github.com&#x2F;dubbogo&#x2F;tools&#x2F;cmd&#x2F;protoc-gen-go-triple
+go get <span class="token parameter variable">-u</span> github.com/dubbogo/tools/cmd/protoc-gen-go-triple
+go <span class="token function">install</span> github.com/golang/protobuf/protoc-gen-go
+go <span class="token function">install</span> github.com/dubbogo/tools/cmd/protoc-gen-go-triple
 
-protoc -I. orderservice.proto  --go_out&#x3D;..&#x2F;api --go-triple_out&#x3D;..&#x2F;api<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+protoc -I. orderservice.proto  <span class="token parameter variable">--go_out</span><span class="token operator">=</span><span class="token punctuation">..</span>/api --go-triple_out<span class="token operator">=</span><span class="token punctuation">..</span>/api<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>这样就会在 go-consumer/api 下生成一个 orderservice.pb.go 文件和
 orderservice_triple.pb.go 文件。</p>
 <p>然后就可以写 go 语言的服务消费者了，新建一个 consumer.go：</p>
