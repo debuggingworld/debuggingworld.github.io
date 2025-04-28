@@ -16,23 +16,24 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  pip install transformers 如果还需要安装其他依赖库，如 datasets 和 tok">
+    <meta name="description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HuggingFace核心组件">
 <meta property="og:url" content="http://example.com/2025/04/05/HuggingFace%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  pip install transformers 如果还需要安装其他依赖库，如 datasets 和 tok">
+<meta property="og:description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformers">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071121415.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071129907.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504092118684.png">
 <meta property="article:published_time" content="2025-04-05T01:35:38.000Z">
-<meta property="article:modified_time" content="2025-04-09T13:18:49.270Z">
+<meta property="article:modified_time" content="2025-04-25T03:05:26.774Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="HuggingFace">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071121415.png">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -307,10 +308,13 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/wyf2017/article/detai
 <p><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44961869/article/details/115954258">安装cuda和对应版本的cudnn</a></p>
 </blockquote>
-<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">pip install transformers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>安装 <a target="_blank" rel="noopener" href="https://pytorch.org/">pytorch</a>：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>安装 transformers：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">pip <span class="token function">install</span> transformers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>如果还需要安装其他依赖库，如 datasets 和 tokenizers
 ，可以使用以下命令：</p>
-<div class="code-wrapper"><pre class="line-numbers language-pyt" data-language="pyt"><code class="language-pyt">pip install transformers datasets tokenizers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">pip <span class="token function">install</span> transformers datasets tokenizers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h4 id="模型下载">1.2 模型下载</h4>
 <p>Hugging Face
 提供了一个庞大的模型库，你可以通过以下步骤来查找所需的模型：</p>
