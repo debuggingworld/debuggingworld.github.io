@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="github | 文档 1. 安装 git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.git cd LLaMA-Factory pip install -e . 可视化启动： # 一定要在 LLaMA-Factor 目录 llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F; 2.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLamA-Factory 微调大模型">
+<meta property="og:url" content="http://example.com/2025/05/01/LLamaFactory-%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="github | 文档 1. 安装 git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.git cd LLaMA-Factory pip install -e . 可视化启动： # 一定要在 LLaMA-Factor 目录 llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F; 2.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011743318.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505021622686.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505021628555.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052033106.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052051596.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011902017.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052121145.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052052332.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052112301.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052113059.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061126179.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061124641.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061136582.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061144254.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061203384.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061204037.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061204640.png">
+<meta property="article:published_time" content="2025-05-01T02:57:49.000Z">
+<meta property="article:modified_time" content="2025-05-06T06:04:24.079Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="微调">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011743318.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>LLamA-Factory 微调大模型 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LLamA-Factory 微调大模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-01 10:57" pubdate>
+          2025年5月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LLamA-Factory 微调大模型</h1>
+            
+            <div class="markdown-body">
+              
+              <p><a
+target="_blank" rel="noopener" href="https://github.com/hiyouga/LLaMA-Factory/blob/main/README_zh.md">github</a>
+| <a
+target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/index.html">文档</a></p>
+<h3 id="安装">1. 安装</h3>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span> <span class="token number">1</span> https://github.com/hiyouga/LLaMA-Factory.git
+<span class="token builtin class-name">cd</span> LLaMA-Factory
+pip <span class="token function">install</span> <span class="token parameter variable">-e</span> <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<p>可视化启动：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 一定要在 LLaMA-Factor 目录</span>
+llamafactory-cli webui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+<p>ui地址：http://127.0.0.1:7860/</p>
+<h3 id="lora微调">2. lora微调</h3>
+<h4 id="数据集准备">2.1 数据集准备</h4>
+<h5 id="预制数据集">1. 预制数据集</h5>
+<p>使用 LLamA-Factory 的 identity 数据集进行自我认知训练。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011743318.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<h5 id="自定义微调数据集">2. 自定义微调数据集</h5>
+<p><a
+target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/getting_started/data_preparation.html">LLamA-Factory
+数据处理</a></p>
+<p>微调数据格式：</p>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token property">"instruction"</span><span class="token operator">:</span> <span class="token string">"人类指令（必填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"input"</span><span class="token operator">:</span> <span class="token string">"人类输入（选填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"output"</span><span class="token operator">:</span> <span class="token string">"模型回答（必填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"system"</span><span class="token operator">:</span> <span class="token string">"系统提示词（选填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"history"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">[</span><span class="token string">"第一轮指令（选填）"</span><span class="token punctuation">,</span> <span class="token string">"第一轮回答（选填）"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span><span class="token string">"第二轮指令（选填）"</span><span class="token punctuation">,</span> <span class="token string">"第二轮回答（选填）"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h6 id="a.-数据采集">a. 数据采集</h6>
+<p><a
+target="_blank" rel="noopener" href="https://modelscope.cn/datasets/w10442005/ruozhiba_qa">弱智吧问答数据</a></p>
+<h6 id="b.-数据转换">b. 数据转换</h6>
+<p>转换脚本：</p>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+
+input_file <span class="token operator">=</span> <span class="token string">"./ruozhiba_qaswift.json"</span>
+output_file <span class="token operator">=</span> <span class="token string">"./ruozhiba_qaswift_train.json"</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    data <span class="token operator">=</span> json<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+
+<span class="token comment"># 转换后的数据</span>
+converted_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> item <span class="token keyword">in</span> data<span class="token punctuation">:</span>
+    converted_item <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"instruction"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"query"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">"input"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+        <span class="token string">"output"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"response"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    converted_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>converted_item<span class="token punctuation">)</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output_file<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>converted_data<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ensure_ascii<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"转换完成，数据已保存为 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>output_file<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>转换后数据集：</p>
+<p><a
+target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505012248327.json">ruozhiba_qaswift_train.json</a></p>
+<h6 id="c.-配置数据集">c. 配置数据集</h6>
+<ol type="1">
+<li><p>将数据集上传到 data 目录</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505021622686.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p></li>
+<li><p>配置数据集</p>
+<p>在 dataset_info.json 中配置自定义数据集</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505021628555.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p></li>
+</ol>
+<h4 id="参数配置">2.1 参数配置</h4>
+<p><strong>基本参数配置：</strong></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052033106.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>【注】检查点路径：权重保存路径。示例：/root/xxx/LLaMA-Factory/saves/Qwen3-4B-Instruct/lora/train_2025-05-05-20-30-37/checkpoint-100</p>
+<p><strong>微调参数配置：</strong></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052051596.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<blockquote>
+<ul>
+<li>最大样本数：超过最大样本数的数据会被裁剪掉</li>
+<li>截断长度：根据数据集文本长度进行设置</li>
+</ul>
+</blockquote>
+<p><strong>其他参数配置：</strong></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011902017.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>【注】步数即训练轮数 epoch</p>
+<p>每次保存前会进行验证，然后保存。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052121145.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p><strong>根据显存占用调整批处理大小：</strong></p>
+<p>参看显存占用：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvitop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052052332.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<h4 id="进度监控">2.2 进度监控</h4>
+<ol type="1">
+<li><p>控制台输出</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052112301.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+<li><p>UI 进度条展示</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052113059.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p></li>
+</ol>
+<h4 id="测试">2.3 测试</h4>
+<h5 id="evaluate-测试">1. Evaluate 测试</h5>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061126179.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>测试结果：</p>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"predict_bleu-4"</span><span class="token operator">:</span> <span class="token number">88.92755507246376</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_model_preparation_time"</span><span class="token operator">:</span> <span class="token number">0.0053</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-1"</span><span class="token operator">:</span> <span class="token number">93.41544807813484</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-2"</span><span class="token operator">:</span> <span class="token number">90.64988815374922</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-l"</span><span class="token operator">:</span> <span class="token number">92.30600718336484</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_runtime"</span><span class="token operator">:</span> <span class="token number">247.6047</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_samples_per_second"</span><span class="token operator">:</span> <span class="token number">6.409</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_steps_per_second"</span><span class="token operator">:</span> <span class="token number">0.129</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h5 id="chat测试">2. chat测试</h5>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061124641.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="模型合并量化">4. 模型合并&amp;量化</h3>
+<h4 id="模型合并">4.1 模型合并</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061136582.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>合并后结果：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061144254.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h4 id="模型量化">4.2 模型量化</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061203384.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>量化后模型：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061204037.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>量化前后模型大小对比：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061204640.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/%E5%BE%AE%E8%B0%83/">#微调</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LLamA-Factory 微调大模型</div>
+      <div>http://example.com/2025/05/01/LLamaFactory-微调大模型/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E7%A7%81%E6%9C%89%E5%8C%96%E9%83%A8%E7%BD%B2/" title="大模型本地私有化部署">
+                        <span class="hidden-mobile">大模型本地私有化部署</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
