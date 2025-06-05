@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义  从数组或切片生">
+    <meta name="description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义   从数组或切片">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——切片">
 <meta property="og:url" content="http://example.com/2022/01/02/Go%E2%80%94%E2%80%94%E5%88%87%E7%89%87/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义  从数组或切片生">
+<meta property="og:description" content="切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。 一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。 1. 切片的定义   从数组或切片">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-02T02:49:33.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.301Z">
@@ -238,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.6k 字
+          2.5k 字
         
       </span>
     
@@ -293,21 +293,26 @@
             <div class="markdown-body">
               
               <p>切片（slice）是对数组的一个连续片段的引用，所以切片是一个引用类型，这个片段可以是整个数组，也可以是由起始和终止索引标识的一些项的子集，需要注意的是，终止索引标识的项不包括在切片内。</p>
-<p>一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice
-元素对应的底层数组元素的地址，要注意的是 slice
-的第一个元素并不一定就是数组的第一个元素。</p>
-<h3 id="切片的定义">1. 切片的定义</h3>
-<ol type="1">
-<li><p>从数组或切片生成新的切片</p>
-<p>语法：slice [开始位置 : 结束位置] &gt;
-从数组或切片生成新的切片拥有如下特性： &gt; + 取出的元素数量为：结束位置
-- 开始位置； &gt; +
-取出元素不包含结束位置对应的索引，切片最后一个元素使用 slice[len(slice)]
-获取； &gt; + 当缺省开始位置时，表示从连续区域开头到结束位置； &gt; +
-当缺省结束位置时，表示从开始位置到整个连续区域末尾； &gt; +
-两者同时缺省时，与切片本身等效； &gt; + 两者同时为 0
-时，等效于空切片，一般用于切片复位。</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">   <span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p>一个 slice 由三个部分构成：指针、长度和容量。指针指向第一个 slice 元素对应的底层数组元素的地址，要注意的是 slice 的第一个元素并不一定就是数组的第一个元素。</p>
+<h3 id="1-切片的定义">1. 切片的定义</h3>
+<ol>
+<li>
+<p>从数组或切片生成新的切片</p>
+<p>语法：slice [开始位置 : 结束位置]</p>
+</li>
+</ol>
+<blockquote>
+<p>从数组或切片生成新的切片拥有如下特性：</p>
+<ul>
+<li>取出的元素数量为：结束位置 - 开始位置；</li>
+<li>取出元素不包含结束位置对应的索引，切片最后一个元素使用 slice[len(slice)] 获取；</li>
+<li>当缺省开始位置时，表示从连续区域开头到结束位置；</li>
+<li>当缺省结束位置时，表示从开始位置到整个连续区域末尾；</li>
+<li>两者同时缺省时，与切片本身等效；</li>
+<li>两者同时为 0 时，等效于空切片，一般用于切片复位。</li>
+</ul>
+</blockquote>
+   <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">   <span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">/* 数组长度为 5 */</span>
 	<span class="token keyword">var</span>  array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">&#123;</span><span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">&#125;</span>
 
@@ -320,14 +325,15 @@
 	<span class="token comment">// []int</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%v,%v"</span><span class="token punctuation">,</span><span class="token function">len</span><span class="token punctuation">(</span>slice2<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">cap</span><span class="token punctuation">(</span>slice2<span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token comment">// 3,5</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
-<li><p>使用 make() 函数构造切片</p></li>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<ol start="2">
+<li>使用 make() 函数构造切片</li>
 </ol>
 <blockquote>
 <p>语法：make( []Type, size, cap )</p>
 </blockquote>
 <p>make 底层创建一个数组，对外不可见</p>
-<p><div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"> 
+ <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"> 
 <span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
 	slice <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
@@ -336,8 +342,8 @@
 
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"长度：%v，容量：%v"</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>slice<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">cap</span><span class="token punctuation">(</span>slice<span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token comment">// 长度：5，容量：10</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<ol start="3" type="1">
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<ol start="3">
 <li>直接声明新的切片</li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -349,8 +355,9 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"长度：%v，容量：%v"</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>slice<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">cap</span><span class="token punctuation">(</span>slice<span class="token punctuation">)</span><span class="token punctuation">)</span>
 	<span class="token comment">// 长度：3，容量：3</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="切片的遍历">2. 切片的遍历</h3>
-<p>方式1：for循环常规方式遍历 方式2：for-range 结构遍历切片</p>
+<h3 id="2-切片的遍历">2. 切片的遍历</h3>
+<p>方式1：for循环常规方式遍历<br>
+方式2：for-range 结构遍历切片</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
 	slice <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">23</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">,</span> <span class="token number">67</span><span class="token punctuation">&#125;</span>
@@ -365,11 +372,9 @@
 		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"下标：%v ，元素：%v\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="切片的操作">3. 切片的操作</h3>
-<h4 id="添加元素">3.1 添加元素</h4>
-<p>用 append()
-函数为切片动态添加元素时，如果空间不足，切片就会进行“扩容”。切片在扩容时，容量的扩展规律是按容量的
-2 倍数进行扩充。</p>
+<h3 id="3-切片的操作">3. 切片的操作</h3>
+<h4 id="3-1-添加元素">3.1 添加元素</h4>
+<p>用 append() 函数为切片动态添加元素时，如果空间不足，切片就会进行“扩容”。切片在扩容时，容量的扩展规律是按容量的 2 倍数进行扩充。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	a <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>                 <span class="token comment">// 追加1个元素</span>
@@ -392,18 +397,14 @@
 	<span class="token comment">// [1 100 0 0 0 2 3]</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>在切片开头添加元素一般都会导致内存的重新分配，而且会导致已有元素全部被复制
-1
-次，因此，从切片的开头添加元素的性能要比从尾部追加元素的性能差很多。</p>
-<h4 id="切片复制">3.2 切片复制</h4>
+<p>在切片开头添加元素一般都会导致内存的重新分配，而且会导致已有元素全部被复制 1 次，因此，从切片的开头添加元素的性能要比从尾部追加元素的性能差很多。</p>
+<h4 id="3-2-切片复制">3.2 切片复制</h4>
 <blockquote>
-<p>语法：copy( destSlice, srcSlice []T) int 将 srcSlice 复制到
-destSlice</p>
+<p>语法：copy( destSlice, srcSlice []T) int<br>
+将 srcSlice 复制到 destSlice</p>
 </blockquote>
-<p>copy()
-可以将一个数组切片复制到另一个数组切片中，如果加入的两个数组切片不一样大，就会按照其中较小的那个数组切片的元素个数进行复制。</p>
-<p>来源和目标的类型必须一致，copy()
-函数的返回值表示实际发生复制的元素个数。</p>
+<p>copy() 可以将一个数组切片复制到另一个数组切片中，如果加入的两个数组切片不一样大，就会按照其中较小的那个数组切片的元素个数进行复制。</p>
+<p>来源和目标的类型必须一致，copy() 函数的返回值表示实际发生复制的元素个数。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	slice1 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">&#125;</span>
 	slice2 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">&#125;</span>
@@ -415,7 +416,7 @@ destSlice</p>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>slice1<span class="token punctuation">)</span>
 	<span class="token comment">// [1 2 3 4 5]</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="删除元素">3.3 删除元素</h4>
+<h4 id="3-3-删除元素">3.3 删除元素</h4>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">&#125;</span>
 	a <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token comment">// 删除开头N个元素</span>

@@ -16,18 +16,24 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。 &gt;申明变量没有初始化就为零值 &gt; + 数值类型为 0 &gt; + 布尔类型为 false &gt; + 字符串为 &quot;&quot;（空字符串） &gt; + 复杂类型为 nil（指针、切片、ma">
+    <meta name="description" content="1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。  申明变量没有初始化就为零值  数值类型为 0 布尔类型为 false 字符串为 “”（空字符串） 复杂类型为 nil（指针、切片、map 等）   func main() &amp;#123; 	var">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——变量、常量与数据类型">
 <meta property="og:url" content="http://example.com/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。 &gt;申明变量没有初始化就为零值 &gt; + 数值类型为 0 &gt; + 布尔类型为 false &gt; + 字符串为 &quot;&quot;（空字符串） &gt; + 复杂类型为 nil（指针、切片、ma">
+<meta property="og:description" content="1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。  申明变量没有初始化就为零值  数值类型为 0 布尔类型为 false 字符串为 “”（空字符串） 复杂类型为 nil（指针、切片、map 等）   func main() &amp;#123; 	var">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130016.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130737.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228134900.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228142655.png">
 <meta property="article:published_time" content="2021-12-18T15:29:33.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.304Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130016.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,16 +298,23 @@
             
             <div class="markdown-body">
               
-              <h3 id="变量">1. 变量</h3>
-<h4 id="变量的声明">1.1 变量的声明</h4>
-<ol type="1">
+              <h3 id="1-变量">1. 变量</h3>
+<h4 id="1-1-变量的声明">1.1 变量的声明</h4>
+<ol>
 <li>指定变量类型，如果没有初始化，则变量默认为零值。</li>
 <li>根据值自行判定变量类型</li>
 <li>简短形式，使用 := 赋值操作符（只能声明局部变量）</li>
 </ol>
-<p>【注】局部变量声明后未使用，编译报错。 &gt;申明变量没有初始化就为零值
-&gt; + 数值类型为 0 &gt; + 布尔类型为 false &gt; + 字符串为
-""（空字符串） &gt; + 复杂类型为 nil（指针、切片、map 等）</p>
+<p>【注】局部变量声明后未使用，编译报错。</p>
+<blockquote>
+<p>申明变量没有初始化就为零值</p>
+<ul>
+<li>数值类型为 0</li>
+<li>布尔类型为 false</li>
+<li>字符串为 “”（空字符串）</li>
+<li>复杂类型为 nil（指针、切片、map 等）</li>
+</ul>
+</blockquote>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> name <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">"张三"</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
@@ -313,7 +326,7 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span>
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="多变量声明">1.2 多变量声明</h4>
+<h4 id="1-2-多变量声明">1.2 多变量声明</h4>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> x<span class="token punctuation">,</span> y <span class="token builtin">int</span>
 <span class="token keyword">var</span> <span class="token punctuation">(</span>
 	<span class="token comment">// 这种写法一般用于声明全局变量</span>
@@ -328,9 +341,8 @@
 	g<span class="token punctuation">,</span> h <span class="token operator">:=</span> <span class="token number">123</span><span class="token punctuation">,</span> <span class="token string">"hello"</span>
 	<span class="token function">println</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">,</span> d<span class="token punctuation">,</span> e<span class="token punctuation">,</span> f<span class="token punctuation">,</span> g<span class="token punctuation">,</span> h<span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="常量">2. 常量</h3>
-<p>常量的声明和变量声明非常类似，只是把 var 换成了
-const，常量在定义的时候必须赋值。</p>
+<h3 id="2-常量">2. 常量</h3>
+<p>常量的声明和变量声明非常类似，只是把 var 换成了 const，常量在定义的时候必须赋值。</p>
 <p>const同时声明多个常量时，如果省略了值则表示和上面一行的值相同。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> pi <span class="token operator">=</span> <span class="token number">3.1415</span>
 <span class="token keyword">const</span> e <span class="token operator">=</span> <span class="token number">2.7182</span>
@@ -347,11 +359,9 @@ const，常量在定义的时候必须赋值。</p>
 <span class="token punctuation">)</span>
 
 fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>n3<span class="token punctuation">)</span> <span class="token comment">// 100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="iota">2.1 iota</h4>
-<p>iota 是 go 语言的常量计数器，只能在常量的表达式中使用。</p>
-<p>iota 在 const 关键字出现时将被重置为 0。const
-中每新增一行常量声明将使 iota 计数一次( iota 可理解为 const
-语句块中的行索引)。 使用 iota 能简化定义，在定义枚举时很有用。</p>
+<h4 id="2-1-iota">2.1 iota</h4>
+<p>iota  是 go 语言的常量计数器，只能在常量的表达式中使用。</p>
+<p>iota 在 const 关键字出现时将被重置为 0。const 中每新增一行常量声明将使 iota 计数一次( iota 可理解为 const 语句块中的行索引)。 使用 iota 能简化定义，在定义枚举时很有用。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> <span class="token punctuation">(</span>
 	n1 <span class="token operator">=</span> <span class="token boolean">iota</span> <span class="token comment">// 0</span>
 	n2        <span class="token comment">// 1</span>
@@ -381,111 +391,103 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 	c<span class="token punctuation">,</span> d                      <span class="token comment">// 2,3</span>
 	e<span class="token punctuation">,</span> f                      <span class="token comment">// 3,4</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="数据类型">3. 数据类型</h3>
-<h4 id="基本数据类型">3.1 基本数据类型</h4>
+<h3 id="3-数据类型">3. 数据类型</h3>
+<h4 id="3-1-基本数据类型">3.1 基本数据类型</h4>
 <h5 id="整型">整型</h5>
 <table>
-
 <thead>
 <tr>
-<th style="text-align: center;">类型</th>
-<th style="text-align: center;">有无符号</th>
-<th style="text-align: center;">占用存储空间</th>
-<th style="text-align: center;">表示范围</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">有无符号</th>
+<th style="text-align:center">占用存储空间</th>
+<th style="text-align:center">表示范围</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">uint8</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">1字节</td>
-<td style="text-align: center;">0 - 255(2<sup>8</sup> -1)</td>
+<td style="text-align:center">uint8</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">1字节</td>
+<td style="text-align:center">0 - 255(2^8^ -1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">uint16</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">21字节</td>
-<td style="text-align: center;">0 - 65535(2<sup>16</sup> -1)</td>
+<td style="text-align:center">uint16</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">21字节</td>
+<td style="text-align:center">0 - 65535(2^16^ -1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">uint32</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">4字节</td>
-<td style="text-align: center;">0 到 4294967295(2<sup>32</sup> -1)</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">0 到 4294967295(2^32^ -1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">uint64</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">8字节</td>
-<td style="text-align: center;">0 到 18446744073709551615(2<sup>64</sup>
--1)</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">0 到 18446744073709551615(2^64^ -1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">int8</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">1字节</td>
-<td style="text-align: center;">-128 到 127(-2<sup>7</sup> ~
-2<sup>7</sup>-1)</td>
+<td style="text-align:center">int8</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">1字节</td>
+<td style="text-align:center">-128 到 127(-2^7^  ~  2^7^-1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">int16</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">2字节</td>
-<td style="text-align: center;">-32768 到 32767(-2<sup>15</sup> ~
-2<sup>15</sup>-1)</td>
+<td style="text-align:center">int16</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">2字节</td>
+<td style="text-align:center">-32768 到 32767(-2^15^  ~  2^15^-1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">int32</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">4字节</td>
-<td style="text-align: center;">-2147483648 到
-2147483647(-2<sup>31</sup> ~ 2<sup>31</sup>-1)</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">-2147483648 到 2147483647(-2^31^  ~  2^31^-1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">int64</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">8字节</td>
-<td style="text-align: center;">-2<sup>63</sup> ~ 2<sup>63</sup>-1</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">-2^63^  ~  2^63^-1</td>
 </tr>
 </tbody>
 </table>
 <p>其他整数类型：</p>
 <table>
-
 <thead>
 <tr>
-<th style="text-align: center;">类型</th>
-<th style="text-align: center;">有无符号</th>
-<th style="text-align: center;">占用存储空间</th>
-<th style="text-align: center;">表示范围</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">有无符号</th>
+<th style="text-align:center">占用存储空间</th>
+<th style="text-align:center">表示范围</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">int</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">32位机占4字节，64位机占8字节</td>
-<td style="text-align: center;">(-2<sup>31</sup> ~ 2<sup>31</sup>-1)  (
--2<sup>63</sup> ~ 2<sup>63</sup>-1)</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">32位机占4字节，64位机占8字节</td>
+<td style="text-align:center">(-2^31^  ~  2^31^-1) \ ( -2^63^  ~  2^63^-1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">uint</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">32位机占4字节，64位机占8字节</td>
-<td style="text-align: center;">(0~2<sup>32</sup> -1)  ( 0 ~
-2<sup>64</sup>-1)</td>
+<td style="text-align:center">uint</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">32位机占4字节，64位机占8字节</td>
+<td style="text-align:center">(0~2^32^ -1) \ ( 0  ~  2^64^-1)</td>
 </tr>
 <tr>
-<td style="text-align: center;">rune</td>
-<td style="text-align: center;">有符号</td>
-<td style="text-align: center;">等价 int32</td>
-<td style="text-align: center;">-2<sup>31</sup> ~ 2<sup>31</sup>-1</td>
+<td style="text-align:center">rune</td>
+<td style="text-align:center">有符号</td>
+<td style="text-align:center">等价 int32</td>
+<td style="text-align:center">-2^31^  ~  2^31^-1</td>
 </tr>
 <tr>
-<td style="text-align: center;">byte</td>
-<td style="text-align: center;">无符号</td>
-<td style="text-align: center;">等价 uint8</td>
-<td style="text-align: center;">0 - 255</td>
+<td style="text-align:center">byte</td>
+<td style="text-align:center">无符号</td>
+<td style="text-align:center">等价 uint8</td>
+<td style="text-align:center">0 - 255</td>
 </tr>
 </tbody>
 </table>
@@ -506,31 +508,31 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">类型</th>
-<th style="text-align: center;">占用存储空间</th>
-<th style="text-align: center;">表示范围</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">占用存储空间</th>
+<th style="text-align:center">表示范围</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">float32</td>
-<td style="text-align: center;">4字节</td>
-<td style="text-align: center;">-3.403E38 ~ 3.403E38</td>
+<td style="text-align:center">float32</td>
+<td style="text-align:center">4字节</td>
+<td style="text-align:center">-3.403E38 ~ 3.403E38</td>
 </tr>
 <tr>
-<td style="text-align: center;">float64</td>
-<td style="text-align: center;">8字节</td>
-<td style="text-align: center;">-1.798E308 ~ 1.798E308</td>
+<td style="text-align:center">float64</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">-1.798E308 ~ 1.798E308</td>
 </tr>
 <tr>
-<td style="text-align: center;">complex64</td>
-<td style="text-align: center;">8字节</td>
-<td style="text-align: center;">32 位实数和虚数</td>
+<td style="text-align:center">complex64</td>
+<td style="text-align:center">8字节</td>
+<td style="text-align:center">32 位实数和虚数</td>
 </tr>
 <tr>
-<td style="text-align: center;">complex128</td>
-<td style="text-align: center;">16字节</td>
-<td style="text-align: center;">64 位实数和虚数</td>
+<td style="text-align:center">complex128</td>
+<td style="text-align:center">16字节</td>
+<td style="text-align:center">64 位实数和虚数</td>
 </tr>
 </tbody>
 </table>
@@ -567,8 +569,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 	<span class="token comment">// Real Score = 1 Image Score = 2</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h5 id="字符类型">字符类型</h5>
-<p>Golang中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte
-来保存（Unicode 码）。</p>
+<p>Golang中没有专门的字符类型，如果要存储单个字符(字母)，一般使用 byte 来保存（Unicode 码）。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//定义字符类型的数据：</span>
 	<span class="token keyword">var</span> c1 <span class="token builtin">byte</span> <span class="token operator">=</span> <span class="token char">'a'</span>
@@ -592,8 +593,7 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
     <span class="token comment">// 20013</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>转义字符</strong></p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130016.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130016.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//\b 退格</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"aaa\bbbb"</span><span class="token punctuation">)</span>
@@ -607,12 +607,13 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130016.png" srcset="
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"\"Golang\""</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>执行结果：</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130737.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130737.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <h5 id="布尔类型">布尔类型</h5>
-<p>布尔型的值只可以是常量 true 或者 false。 布尔类型占1个字节</p>
+<p>布尔型的值只可以是常量 true 或者 false。<br>
+布尔类型占1个字节</p>
 <h5 id="字符串类型">字符串类型</h5>
-<p>【注意】go 中 字符串是基本数据类型 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">func main() &#123;
+<p>【注意】go 中 字符串是基本数据类型</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">func main() &#123;
 
 	&#x2F;&#x2F;1.定义一个字符串：
 	var s1 string &#x3D; &quot;hello world&quot;
@@ -639,12 +640,14 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130737.png" srcset="
 		&quot;def&quot; + &quot;abc&quot; + &quot;def&quot; + &quot;abc&quot; + &quot;def&quot;
 	fmt.Println(s6)
 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> #####
-数据类型转换</p>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h5 id="数据类型转换">数据类型转换</h5>
 <h6 id="数值类型之间转换">数值类型之间转换</h6>
-<p>Go
-在不同类型的变量之间赋值时需要显式转换，并且只有显式转换(强制转换)。</p>
-<p>语法：T(v) T : 数据类型 v : 需要转换的变量 将值 v 转换为类型 T</p>
+<p>Go 在不同类型的变量之间赋值时需要显式转换，并且只有显式转换(强制转换)。</p>
+<p>语法：T(v)<br>
+T : 数据类型<br>
+v : 需要转换的变量<br>
+将值 v 转换为类型 T</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//进行类型转换：</span>
 	<span class="token keyword">var</span> n1 <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">100</span>
@@ -669,10 +672,10 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228130737.png" srcset="
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h6 id="数值类型转换为-string">数值类型转换为 string</h6>
-<p>方式1：fmt.Sprintf("%参数",表达式) 方式2：使用 strconv 包的函数<br />
-参数参考：https://studygolang.com/pkgdoc</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228134900.png" srcset="/img/loading.gif" lazyload /></p>
+<p>方式1：fmt.Sprintf(“%参数”,表达式)<br>
+方式2：使用 strconv 包的函数<br>
+参数参考：<a target="_blank" rel="noopener" href="https://studygolang.com/pkgdoc">https://studygolang.com/pkgdoc</a></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228134900.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> n1 <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">19</span>
 	<span class="token keyword">var</span> n2 <span class="token builtin">float64</span> <span class="token operator">=</span> <span class="token number">4.78</span>
@@ -694,10 +697,8 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228134900.png" srcset="
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h6 id="string-类型转数值类型">string 类型转数值类型</h6>
 <p>方式：使用 strconv 包的函数</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png" srcset="/img/loading.gif" lazyload /></p>
-<p>注意：string向基本数据类型转换的时候，一定要确保 string
-类型能够转成有效的数据类型，否则最后得到的结果就是按照对应类型的默认值输出</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>注意：string向基本数据类型转换的时候，一定要确保 string 类型能够转成有效的数据类型，否则最后得到的结果就是按照对应类型的默认值输出</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//string-->bool</span>
 	<span class="token keyword">var</span> s1 <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">"true"</span>
@@ -716,7 +717,7 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png" srcset="
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"f1的类型是：%T,f1=%v \n"</span><span class="token punctuation">,</span> f1<span class="token punctuation">,</span> f1<span class="token punctuation">)</span>
 	
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="复杂数据类型">3.2 复杂数据类型</h4>
+<h4 id="3-2-复杂数据类型">3.2 复杂数据类型</h4>
 <h5 id="指针">指针</h5>
 <p>基本数据类型都有对应的指针类型，形式为 *数据类型</p>
 <p>基本数据类型和指针：</p>
@@ -725,7 +726,11 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png" srcset="
 	<span class="token comment">//&amp;符号+变量 就可以获取这个变量内存的地址</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>age<span class="token punctuation">)</span> <span class="token comment">//0xc0000a2058</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>指针变量： 1. &amp; 取内存地址 2. * 根据地址取值</p>
+<p>指针变量：</p>
+<ol>
+<li>&amp; 取内存地址</li>
+<li>* 根据地址取值</li>
+</ol>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> age <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">18</span>
 
@@ -740,8 +745,7 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228140047.png" srcset="
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"ptr指向的数值为：%v"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span> <span class="token comment">//ptr指向的数值为：18</span>
 <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228142655.png" srcset="/img/loading.gif" lazyload /></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228142655.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>通过指针改变指向值:</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> num <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span>

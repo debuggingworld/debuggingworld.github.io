@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformers">
+    <meta name="description" content="1.  Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HuggingFace核心组件">
 <meta property="og:url" content="http://example.com/2025/04/05/HuggingFace%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformers">
+<meta property="og:description" content="1.  Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformer">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071121415.png">
@@ -298,29 +298,25 @@
             
             <div class="markdown-body">
               
-              <h3 id="transformers-库使用">1. Transformers 库使用</h3>
-<h4 id="安装-transformers">1.1 安装 transformers</h4>
+              <h3 id="1-Transformers-库使用">1.  Transformers 库使用</h3>
+<h4 id="1-1-安装-transformers">1.1 安装 transformers</h4>
 <p>Hugging Face 提供了 transformers 库，用于加载和使用模型</p>
 <blockquote>
 <p>基础环境：Anaconda,CUDA,cuDNN,pytorch</p>
-<p><a
-target="_blank" rel="noopener" href="https://blog.csdn.net/wyf2017/article/details/118676765">安装Anaconda</a></p>
-<p><a
-target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44961869/article/details/115954258">安装cuda和对应版本的cudnn</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wyf2017/article/details/118676765">安装Anaconda</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44961869/article/details/115954258">安装cuda和对应版本的cudnn</a></p>
 </blockquote>
 <p>安装 <a target="_blank" rel="noopener" href="https://pytorch.org/">pytorch</a>：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504251101080.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
 <p>安装 transformers：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">pip <span class="token function">install</span> transformers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p>如果还需要安装其他依赖库，如 datasets 和 tokenizers
-，可以使用以下命令：</p>
+<p>如果还需要安装其他依赖库，如 datasets 和 tokenizers ，可以使用以下命令：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">pip <span class="token function">install</span> transformers datasets tokenizers<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h4 id="模型下载">1.2 模型下载</h4>
-<p>Hugging Face
-提供了一个庞大的模型库，你可以通过以下步骤来查找所需的模型：</p>
-<ol type="1">
+<h4 id="1-2-模型下载">1.2 模型下载</h4>
+<p>Hugging Face 提供了一个庞大的模型库，你可以通过以下步骤来查找所需的模型：</p>
+<ol>
 <li>访问 <a target="_blank" rel="noopener" href="https://huggingface.co/models">模型库页面</a>。</li>
-<li>在搜索栏中输入关键字，如 "GPT-2" 或 "BERT"，然后点击搜索。</li>
+<li>在搜索栏中输入关键字，如 “GPT-2” 或 “BERT”，然后点击搜索。</li>
 <li>你可以使用左侧的过滤器按任务、框架、语言等条件筛选模型</li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> transformers <span class="token keyword">import</span> AutoModelForCausalLM<span class="token punctuation">,</span> AutoTokenizer
@@ -335,8 +331,8 @@ AutoModelForCausalLM<span class="token punctuation">.</span>from_pretrained<span
 AutoTokenizer<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span>model_name<span class="token punctuation">,</span> cache_dir<span class="token operator">=</span>cache_dir<span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"模型分词器已下载到：</span><span class="token interpolation"><span class="token punctuation">&#123;</span>cache_dir<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="模型执行">1.3 模型执行</h4>
-<h5 id="文本生成">1. 文本生成</h5>
+<h4 id="1-3-模型执行">1.3 模型执行</h4>
+<h5 id="1-文本生成">1. 文本生成</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> transformers <span class="token keyword">import</span> AutoModelForCausalLM<span class="token punctuation">,</span> AutoTokenizer<span class="token punctuation">,</span> pipeline
 
 <span class="token comment"># 设置具体包含config.json的目录</span>
@@ -365,7 +361,7 @@ output <span class="token operator">=</span> generator<span class="token punctua
     <span class="token comment"># 该参数控制生成的文本中是否清理分词时引入的空格。如果设置为 True，生成的文本会清除多余的空格；如果为 False，则保留原样。默认值即将改变为 False，因为它能更好地保留原始文本的格式。</span>
 <span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="文本分类">2. 文本分类</h5>
+<h5 id="2-文本分类">2. 文本分类</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> transformers <span class="token keyword">import</span> BertTokenizer<span class="token punctuation">,</span> BertForSequenceClassification<span class="token punctuation">,</span> pipeline
 
 model_dir <span class="token operator">=</span> <span class="token string">"model/bert-base-chinese"</span>
@@ -427,21 +423,16 @@ BertForSequenceClassification<span class="token punctuation">(</span>
   <span class="token punctuation">(</span>dropout<span class="token punctuation">)</span>: Dropout<span class="token punctuation">(</span>p<span class="token operator">=</span><span class="token number">0.1</span>, <span class="token assign-left variable">inplace</span><span class="token operator">=</span>False<span class="token punctuation">)</span>
   <span class="token punctuation">(</span>classifier<span class="token punctuation">)</span>: Linear<span class="token punctuation">(</span>in_features<span class="token operator">=</span><span class="token number">768</span>, <span class="token assign-left variable">out_features</span><span class="token operator">=</span><span class="token number">2</span>, <span class="token assign-left variable">bias</span><span class="token operator">=</span>True<span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="datasets-使用">2. Datasets 使用</h3>
-<p>Datasets 库是 HuggingFace
-生态系统中一个重要的数据集库，可用于轻松地访问和共享数据集，这些数据集是关于音频、计算机视觉、以及自然语言处理等领域。Datasets
-库可以通过一行来加载一个数据集，并且可以使用 Hugging Face
-强大的数据处理方法来快速准备好你的数据集。在 Apache Arrow
-格式的支持下，通过 zero-copy read
-来处理大型数据集，而没有任何内存限制，从而实现最佳速度和效率。</p>
-<p>  当需要微调模型的时候，需要对数据集进行以下操作：</p>
-<ol type="1">
+<h3 id="2-Datasets-使用">2. Datasets 使用</h3>
+<p>Datasets 库是 HuggingFace 生态系统中一个重要的数据集库，可用于轻松地访问和共享数据集，这些数据集是关于音频、计算机视觉、以及自然语言处理等领域。Datasets 库可以通过一行来加载一个数据集，并且可以使用 Hugging Face 强大的数据处理方法来快速准备好你的数据集。在 Apache Arrow 格式的支持下，通过 zero-copy read 来处理大型数据集，而没有任何内存限制，从而实现最佳速度和效率。</p>
+<p>当需要微调模型的时候，需要对数据集进行以下操作：</p>
+<ol>
 <li>数据集加载：下载、加载数据集</li>
 <li>数据集预处理：使用Dataset.map() 预处理数据</li>
 <li>数据集评估指标：加载和计算指标</li>
 </ol>
-<h4 id="加载数据">2.1 加载数据</h4>
-<h5 id="加载dataset数据集">1. 加载Dataset数据集</h5>
+<h4 id="2-1-加载数据">2.1 加载数据</h4>
+<h5 id="1-加载Dataset数据集">1. 加载Dataset数据集</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> datasets <span class="token keyword">import</span> load_from_disk<span class="token punctuation">,</span>load_dataset
 
 <span class="token comment"># 默认缓存路径：~/.cache/huggingface/datasets</span>
@@ -464,7 +455,7 @@ dataset <span class="token operator">=</span> load_dataset<span class="token pun
     <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="保存dataset并加载">2. 保存Dataset并加载</h5>
+<h5 id="2-保存Dataset并加载">2. 保存Dataset并加载</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> datasets <span class="token keyword">import</span> load_from_disk<span class="token punctuation">,</span>load_dataset
 
 <span class="token comment"># dataset = load_dataset(path="lansinuote/ChnSentiCorp",cache_dir="dataset_cache/")</span>
@@ -474,16 +465,15 @@ dataset <span class="token operator">=</span> load_dataset<span class="token pun
 dataset <span class="token operator">=</span> load_from_disk<span class="token punctuation">(</span><span class="token string">"./dataset/ChnSentiCorp"</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>dataset<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>数据集保存文件结构：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071121415.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h5 id="从文件中加载">3. 从文件中加载</h5>
-<h5 id="支持csv-tsv-txt-json-jsonl等格式的文件">支持csv, tsv, txt, json,
-jsonl等格式的文件</h5>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071121415.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<h5 id="3-从文件中加载">3. 从文件中加载</h5>
+<h5 id="支持csv-tsv-txt-json-jsonl等格式的文件">支持csv, tsv, txt, json, jsonl等格式的文件</h5>
 <div class="code-wrapper"><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">from</span> datasets <span class="token keyword">import</span> load_dataset
 
 data_files <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">"train"</span><span class="token punctuation">:</span> <span class="token string">"./data/sougou_mini/train.csv"</span><span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">:</span> <span class="token string">"./data/sougou_mini/test.csv"</span><span class="token punctuation">&#125;</span>
 drug_dataset <span class="token operator">=</span> load_dataset<span class="token punctuation">(</span><span class="token string">"csv"</span><span class="token punctuation">,</span> data_files<span class="token operator">=</span>data_files<span class="token punctuation">,</span> delimiter<span class="token operator">=</span><span class="token string">","</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="从内存中加载">4. 从内存中加载</h5>
+<h5 id="4-从内存中加载">4. 从内存中加载</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> pandas
 <span class="token keyword">from</span> datasets <span class="token keyword">import</span> Dataset
 
@@ -499,8 +489,8 @@ dataset2 <span class="token operator">=</span> Dataset<span class="token punctua
     features: <span class="token punctuation">[</span><span class="token string">'a'</span>, <span class="token string">'b'</span><span class="token punctuation">]</span>,
     num_rows: <span class="token number">3</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071129907.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<h4 id="数据切分">2.2 数据切分</h4>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504071129907.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<h4 id="2-2-数据切分">2.2 数据切分</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> datasets <span class="token keyword">import</span> load_from_disk
 
 dataset <span class="token operator">=</span> load_from_disk<span class="token punctuation">(</span><span class="token string">"./dataset/ChnSentiCorp"</span><span class="token punctuation">)</span>
@@ -526,7 +516,7 @@ Dataset<span class="token punctuation">(</span><span class="token punctuation">&
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span><span class="token string">'text'</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span><span class="token string">'我看过朋友的还可以，但是我订的书迟迟未到已有半个月，都没有收到打电话也没有用，以后你们订书一定要考虑好！当当实在是太慢了'</span>, <span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token punctuation">..</span><span class="token string">'], '</span>label': <span class="token punctuation">[</span><span class="token number">0</span>, <span class="token number">1</span>, <span class="token number">1</span>, <span class="token number">1</span>, <span class="token number">0</span>, <span class="token number">0</span>, <span class="token number">1</span>, <span class="token number">0</span>, <span class="token number">1</span>, <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="更多特性">2.3 更多特性</h4>
+<h4 id="2-3-更多特性">2.3 更多特性</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> datasets <span class="token keyword">import</span> load_from_disk<span class="token punctuation">,</span> load_dataset<span class="token punctuation">,</span> Value
 <span class="token keyword">from</span> transformers <span class="token keyword">import</span> AutoTokenizer
 
@@ -578,7 +568,7 @@ tokenizer <span class="token operator">=</span> AutoTokenizer<span class="token 
 <span class="token keyword">def</span> <span class="token function">tokenize_function</span><span class="token punctuation">(</span>sample<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">return</span> tokenizer<span class="token punctuation">(</span>sample<span class="token punctuation">[</span><span class="token string">'context'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> truncation<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> max_length<span class="token operator">=</span><span class="token number">256</span><span class="token punctuation">)</span>
 tokenized_dataset <span class="token operator">=</span> train_dataset<span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span>tokenize_function<span class="token punctuation">,</span> batched<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="编码">3. 编码</h3>
+<h3 id="3-编码">3. 编码</h3>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> transformers <span class="token keyword">import</span> BertTokenizer
 
 <span class="token comment"># 加载字典和分词器</span>
@@ -615,7 +605,7 @@ out <span class="token operator">=</span> token<span class="token punctuation">.
 
 <span class="token comment"># 解码文本数据</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>token<span class="token punctuation">.</span>decode<span class="token punctuation">(</span>out<span class="token punctuation">[</span><span class="token string">"input_ids"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> token<span class="token punctuation">.</span>decode<span class="token punctuation">(</span>out<span class="token punctuation">[</span><span class="token string">"input_ids"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504092118684.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202504092118684.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" />
 
               
             </div>
