@@ -16,28 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 基本测试框架 在 Go 语言中，所有的测试都需要以  _test.go 结尾，这样 go build 不会去编译  _test.go 结尾的文件，而  go test 会去编译  _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestM">
+    <meta name="description" content="1. 基本测试框架 在 Go 语言中，所有的测试都需要以 _test.go 结尾，这样 go build 不会去编译 _test.go 结尾的文件，而 go test 会去编译 _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestMain">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——测试">
 <meta property="og:url" content="http://example.com/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 基本测试框架 在 Go 语言中，所有的测试都需要以  _test.go 结尾，这样 go build 不会去编译  _test.go 结尾的文件，而  go test 会去编译  _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestM">
+<meta property="og:description" content="1. 基本测试框架 在 Go 语言中，所有的测试都需要以 _test.go 结尾，这样 go build 不会去编译 _test.go 结尾的文件，而 go test 会去编译 _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestMain">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220232747.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220234619.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221234812.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000146.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221235659.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000959.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/1%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20211222154956.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/2%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20211222161446.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222222227.png">
 <meta property="article:published_time" content="2021-12-20T14:30:21.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.305Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220232747.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -302,9 +292,12 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-基本测试框架">1. 基本测试框架</h3>
-<p>在 Go 语言中，所有的测试都需要以  _test.go 结尾，这样 go build 不会去编译  _test.go 结尾的文件，而  go test 会去编译  _test.go 结尾的文件。</p>
-<p>在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:</p>
+              <h3 id="基本测试框架">1. 基本测试框架</h3>
+<p>在 Go 语言中，所有的测试都需要以 _test.go 结尾，这样 go build
+不会去编译 _test.go 结尾的文件，而 go test 会去编译 _test.go
+结尾的文件。</p>
+<p>在编写测试的时候，会用到 testing
+这个包，在这个包中，常用的类型有下面这些:</p>
 <ul>
 <li>testing.T（单元测试）</li>
 <li>testing.B（基准测试）</li>
@@ -312,19 +305,22 @@
 <li>testing.TB（testing.T、testing.B 公用接口）</li>
 <li>testing.PB（Next() 接口 。 判断是否继续循环）</li>
 </ul>
-<p>有一类测试例外，那就是 Example 测试，主要用来在文档中输出一些测试案例，Example 测试必须以 Example 开头，方法不需要任何参数，同时要指明这个实例的输出，像下面这样：</p>
+<p>有一类测试例外，那就是 Example
+测试，主要用来在文档中输出一些测试案例，Example 测试必须以 Example
+开头，方法不需要任何参数，同时要指明这个实例的输出，像下面这样：
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">ExampleTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"run example test"</span><span class="token punctuation">)</span>
  <span class="token comment">// Output:</span>
  <span class="token comment">// run example test</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>所有的测试都可以通过 go test 来发起，例如，在当前包下发起测试 go test -v ./ ，-v 参数表示打印测试的过程，会把测试过程中的标准输出都打印出来。</p>
-<h3 id="2-单元测试">2. 单元测试</h3>
-<h4 id="2-1-语法格式：">2.1 语法格式：</h4>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 所有的测试都可以通过 go test
+来发起，例如，在当前包下发起测试 go test -v ./ ，-v
+参数表示打印测试的过程，会把测试过程中的标准输出都打印出来。</p>
+<h3 id="单元测试">2. 单元测试</h3>
+<h4 id="语法格式">2.1 语法格式：</h4>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestXxx</span><span class="token punctuation">(</span><span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p><font color="red">注意：Xxx 可以是任何字母数字字符串，但是第一个字母不能是小写字母。</font><br>
-其中参数 t 用于报告测试失败和附加的日志信息。<br>
-testing.T的拥有的方法如下：</p>
+<p><font color="red">注意：Xxx
+可以是任何字母数字字符串，但是第一个字母不能是小写字母。</font> 其中参数
+t 用于报告测试失败和附加的日志信息。 testing.T的拥有的方法如下：
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">Error</span><span class="token punctuation">(</span>args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">Errorf</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">Fail</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -341,30 +337,19 @@ testing.T的拥有的方法如下：</p>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">SkipNow</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">Skipf</span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> args <span class="token operator">...</span><span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>c <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">Skipped</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<ul>
-<li>判定失败接口：<br>
-　　Fail 失败继续<br>
-　　FailNow 失败终止</li>
-<li>打印信息接口：<br>
-　　Log 数据流 （cout　类似）<br>
-　　Logf format (printf 类似）</li>
-<li>SkipNow 跳过当前测试</li>
-<li>Skiped 检测是否跳过</li>
-<li>综合接口产生：<br>
-　　Error / Errorf 报告出错继续 [ Log / Logf + Fail ]<br>
-　　Fatel / Fatelf 报告出错终止 [ Log / Logf + FailNow ]<br>
-　　Skip / Skipf 报告并跳过 [ Log / Logf + SkipNow ]</li>
-</ul>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> + 判定失败接口： 　　Fail 失败继续 　　FailNow 失败终止 +
+打印信息接口： 　　Log 数据流 （cout　类似） 　　Logf format (printf
+类似） + SkipNow 跳过当前测试 + Skiped 检测是否跳过 + 综合接口产生：
+　　Error / Errorf 报告出错继续 [ Log / Logf + Fail ] 　　Fatel / Fatelf
+报告出错终止 [ Log / Logf + FailNow ] 　　Skip / Skipf 报告并跳过 [ Log
+/ Logf + SkipNow ] <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">
 <span class="token keyword">func</span> <span class="token function">getAge</span><span class="token punctuation">(</span>IDNumber <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">int16</span> <span class="token punctuation">&#123;</span>
 
  strYear <span class="token operator">:=</span> IDNumber<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">10</span><span class="token punctuation">]</span>
  intYear<span class="token punctuation">,</span> <span class="token boolean">_</span> <span class="token operator">:=</span> strconv<span class="token punctuation">.</span><span class="token function">Atoi</span><span class="token punctuation">(</span>strYear<span class="token punctuation">)</span>
 
  <span class="token keyword">return</span> <span class="token function">int16</span><span class="token punctuation">(</span><span class="token number">2022</span> <span class="token operator">-</span> intYear<span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Test_GetAge</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Test_GetAge</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
  <span class="token keyword">var</span> <span class="token punctuation">(</span>
   in       <span class="token operator">=</span> <span class="token string">"610113200505189012"</span>
   expected <span class="token operator">=</span> <span class="token number">16</span>
@@ -373,32 +358,37 @@ testing.T的拥有的方法如下：</p>
  <span class="token keyword">if</span> actual <span class="token operator">!=</span> <span class="token function">int16</span><span class="token punctuation">(</span>expected<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   t<span class="token punctuation">.</span><span class="token function">Errorf</span><span class="token punctuation">(</span><span class="token string">"Fib(%s) = %d; expected %d"</span><span class="token punctuation">,</span> in<span class="token punctuation">,</span> actual<span class="token punctuation">,</span> expected<span class="token punctuation">)</span>
  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>所有的测试都可以通过 go test 来发起，例如，在当前包下发起测试 go test -v ./ ，-v ：查看测试函数名称和运行时间</p>
-<p>还可以在go test命令后添加 -run 参数，它对应一个正则表达式，只有函数名匹配上的测试函数才会被 go test 命令执行</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220232747.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>【注】：</p>
-<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">PS D:\workspace\zth\gotest\src\gocode\main&gt; go test .    
-go: go.mod file not found in current directory or any parent directory; see &#39;go help modules&#39; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<p><strong>问题原因：</strong><br>
-go module 是 go 从1.13 版本开始正式推荐使用依赖管理库<br>
-go module 可以将某个项目(文件夹)下的所有依赖整理成一个 go.mod 文件,里面写入了依赖的版本等<br>
-使用go module之后我们可不用将代码放置在src下了<br>
-使用 go module 管理依赖后会在项目根目录下生成两个文件 go.mod 和 go.sum。</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p>所有的测试都可以通过 go test 来发起，例如，在当前包下发起测试 go test
+-v ./ ，-v ：查看测试函数名称和运行时间</p>
+<p>还可以在go test命令后添加 -run
+参数，它对应一个正则表达式，只有函数名匹配上的测试函数才会被 go test
+命令执行</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220232747.png" srcset="/img/loading.gif" lazyload /></p>
+<p>【注】： <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">PS D:\workspace\zth\gotest\src\gocode\main&gt; go test .    
+go: go.mod file not found in current directory or any parent directory; see &#39;go help modules&#39; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div> <strong>问题原因：</strong> go module 是 go
+从1.13 版本开始正式推荐使用依赖管理库 go module
+可以将某个项目(文件夹)下的所有依赖整理成一个 go.mod
+文件,里面写入了依赖的版本等 使用go
+module之后我们可不用将代码放置在src下了 使用 go module
+管理依赖后会在项目根目录下生成两个文件 go.mod 和 go.sum。</p>
 <blockquote>
-<p>go env -w GO111MODULE=auto<br>
-go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
+<p>go env -w GO111MODULE=auto go mod init XXX 　//初始化Go
+moudle，xxx为文件夹名</p>
 </blockquote>
 <blockquote>
-<p>用环境变量 GO111MODULE 开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是 auto。</p>
-<ul>
-<li>GO111MODULE=off 　无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。</li>
-<li>GO111MODULE=on 　模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据 go.mod 下载依赖。</li>
-<li>GO111MODULE=auto 　在 $GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。<br>
-在使用模块的时候，GOPATH 是无意义的，不过它还是会把下载的依赖储存在 $GOPATH/src/mod 中，也会把 go install 的结果放在$GOPATH/bin 中。</li>
-</ul>
+<p>用环境变量 GO111MODULE
+开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是 auto。 +
+GO111MODULE=off 　无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。 +
+GO111MODULE=on 　模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据
+go.mod 下载依赖。 + GO111MODULE=auto 　在 $GOPATH/src 外面且根目录有
+go.mod 文件时，开启模块支持。 在使用模块的时候，GOPATH
+是无意义的，不过它还是会把下载的依赖储存在 <span
+class="math inline">\(GOPATH/src/mod 中，也会把 go install
+的结果放在\)</span>GOPATH/bin 中。</p>
 </blockquote>
-<h4 id="2-2-Table-Driven-Test">2.2 Table-Driven Test</h4>
+<h4 id="table-driven-test">2.2 Table-Driven Test</h4>
 <p>采用 Table-Driven 的方式盖更多 case。</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Test_GetAge2</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">var</span> ageTest <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token keyword">struct</span><span class="token punctuation">&#123;</span>
@@ -421,10 +411,10 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>t.Errorf，即使其中某个 case 失败，也不会终止测试执行。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220234619.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="2-3-Parallel-测试">2.3 Parallel 测试</h4>
-<p>被测试方法：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> <span class="token punctuation">(</span>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211220234619.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="parallel-测试">2.3 Parallel 测试</h4>
+<p>被测试方法： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> <span class="token punctuation">(</span>
 	data   <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span>
 	locker sync<span class="token punctuation">.</span>RWMutex
 <span class="token punctuation">)</span>
@@ -439,9 +429,7 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 	locker<span class="token punctuation">.</span><span class="token function">RLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	<span class="token keyword">defer</span> locker<span class="token punctuation">.</span><span class="token function">RUnlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	<span class="token keyword">return</span> data<span class="token punctuation">[</span>k<span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>单元测试方法：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> pairs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 单元测试方法： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> pairs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
 	k <span class="token builtin">string</span>
 	v <span class="token builtin">string</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span>
@@ -472,13 +460,17 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 		<span class="token punctuation">&#125;</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>执行结果：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221234812.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>如果注释掉 WriteToMap 和 ReadFromMap 中 locker 保护的代码，执行测试，测试失败。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000146.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="2-4-testing-的变量">2.4 testing 的变量</h4>
+执行结果：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221234812.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果注释掉 WriteToMap 和 ReadFromMap 中 locker
+保护的代码，执行测试，测试失败。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000146.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="testing-的变量">2.4 testing 的变量</h4>
 <ul>
-<li>test.short : 一个快速测试的标记，在测试用例中可以使用 testing.Short() 来绕开一些测试</li>
+<li>test.short : 一个快速测试的标记，在测试用例中可以使用
+testing.Short() 来绕开一些测试</li>
 <li>test.outputdir : 输出目录</li>
 <li>test.coverprofile : 测试覆盖率参数，指定输出文件</li>
 <li>test.run : 指定正则来运行某个 / 某些测试用例</li>
@@ -492,31 +484,33 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 <li>test.parallel : 指定运行测试用例的并行数</li>
 </ul>
 <p>测试覆盖率：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221235659.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211221235659.png" srcset="/img/loading.gif" lazyload /></p>
 <p>将覆盖率相关的信息输出到文件：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000959.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="3-基准测试">3. 基准测试</h3>
-<h4 id="3-1-基本格式">3.1 基本格式</h4>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222000959.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="基准测试">3. 基准测试</h3>
+<h4 id="基本格式">3.1 基本格式</h4>
 <p>在 _test.go 结尾的测试文件中，基准测试函数形式如下：</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">BenchmarkXxx</span><span class="token punctuation">(</span><span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p>通过 go test 命令，加上 -bench （匹配需要执行的函数）标志来执行。多个基准测试按照顺序运行。</p>
-<p>待测试函数：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Fib</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+<p>通过 go test 命令，加上 -bench
+（匹配需要执行的函数）标志来执行。多个基准测试按照顺序运行。</p>
+<p>待测试函数： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Fib</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">if</span> n <span class="token operator">&lt;</span> <span class="token number">2</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> n
 	<span class="token punctuation">&#125;</span>
 	<span class="token keyword">return</span> <span class="token function">Fib</span><span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">Fib</span><span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>基准测试函数：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">BenchmarkFib10</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 基准测试函数： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">BenchmarkFib10</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">for</span> n <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> n <span class="token operator">&lt;</span> b<span class="token punctuation">.</span>N<span class="token punctuation">;</span> n<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
 		<span class="token function">Fib</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/1%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20211222154956.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="3-2-计时方法">3.2 计时方法</h4>
-<ol>
-<li>StartTimer：开始对测试进行计时。该方法会在基准测试开始时自动被调用，也可以在调用 StopTimer 之后恢复计时；</li>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/1微信截图_20211222154956.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="计时方法">3.2 计时方法</h4>
+<ol type="1">
+<li>StartTimer：开始对测试进行计时。该方法会在基准测试开始时自动被调用，也可以在调用
+StopTimer 之后恢复计时；</li>
 <li>StopTimer：停止对测试进行计时。当需要执行一些复杂的初始化操作，并且不想对这些操作进行测量时，就可以使用这个方法来暂时地停止计时；</li>
 <li>ResetTimer：对已经逝去的基准测试时间以及内存分配计数器进行清零。对于正在运行中的计时器，不会产生任何效果。</li>
 </ol>
@@ -528,10 +522,12 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 		<span class="token function">Fib</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/2%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20211222161446.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="3-3-内存统计">3.3  内存统计</h4>
-<p>ReportAllocs 方法用于打开当前基准测试的内存统计功能， 与 go test 使用 -benchmem 标志类似，但 ReportAllocs 只影响那些调用了该函数的基准测试。</p>
-  <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">  <span class="token keyword">func</span> <span class="token function">BenchmarkFib10Para</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/2微信截图_20211222161446.png" srcset="/img/loading.gif" lazyload /></p>
+<p>#### 3.3 内存统计</p>
+<p>ReportAllocs 方法用于打开当前基准测试的内存统计功能， 与 go test 使用
+-benchmem 标志类似，但 ReportAllocs 只影响那些调用了该函数的基准测试。
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go">  <span class="token keyword">func</span> <span class="token function">BenchmarkFib10Para</span><span class="token punctuation">(</span>b <span class="token operator">*</span>testing<span class="token punctuation">.</span>B<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	b<span class="token punctuation">.</span><span class="token function">ReportAllocs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	templ <span class="token operator">:=</span> template<span class="token punctuation">.</span><span class="token function">Must</span><span class="token punctuation">(</span>template<span class="token punctuation">.</span><span class="token function">New</span><span class="token punctuation">(</span><span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Parse</span><span class="token punctuation">(</span><span class="token string">"Hello, &#123;&#123;.&#125;&#125;!"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 	b<span class="token punctuation">.</span><span class="token function">RunParallel</span><span class="token punctuation">(</span><span class="token keyword">func</span><span class="token punctuation">(</span>pb <span class="token operator">*</span>testing<span class="token punctuation">.</span>PB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -544,24 +540,29 @@ go mod init XXX 　//初始化Go moudle，xxx为文件夹名</p>
 		<span class="token punctuation">&#125;</span>
 	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222222227.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="4-子测试与子基准测试">4.  子测试与子基准测试</h3>
-<p>T 和 B 的 Run 方法允许定义子单元测试和子基准测试，而不必为它们单独定义函数。这便于创建基于 Table-Driven 的基准测试和层级测试。它还提供了一种共享通用 setup 和 tear-down 代码的方法：</p>
-<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestFoo</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211222222227.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="子测试与子基准测试">4. 子测试与子基准测试</h3>
+<p>T 和 B 的 Run
+方法允许定义子单元测试和子基准测试，而不必为它们单独定义函数。这便于创建基于
+Table-Driven 的基准测试和层级测试。它还提供了一种共享通用 setup 和
+tear-down 代码的方法： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestFoo</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// &lt;setup code></span>
     t<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token string">"A=1"</span><span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     t<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token string">"A=2"</span><span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     t<span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token string">"B=1"</span><span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">...</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     <span class="token comment">// &lt;tear-down code></span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>每个子测试和子基准测试都有一个唯一的名称：由顶层测试的名称与传递给 Run 的名称组成，以斜杠分隔，并具有可选的尾随序列号，用于消除歧义。</p>
-<p>命令行标志 -run 和 -bench 的参数是非固定的正则表达式，用于匹配测试名称。对于由斜杠分隔的测试名称，例如子测试的名称，它名称本身即可作为参数，依次匹配由斜杠分隔的每部分名称。</p>
+每个子测试和子基准测试都有一个唯一的名称：由顶层测试的名称与传递给 Run
+的名称组成，以斜杠分隔，并具有可选的尾随序列号，用于消除歧义。</p>
+<p>命令行标志 -run 和 -bench
+的参数是非固定的正则表达式，用于匹配测试名称。对于由斜杠分隔的测试名称，例如子测试的名称，它名称本身即可作为参数，依次匹配由斜杠分隔的每部分名称。
 <div class="code-wrapper"><pre class="line-numbers language-js" data-language="js"><code class="language-js">go test <span class="token operator">-</span>run <span class="token string">''</span>      # 执行所有测试。
 go test <span class="token operator">-</span>run Foo     # 执行匹配 <span class="token string">"Foo"</span> 的顶层测试，例如 <span class="token string">"TestFooBar"</span>。
 go test <span class="token operator">-</span>run Foo<span class="token operator">/</span><span class="token constant">A</span><span class="token operator">=</span>  # 对于匹配 <span class="token string">"Foo"</span> 的顶层测试，执行其匹配 <span class="token string">"A="</span> 的子测试。
 go test <span class="token operator">-</span>run <span class="token operator">/</span><span class="token constant">A</span><span class="token operator">=</span><span class="token number">1</span>    # 执行所有匹配 <span class="token string">"A=1"</span> 的子测试。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>子测试也可用于程序并行控制。只有子测试全部执行完毕后，父测试才会完成。在下述例子中，所有子测试之间并行运行，此处的 “并行” 只限于这些子测试之间，并不影响定义在其他顶层测试中的子测试：</p>
+子测试也可用于程序并行控制。只有子测试全部执行完毕后，父测试才会完成。在下述例子中，所有子测试之间并行运行，此处的
+“并行” 只限于这些子测试之间，并不影响定义在其他顶层测试中的子测试：
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">TestGroupedParallel</span><span class="token punctuation">(</span>t <span class="token operator">*</span>testing<span class="token punctuation">.</span>T<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> tc <span class="token operator">:=</span> <span class="token keyword">range</span> tests <span class="token punctuation">&#123;</span>
         tc <span class="token operator">:=</span> tc <span class="token comment">// capture range variable</span>
@@ -570,7 +571,7 @@ go test <span class="token operator">-</span>run <span class="token operator">/<
             <span class="token operator">...</span>
         <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 
               
             </div>

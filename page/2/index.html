@@ -436,7 +436,7 @@
       <a class="index-excerpt" href="/2024/09/24/LangChain%E2%80%94%E2%80%94%E5%AE%9E%E6%88%98%EF%BC%9A%E6%88%BF%E4%BA%A7%E9%94%80%E5%94%AE%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA/" target="_blank">
         <div>
           
-          整体架构  1. 构造数据 使用 GPT-4 构造销售话术数据 ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 使用 ChatGPT 构造销售数据的 Prompt 示例： 你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。  每条销售话术以如下格式给出： [客户问
+          整体架构  1. 构造数据 　　使用 GPT-4 构造销售话术数据 　　ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 　　使用 ChatGPT 构造销售数据的 Prompt 示例： 你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。  每条销售话术以如下格式
         </div>
       </a>
 
@@ -499,7 +499,7 @@
       <a class="index-excerpt" href="/2024/09/14/LangChain%E2%80%94%E2%80%94Agent/" target="_blank">
         <div>
           
-          1. Agent OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包括可
+          1. Agent 　　OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包
         </div>
       </a>
 
@@ -562,7 +562,7 @@
       <a class="index-excerpt" href="/2024/09/10/LangChain%E2%80%94%E2%80%94Loaders%E3%80%81Splitters%E3%80%81embedding%E3%80%81Vector%20stores%E3%80%81Retrievers/" target="_blank">
         <div>
           
-          1. Document Loaders 使用文档加载器从源中加载数据作为文档。一个文档是一段文字和相关的元数据。  例如，有用于加载简单 .txt 文件的文档加载器，用于加载 ArXiv 论文，或者任何网页的文本内容 1. BaseLoader 类定义 BaseLoader 类定义了如何从不同的数据源加载文档，并提供了一个可选的方法来分割加载的文档。使用这个类作为基础，开发者可以为特定的数据源创建
+          1. Document Loaders 　　使用文档加载器从源中加载数据作为文档。一个文档是一段文字和相关的元数据。  例如，有用于加载简单 .txt 文件的文档加载器，用于加载 ArXiv 论文，或者任何网页的文本内容 1. BaseLoader 类定义 　　BaseLoader 类定义了如何从不同的数据源加载文档，并提供了一个可选的方法来分割加载的文档。使用这个类作为基础，开发者可以为特定的数
         </div>
       </a>
 
@@ -625,7 +625,7 @@
       <a class="index-excerpt" href="/2024/09/07/LangChain%E2%80%94%E2%80%94Memory/" target="_blank">
         <div>
           
-          记忆组件需要实现两个基本操作：读取和写入。 LangChain 的各类 chain 任务组件，如果你打开 Memory 功能，他会执行下面类似的逻辑  接收初始用户输入的时候，Chain 会尝试从记忆组件中查询相关的历史信息，然后把历史信息和用户的输入拼接到提示词中传给LLM。 在接收 LLM 返回内容的时候，会自动把结果存储到记忆组件，方便下次查询。   1. Memory 组件 1.1 Bas
+          记忆组件需要实现两个基本操作：读取和写入。 　　LangChain 的各类 chain 任务组件，如果你打开 Memory 功能，他会执行下面类似的逻辑  接收初始用户输入的时候，Chain 会尝试从记忆组件中查询相关的历史信息，然后把历史信息和用户的输入拼接到提示词中传给LLM。 在接收 LLM 返回内容的时候，会自动把结果存储到记忆组件，方便下次查询。   1. Memory 组件 1.1
         </div>
       </a>
 
@@ -688,7 +688,7 @@
       <a class="index-excerpt" href="/2024/09/05/LangChain%E2%80%94%E2%80%94chains/" target="_blank">
         <div>
           
-          1. LLMChain LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生成的 p
+          1. LLMChain 　　LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 　　一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生
         </div>
       </a>
 
@@ -751,7 +751,7 @@
       <a class="index-excerpt" href="/2024/08/30/LangChain%E2%80%94%E2%80%94model%20I:O(models%E3%80%81Prompts%E3%80%81OutputParser)/" target="_blank">
         <div>
           
-          Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LLMs
+          Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LL
         </div>
       </a>
 
@@ -814,7 +814,7 @@
       <a class="index-excerpt" href="/2024/08/22/OpenAI%E2%80%94%E2%80%94embedding/" target="_blank">
         <div>
           
-          1. 生成 Embedding  基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消极。每个
+          1. 生成 Embedding  　　基于 text-embedding-ada-002 模型对亚马逊美食评论数据集(amazon-fine-food-reviews)进行 embedding。 　　该数据集包含截至2012年10月用户在亚马逊上留下的共计568,454条美食评论。为了说明目的，我们将使用该数据集的一个子集，其中包括最近1,000条评论。这些评论都是用英语撰写的，并且倾向于积极或消
         </div>
       </a>
 

@@ -301,19 +301,32 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-MCP介绍">1. MCP介绍</h3>
-<p>MCP（Model Context Protocol，模型上下文协议）是一种开放协议，旨在实现 大型语言模型（LLM） 应用与外部数据源、工具和服务之间的无缝集成，类似于网络中的 HTTP 协议或邮件中的 SMTP 协议。</p>
-<p>MCP 协议通过标准化模型与外部资源的交互方式，提升 LLM 应用的功能性、灵活性和可扩展性。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121906263.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>MCP 通过定义标准化的接口和协议，使 LLM 能够动态访问和集成以下内容：</p>
-<ol>
-<li><strong>外部数据源</strong>：如数据库、API、文档库等，为 LLM 提供实时或历史数据。</li>
-<li><strong>工具和服务</strong>：如计算工具、搜索引擎、第三方服务等，扩展 LLM 的功能。</li>
-<li><strong>上下文管理</strong>：动态维护 LLM 的对话上下文，确保连贯性和一致性。</li>
+              <h3 id="mcp介绍">1. MCP介绍</h3>
+<p>MCP（Model Context Protocol，模型上下文协议）是一种开放协议，旨在实现
+大型语言模型（LLM）
+应用与外部数据源、工具和服务之间的无缝集成，类似于网络中的 HTTP
+协议或邮件中的 SMTP 协议。</p>
+<p>MCP 协议通过标准化模型与外部资源的交互方式，提升 LLM
+应用的功能性、灵活性和可扩展性。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121906263.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>MCP 通过定义标准化的接口和协议，使 LLM
+能够动态访问和集成以下内容：</p>
+<ol type="1">
+<li><strong>外部数据源</strong>：如数据库、API、文档库等，为 LLM
+提供实时或历史数据。</li>
+<li><strong>工具和服务</strong>：如计算工具、搜索引擎、第三方服务等，扩展
+LLM 的功能。</li>
+<li><strong>上下文管理</strong>：动态维护 LLM
+的对话上下文，确保连贯性和一致性。</li>
 </ol>
-<h4 id="1-1-MCP-和-API-的区别">1.1 MCP 和 API 的区别</h4>
-<p>在推出 MCP 之前，AI 应用如果要对接外部工具，通常需要单独整合多个不同的 API，每个 API 的接口可能都各不相同，认证方式和错误处理也可能不同，极大地增加了开发复杂度和维护成本。</p>
-<p>所以说，传统 API 就像不同的门，每扇门都有一把不同的钥匙，而 MCP 像一把万能钥匙，AI 应用开发者只要集成了这个万能钥匙，就可以打开任意的门。下面是 MCP 和传统 API 的对比：</p>
+<h4 id="mcp-和-api-的区别">1.1 MCP 和 API 的区别</h4>
+<p>在推出 MCP 之前，AI
+应用如果要对接外部工具，通常需要单独整合多个不同的 API，每个 API
+的接口可能都各不相同，认证方式和错误处理也可能不同，极大地增加了开发复杂度和维护成本。</p>
+<p>所以说，传统 API 就像不同的门，每扇门都有一把不同的钥匙，而 MCP
+像一把万能钥匙，AI
+应用开发者只要集成了这个万能钥匙，就可以打开任意的门。下面是 MCP 和传统
+API 的对比：</p>
 <table>
 <thead>
 <tr>
@@ -350,40 +363,43 @@
 </tr>
 </tbody>
 </table>
-<h4 id="1-2-MCP核心解决的问题">1.2 MCP核心解决的问题</h4>
-<p>**传统范式之困：**在传统开发模式中，大模型调用外部服务需要经历复杂的技术链路：</p>
-<p>​	自然语言理解 -&gt; 业务逻辑解析 -&gt; API调用 -&gt; 结果处理</p>
-<p>​	每个环节都可能产生信息损耗，比如下面提到的三个典型问题：</p>
+<h4 id="mcp核心解决的问题">1.2 MCP核心解决的问题</h4>
+<p><strong>传统范式之困：</strong>在传统开发模式中，大模型调用外部服务需要经历复杂的技术链路：</p>
+<p>​ 自然语言理解 -&gt; 业务逻辑解析 -&gt; API调用 -&gt; 结果处理</p>
+<p>​ 每个环节都可能产生信息损耗，比如下面提到的三个典型问题：</p>
 <ul>
-<li>**语义鸿沟：**自然语言指令到具体API参数的映射模糊</li>
-<li>**能力黑洞：**模型对可用服务缺乏实时认知</li>
-<li>**安全边界：**直接开放API调用存在风险敞口</li>
+<li><strong>语义鸿沟：</strong>自然语言指令到具体API参数的映射模糊</li>
+<li><strong>能力黑洞：</strong>模型对可用服务缺乏实时认知</li>
+<li><strong>安全边界：</strong>直接开放API调用存在风险敞口</li>
 </ul>
 <p><strong>MCP核心解决的问题：</strong></p>
-<p>​	打通模型与工具、与现实世界、与人类所见、所思、所想的最后一公里。</p>
-<h4 id="1-3-MCP与functionCall的关系">1.3 MCP与functionCall的关系</h4>
+<p>​ 打通模型与工具、与现实世界、与人类所见、所思、所想的最后一公里。</p>
+<h4 id="mcp与functioncall的关系">1.3 MCP与functionCall的关系</h4>
 <p><strong>一句话总结：</strong></p>
-<p>​	MCP 统一了不同大模型和不同服务之间的协议。</p>
+<p>​ MCP 统一了不同大模型和不同服务之间的协议。</p>
 <p><strong>一张图理解：</strong></p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141601911.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<h3 id="2-MCP-的架构">2. MCP 的架构</h3>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141530342.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141601911.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="mcp-的架构">2. MCP 的架构</h3>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141530342.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>MCP 的架构由四个关键部分组成：</p>
-<ol>
-<li><strong>主机（Host）</strong>：主机是期望从服务器获取数据的人工智能应用，例如  Claude Desktop、Cursor、一个集成开发环境（IDE）等。主机负责初始化和管理客户端、处理用户授权、管理上下文聚合等。</li>
+<ol type="1">
+<li><strong>主机（Host）</strong>：主机是期望从服务器获取数据的人工智能应用，例如
+Claude
+Desktop、Cursor、一个集成开发环境（IDE）等。主机负责初始化和管理客户端、处理用户授权、管理上下文聚合等。</li>
 <li><strong>客户端（Client）</strong>：客户端是主机与服务器之间的桥梁。它与服务器保持一对一的连接，负责消息路由、能力管理、协议协商和订阅管理等。客户端确保主机和服务器之间的通信清晰、安全且高效。</li>
 <li><strong>服务器（Server）</strong>：服务器是提供外部数据和工具的组件。它通过工具、资源和提示模板为大型语言模型提供额外的上下文和功能。例如，一个服务器可以提供与Gmail、Slack等外部服务的API调用。</li>
 </ol>
 <p>结合AI模型，以一个Java应用为例，架构是这样：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141532185.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141532185.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>可以看到传输层有两类：</p>
 <ul>
 <li>StdioTransport</li>
 <li>HTTP SSE</li>
 </ul>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141533286.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<h3 id="3-协议消息">3. 协议消息</h3>
-<p>MCP 的核心是使用 JSON-RPC 2.0 作为消息格式，为客户端和服务器之间的通信提供了一种标准化的方式。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505141533286.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="协议消息">3. 协议消息</h3>
+<p>MCP 的核心是使用 JSON-RPC 2.0
+作为消息格式，为客户端和服务器之间的通信提供了一种标准化的方式。</p>
 <p>基础协议定义了三种基本消息类型，分别是请求（Requests）、响应（Responses）和通知（Notifications）。</p>
 <ul>
 <li><strong>请求和响应</strong>：请求和响应是一对一的，客户端发送请求后，服务器会返回一个响应。<code>id</code>字段用于关联请求和响应。</li>
@@ -391,8 +407,8 @@
 <li><strong>错误处理</strong>：如果请求失败，响应中会包含<code>error</code>字段，提供错误代码和描述，帮助开发者快速定位问题。</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/30515707345">交互过程</a></p>
-<h3 id="4-基于Spring-AI-集成-MCP">4. 基于Spring AI 集成 MCP</h3>
-<h4 id="4-1-MCP-server">4.1 MCP server</h4>
+<h3 id="基于spring-ai-集成-mcp">4. 基于Spring AI 集成 MCP</h3>
+<h4 id="mcp-server">4.1 MCP server</h4>
 <p>依赖：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.ai<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -431,22 +447,28 @@
         <span class="token keyword">return</span> weatherResponse<span class="token punctuation">.</span><span class="token function">current</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">temperature_2m</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"°C"</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>使用 <strong>@Tool</strong> 和 <strong>@ToolParam</strong> 注解定义 mcp 服务 <strong>tool</strong> 的行为和参数。</p>
-<p>然后将 <strong>MCP Tool</strong> 注册到 <strong>MCP 服务</strong>。</p>
+<p>使用 <strong><span class="citation"
+data-cites="Tool">@Tool</span></strong> 和 <strong><span
+class="citation" data-cites="ToolParam">@ToolParam</span></strong>
+注解定义 mcp 服务 <strong>tool</strong> 的行为和参数。</p>
+<p>然后将 <strong>MCP Tool</strong> 注册到 <strong>MCP
+服务</strong>。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">ToolCallbackProvider</span> <span class="token function">weatherTools</span><span class="token punctuation">(</span><span class="token class-name">WeatherService</span> weatherService<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> <span class="token class-name">MethodToolCallbackProvider</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toolObjects</span><span class="token punctuation">(</span>weatherService<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="4-2-MCP-server调试">4.2 MCP server调试</h4>
+<h4 id="mcp-server调试">4.2 MCP server调试</h4>
 <p>MCP Inspector 进行调试:</p>
 <p>安装：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">npx @modelcontextprotocol/inspector@0.7.0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ghj1976/p/18790993/shi-yonginspector-diao-shimcp-fu-wu">MCP Inspector 使用说明</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/ghj1976/p/18790993/shi-yonginspector-diao-shimcp-fu-wu">MCP
+Inspector 使用说明</a></p>
 <p>调用示例：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121922324.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121922324.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <p>SSE连接：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121952750.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
-<h4 id="4-3-MCP-Client">4.3 MCP Client</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505121952750.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<h4 id="mcp-client">4.3 MCP Client</h4>
 <p>依赖：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.ai<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>

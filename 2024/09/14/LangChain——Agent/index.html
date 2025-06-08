@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Agent OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包括可">
+    <meta name="description" content="1. Agent 　　OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LangChain——Agent">
 <meta property="og:url" content="http://example.com/2024/09/14/LangChain%E2%80%94%E2%80%94Agent/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Agent OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包括可">
+<meta property="og:description" content="1. Agent 　　OpenAI应用研究主管LilianWeng写的LLM Powered Autonomous Agents把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块   规划：如何对问题进行拆解得到解决路径，既模型推理步骤 工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求 记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141156281.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141545871.png">
@@ -299,10 +299,13 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-Agent">1. Agent</h3>
-<p>OpenAI应用研究主管LilianWeng写的<a target="_blank" rel="noopener" href="https://lilianweng.github.io/posts/2023-06-23-agent/">LLM Powered Autonomous Agents</a>把人工智能代理(AI Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141156281.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" />
-<ol>
+              <h3 id="agent">1. Agent</h3>
+<p>　　OpenAI应用研究主管LilianWeng写的<a
+target="_blank" rel="noopener" href="https://lilianweng.github.io/posts/2023-06-23-agent/">LLM Powered
+Autonomous Agents</a>把人工智能代理(AI
+Agent)分成了以下3个部分：规划模块，工具调用模块和记忆模块</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141156281.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<ol type="1">
 <li>规划：如何对问题进行拆解得到解决路径，既模型推理步骤</li>
 <li>工具：支持哪些工具使用，如何进行工具选择，并生成调用工具的请求</li>
 <li>记忆：短期记忆包括工具的返回值，已经完成的推理路径，长期记忆包括可访问的外部长期存储例如知识库</li>
@@ -310,19 +313,22 @@
 <p><strong>LangChain Agents 设计原理：</strong></p>
 <p>代理的核心思想是使用 LLM 来选择一系列要执行的动作。</p>
 <ul>
-<li>在链式结构（Chains）中，一系列动作执行是硬编码的（ SequentialChain 和 RouterChain 也仅实现了面向过程）。</li>
+<li>在链式结构（Chains）中，一系列动作执行是硬编码的（ SequentialChain
+和 RouterChain 也仅实现了面向过程）。</li>
 <li>在代理（Agents）中，语言模型被用作推理引擎，以确定应该采取哪些动作以及执行顺序</li>
 </ul>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141545871.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
-<h3 id="2-Self-Ask">2. Self Ask</h3>
-<h4 id="2-1-原理">2.1 原理</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141545871.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<h3 id="self-ask">2. Self Ask</h3>
+<h4 id="原理">2.1 原理</h4>
 <blockquote>
-<p>measuring and narrowing the compositionality gap in language models</p>
-<p><a target="_blank" rel="noopener" href="https://ofir.io/Self-ask-prompting/">https://ofir.io/Self-ask-prompting/</a></p>
+<p>measuring and narrowing the compositionality gap in language
+models</p>
+<p>https://ofir.io/Self-ask-prompting/</p>
 </blockquote>
-<p>Self Ask提出了一种把问题拆解成子问题的Prompt范式，每一步模型都会<strong>自我提问</strong>是否可以把问题改写/拆解成一个简单的子问题，并进行回答，回答时可以调用搜索工具来获得答案，然后根据工具返回结果，继续进行自我提问，直到获得最终答案。其实自我提问的推理形式并不是核心，核心是引导模型来进行问题拆解，也就是开头提到的规划能力。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141552817.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" />
-<h4 id="2-2-Langchain-实现：">2.2 Langchain 实现：</h4>
+<p>　　Self
+Ask提出了一种把问题拆解成子问题的Prompt范式，每一步模型都会<strong>自我提问</strong>是否可以把问题改写/拆解成一个简单的子问题，并进行回答，回答时可以调用搜索工具来获得答案，然后根据工具返回结果，继续进行自我提问，直到获得最终答案。其实自我提问的推理形式并不是核心，核心是引导模型来进行问题拆解，也就是开头提到的规划能力。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141552817.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<h4 id="langchain-实现">2.2 Langchain 实现：</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">model <span class="token operator">=</span> ChatOpenAI<span class="token punctuation">(</span>model<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo"</span><span class="token punctuation">)</span>
 search <span class="token operator">=</span> TavilySearchResults<span class="token punctuation">(</span>max_results<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
 tools <span class="token operator">=</span> <span class="token punctuation">[</span>
@@ -348,17 +354,21 @@ So the final answer is: Elon Reeve Musk
 
 <span class="token operator">></span> Finished chain.
 <span class="token punctuation">&#123;</span><span class="token string">'input'</span><span class="token builtin class-name">:</span> <span class="token string">'Who is the CEO of Tesla'</span>, <span class="token string">'output'</span><span class="token builtin class-name">:</span> <span class="token string">'Elon Reeve Musk'</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-ReAct">3. ReAct</h3>
-<h4 id="3-1-原理">3.1 原理</h4>
+<h3 id="react">3. ReAct</h3>
+<h4 id="原理-1">3.1 原理</h4>
 <blockquote>
-<p>ReAct: synergizing reasoning and acting in language models<br>
-<a target="_blank" rel="noopener" href="https://tsmatz.wordpress.com/2023/03/07/react-with-openai-gpt-and-langchain/">https://tsmatz.wordpress.com/2023/03/07/react-with-openai-gpt-and-langchain/</a></p>
+<p>ReAct: synergizing reasoning and acting in language models
+https://tsmatz.wordpress.com/2023/03/07/react-with-openai-gpt-and-langchain/</p>
 </blockquote>
-<p>ReAct 文如其名，模型推理分成了两个部分，Reason和Action。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141538461.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<p>Reason 生成分析步骤，Action 生成工具调用请求，二者交替进行直到得到最终的结果。和 Self Ask 对比，ReAct 进一步把推理和工具调用进行了解耦, 在 Self Ask 中，自我提问既是推理步骤也是搜索工具的请求 query，而在 ReAct 中工具调用的请求在推理步骤之后，这样可以更好的支持搜索以外的其他工具。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141541825.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" />
-<h4 id="3-2-Langchain-实现">3.2 Langchain 实现</h4>
+<p>　　ReAct 文如其名，模型推理分成了两个部分，Reason和Action。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141538461.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>　　Reason 生成分析步骤，Action
+生成工具调用请求，二者交替进行直到得到最终的结果。和 Self Ask
+对比，ReAct 进一步把推理和工具调用进行了解耦, 在 Self Ask
+中，自我提问既是推理步骤也是搜索工具的请求 query，而在 ReAct
+中工具调用的请求在推理步骤之后，这样可以更好的支持搜索以外的其他工具。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409141541825.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<h4 id="langchain-实现-1">3.2 Langchain 实现</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     model <span class="token operator">=</span> ChatOpenAI<span class="token punctuation">(</span>model<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo"</span><span class="token punctuation">)</span>
     tools <span class="token operator">=</span> load_tools<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"llm-math"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> llm<span class="token operator">=</span>model<span class="token punctuation">)</span>
@@ -415,11 +425,15 @@ Final Answer: Elon Musk is the CEO of Tesla.
 
 <span class="token operator">></span> Finished chain.
 <span class="token punctuation">&#123;</span><span class="token string">'input'</span><span class="token builtin class-name">:</span> <span class="token string">'Who is the CEO of Tesla'</span>, <span class="token string">'output'</span><span class="token builtin class-name">:</span> <span class="token string">'Elon Musk is the CEO of Tesla.'</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="1-tavily">1. tavily</h5>
-<p><a target="_blank" rel="noopener" href="https://tavily.com/">Tavily’s Search API</a> is a search engine built specifically for AI agents (LLMs), delivering real-time, accurate, and factual results at speed.</p>
-<p><a target="_blank" rel="noopener" href="https://python.langchain.com/v0.2/docs/integrations/tools/tavily_search/">LangChain tavily</a></p>
+<h5 id="tavily">1. tavily</h5>
+<p>　　<a target="_blank" rel="noopener" href="https://tavily.com/">Tavily's Search API</a> is a search
+engine built specifically for AI agents (LLMs), delivering real-time,
+accurate, and factual results at speed.</p>
+<p>　　<a
+target="_blank" rel="noopener" href="https://python.langchain.com/v0.2/docs/integrations/tools/tavily_search/">LangChain
+tavily</a></p>
 <div class="code-wrapper"><pre class="line-numbers language-py" data-language="py"><code class="language-py">os<span class="token punctuation">.</span>environ<span class="token punctuation">[</span><span class="token string">"TAVILY_API_KEY"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"xxx"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h5 id="2-Streaming-Messages">2. Streaming Messages</h5>
+<h5 id="streaming-messages">2. Streaming Messages</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     model <span class="token operator">=</span> ChatOpenAI<span class="token punctuation">(</span>model<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo"</span><span class="token punctuation">)</span>
     search <span class="token operator">=</span> TavilySearchResults<span class="token punctuation">(</span>max_results<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
@@ -438,8 +452,10 @@ Final Answer: Elon Musk is the CEO of Tesla.
 ----
 <span class="token punctuation">&#123;</span><span class="token string">'output'</span><span class="token builtin class-name">:</span> <span class="token string">'The current weather in Beijing is clear with a temperature of 22.0°C (71.6°F).'</span>, <span class="token string">'messages'</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>AIMessage<span class="token punctuation">(</span>content<span class="token operator">=</span><span class="token string">'The search results show the current weather in Beijing.\nFinal Answer: The current weather in Beijing is clear with a temperature of 22.0°C (71.6°F).'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span>
 ----<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="3-Streaming-tokens">3. Streaming tokens</h5>
-<p>In addition to streaming back messages, it is also useful to be streaming back tokens. We can do this with the <code>.astream_events</code> method.</p>
+<h5 id="streaming-tokens">3. Streaming tokens</h5>
+<p>　　In addition to streaming back messages, it is also useful to be
+streaming back tokens. We can do this with the
+<code>.astream_events</code> method.</p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">get_function_tools</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     model <span class="token operator">=</span> ChatOpenAI<span class="token punctuation">(</span>model<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo"</span><span class="token punctuation">)</span>
     search <span class="token operator">=</span> TavilySearchResults<span class="token punctuation">(</span>max_results<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>

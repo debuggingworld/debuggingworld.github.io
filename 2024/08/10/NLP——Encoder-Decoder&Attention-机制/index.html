@@ -16,18 +16,17 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM 等等，">
+    <meta name="description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 　　目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 　　具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP——Encoder-Decoder &amp; Attention 机制">
 <meta property="og:url" content="http://example.com/2024/08/10/NLP%E2%80%94%E2%80%94Encoder-Decoder&Attention-%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM 等等，">
+<meta property="og:description" content="1. Encoder-Decoder 1.1 Encoder-Decoder结构 　　目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。 　　具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN&#x2F;RNN&#x2F;BiRNN&#x2F;GRU&#x2F;LSTM">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101812406.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110009932.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110021709.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110024233.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110029239.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110033730.gif">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110035322.gif">
@@ -253,7 +252,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          4.9k 字
+          5k 字
         
       </span>
     
@@ -307,81 +306,153 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-Encoder-Decoder">1. Encoder-Decoder</h3>
-<h4 id="1-1-Encoder-Decoder结构">1.1 Encoder-Decoder结构</h4>
-<p>目前大多数的注意力模型都是依附在 Encoder-Decoder 框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。</p>
-<p>具体实现 Encoder-Decoder 的时候，编码器和解码器都不是固定的，可选的有 CNN/RNN/BiRNN/GRU/LSTM 等等，你可以自由组合。比如说，你在编码时使用 BiRNN，解码时使用RNN，或者在编码时使用 RNN，解码时使用 LSTM 等等。例如在 Image Caption 的应用中 Encoder-Decoder 就是 CNN-RNN 的编码 - 解码框架；在神经网络机器翻译中 Encoder-Decoder 往往就是 LSTM-LSTM 的编码 - 解码框架，在机器翻译中也被叫做 <a target="_blank" rel="noopener" href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf">Sequence to Sequence learning</a> 。</p>
+              <h3 id="encoder-decoder">1. Encoder-Decoder</h3>
+<h4 id="encoder-decoder结构">1.1 Encoder-Decoder结构</h4>
+<p>　　目前大多数的注意力模型都是依附在 Encoder-Decoder
+框架下，但并不是只能运用在该模型中，注意力机制作为一种思想可以和多种模型进行结合，其本身不依赖于任何一种框架。</p>
+<p>　　具体实现 Encoder-Decoder
+的时候，编码器和解码器都不是固定的，可选的有 CNN/RNN/BiRNN/GRU/LSTM
+等等，你可以自由组合。比如说，你在编码时使用
+BiRNN，解码时使用RNN，或者在编码时使用 RNN，解码时使用 LSTM 等等。例如在
+Image Caption 的应用中 Encoder-Decoder 就是 CNN-RNN 的编码 -
+解码框架；在神经网络机器翻译中 Encoder-Decoder 往往就是 LSTM-LSTM 的编码
+- 解码框架，在机器翻译中也被叫做 <a
+target="_blank" rel="noopener" href="https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf">Sequence
+to Sequence learning</a> 。</p>
 <blockquote>
 <p>所谓编码，就是将输入的序列编码成一个固定长度的向量；解码，就是将之前生成的固定向量再解码成输出序列。这里的输入序列和输出序列正是机器翻译的结果和输出。</p>
 </blockquote>
-<p>为了说明 Attention 机制的作用，以 Encoder-Decoder 框架下的机器翻译的应用为例，该框架的抽象表示如下图：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" />
-<p>为了方便阐述，在选取 Encoder 和 Decoder 时都假设其为 RNN。在 RNN 中，当前时刻隐藏状态 h<sub>t</sub> 是由上一时刻的隐藏状态 h<sub>t−1</sub> 和当前时刻的输入 x<sub>t</sub> 决定的，如下公式所示：</p>
-<p>$$<br>
-h_t=f(h_{t−1},x_t)<br>
-$$</p>
-<p>在 <strong>编码阶段</strong>，获得各个时刻的隐藏层状态后，通过把这些隐藏层的状态进行汇总，可以生成最后的语义编码向量 C，如下公式所示，其中 q 表示某种非线性神经网络，此处表示多层 RNN 。<br>
-$$<br>
-C=q(h_1,h_2,⋯,h_{T_x})<br>
-$$<br>
-　　在一些应用中，也可以直接将最后的隐藏层编码状态作为最终的语义编码 $C$，即满足：<br>
-$$<br>
-C=q(h1,h2,⋯,h_{T_x})=h_{T_x}<br>
-$$<br>
-　　在 <strong>解码阶段</strong>，需要根据给定的语义向量 C 和之前已经生成的输出序列 $ y1,y2,⋯,y_{t−1}$ 来预测下一个输出的单词 $y_t$，即满足公式：<br>
-$$<br>
-y_t=arg\ maxP(y_t)=∏^T_{t=1}p(y_t|y_1,y_2,⋯,y_{t−1},C)<br>
-$$<br>
-　　由于我们此处使用的 Decoder 是 RNN ，所以当前状态的输出只与上一状态和当前的输入相关，所以可以将公式简写成如下形式：<br>
-$$<br>
-y_t=g(y_{t−1},s_{t−1},C)<br>
-$$<br>
-　　在上面公式中，$s_{t−1}$ 表示 Decoder 中 RNN 神经元的隐藏层状态，$y_{t−1}$ 表示前一时刻的输出，C 代表的是编码后的语义向量，而 $g(⋅)$ 则是一个非线性的多层神经网络，可以输出  $y_t$ 的概率，一般情况下是由多层 RNN 和 softmax 层组成。</p>
-<h4 id="1-2-局限性">1.2 局限性</h4>
-<p>Encoder-Decoder 框架虽然应用广泛，但是其存在的局限性也比较大。最大的局限性就是 Encoder 和 Decoder 之间只通过一个固定长度的语义向量 C 来唯一联系。也就是说，Encoder 必须要将输入的整个序列的信息都压缩进一个固定长度的向量中，存在两个弊端：</p>
-<ol>
+<p>　　为了说明 Attention 机制的作用，以 Encoder-Decoder
+框架下的机器翻译的应用为例，该框架的抽象表示如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101856639.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<p>　　为了方便阐述，在选取 Encoder 和 Decoder 时都假设其为 RNN。在 RNN
+中，当前时刻隐藏状态 h<sub>t</sub> 是由上一时刻的隐藏状态
+h<sub>t−1</sub> 和当前时刻的输入 x<sub>t</sub>
+决定的，如下公式所示：</p>
+<p><span class="math display">\[
+h_t=f(h_{t−1},x_t)
+\]</span></p>
+<p>　　在
+<strong>编码阶段</strong>，获得各个时刻的隐藏层状态后，通过把这些隐藏层的状态进行汇总，可以生成最后的语义编码向量
+C，如下公式所示，其中 q 表示某种非线性神经网络，此处表示多层 RNN 。
+<span class="math display">\[
+C=q(h_1,h_2,⋯,h_{T_x})
+\]</span>
+　　在一些应用中，也可以直接将最后的隐藏层编码状态作为最终的语义编码
+<span class="math inline">\(C\)</span>，即满足： <span
+class="math display">\[
+C=q(h1,h2,⋯,h_{T_x})=h_{T_x}
+\]</span> 　　在 <strong>解码阶段</strong>，需要根据给定的语义向量 C
+和之前已经生成的输出序列 $ y1,y2,⋯,y_{t−1}$ 来预测下一个输出的单词 <span
+class="math inline">\(y_t\)</span>，即满足公式： <span
+class="math display">\[
+y_t=arg\ maxP(y_t)=∏^T_{t=1}p(y_t|y_1,y_2,⋯,y_{t−1},C)
+\]</span> 　　由于我们此处使用的 Decoder 是 RNN
+，所以当前状态的输出只与上一状态和当前的输入相关，所以可以将公式简写成如下形式：
+<span class="math display">\[
+y_t=g(y_{t−1},s_{t−1},C)
+\]</span> 　　在上面公式中，<span class="math inline">\(s_{t−1}\)</span>
+表示 Decoder 中 RNN 神经元的隐藏层状态，<span
+class="math inline">\(y_{t−1}\)</span> 表示前一时刻的输出，C
+代表的是编码后的语义向量，而 <span class="math inline">\(g(⋅)\)</span>
+则是一个非线性的多层神经网络，可以输出 <span
+class="math inline">\(y_t\)</span> 的概率，一般情况下是由多层 RNN 和
+softmax 层组成。</p>
+<h4 id="局限性">1.2 局限性</h4>
+<p>　　Encoder-Decoder
+框架虽然应用广泛，但是其存在的局限性也比较大。最大的局限性就是 Encoder
+和 Decoder 之间只通过一个固定长度的语义向量 C
+来唯一联系。也就是说，Encoder
+必须要将输入的整个序列的信息都压缩进一个固定长度的向量中，存在两个弊端：</p>
+<ol type="1">
 <li>语义向量 C 可能无法完全表示整个序列的信息。</li>
 <li>先输入到网络的内容携带的信息会被后输入的信息覆盖掉，输入的序列越长，该现象就越严重。</li>
 </ol>
-<p>这两个弊端使得 Decoder 在解码时一开始就无法获得输入序列最够多的信息，因此导致解码的精确度不够准确。</p>
-<h3 id="2-Attention-机制">2. Attention 机制</h3>
-<h4 id="2-1-什么是注意力机制">2.1 什么是注意力机制</h4>
-<p>注意力机制是指人类的神经系统在面对复杂的感知信息时，通过选择性的关注和集中注意力来处理特定的刺激。注意力机制可以帮助我们过滤掉不相关或无用的信息，并专注于重要的刺激、任务或目标。这种机制可以通过自主调控或受到外界环境的影响而发生变化。例如，注意力可以集中于一个特定的刺激或任务，也可以在多个刺激之间进行转移和分配。注意力机制在认知过程中起着重要的作用，影响感知、思维、决策和行为等方面的表现。</p>
-<p><strong>基于注意力机制的深度学习，核心在于让机器学会去感知数据中的重要和不重要的部分</strong>。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101812406.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<h4 id="2-2-Attention-机制的作用">2.2 Attention 机制的作用</h4>
-<p>在上述的模型中，Encoder-Decoder 框架将输入 X 都编码转化为语义表示 C，这就导致翻译出来的序列的每一个字都是同权地考虑了输入中的所有的词。例如输入的英文句子是：<code>Tom chase Jerry</code>，目标的翻译结果是：<code>汤姆追逐杰瑞</code>。在未考虑注意力机制的模型当中，模型认为 <code>汤姆</code> 这个词的翻译受到 <code>Tom</code>，<code>chase</code> 和 <code>Jerry</code> 这三个词的同权重的影响。但是实际上显然不应该是这样处理的，<code>汤姆</code> 这个词应该受到输入的 <code>Tom</code> 这个词的影响最大，而其它输入的词的影响则应该是非常小的。显然，在未考虑注意力机制的 Encoder-Decoder 模型中，这种不同输入的重要程度并没有体现处理，一般称这样的模型为 <strong>分心模型</strong>。</p>
-<p>而带有 Attention 机制的 Encoder-Decoder 模型则是要从序列中学习到每一个元素的重要程度，然后按重要程度将元素合并。因此，注意力机制可以看作是 Encoder 和 Decoder 之间的接口，它向 Decoder 提供来自每个 Encoder 隐藏状态的信息。通过该设置，模型能够选择性地关注输入序列的有用部分，从而学习它们之间的“对齐”。这就表明，在 Encoder 将输入的序列元素进行编码时，得到的不在是一个固定的语义编码 C ，而是存在多个语义编码，且不同的语义编码由不同的序列元素以不同的权重参数组合而成。一个简单地体现 Attention 机制运行的示意图如下：</p>
+<p>这两个弊端使得 Decoder
+在解码时一开始就无法获得输入序列最够多的信息，因此导致解码的精确度不够准确。</p>
+<h3 id="attention-机制">2. Attention 机制</h3>
+<h4 id="什么是注意力机制">2.1 什么是注意力机制</h4>
+<p>　　注意力机制是指人类的神经系统在面对复杂的感知信息时，通过选择性的关注和集中注意力来处理特定的刺激。注意力机制可以帮助我们过滤掉不相关或无用的信息，并专注于重要的刺激、任务或目标。这种机制可以通过自主调控或受到外界环境的影响而发生变化。例如，注意力可以集中于一个特定的刺激或任务，也可以在多个刺激之间进行转移和分配。注意力机制在认知过程中起着重要的作用，影响感知、思维、决策和行为等方面的表现。</p>
+<p>　　<strong>基于注意力机制的深度学习，核心在于让机器学会去感知数据中的重要和不重要的部分</strong>。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408101812406.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h4 id="attention-机制的作用">2.2 Attention 机制的作用</h4>
+<p>　　在上述的模型中，Encoder-Decoder 框架将输入 X 都编码转化为语义表示
+C，这就导致翻译出来的序列的每一个字都是同权地考虑了输入中的所有的词。例如输入的英文句子是：<code>Tom chase Jerry</code>，目标的翻译结果是：<code>汤姆追逐杰瑞</code>。在未考虑注意力机制的模型当中，模型认为
+<code>汤姆</code> 这个词的翻译受到 <code>Tom</code>，<code>chase</code>
+和 <code>Jerry</code>
+这三个词的同权重的影响。但是实际上显然不应该是这样处理的，<code>汤姆</code>
+这个词应该受到输入的 <code>Tom</code>
+这个词的影响最大，而其它输入的词的影响则应该是非常小的。显然，在未考虑注意力机制的
+Encoder-Decoder
+模型中，这种不同输入的重要程度并没有体现处理，一般称这样的模型为
+<strong>分心模型</strong>。</p>
+<p>　　而带有 Attention 机制的 Encoder-Decoder
+模型则是要从序列中学习到每一个元素的重要程度，然后按重要程度将元素合并。因此，注意力机制可以看作是
+Encoder 和 Decoder 之间的接口，它向 Decoder 提供来自每个 Encoder
+隐藏状态的信息。通过该设置，模型能够选择性地关注输入序列的有用部分，从而学习它们之间的“对齐”。这就表明，在
+Encoder 将输入的序列元素进行编码时，得到的不在是一个固定的语义编码 C
+，而是存在多个语义编码，且不同的语义编码由不同的序列元素以不同的权重参数组合而成。一个简单地体现
+Attention 机制运行的示意图如下：</p>
 <blockquote>
 <p><strong>定义：对齐</strong></p>
 <p>对齐是指将原文的片段与其对应的译文片段进行匹配。</p>
 </blockquote>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110009932.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>在 Attention 机制下，语义编码 C 就不在是输入序列 X 的直接编码了，而是各个元素按其重要程度加权求和得到的，即：<br>
-$$<br>
-Ci=∑^{T_x}<em>{j=0}a</em>{ij}f(x_j)<br>
-$$<br>
-　　上面公式中，参数 i 表示时刻， j 表示序列中的第 j 个元素， $T_x$ 表示序列的长度， $f(⋅)$ 表示对元素 $x_j$ 的编码。$a_{ij}$ 可以看作是一个概率，反映了元素 $h_j$ 对 $C_i$ 的重要性，可以使用 softmax 来表示：<br>
-$$<br>
-a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}<em>{k=1}exp(e</em>{ik})}<br>
-$$<br>
-　　这里 $e_{ij}$ 正是反映了待编码的元素和其它元素之间的匹配度，当匹配度越高时，说明该元素对其的影响越大，则 $a_{ij}$ 的值也就越大。</p>
-<p>因此，得出 aijaij 的过程如下图：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110021709.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>其中，$h_i$ 表示 Encoder 的转换函数，$F(h_j,H_i)$ 表示预测与目标的匹配打分函数。将以上过程串联起来，则注意力模型的结构如下图所示：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110024233.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="2-3-Attention-原理">2.3 Attention 原理</h4>
-<p>Attention 机制的一个重点就是获得 attention value，即机器翻译中的语义编码 $C_i$。在上一节中我们知道该值是通过输入元素按照不同的权重参数组合而成的，所以我们可以将其定义为一个 attention 函数，比较主流的 attention 函数的机制是采用键值对查询的方式，其工作实质如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110029239.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>在自然语言任务中，往往 Key 和 Value 是相同的。需要注意的是，计算出来的 attention value 是一个向量，代表序列元素 $x_j$ 的编码向量，包含了元素 $x_j$ 的上下文关系，即同时包含全局联系和局部联系。全局联系很好理解，因为在计算时考虑了该元素与其他所有元素的相似度计算；而局部联系则是因为在对元素 $x_j$ 进行编码时，重点考虑与其相似度较高的局部元素，尤其是其本身。</p>
-<p>阅读到一篇有关 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMTkyMg==&amp;mid=2247485860&amp;idx=1&amp;sn=e926a739784090b3779711164217b968&amp;chksm=c06981f9f71e08efb5f57441444f71a09f1d27fc667af656a5ad1173e32ad394201d02195a3a&amp;mpshare=1&amp;scene=1&amp;srcid=0618HMAYi4gzzwWfedLoOuSD&amp;key=cb6098335ab487a8ec84c95399379f16f975d33ce91588d73ecf857c54b543666b5927e231ad3a9b17bff0c20fff20fc49c262912dca050dee9465801de8a4cdc79e3d8f4fbc058345331fb691bcbacb&amp;ascene=1&amp;uin=MTE3NTM4MTY0NA%3D%3D&amp;devicetype=Windows+10&amp;version=62060833&amp;lang=zh_CN&amp;pass_ticket=ikhBXxX7PL%2Fal9hbIGXbRFA96ei74EF%2BcP8KdbP6UcV6mIpOfPWzVuju%2Bqw86q5r">动画图解Attention机制</a> 的文章，这里主要是对 Attention 层的实现做下总结，详细内容请查看原文。注意力机制可以看作是神经网络架构中的一层神经网络，注意力层的实现可以分为 6 个步骤。</p>
-<p><strong>Step 0：准备隐藏状态</strong></p>
-<p>首先准备第一个 Decoder 的隐藏层状态（红色）和所有可用的 Encoder 隐藏层状态（绿色）。在示例中，有 4 个 Encoder 隐藏状态和 1 个 Decoder 隐藏状态。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110033730.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p><strong>Step 1：得到每一个 Encoder 隐藏状态的得分</strong></p>
-<p>分值（score）由 <code>score</code> 函数来获得，最简单的方法是直接用 Decoder 隐藏状态和 Encoder 中的每一个隐藏状态进行点积。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110035322.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>假设 Decoder 中的隐藏状态为 <code>[5, 0, 1]</code>，分别与 Encoder 中的每个隐藏状态做点积，得到第二个隐藏状态的分值最高，说明下一个要解码的元素将受到当前这种隐藏状态的严重影响。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110009932.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　在 Attention 机制下，语义编码 C 就不在是输入序列 X
+的直接编码了，而是各个元素按其重要程度加权求和得到的，即： <span
+class="math display">\[
+Ci=∑^{T_x}_{j=0}a_{ij}f(x_j)
+\]</span> 　　上面公式中，参数 i 表示时刻， j 表示序列中的第 j 个元素，
+<span class="math inline">\(T_x\)</span> 表示序列的长度， <span
+class="math inline">\(f(⋅)\)</span> 表示对元素 <span
+class="math inline">\(x_j\)</span> 的编码。<span
+class="math inline">\(a_{ij}\)</span> 可以看作是一个概率，反映了元素
+<span class="math inline">\(h_j\)</span> 对 <span
+class="math inline">\(C_i\)</span> 的重要性，可以使用 softmax 来表示：
+<span class="math display">\[
+a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}_{k=1}exp(e_{ik})}
+\]</span> 　　这里 <span class="math inline">\(e_{ij}\)</span>
+正是反映了待编码的元素和其它元素之间的匹配度，当匹配度越高时，说明该元素对其的影响越大，则
+<span class="math inline">\(a_{ij}\)</span> 的值也就越大。</p>
+<p>　　因此，得出 aijaij 的过程如下图：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110021709.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　其中，<span class="math inline">\(h_i\)</span> 表示 Encoder
+的转换函数，<span class="math inline">\(F(h_j,H_i)\)</span>
+表示预测与目标的匹配打分函数。将以上过程串联起来，则注意力模型的结构如下图所示：</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110024233.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="attention-原理">2.3 Attention 原理</h4>
+<p>　　Attention 机制的一个重点就是获得 attention
+value，即机器翻译中的语义编码 <span
+class="math inline">\(C_i\)</span>。在上一节中我们知道该值是通过输入元素按照不同的权重参数组合而成的，所以我们可以将其定义为一个
+attention 函数，比较主流的 attention
+函数的机制是采用键值对查询的方式，其工作实质如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110029239.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　在自然语言任务中，往往 Key 和 Value
+是相同的。需要注意的是，计算出来的 attention value
+是一个向量，代表序列元素 <span class="math inline">\(x_j\)</span>
+的编码向量，包含了元素 <span class="math inline">\(x_j\)</span>
+的上下文关系，即同时包含全局联系和局部联系。全局联系很好理解，因为在计算时考虑了该元素与其他所有元素的相似度计算；而局部联系则是因为在对元素
+<span class="math inline">\(x_j\)</span>
+进行编码时，重点考虑与其相似度较高的局部元素，尤其是其本身。</p>
+<p>　　阅读到一篇有关 <a
+target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMTkyMg==&amp;mid=2247485860&amp;idx=1&amp;sn=e926a739784090b3779711164217b968&amp;chksm=c06981f9f71e08efb5f57441444f71a09f1d27fc667af656a5ad1173e32ad394201d02195a3a&amp;mpshare=1&amp;scene=1&amp;srcid=0618HMAYi4gzzwWfedLoOuSD&amp;key=cb6098335ab487a8ec84c95399379f16f975d33ce91588d73ecf857c54b543666b5927e231ad3a9b17bff0c20fff20fc49c262912dca050dee9465801de8a4cdc79e3d8f4fbc058345331fb691bcbacb&amp;ascene=1&amp;uin=MTE3NTM4MTY0NA%3D%3D&amp;devicetype=Windows+10&amp;version=62060833&amp;lang=zh_CN&amp;pass_ticket=ikhBXxX7PL%2Fal9hbIGXbRFA96ei74EF%2BcP8KdbP6UcV6mIpOfPWzVuju%2Bqw86q5r">动画图解Attention机制</a>
+的文章，这里主要是对 Attention
+层的实现做下总结，详细内容请查看原文。注意力机制可以看作是神经网络架构中的一层神经网络，注意力层的实现可以分为
+6 个步骤。</p>
+<p>　　<strong>Step 0：准备隐藏状态</strong></p>
+<p>　　首先准备第一个 Decoder 的隐藏层状态（红色）和所有可用的 Encoder
+隐藏层状态（绿色）。在示例中，有 4 个 Encoder 隐藏状态和 1 个 Decoder
+隐藏状态。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110033730.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　<strong>Step 1：得到每一个 Encoder 隐藏状态的得分</strong></p>
+<p>　　分值（score）由 <code>score</code>
+函数来获得，最简单的方法是直接用 Decoder 隐藏状态和 Encoder
+中的每一个隐藏状态进行点积。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110035322.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　假设 Decoder 中的隐藏状态为 <code>[5, 0, 1]</code>，分别与
+Encoder
+中的每个隐藏状态做点积，得到第二个隐藏状态的分值最高，说明下一个要解码的元素将受到当前这种隐藏状态的严重影响。</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">decoder_hidden &#x3D; [10, 5, 10]
 encoder_hidden score
 ---------------------
@@ -390,18 +461,26 @@ encoder_hidden score
      [1, 1, 0]     15
      [0, 5, 1]     35<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>Step 2：将所有得分送入 softmax 层</strong></p>
-<p>该部分实质上就是对得到的所有分值进行归一化，这样 <code>softmax</code> 之后得到的所有分数相加为 1。而且能够使得原本分值越高的隐藏状态，其对应的概率也越大，从而抑制那些无效或者噪音信息。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110041387.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>通过 softmax 层后，可以得到一组新的隐藏层状态分数，其计算方法即为公式 $a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}<em>{k=1}exp(e</em>{ik})}$。注意，此处得到的分值应该是浮点数，但是由于无限接近于 0 和 1，所以做了近似。</p>
+<p>　　该部分实质上就是对得到的所有分值进行归一化，这样
+<code>softmax</code> 之后得到的所有分数相加为
+1。而且能够使得原本分值越高的隐藏状态，其对应的概率也越大，从而抑制那些无效或者噪音信息。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110041387.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　通过 softmax
+层后，可以得到一组新的隐藏层状态分数，其计算方法即为公式 <span
+class="math inline">\(a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}_{k=1}exp(e_{ik})}\)</span>。注意，此处得到的分值应该是浮点数，但是由于无限接近于
+0 和 1，所以做了近似。</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">encoder_hidden score score^
 -----------------------------
      [0, 1, 1]     15       0
      [5, 0, 1]     60       1
      [1, 1, 0]     15       0
      [0, 5, 1]     35       0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>Step 3：用每个 Encoder 的隐藏状态乘以 softmax 之后的得分</strong></p>
-<p>通过将每个编码器的隐藏状态与其 softmax 之后的分数(标量)相乘，我们得到 对齐向量 或标注向量。这正是对齐产生的机制</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110045703.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
+<p><strong>Step 3：用每个 Encoder 的隐藏状态乘以 softmax
+之后的得分</strong></p>
+<p>　　通过将每个编码器的隐藏状态与其 softmax
+之后的分数(标量)相乘，我们得到 对齐向量
+或标注向量。这正是对齐产生的机制</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110045703.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">encoder score score^ alignment
  ---------------------------------
  [0, 1, 1]   15     0   [0, 0, 0]
@@ -409,24 +488,37 @@ encoder_hidden score
  [1, 1, 0]   15     0   [0, 0, 0]
  [0, 5, 1]   35     0   [0, 0, 0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>Step 4：将所有对齐的向量进行累加</strong></p>
-<p>对对齐向量进行求和，生成 <em>上下文向量</em> 。上下文向量是前一步的对齐向量的聚合信息。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110047508.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>该步骤其实就对应了公式$Ci=∑^{T_x}<em>{j=0}a</em>{ij}f(x_j)$，得到最终的编码后的向量来作为 Decoder 的输入，其编码后的向量为 <code>[5, 0, 1]</code>。</p>
+<p>　　对对齐向量进行求和，生成 <em>上下文向量</em>
+。上下文向量是前一步的对齐向量的聚合信息。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110047508.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　该步骤其实就对应了公式<span
+class="math inline">\(Ci=∑^{T_x}_{j=0}a_{ij}f(x_j)\)</span>，得到最终的编码后的向量来作为
+Decoder 的输入，其编码后的向量为 <code>[5, 0, 1]</code>。</p>
 <p><strong>Step 5：把上下文向量送到 Decoder 中</strong></p>
-<p>通过将上下文向量和 Decoder 的上一个隐藏状态一起送入当前的隐藏状态，从而得到解码后的输出。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110050506.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<p>最终得到完整的注意力层结构如下图所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110051647.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" />
-<h4 id="2-4-Attention-机制的优劣">2.4  Attention 机制的优劣</h4>
-<p>相比于传统的 RNN 和 CNN，attention 机制具有如下优点：</p>
+<p>　　通过将上下文向量和 Decoder
+的上一个隐藏状态一起送入当前的隐藏状态，从而得到解码后的输出。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110050506.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<p>　　最终得到完整的注意力层结构如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110051647.png" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
+<h4 id="attention-机制的优劣">2.4 Attention 机制的优劣</h4>
+<p>　　相比于传统的 RNN 和 CNN，attention 机制具有如下优点：</p>
 <ul>
-<li>一步到位的全局联系捕捉，且关注了元素的局部联系；attention 函数在计算 attention value 时，是进行序列的每一个元素和其它元素的对比，在这个过程中每一个元素间的距离都是一；而在时间序列 RNNs 中，元素的值是通过一步步递推得到的长期依赖关系获取的，而越长的序列捕捉长期依赖关系的能力就会越弱。</li>
-<li>并行计算减少模型训练时间；Attention 机制每一步的计算都不依赖于上一步的计算结果，因此可以并行处理。</li>
+<li>一步到位的全局联系捕捉，且关注了元素的局部联系；attention 函数在计算
+attention value
+时，是进行序列的每一个元素和其它元素的对比，在这个过程中每一个元素间的距离都是一；而在时间序列
+RNNs
+中，元素的值是通过一步步递推得到的长期依赖关系获取的，而越长的序列捕捉长期依赖关系的能力就会越弱。</li>
+<li>并行计算减少模型训练时间；Attention
+机制每一步的计算都不依赖于上一步的计算结果，因此可以并行处理。</li>
 <li>模型复杂度小，参数少</li>
 </ul>
-<p>但 attention 机制的缺点也比较明显，因为是对序列的所有元素并行处理的，所以无法考虑输入序列的元素顺序，这在自然语言处理任务中比较糟糕。因为在自然语言中，语言的顺序是包含了十分多的信息的，如果缺失了该部分的信息，则得到的结果往往会大大折扣。</p>
-<h4 id="2-5-总结">2.5 总结</h4>
-<p>简而言之，Attention 机制就是对输入的每个元素考虑不同的权重参数，从而更加关注与输入的元素相似的部分，而抑制其它无用的信息。其最大的优势就是能一步到位的考虑全局联系和局部联系，且能并行化计算，这在大数据的环境下尤为重要。同时，我们需要注意的是 Attention 机制作为一种思想，并不是只能依附在 Encoder-Decoder 框架下的，而是可以根据实际情况和多种模型进行结合。</p>
+<p>　　但 attention
+机制的缺点也比较明显，因为是对序列的所有元素并行处理的，所以无法考虑输入序列的元素顺序，这在自然语言处理任务中比较糟糕。因为在自然语言中，语言的顺序是包含了十分多的信息的，如果缺失了该部分的信息，则得到的结果往往会大大折扣。</p>
+<h4 id="总结">2.5 总结</h4>
+<p>　　简而言之，Attention
+机制就是对输入的每个元素考虑不同的权重参数，从而更加关注与输入的元素相似的部分，而抑制其它无用的信息。其最大的优势就是能一步到位的考虑全局联系和局部联系，且能并行化计算，这在大数据的环境下尤为重要。同时，我们需要注意的是
+Attention 机制作为一种思想，并不是只能依附在 Encoder-Decoder
+框架下的，而是可以根据实际情况和多种模型进行结合。</p>
 
               
             </div>

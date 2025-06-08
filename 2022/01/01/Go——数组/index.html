@@ -292,7 +292,7 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-数组的申明">1. 数组的申明</h3>
+              <h3 id="数组的申明">1. 数组的申明</h3>
 <blockquote>
 <p>var　variable_name　[SIZE]variable_type</p>
 </blockquote>
@@ -310,13 +310,11 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"第二个元素地址：%p \n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>scores<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// 0xc0000ac072</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>【注】</p>
-<ol>
-<li>数组的地址即第一个元素的地址，数组每个元素占用的字节数取决于数组类型。</li>
-<li>长度属于类型的一部分</li>
-<li>Go 中数组属值类型，在默认情况下是值传递，因此会进行值拷贝。</li>
-</ol>
-<h3 id="2-数组的初始化">2. 数组的初始化</h3>
+<p>【注】 1.
+数组的地址即第一个元素的地址，数组每个元素占用的字节数取决于数组类型。
+2. 长度属于类型的一部分 3. Go
+中数组属值类型，在默认情况下是值传递，因此会进行值拷贝。</p>
+<h3 id="数组的初始化">2. 数组的初始化</h3>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//第一种：</span>
 	<span class="token keyword">var</span> arr1 <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">&#125;</span>
@@ -331,8 +329,8 @@
 	<span class="token keyword">var</span> arr4 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">2</span><span class="token punctuation">:</span> <span class="token number">66</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">:</span> <span class="token number">33</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">:</span> <span class="token number">99</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">:</span> <span class="token number">88</span><span class="token punctuation">&#125;</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>arr4<span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-数组的遍历">3. 数组的遍历</h3>
-<ol>
+<h3 id="数组的遍历">3. 数组的遍历</h3>
+<ol type="1">
 <li>for 循环</li>
 <li>for range</li>
 </ol>
@@ -347,7 +345,7 @@
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="4-二维数组">4. 二维数组</h3>
+<h3 id="二维数组">4. 二维数组</h3>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 
 	<span class="token keyword">var</span> array1 <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token builtin">int16</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token builtin">int16</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
@@ -373,9 +371,8 @@
 		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 	<span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="5-向函数传递数组">5. 向函数传递数组</h3>
-<p>void myFunction(param [10]int){}<br>
-void myFunction(param []int)</p>
+<h3 id="向函数传递数组">5. 向函数传递数组</h3>
+<p>void myFunction(param [10]int){} void myFunction(param []int)</p>
 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">/* 数组长度为 5 */</span>
 	<span class="token keyword">var</span>  balance <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token punctuation">&#123;</span><span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">&#125;</span>
