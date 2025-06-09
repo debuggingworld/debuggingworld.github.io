@@ -16,18 +16,20 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r">
+    <meta name="description" content="1. reset 的三种模式   –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。   –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。   –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——reset的三种模式">
 <meta property="og:url" content="http://example.com/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r">
+<meta property="og:description" content="1. reset 的三种模式   –hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。   –soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。   –mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。    2.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png">
 <meta property="article:published_time" content="2022-02-22T13:58:42.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.298Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -292,20 +294,22 @@
             
             <div class="markdown-body">
               
-              <h3 id="reset-的三种模式">1. reset 的三种模式 </h3>
+              <h3 id="1-reset-的三种模式">1. reset 的三种模式</h3>
 <ul>
-<li><p>--hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。</p></li>
-<li><p>--soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p></li>
-<li><p>--mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。</p></li>
+<li>
+<p>–hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。</p>
+</li>
+<li>
+<p>–soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
+</li>
+<li>
+<p>–mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。</p>
+</li>
 </ul>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="reset---hard">2. reset --hard</h3>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220222220108.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="2-reset-hard">2. reset --hard</h3>
 <p>重置 stage 区和工作目录（慎用）。</p>
-<p>在 reset 后面加 --hard 参数时，stage
-区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。也就是没有
-commit
-的修改会被全部擦掉。执行后工作区、暂存区、版本库保持一致（指定HEAD版本）
+<p>在 reset 后面加 --hard 参数时，stage 区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。也就是没有 commit 的修改会被全部擦掉。执行后工作区、暂存区、版本库保持一致（指定HEAD版本）</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/test <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
 $ <span class="token function">git</span> status
 On branch master
@@ -345,11 +349,12 @@ Date:   Wed Nov <span class="token number">25</span> <span class="token number">
 Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/test <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
 $ <span class="token function">git</span> status
 On branch master
-nothing to commit, working tree clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> ### 3. reset --soft
-保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
-<p>可以使用 Soft
-Reset 合并「当前节点」与「reset目标节点」之间不具太大意义的 commit 记录，让 commit 演进线图较为清晰点。</p>
-<p>【示例】工作区添加新文件后reset  <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/test <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+nothing to commit, working tree clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h3 id="3-reset-soft">3. reset --soft</h3>
+<p>保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。</p>
+<p>可以使用 Soft Reset 合并「当前节点」与「reset目标节点」之间不具太大意义的 commit 记录，让 commit 演进线图较为清晰点。</p>
+<p>【示例】工作区添加新文件后reset</p>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/test <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
 $ <span class="token function">git</span> log
 commit 82ad83fcfcfb366ab7a895053f9b8936aaabf6cf <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span>
 Author: Zhangtao153 <span class="token operator">&lt;</span><span class="token number">13289265979</span>@163.com<span class="token operator">></span>
@@ -392,10 +397,10 @@ Changes to be committed:
 
 Untracked files:
   <span class="token punctuation">(</span>use <span class="token string">"git add &lt;file>..."</span> to include <span class="token keyword">in</span> what will be committed<span class="token punctuation">)</span>
-        bb.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> ### 4. reset
-不加参数(mixed)
-工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。简而言之，就是「把所有差异都混合（mixed）放在工作目录中」。</p>
-<p>【例】工作区修改后添加到暂存区，在工作区添加新文件后reset
+        bb.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h3 id="4-reset-不加参数-mixed">4. reset 不加参数(mixed)</h3>
+<p>工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。简而言之，就是「把所有差异都混合（mixed）放在工作目录中」。</p>
+<p>【例】工作区修改后添加到暂存区，在工作区添加新文件后reset</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/tmp/test <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
 $ <span class="token function">git</span> status
 On branch master
@@ -425,7 +430,7 @@ Untracked files:
   <span class="token punctuation">(</span>use <span class="token string">"git add &lt;file>..."</span> to include <span class="token keyword">in</span> what will be committed<span class="token punctuation">)</span>
         bb.txt
 
-no changes added to commit <span class="token punctuation">(</span>use <span class="token string">"git add"</span> and/or <span class="token string">"git commit -a"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+no changes added to commit <span class="token punctuation">(</span>use <span class="token string">"git add"</span> and/or <span class="token string">"git commit -a"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>

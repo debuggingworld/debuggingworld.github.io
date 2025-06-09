@@ -23,12 +23,25 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;637251aa6376897f2b764170 1. SPI SPI 全称 Service Provider Interface，是 Java 提供的一套用来被第三方实现或者扩展的接口，它可以用来启用框架扩展和替换组件。 SPI 的作用就是为这些被扩展的 API 寻找服务实现。 1.1 SPI 和 API  API （App">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201608.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201909.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221107212226.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108210913.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213454.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213905.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221113202229.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/DebugStarterInitializer%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB123werwre.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/%E5%88%9D%E5%A7%8B%E5%8C%96ContextLoaderListener.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114212011.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114220618.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114221050.png">
 <meta property="article:published_time" content="2022-11-06T14:19:41.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.854Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="SpringMVC">
 <meta property="article:tag" content="源码">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201608.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -293,24 +306,20 @@
             
             <div class="markdown-body">
               
-              <p>https://www.processon.com/view/link/637251aa6376897f2b764170</p>
-<h3 id="spi">1. SPI</h3>
-<p>SPI 全称 Service Provider Interface，是 Java
-提供的一套用来被第三方实现或者扩展的接口，它可以用来启用框架扩展和替换组件。
-SPI 的作用就是为这些被扩展的 API 寻找服务实现。</p>
-<h4 id="spi-和-api">1.1 SPI 和 API</h4>
+              <p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/637251aa6376897f2b764170">https://www.processon.com/view/link/637251aa6376897f2b764170</a></p>
+<h3 id="1-SPI">1. SPI</h3>
+<p>SPI 全称 Service Provider Interface，是 Java 提供的一套用来被第三方实现或者扩展的接口，它可以用来启用框架扩展和替换组件。 SPI 的作用就是为这些被扩展的 API 寻找服务实现。</p>
+<h4 id="1-1-SPI-和-API">1.1 SPI 和 API</h4>
 <blockquote>
-<p>API （Application Programming
-Interface）在大多数情况下，都是实现方制定接口并完成对接口的实现，调用方仅仅依赖接口调用，且无权选择不同实现。
-从使用人员上来说，API 直接被应用开发人员使用。 SPI （Service Provider
-Interface）是调用方来制定接口规范，提供给外部来实现，调用方在调用时则选择自己需要的外部实现。
-从使用人员上来说，SPI 被框架扩展人员使用。</p>
+<p>API （Application Programming Interface）在大多数情况下，都是实现方制定接口并完成对接口的实现，调用方仅仅依赖接口调用，且无权选择不同实现。 从使用人员上来说，API 直接被应用开发人员使用。<br>
+SPI （Service Provider Interface）是调用方来制定接口规范，提供给外部来实现，调用方在调用时则选择自己需要的外部实现。  从使用人员上来说，SPI 被框架扩展人员使用。</p>
 </blockquote>
-<h4 id="使用">1.2 使用</h4>
-<p>1、服务提供者 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDao</span> <span class="token punctuation">&#123;</span>
+<h4 id="1-2-使用">1.2 使用</h4>
+<p>1、服务提供者</p>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IUserDao</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">void</span> <span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div> <img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201608.png" srcset="/img/loading.gif" lazyload /></p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201608.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>2、服务实现者</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDaoImpl</span> <span class="token keyword">implements</span> <span class="token class-name">IUserDao</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Override</span>
@@ -318,9 +327,9 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201608.png" srcset="
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"spi_implementer UserDaoImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>resources-INF.debuggingWorld.dao.IUserDao <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">com.debuggingWorld.dao.impl.UserDaoImpl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201909.png" srcset="/img/loading.gif" lazyload /></p>
+<p>resources\META-INF\services\com.debuggingWorld.dao.IUserDao</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">com.debuggingWorld.dao.impl.UserDaoImpl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201909.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>3、测试</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -330,15 +339,15 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108201909.png" srcset="
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="spring-整合-springmvc">2. Spring 整合 SpringMVC</h3>
-<h4 id="特性">2.1 特性</h4>
-<p>说到 Spring 整合 SpringMVC 唯一的体现就是父子容器： +
-通常设置父容器（Spring）管理 Service、Dao 层的 Bean,
-子容器（SpringMVC）管理 Controller 的 Bean + 子容器可以访问父容器的
-Bean, 父容器无法访问子容器的 Bean。</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221107212226.png" srcset="/img/loading.gif" lazyload /></p>
-<h4 id="实现">2.2 实现</h4>
+<h3 id="2-Spring-整合-SpringMVC">2. Spring 整合 SpringMVC</h3>
+<h4 id="2-1-特性">2.1 特性</h4>
+<p>说到 Spring 整合 SpringMVC 唯一的体现就是父子容器：</p>
+<ul>
+<li>通常设置父容器（Spring）管理 Service、Dao 层的 Bean, 子容器（SpringMVC）管理 Controller 的 Bean</li>
+<li>子容器可以访问父容器的 Bean, 父容器无法访问子容器的 Bean。</li>
+</ul>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221107212226.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h4 id="2-2-实现">2.2 实现</h4>
 <p>相信大家在 SSM 框架整合的时候都曾在 web.xm l配置过这段：</p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token comment">&lt;!--spring 基于web应用的启动--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>listener</span><span class="token punctuation">></span></span>
@@ -365,28 +374,22 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221107212226.png" srcset="
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>dispatcherServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>有人可能只知道 DispatcherServlet 叫前端控制器，是 SpringMVC
-处理前端请求的一个核心调度器。那它为什么能处理请求？处理之前做了什么准备工作呢？又是怎么和
-Spring 结合起来的呢？ 为什么有了 DispatcherServlet 还要个
-ContextLoaderListener， 配一个不行吗？干嘛要配俩啊？</p>
-<h3 id="零配置整合-springmvc-的方式">3. 零配置整合 SpringMVC 的方式</h3>
+<p>有人可能只知道 DispatcherServlet 叫前端控制器，是 SpringMVC 处理前端请求的一个核心调度器。那它为什么能处理请求？处理之前做了什么准备工作呢？又是怎么和 Spring 结合起来的呢？<br>
+为什么有了 DispatcherServlet 还要个 ContextLoaderListener， 配一个不行吗？干嘛要配俩啊？</p>
+<h3 id="3-零配置整合-SpringMVC-的方式">3. 零配置整合 SpringMVC 的方式</h3>
 <p>没有配置就需要省略掉 web.xml，怎么省略呢？</p>
 <p>在 Servlet3.0 提供的规范文档中可以找到2种方式。</p>
-<h4 id="注解方式">3.1 注解方式</h4>
-<p><span class="citation" data-cites="WebServlet">@WebServlet</span>
-<span class="citation" data-cites="WebFilter">@WebFilter</span> <span
-class="citation" data-cites="WebListener">@WebListener</span></p>
-<p>但是这种方式不利于扩展， 并且如果编写在 jar 包中 tomcat
-是无法感知到的。</p>
-<h4 id="spi方式">3.2 SPI方式</h4>
-<p>在 Serlvet3-1
-的规范手册中：就提供了一种更加易于扩展可用于共享库可插拔的一种方式，参见8.2.4。</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108210913.png" srcset="/img/loading.gif" lazyload /></p>
-<p>也就是在应用 META-INF/services 路径下放一个
-javax.servlet.ServletContainerInitailizer</p>
-<p>通过 ServletContext 就可以动态注册三大组件。 以 Servlet
-注册为例：</p>
+<h4 id="3-1-注解方式">3.1 注解方式</h4>
+<p>@WebServlet<br>
+@WebFilter<br>
+@WebListener</p>
+<p>但是这种方式不利于扩展， 并且如果编写在 jar 包中 tomcat 是无法感知到的。</p>
+<h4 id="3-2-SPI方式">3.2 SPI方式</h4>
+<p>在 Serlvet3-1 的规范手册中：就提供了一种更加易于扩展可用于共享库可插拔的一种方式，参见8.2.4。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108210913.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>也就是在应用 META-INF/services 路径下放一个 javax.servlet.ServletContainerInitailizer</p>
+<p>通过 ServletContext 就可以动态注册三大组件。<br>
+以 Servlet 注册为例：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DebugServletContainerInitializer</span> <span class="token keyword">implements</span> <span class="token class-name">ServletContainerInitializer</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Override</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onStartup</span><span class="token punctuation">(</span><span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Class</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">></span></span> webAppInitializerClasses<span class="token punctuation">,</span> <span class="token class-name">ServletContext</span> servletContext<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span>
@@ -401,11 +404,9 @@ javax.servlet.ServletContainerInitailizer</p>
 
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213454.png" srcset="/img/loading.gif" lazyload /></p>
-<h3 id="实现基于-spi-规范的-springmvc">4. 实现基于 SPI 规范的
-SpringMVC</h3>
-<h4 id="启动类">4.1 启动类</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213454.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h3 id="4-实现基于-SPI-规范的-SpringMVC">4. 实现基于 SPI 规范的 SpringMVC</h3>
+<h4 id="4-1-启动类">4.1 启动类</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DebugStarterInitializer</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractAnnotationConfigDispatcherServletInitializer</span> <span class="token punctuation">&#123;</span>
 
     <span class="token comment">/**
@@ -432,18 +433,18 @@ SpringMVC</h3>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&#123;</span><span class="token string">"/"</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="父容器配置类">4.2 父容器配置类</h4>
-<p>扫描的包排除掉 <span class="citation"
-data-cites="Controller">@Controller</span> <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<h4 id="4-2-父容器配置类">4.2 父容器配置类</h4>
+<p>扫描的包排除掉 @Controller</p>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>basePackages <span class="token operator">=</span> <span class="token string">"com.debuggingWorld"</span><span class="token punctuation">,</span>excludeFilters <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@ComponentScan.Filter</span><span class="token punctuation">(</span>type <span class="token operator">=</span> <span class="token class-name">FilterType</span><span class="token punctuation">.</span><span class="token constant">ANNOTATION</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token class-name">Controller</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
         <span class="token annotation punctuation">@ComponentScan.Filter</span><span class="token punctuation">(</span>type <span class="token operator">=</span> <span class="token class-name">FilterType</span><span class="token punctuation">.</span><span class="token constant">ASSIGNABLE_TYPE</span><span class="token punctuation">,</span>value <span class="token operator">=</span> <span class="token class-name">WebAppConfig</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RootConfig</span> <span class="token punctuation">&#123;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<h4 id="子容器配置类">4.3 子容器配置类</h4>
-<p>扫描包含 <span class="citation"
-data-cites="Controller">@Controller</span> 的 Bean。 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h4 id="4-3-子容器配置类">4.3 子容器配置类</h4>
+<p>扫描包含 @Controller 的 Bean。</p>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"com.debuggingWorld"</span><span class="token punctuation">,</span> includeFilters <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
         <span class="token annotation punctuation">@ComponentScan.Filter</span><span class="token punctuation">(</span>type <span class="token operator">=</span> <span class="token class-name">FilterType</span><span class="token punctuation">.</span><span class="token constant">ANNOTATION</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token class-name">RestController</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token class-name">Controller</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">,</span> useDefaultFilters <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
@@ -501,52 +502,37 @@ data-cites="Controller">@Controller</span> 的 Bean。 <div class="code-wrapper"
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">configureMessageConverters</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HttpMessageConverter</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span><span class="token punctuation">></span></span> converters<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         converters<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MappingJackson2HttpMessageConverter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
-<h3 id="spi-方式-springmvc-启动原理">5. SPI 方式 SpringMVC 启动原理</h3>
-<h4 id="加载-servletcontainerinitializer-实现类">5.1 加载
-ServletContainerInitializer 实现类</h4>
-<p>外置 Tomcat 启动的时候通过 SPI 找到我们应用中的
-/META-INF/service/javax.servlet.ServletContainerInitializer</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213905.png" srcset="/img/loading.gif" lazyload /></p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h3 id="5-SPI-方式-SpringMVC-启动原理">5. SPI 方式 SpringMVC 启动原理</h3>
+<h4 id="5-1-加载-ServletContainerInitializer-实现类">5.1 加载 ServletContainerInitializer 实现类</h4>
+<p>外置 Tomcat 启动的时候通过 SPI 找到我们应用中的 /META-INF/service/javax.servlet.ServletContainerInitializer</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221108213905.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>1、调用 SpringServletContainerInitializer.onStartUp()</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221113202229.png" srcset="/img/loading.gif" lazyload /></p>
-<p>调用 onStartUp() 前会先通过 <span class="citation"
-data-cites="HandlesTypes">@HandlesTypes</span> 找到所有实现了
-WebApplicationInitializer 接口的类，传入到 OnStartup 的
-webAppInitializerClasses 参数中，并传入Servlet上下文对象。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221113202229.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>调用 onStartUp() 前会先通过 @HandlesTypes 找到所有实现了 WebApplicationInitializer 接口的类，传入到 OnStartup 的 webAppInitializerClasses 参数中，并传入Servlet上下文对象。</p>
 <p>启动类继承关系（组成了父子容器）：</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/DebugStarterInitializer继承关系123werwre.png" srcset="/img/loading.gif" lazyload /></p>
-<p>2、找到所有 WebApplicationInitializer 接口的实现类后，
-不是接口、不是抽象类则通过反射进行实例化。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/DebugStarterInitializer%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB123werwre.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>2、找到所有 WebApplicationInitializer 接口的实现类后， 不是接口、不是抽象类则通过反射进行实例化。</p>
 <blockquote>
 <p>所以，会发现内部实现类都是抽象的，想让其起作用必须添加一个自定义实现类。</p>
 </blockquote>
 <p>3、 调用上一步实例化对象的 onStartup() 方法</p>
-<p>在这一步完成 父子容器的创建以及
-ContextLoaderListener、DispatcherServlet 的注册。</p>
+<p>在这一步完成 父子容器的创建以及 ContextLoaderListener、DispatcherServlet 的注册。</p>
 <p>过程详见思维导图。</p>
-<h4 id="初始化-contextloaderlistener">5.2 初始化
-ContextLoaderListener</h4>
+<h4 id="5-2-初始化-ContextLoaderListener">5.2 初始化 ContextLoaderListener</h4>
 <ul>
-<li>外置 tomcat 会帮我们调用 ContextLoaderListener#contextInitialized
-进行初始化。</li>
+<li>外置 tomcat 会帮我们调用 ContextLoaderListener#contextInitialized 进行初始化。</li>
 <li>xml 的方式下判断容器为空时创建父容器。</li>
 <li>在里面会调用父容器的 <strong>refresh()</strong> 方法</li>
 <li>将父容器存入到 Servlet 域中供子容器使用</li>
 </ul>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/初始化ContextLoaderListener.png" srcset="/img/loading.gif" lazyload /></p>
-<h4 id="初始化-dispatcherservlet">5.3 初始化 DispatcherServlet</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/%E5%88%9D%E5%A7%8B%E5%8C%96ContextLoaderListener.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<h4 id="5-3-初始化-DispatcherServlet">5.3 初始化 DispatcherServlet</h4>
 <p>外置 tomcat 会帮我们调用 DispatcherServlet#init()   进行初始化</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114212011.png" srcset="/img/loading.gif" lazyload /></p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114220618.png" srcset="/img/loading.gif" lazyload /></p>
-<p>----&gt;FrameworkServlet.this.onApplicationEvent(event);
---------&gt;onRefresh(event.getApplicationContext());
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114212011.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114220618.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>----&gt;FrameworkServlet.this.onApplicationEvent(event);<br>
+--------&gt;onRefresh(event.getApplicationContext());<br>
 --------------&gt;initStrategies(context);</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">initStrategies</span><span class="token punctuation">(</span><span class="token class-name">ApplicationContext</span> context<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token comment">//初始化我们web上下文对象的 用于文件上传下载的解析器对象</span>
@@ -566,13 +552,9 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114220618.png" srcset="
 	<span class="token function">initViewResolvers</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token function">initFlashMapManager</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>这里面的每一个方法不用太细看， 就是给 SpringMVC 准备初始化的数据，
-为后续 SpringMVC 处理请求做准备</p>
-<p>基本都是从容器中拿到已经配置的
-Bean（RequestMappingHandlerMapping、RequestMappingHandlerAdapter、HandlerExceptionResolver
-）放到 dispatcherServlet 中做准备。</p>
-<p><img
-src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114221050.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这里面的每一个方法不用太细看，  就是给 SpringMVC 准备初始化的数据，  为后续 SpringMVC 处理请求做准备</p>
+<p>基本都是从容器中拿到已经配置的 Bean（RequestMappingHandlerMapping、RequestMappingHandlerAdapter、HandlerExceptionResolver  ）放到 dispatcherServlet 中做准备。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114221050.png" srcset="/img/loading.gif" lazyload alt=""></p>
 <p>但是这些 Bean 又是从哪来的呢？？</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"com.debuggingWorld"</span><span class="token punctuation">,</span> includeFilters <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
@@ -582,17 +564,17 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20221114221050.png" srcset="
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebAppConfig</span> <span class="token keyword">implements</span> <span class="token class-name">WebMvcConfigurer</span> <span class="token punctuation">&#123;</span>
 ……
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>我们在子容器配置类中使用了 <span class="citation"
-data-cites="EnableWebMvc">@EnableWebMvc</span> 。</p>
+<p>我们在子容器配置类中使用了 @EnableWebMvc 。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Documented</span>
 <span class="token annotation punctuation">@Import</span><span class="token punctuation">(</span><span class="token class-name">DelegatingWebMvcConfiguration</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
 <span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">EnableWebMvc</span> <span class="token punctuation">&#123;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>导入了 DelegatingWebMvcConfiguration。 DelegatingWebMvcConfiguration
-的父类配置了这些 Bean。 SpringBoot 也是用的这种方式，</p>
-<p>https://www.processon.com/view/link/610e6a167d9c082be334ec49</p>
+<p>导入了 DelegatingWebMvcConfiguration。<br>
+DelegatingWebMvcConfiguration 的父类配置了这些 Bean。<br>
+SpringBoot 也是用的这种方式，</p>
+<p><a target="_blank" rel="noopener" href="https://www.processon.com/view/link/610e6a167d9c082be334ec49">https://www.processon.com/view/link/610e6a167d9c082be334ec49</a></p>
 
               
             </div>

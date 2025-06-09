@@ -16,19 +16,24 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="分布式推理是指将大模型的计算任务拆分到多个 GPU 设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor Parallelism）和流水线并行（Pipeline Parallelism）。 1. 推理引擎如何实现高效推理？ 　　推理引擎旨在优化生产环境中 LLM 的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM 能够处理大量的请求并快速响应。">
+    <meta name="description" content="分布式推理是指将大模型的计算任务拆分到多个 GPU 设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor Parallelism）和流水线并行（Pipeline Parallelism）。 1. 推理引擎如何实现高效推理？ 推理引擎旨在优化生产环境中 LLM 的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM 能够处理大量的请求并快速响应。 推理引擎的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式推理与量化部署">
 <meta property="og:url" content="http://example.com/2025/06/05/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8E%A8%E7%90%86%E4%B8%8E%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="分布式推理是指将大模型的计算任务拆分到多个 GPU 设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor Parallelism）和流水线并行（Pipeline Parallelism）。 1. 推理引擎如何实现高效推理？ 　　推理引擎旨在优化生产环境中 LLM 的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM 能够处理大量的请求并快速响应。">
+<meta property="og:description" content="分布式推理是指将大模型的计算任务拆分到多个 GPU 设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor Parallelism）和流水线并行（Pipeline Parallelism）。 1. 推理引擎如何实现高效推理？ 推理引擎旨在优化生产环境中 LLM 的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM 能够处理大量的请求并快速响应。 推理引擎的">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506082143958.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506082208732.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506091113531.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506091123871.png">
 <meta property="article:published_time" content="2025-06-05T12:49:32.000Z">
-<meta property="article:modified_time" content="2025-06-08T09:46:32.476Z">
+<meta property="article:modified_time" content="2025-06-09T06:48:59.342Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="模型部署">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506082143958.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -239,7 +244,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.3k 字
+          4.7k 字
         
       </span>
     
@@ -251,7 +256,7 @@
         
         
           <!-- compatible with older versions-->
-          8 分钟
+          15 分钟
         
       </span>
     
@@ -293,99 +298,134 @@
             
             <div class="markdown-body">
               
-              <p>　　分布式推理是指将大模型的计算任务拆分到多个 GPU
-设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor
-Parallelism）和流水线并行（Pipeline Parallelism）。</p>
-<h3 id="推理引擎如何实现高效推理">1. 推理引擎如何实现高效推理？</h3>
-<p>　　推理引擎旨在优化生产环境中 LLM
-的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM
-能够处理大量的请求并快速响应。</p>
-<p>　　推理引擎的核心技术主要包括 <strong>KV
-缓存管理、分页机制、连续批处理、结构化输出、张量并行、流水线并行、专家并行
-和 低比特量化等。</strong></p>
-<h4 id="kv-缓存管理">1. KV 缓存管理</h4>
-<p>　　在自回归推理场景中，模型每生成一个新 token，都需计算并保存对应的
-KV（键-值）缓存，以供后续的 token 解码重复使用。</p>
+              <p>分布式推理是指将大模型的计算任务拆分到多个 GPU 设备上并行执行，以解决单卡显存不足、提升推理速度的技术。其核心在于张量并行（Tensor Parallelism）和流水线并行（Pipeline Parallelism）。</p>
+<h3 id="1-推理引擎如何实现高效推理？">1. 推理引擎如何实现高效推理？</h3>
+<p>推理引擎旨在优化生产环境中 LLM 的内存使用和性能。它们通过实现高吞吐量和低延迟来保证 LLM 能够处理大量的请求并快速响应。</p>
+<p>推理引擎的核心技术主要包括 <strong>KV 缓存管理、分页机制、连续批处理、结构化输出、张量并行、流水线并行、专家并行 和 低比特量化等。</strong></p>
+<h4 id="1-KV-缓存管理">1. KV 缓存管理</h4>
+<p>在自回归推理场景中，模型每生成一个新 token，都需计算并保存对应的 KV（键-值）缓存，以供后续的 token 解码重复使用。</p>
 <p><strong>如何管理并最大化复用这些缓存，成为推理性能优化的重要方向。</strong></p>
 <blockquote>
-<p>首个广泛落地这一技术的是 vLLM 项目。vLLM 引入了名为 PagedAttention
-的机制，通过精细的分页缓存管理，动态按需加载和共享前缀缓存，从而大幅降低了重复计算和显存占用。</p>
-<p>随后，SGLang 提出
-RadixAttention，基于前缀树结构进一步提高了缓存命中率，尤其适用于多轮对话场景。</p>
-<p>Hugging Face 的 Text Generation Inference（TGI）也在 2024 年发布的
-v3.0 版本中新版本中加入类似机制，使长上下文推理场景显著提速。</p>
+<p>首个广泛落地这一技术的是 vLLM 项目。vLLM 引入了名为 PagedAttention 的机制，通过精细的分页缓存管理，动态按需加载和共享前缀缓存，从而大幅降低了重复计算和显存占用。</p>
+<p>随后，SGLang 提出 RadixAttention，基于前缀树结构进一步提高了缓存命中率，尤其适用于多轮对话场景。</p>
+<p>Hugging Face 的 Text Generation Inference（TGI）也在 2024 年发布的 v3.0 版本中新版本中加入类似机制，使长上下文推理场景显著提速。</p>
 </blockquote>
-<h4 id="分页机制">2. 分页机制</h4>
-<p>　　传统的 KV
-缓存分配通常以最大上下文长度为单位进行整体分配，导致严重的显存浪费。</p>
-<p><strong>为解决该问题，vLLM
-率先提出了基于分页机制（PagedAttention）的精细化内存管理方法</strong>。</p>
-<p>　　这种方法借鉴操作系统虚拟内存分页的理念，将 KV
-缓存分割为固定大小的“小页”，允许动态、非连续存储，从而大幅降低显存碎片率，并显著提升显存利用率。</p>
-<p>　　这种设计随后得到了广泛认可，TGI 和 DeepSpeed-Inference
-也在各自的引擎中加入了类似分页式的缓存管理方案，使得该技术成为了主流推理引擎的标配机制。</p>
-<h4 id="连续批处理">3. 连续批处理</h4>
-<p>　　推理场景下的批处理机制传统上为静态批量，即等待批量请求齐全再开始计算，导致
-GPU 资源闲置率较高。连续批处理实现动态批量调度。</p>
-<p>　　<strong>vLLM 项目首次提出并实现了“连续批处理（Continuous
-Batching）”的概念</strong>，这种机制通过动态地将不同用户的推理请求实时插入到当前运行的批次中，从而最大限度减少
-GPU 空转，显著提高硬件利用率与推理吞吐量。</p>
-<p>　　连续批处理将推理过程拆分为两个阶段：预填充阶段（Prefill）和解码阶段（Decode），并将预填充与解码解耦，使得模型在处理长上下文输入（预填充耗时长）和后续逐字生成（单步耗时短）时都能各自批量并行，避免资源闲置。这种
-PD 分离的架构也被月之暗面的 Mooncake 所采用。</p>
-<p>　　<strong>目前，连续批处理已广泛被其他推理引擎如 TGI 和 SGLang
-等采纳，各项目在此基础上进一步优化了实时拼批策略，推动其成为业界标准做法。</strong></p>
-<h4 id="结构化输出规范模型生成内容">4. 结构化输出：规范模型生成内容</h4>
-<p>　　<strong>模型生成的自由文本在特定应用场景下往往难以直接使用，如
-API 调用或 JSON 响应。</strong></p>
-<p>　　结构化输出技术通过在生成过程中施加约束（例如正则约束、有限状态机FSM约束），使模型能够直接产出符合预定义格式的结构化数据。</p>
+<h4 id="2-分页机制">2. 分页机制</h4>
+<p>传统的 KV 缓存分配通常以最大上下文长度为单位进行整体分配，导致严重的显存浪费。</p>
+<p><strong>为解决该问题，vLLM 率先提出了基于分页机制（PagedAttention）的精细化内存管理方法</strong>。</p>
+<p>这种方法借鉴操作系统虚拟内存分页的理念，将 KV 缓存分割为固定大小的“小页”，允许动态、非连续存储，从而大幅降低显存碎片率，并显著提升显存利用率。</p>
+<p>这种设计随后得到了广泛认可，TGI 和 DeepSpeed-Inference 也在各自的引擎中加入了类似分页式的缓存管理方案，使得该技术成为了主流推理引擎的标配机制。</p>
+<h4 id="3-连续批处理">3. 连续批处理</h4>
+<p>推理场景下的批处理机制传统上为静态批量，即等待批量请求齐全再开始计算，导致 GPU 资源闲置率较高。连续批处理实现动态批量调度。</p>
+<p><strong>vLLM 项目首次提出并实现了“连续批处理（Continuous Batching）”的概念</strong>，这种机制通过动态地将不同用户的推理请求实时插入到当前运行的批次中，从而最大限度减少 GPU 空转，显著提高硬件利用率与推理吞吐量。</p>
+<p>连续批处理将推理过程拆分为两个阶段：预填充阶段（Prefill）和解码阶段（Decode），并将预填充与解码解耦，使得模型在处理长上下文输入（预填充耗时长）和后续逐字生成（单步耗时短）时都能各自批量并行，避免资源闲置。这种 PD 分离的架构也被月之暗面的 Mooncake 所采用。</p>
+<p><strong>目前，连续批处理已广泛被其他推理引擎如 TGI 和 SGLang 等采纳，各项目在此基础上进一步优化了实时拼批策略，推动其成为业界标准做法。</strong></p>
+<h4 id="4-结构化输出：规范模型生成内容">4. 结构化输出：规范模型生成内容</h4>
+<p><strong>模型生成的自由文本在特定应用场景下往往难以直接使用，如 API 调用或 JSON 响应。</strong></p>
+<p>结构化输出技术通过在生成过程中施加约束（例如正则约束、有限状态机FSM约束），使模型能够直接产出符合预定义格式的结构化数据。</p>
 <blockquote>
-<p><strong>这一技术由 SGLang 项目首创，推出了名为 xGrammar
-的约束解码模块</strong>，实现对 JSON
-和函数调用等格式的强约束，极大简化了应用端的解析工作。</p>
-<p>随后，vLLM 与 Hugging Face
-也分别推出了相似的结构化输出功能，并逐步将这一特性推广为推理引擎的常规功能之一。<strong>OpenAI
-在其 API 中引入了 “函数调用” 机制，也是一种结构化输出思路。</strong></p>
+<p><strong>这一技术由 SGLang 项目首创，推出了名为 xGrammar 的约束解码模块</strong>，实现对 JSON 和函数调用等格式的强约束，极大简化了应用端的解析工作。</p>
+<p>随后，vLLM 与 Hugging Face 也分别推出了相似的结构化输出功能，并逐步将这一特性推广为推理引擎的常规功能之一。<strong>OpenAI 在其 API 中引入了 “函数调用” 机制，也是一种结构化输出思路。</strong></p>
 </blockquote>
-<h4 id="张量并行与流水线并行">5. 张量并行与流水线并行</h4>
-<p>　　张量并行（Tensor Parallelism, TP）和流水线并行（Pipeline
-Parallelism,
-PP）是目前模型规模扩展至数十亿乃至千亿级别时常用的推理部署方法。</p>
-<p><strong>TP 将单层网络参数张量分割并分布到多张 GPU
-上同时计算，从而突破单 GPU 显存瓶颈；</strong></p>
-<p><strong>PP 则将模型不同层分割到不同 GPU 上，流水线式执行推理，使单个
-GPU 承担的模型层数减少，从而支持更大的模型。</strong></p>
+<h4 id="5-张量并行与流水线并行">5. 张量并行与流水线并行</h4>
+<p>张量并行（Tensor Parallelism, TP）和流水线并行（Pipeline Parallelism, PP）是目前模型规模扩展至数十亿乃至千亿级别时常用的推理部署方法。</p>
+<p><strong>TP 将单层网络参数张量分割并分布到多张 GPU 上同时计算，从而突破单 GPU 显存瓶颈；</strong></p>
+<p><strong>PP 则将模型不同层分割到不同 GPU 上，流水线式执行推理，使单个 GPU 承担的模型层数减少，从而支持更大的模型。</strong></p>
 <blockquote>
-<p>这两种并行策略由 NVIDIA 的 Megatron-LM 首先提出并推广，随后微软的
-DeepSpeed 和开源引擎 vLLM、SGLang
-等也广泛采纳，形成了面向超大模型推理场景的行业标准解决方案。</p>
+<p>这两种并行策略由 NVIDIA 的 Megatron-LM 首先提出并推广，随后微软的 DeepSpeed 和开源引擎 vLLM、SGLang 等也广泛采纳，形成了面向超大模型推理场景的行业标准解决方案。</p>
 </blockquote>
-<h4 id="专家并行">6. 专家并行</h4>
-<p>　　专家并行（Expert Parallelism, EP）技术伴随 Mixture-of-Experts
-(MoE) 模型架构的兴起而受到关注，并在 DeepSeek
-的火爆传播中受到更多的重视。</p>
-<p><strong>MoE
-模型通过路由网络选择激活部分专家子模型，从而实现稀疏激活和极大规模参数扩展。</strong></p>
-<p><strong>EP 将不同的专家分配到不同 GPU
-上并行运行，从而有效实现稀疏计算与内存高效管理。</strong></p>
+<h4 id="6-专家并行">6. 专家并行</h4>
+<p>专家并行（Expert Parallelism, EP）技术伴随 Mixture-of-Experts (MoE) 模型架构的兴起而受到关注，并在 DeepSeek 的火爆传播中受到更多的重视。</p>
+<p><strong>MoE 模型通过路由网络选择激活部分专家子模型，从而实现稀疏激活和极大规模参数扩展。</strong></p>
+<p><strong>EP 将不同的专家分配到不同 GPU 上并行运行，从而有效实现稀疏计算与内存高效管理。</strong></p>
 <blockquote>
-<p>微软 DeepSpeed-MoE 在推理端首次规模化实现了这一技术，使万亿参数级别的
-MoE 模型具备实际可用的推理效率。</p>
-<p>此后，NVIDIA 的 Megatron-Core、NeMo
-等平台迅速跟进并在大规模场景中验证了该技术的有效性。vLLM 则计划于 2025
-Q2 在主干中正式支持专家并行，进一步促进 MoE 推理的普及。</p>
+<p>微软 DeepSpeed-MoE 在推理端首次规模化实现了这一技术，使万亿参数级别的 MoE 模型具备实际可用的推理效率。</p>
+<p>此后，NVIDIA 的 Megatron-Core、NeMo 等平台迅速跟进并在大规模场景中验证了该技术的有效性。vLLM 则计划于 2025 Q2 在主干中正式支持专家并行，进一步促进 MoE 推理的普及。</p>
 </blockquote>
-<p>　　专家并行支持了稀疏激活的超大模型</p>
-<h4 id="低比特量化实现模型的高效压缩">7.
-低比特量化：实现模型的高效压缩</h4>
-<p>　　<strong>低比特量化（如 INT8 或
-INT4）是降低大模型推理成本的主流方案。</strong></p>
-<p>　　通过精细的权重量化技术，在几乎不损失精度的情况下，大幅压缩模型体积并降低显存占用，使得推理服务的部署成本和硬件门槛显著下降。</p>
+<p>专家并行支持了稀疏激活的超大模型</p>
+<h4 id="7-低比特量化：实现模型的高效压缩">7. 低比特量化：实现模型的高效压缩</h4>
+<p><strong>低比特量化（如 INT8 或 INT4）是降低大模型推理成本的主流方案。</strong></p>
+<p>通过精细的权重量化技术，在几乎不损失精度的情况下，大幅压缩模型体积并降低显存占用，使得推理服务的部署成本和硬件门槛显著下降。</p>
 <blockquote>
 <p>开创性的 GPTQ 算法首次实现了百亿至千亿参数模型的 INT4 量化。</p>
-<p>后续 Hugging Face、vLLM 和 llama.cpp 等主流推理引擎均支持 GPTQ
-或类似的量化方案，推动 INT8 和 INT4
-量化模型成为业界推理部署的主流模式。</p>
+<p>后续 Hugging Face、vLLM 和 llama.cpp 等主流推理引擎均支持 GPTQ 或类似的量化方案，推动 INT8 和 INT4 量化模型成为业界推理部署的主流模式。</p>
 </blockquote>
+<h3 id="2-vLLM-分布式推理">2. vLLM 分布式推理</h3>
+<p>vLLM 通过 PagedAttention 和张量并行技术优化显存管理和计算效率，支持多 GPU 推理。</p>
+<p>核心机制：</p>
+<ul>
+<li>张量并行：通过 tensor_parallel_size 参数指定 GPU 数量，模型自动拆分到多卡。</li>
+<li>PagedAttention：将注意力机制的键值（KV）缓存分块存储，减少显存碎片，提升利用率。</li>
+<li>连续批处理：动态合并不同长度的请求，减少GPU空闲时间。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://vllm.hyper.ai/docs/inference-and-serving/distributed_serving_new">文档</a></p>
+<p>单机多卡：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vllm serve facebook/opt-13b <span class="token punctuation">\</span>
+    --tensor-parallel-size <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+<p>多机多卡：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vllm serve gpt2 <span class="token punctuation">\</span>
+    --tensor-parallel-size <span class="token number">4</span> <span class="token punctuation">\</span>
+    --pipeline-parallel-size <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<h3 id="3-LMDeploy-分布式推理">3. LMDeploy 分布式推理</h3>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iW4y1A77P/">教程地址</a></p>
+<p>LMDeploy 是专为高效部署设计的框架，支持量化技术与分布式推理，尤其适合低显存环境。</p>
+<p>核心机制：</p>
+<ul>
+<li>张量并行：通过 --tp 参数指定 GPU 数量，支持多卡协同计算。</li>
+<li>KV Cache 量化：支持 INT8/INT4 量化，降低显存占用。</li>
+<li>动态显存管理：通过 --cache-max-entry-count 控制 KV 缓存比例</li>
+</ul>
+<h4 id="3-1-量化">3.1 量化</h4>
+<p>为什么要做量化？</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506082143958.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<h4 id="3-2-为什么做-Weight-Only-的量化？">3.2 为什么做 Weight Only 的量化？</h4>
+<p>两个基本概念</p>
+<ul>
+<li>
+<p>计算密集 (compute-bound)：推理的绝大部分时间消耗在数值计算上；针对计算密集场景，可以通过使用更快的硬件计算单元来提升计算速度，比如量化为 W8A8 使用 INT8 Tensor Core 来加速计算。</p>
+</li>
+<li>
+<p>访存密集 (memory-bound)：推理时，绝大部分时间消耗在数据读取上；针对访存密集型场景，一般是通过提高计算访存比来提升性能。</p>
+<blockquote>
+<p>LLM 是典型的访存密集型任务。<br>
+常见的 LLM 模型是 Decoder Only 架构。推理时大部分时间消耗在逐 Token 生成阶段( Decoding 阶段)，是典型的访存密集型场景。<br>
+A100 的 FP16 峰值算力为 312 TFLOPS，只有在 Batch Size 达到 128 这个量级时，计算才成为推理的瓶颈，但由于 LLM 模型本身就很大，推理时的 KV Cache 也会占用很多显存，还有一些其他的因素影响（如 Persistent Batch ),实际推理时很难做到 128 这么大的 Batch Size。</p>
+</blockquote>
+</li>
+</ul>
+<p>Weight Only 量化一举多得。4 bit Weight Only 量化，将 FP16 的模型权重量化为 INT4，访存量直接降为 FP16 模型的 1/4，大幅降低了访存成本，提高了 Decoding 的速度。加速的同时还节省了显存，同样的设备能够支持更大的模型以及更长的对话长度。</p>
+<h4 id="3-3-如何做-Weight-Only-的量化？">3.3 如何做 Weight Only 的量化？</h4>
+<p>LMDeploy 使用 MIT HAN LAB 开源的 AWQ 算法，量化为 4bit 模型，推理时，先把 4bit 权重，反量化回 FP16（在 Kernel 内部进行，从 Global Memory 读取时仍是 4bit），依旧使用的是 FP16 计算。<br>
+相较于社区使用比较多的 GPTQ 算法，AWQ 的推理速度更快，量化的时间更短。</p>
+<h4 id="3-4-推理引擎TurboMind">3.4 推理引擎TurboMind</h4>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506082208732.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<h4 id="3-5-实践">3.5 实践</h4>
+<h5 id="1-多卡部署">1. 多卡部署</h5>
+<p><a target="_blank" rel="noopener" href="https://lmdeploy.readthedocs.io/zh-cn/latest/llm/api_server.html">文档</a></p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server internlm/internlm2_5-7b-chat --server-port <span class="token number">23333</span> --model-name DeepSeek-R1-Distill-Qwen-7B  --session-len <span class="token number">4096</span>   --max-batch-size <span class="token number">32</span> <span class="token parameter variable">--tp</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>api_server 启动时的参数可以通过命令行<code>lmdeploy serve api_server -h</code>查看。 比如，<code>--tp</code> 设置张量并行，<code>--session-len</code> 设置推理的最大上下文窗口长度，<code>--cache-max-entry-count</code> 调整 k/v cache 的内存使用比例等等。</p>
+<h5 id="2-Key-Value-KV-Cache-量化">2. Key-Value(KV) Cache 量化</h5>
+<p><a target="_blank" rel="noopener" href="https://lmdeploy.readthedocs.io/zh-cn/latest/quantization/kv_quant.html">文档</a></p>
+<p>自 v0.4.0 起，LMDeploy 支持<strong>在线</strong> kv cache int4/int8 量化，量化方式为 per-head per-token 的非对称量化。原来的 kv 离线量化方式移除。</p>
+<p>量化 kv 有利于增加 kv block 的数量。与 fp16 相比，int4/int8 kv 的 kv block 分别可以增加到 4 倍和 2 倍。这意味着，在相同的内存条件下，kv 量化后，系统能支撑的并发数可以大幅提升，从而最终提高吞吐量。</p>
+<p>LMDeploy kv 量化具备以下优势：</p>
+<ol>
+<li>量化不需要校准数据集</li>
+<li>支持 volta 架构（sm70）及以上的所有显卡型号</li>
+<li>kv int8 量化精度几乎无损，kv int4 量化精度在可接受范围之内</li>
+<li>推理高效，在 llama2-7b 上加入 int8/int4 kv 量化，RPS 相较于 fp16 分别提升近 30% 和 40</li>
+</ol>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server internlm/internlm2_5-7b-chat --quant-policy <span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<h5 id="3-TurboMind">3. TurboMind</h5>
+<p>使用 TurboMind 推理模型需要先将模型转化为 TurboMind 的格式，目前支持在线转换和离线转换两种形式。在线转换可以直接加载 Huggingface 模型，离线转换需需要先保存模型再加载。</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy convert Qwen3-4B /root/autodl-tmp/models/Qwen/Qwen3-4B-merged<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>执行完成后将会在当前目录生成一个 workspace 的文件夹。这里面包含的就是 TurboMind 和 Triton “模型推理”需要到的文件。</p>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506091113531.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<h3 id="TurboMind-推理-命令行本地对话">TurboMind 推理+命令行本地对话</h3>
+<h3 id="TurboMind推理-API服务">TurboMind推理+API服务</h3>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server ./workspace<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506091123871.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" />
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_73668945/article/details/135712890">https://blog.csdn.net/qq_73668945/article/details/135712890</a></p>
 
               
             </div>
