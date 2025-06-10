@@ -23,15 +23,11 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. Spring JdbcTemplate 1.1 配置数据源 pom: &lt;dependencies&gt;     &lt;dependency&gt;         &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;         &lt;artifactId&gt;spring-context&lt;&#x2F;artifactId&gt;         &lt;versi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220827194209.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%ABabzd.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220828225955.png">
 <meta property="article:published_time" content="2022-08-27T10:34:36.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:34:14.855Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220827194209.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -296,8 +292,8 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-Spring-JdbcTemplate">1. Spring JdbcTemplate</h3>
-<h4 id="1-1-配置数据源">1.1 配置数据源</h4>
+              <h3 id="spring-jdbctemplate">1. Spring JdbcTemplate</h3>
+<h4 id="配置数据源">1.1 配置数据源</h4>
 <p><strong>pom:</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
@@ -338,13 +334,14 @@
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220827194209.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p><strong>dbconfig.properties:</strong></p>
-<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">jdbc.name&#x3D;root
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220827194209.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>dbconfig.properties:</strong> <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">jdbc.name&#x3D;root
 jdbc.password&#x3D;mysql
 jdbc.url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;debuggingworld?useSSL&#x3D;false
-jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-2-添加-dataSource-和-JdbcTemplate">1.2 添加 dataSource 和 JdbcTemplate</h4>
+jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<h4 id="添加-datasource-和-jdbctemplate">1.2 添加 dataSource 和
+JdbcTemplate</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span><span class="token string">"com.zth"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@PropertySource</span><span class="token punctuation">(</span><span class="token string">"classpath:dbConfig.properties"</span><span class="token punctuation">)</span>
@@ -377,7 +374,7 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">JdbcTemplate</span><span class="token punctuation">(</span><span class="token function">dataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-3-查询">1.3 查询</h4>
+<h4 id="查询">1.3 查询</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDaoTest</span> <span class="token punctuation">&#123;</span>
 
     <span class="token class-name">JdbcTemplate</span> jdbcTemplate<span class="token punctuation">;</span>
@@ -427,7 +424,7 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-4-增删改">1.4 增删改</h4>
+<h4 id="增删改">1.4 增删改</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testInsert</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> result <span class="token operator">=</span> jdbcTemplate<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token string">"insert into t_user( name, age) VALUES (?,?)"</span><span class="token punctuation">,</span> <span class="token string">"lisi"</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -456,7 +453,7 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
     <span class="token keyword">int</span> result <span class="token operator">=</span> jdbcTemplate<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token string">"delete from t_user where id = ?"</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-5-具名参数">1.5 具名参数</h4>
+<h4 id="具名参数">1.5 具名参数</h4>
 <p><strong>NamedParameterJdbcTemplate:</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">NamedParameterJdbcTemplate</span> <span class="token function">namedParameterJdbcTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
@@ -471,7 +468,8 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
     <span class="token keyword">int</span> result <span class="token operator">=</span> namedParameterJdbcTemplate<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token string">"insert into t_user(name, age) values(:name,:age)"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-6-Spring-JdbcTemplate-整合-dao">1.6 Spring JdbcTemplate 整合 dao</h4>
+<h4 id="spring-jdbctemplate-整合-dao">1.6 Spring JdbcTemplate 整合
+dao</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Repository</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDaoImpl</span> <span class="token keyword">implements</span> <span class="token class-name">IUserDao</span> <span class="token punctuation">&#123;</span>
 
@@ -489,8 +487,8 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
     <span class="token punctuation">&#125;</span>
 
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="2-声明式事务">2. 声明式事务</h3>
-<h4 id="2-1-基于注解">2.1 基于注解</h4>
+<h3 id="声明式事务">2. 声明式事务</h3>
+<h4 id="基于注解">2.1 基于注解</h4>
 <h5 id="添加事务管理器">添加事务管理器</h5>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
 <span class="token keyword">public</span> <span class="token class-name">DruidDataSource</span> <span class="token function">dataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -508,7 +506,8 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
     <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DataSourceTransactionManager</span><span class="token punctuation">(</span><span class="token function">dataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h5 id="开启事务注解驱动">开启事务注解驱动</h5>
-<p><strong>@EnableTransactionManagement</strong></p>
+<p><strong><span class="citation"
+data-cites="EnableTransactionManagement">@EnableTransactionManagement</span></strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span><span class="token string">"com.zth"</span><span class="token punctuation">)</span>
 <span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@EnableTransactionManagement</span>
@@ -533,7 +532,7 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
        <span class="token comment">//……</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-2-基于xml">2.2  基于xml</h4>
+<h4 id="基于xml">2.2 基于xml</h4>
 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>component-scan</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.zth<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>property-placeholder</span> <span class="token attr-name">location</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>classpath:dbConfig.properties<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
@@ -571,24 +570,29 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>method</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>*<span class="token punctuation">"</span></span> <span class="token attr-name">rollback-for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>IOException<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">tx:</span>attributes</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">tx:</span>advice</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-Transactional">3 @Transactional</h3>
-<p>@Transactional 可以标记在类上面，当前类所有的方法都运用事务<br>
-@Transactional 标记在方法则只是当前方法运用事务<br>
-如果类和方法都存在 @Transactional 会以方法的为准。 建议：@Transactional 写在方法上面，控制粒度更细，而且建议 @Transactional 写在业务逻辑层上</p>
-<p>事务配置的属性</p>
-<ul>
-<li>isolation：设置事务的隔离级别</li>
-<li>propagation：事务的传播行为</li>
-<li>noRollbackFor：那些异常事务可以不回滚</li>
-<li>noRollbackForClassName：填写的参数是全类名</li>
-<li>rollbackFor：哪些异常事务需要回滚</li>
-<li>rollbackForClassName：填写的参数是全类名</li>
-<li>readOnly：设置事务是否为只读事务</li>
-<li>timeout：事务超出指定执行时长后自动终止并回滚,单位是秒</li>
-</ul>
-<h4 id="3-1-隔离级别（isolation）">3.1 隔离级别（isolation）</h4>
-<p><strong>使用方式：</strong><br>
-@Transactional(isolation = Isolation.REPEATABLE_READ)</p>
+<h3 id="transactional">3 <span class="citation"
+data-cites="Transactional">@Transactional</span></h3>
+<p><span class="citation"
+data-cites="Transactional">@Transactional</span>
+可以标记在类上面，当前类所有的方法都运用事务 <span class="citation"
+data-cites="Transactional">@Transactional</span>
+标记在方法则只是当前方法运用事务 如果类和方法都存在 <span
+class="citation" data-cites="Transactional">@Transactional</span>
+会以方法的为准。 建议：<span class="citation"
+data-cites="Transactional">@Transactional</span>
+写在方法上面，控制粒度更细，而且建议 <span class="citation"
+data-cites="Transactional">@Transactional</span> 写在业务逻辑层上</p>
+<p>事务配置的属性 + isolation：设置事务的隔离级别 +
+propagation：事务的传播行为 + noRollbackFor：那些异常事务可以不回滚 +
+noRollbackForClassName：填写的参数是全类名 +
+rollbackFor：哪些异常事务需要回滚 +
+rollbackForClassName：填写的参数是全类名 +
+readOnly：设置事务是否为只读事务 +
+timeout：事务超出指定执行时长后自动终止并回滚,单位是秒</p>
+<h4 id="隔离级别isolation">3.1 隔离级别（isolation）</h4>
+<p><strong>使用方式：</strong> <span class="citation"
+data-cites="Transactional">@Transactional</span>(isolation =
+Isolation.REPEATABLE_READ)</p>
 <ul>
 <li>Isolation.DEFAULT：默认值，表示使用底层数据库的默认隔离级别。</li>
 <li>Isolation.READ_UNCOMMITTED：该隔离级别表示一个事务可以读取另一个事务修改但还没有提交的数据。</li>
@@ -596,15 +600,18 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
 <li>Isolation.REPEATABLE_READ：该隔离级别表示一个事务中多次某个查询得到的记录相同。</li>
 <li>Isolation.SERIALIZABLE：所有的事务依次串行执行。</li>
 </ul>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%ABabzd.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>并发安全：SERIALIZABLE&gt;REPEATABLE_READ&gt;READ_COMMITTED<br>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/事务隔离级别abzd.png" srcset="/img/loading.gif" lazyload /></p>
+<p>并发安全：SERIALIZABLE&gt;REPEATABLE_READ&gt;READ_COMMITTED
 运行效率：READ_COMMITTED&gt;REPEATABLE_READ&gt;SERIALIZABLE</p>
-<h4 id="3-2-事务的传播特性">3.2 事务的传播特性</h4>
-<p>当一个具有事务控制的方法被另一个有事务控制的方法调用后，需要如何管理事务(新建事务?在事务中执行?把事务挂起?报异<br>
+<h4 id="事务的传播特性">3.2 事务的传播特性</h4>
+<p>当一个具有事务控制的方法被另一个有事务控制的方法调用后，需要如何管理事务(新建事务?在事务中执行?把事务挂起?报异
 常?)</p>
-<p><strong>使用方式：</strong><br>
-@Transactional(propagation = Propagation.REQUIRED)</p>
+<p><strong>使用方式：</strong> <span class="citation"
+data-cites="Transactional">@Transactional</span>(propagation =
+Propagation.REQUIRED)</p>
 <table>
+
 <thead>
 <tr>
 <th>事务传播行为类型</th>
@@ -658,36 +665,49 @@ jdbc.driverClassName&#x3D;com.mysql.jdbc.Driver<span aria-hidden="true" class="l
 </tr>
 </tbody>
 </table>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/148504094">https://zhuanlan.zhihu.com/p/148504094</a></p>
+<p>https://zhuanlan.zhihu.com/p/148504094</p>
 <p><strong>外部事务需要挂起的，外部事务和内部事务必须不在同一个类中</strong></p>
-<h4 id="3-3-超时属性-timeout">3.3 超时属性(timeout)</h4>
-<p>指定事务等待的最长时间（秒） 当前事务访问数据时，有可能访问的数据被别的数据进行加锁的处理，那么此时事务就 必须等待，如果等待时间过长给用户造成的体验感差。超时直接回滚返回。</p>
-<p><strong>使用方式：</strong><br>
-@Transactional(timeout = 2)</p>
-<p>Spring事务超时 = 事务开始时到最后一个Statement创建时时间 + 最后一个Statement的执行时超时时间（即其queryTimeout）。</p>
-<h4 id="3-4-设置事务只读-readOnly">3.4 设置事务只读(readOnly)</h4>
-<p><strong>使用方式：</strong><br>
-@Transactional(readOnly = true)</p>
-<p>readonly：只会设置在查询的业务方法中<br>
-connection.setReadOnly(true) 通知数据库当前操作是只读，数据库就会对当前只读做相应优化</p>
-<p>如果一次执行单条查询语句，则没有必要启用事务支持，数据库默认支持 SQL 执行期间的读一致性；<br>
-如果一次执行多条查询语句，例如统计查询，报表查询，在这种场景下，多条查询 SQL 必须保证整体的读一致性，否则在前一条 SQL 查询之后，后一条 SQL 查询之前，数据被其他用户改变，则该次整体的统计查询将会出现读数据不一致的状态，此时应该启用事务支持（如：设置不可重复度、幻影读级 别）。<br>
-对于只读事务，可以指定事务类型为 readonly，即只读事务。由于只读事务不存在数据的修改，因此数据库将会为只读事务提供一些优化手段。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jinwufeiyang/article/details/119300491">https://blog.csdn.net/jinwufeiyang/article/details/119300491</a></p>
-<h4 id="3-5-异常属性">3.5 异常属性</h4>
-<p><strong>使用方式：</strong><br>
-@Transactional(rollbackFor = IOException.class)</p>
+<h4 id="超时属性timeout">3.3 超时属性(timeout)</h4>
+<p>指定事务等待的最长时间（秒）
+当前事务访问数据时，有可能访问的数据被别的数据进行加锁的处理，那么此时事务就
+必须等待，如果等待时间过长给用户造成的体验感差。超时直接回滚返回。</p>
+<p><strong>使用方式：</strong> <span class="citation"
+data-cites="Transactional">@Transactional</span>(timeout = 2)</p>
+<p>Spring事务超时 = 事务开始时到最后一个Statement创建时时间 +
+最后一个Statement的执行时超时时间（即其queryTimeout）。</p>
+<h4 id="设置事务只读readonly">3.4 设置事务只读(readOnly)</h4>
+<p><strong>使用方式：</strong> <span class="citation"
+data-cites="Transactional">@Transactional</span>(readOnly = true)</p>
+<p>readonly：只会设置在查询的业务方法中 connection.setReadOnly(true)
+通知数据库当前操作是只读，数据库就会对当前只读做相应优化</p>
+<p>如果一次执行单条查询语句，则没有必要启用事务支持，数据库默认支持 SQL
+执行期间的读一致性；
+如果一次执行多条查询语句，例如统计查询，报表查询，在这种场景下，多条查询
+SQL 必须保证整体的读一致性，否则在前一条 SQL 查询之后，后一条 SQL
+查询之前，数据被其他用户改变，则该次整体的统计查询将会出现读数据不一致的状态，此时应该启用事务支持（如：设置不可重复度、幻影读级
+别）。 对于只读事务，可以指定事务类型为
+readonly，即只读事务。由于只读事务不存在数据的修改，因此数据库将会为只读事务提供一些优化手段。</p>
+<p>https://blog.csdn.net/jinwufeiyang/article/details/119300491</p>
+<h4 id="异常属性">3.5 异常属性</h4>
+<p><strong>使用方式：</strong> <span class="citation"
+data-cites="Transactional">@Transactional</span>(rollbackFor =
+IOException.class)</p>
 <p>设置当前事务出现哪些异常就进行回滚或者提交。</p>
-<p>默认对于 RuntimeException 、Error 及其子类采用的是回滚的策略。<br>
+<p>默认对于 RuntimeException 、Error 及其子类采用的是回滚的策略。
 默认对于 检查异常及其子类采用的是提交的策略。</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220828225955.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h4 id="3-6-使用推荐">3.6 使用推荐</h4>
-<p>如果当前业务方法是一组 增、改、删 ： @Transactional<br>
-如果当前业务方法是一组查询：@Transactionl(readOnly=true)<br>
-如果当前业务方法是单个查询：@Transactionl(propagation=propagation.SUPPORTS ,readOnly=true)</p>
-<h3 id="4-事务失效">4. 事务失效</h3>
-<p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1714667126401049636&amp;wfr=spider&amp;for=pc">https://baijiahao.baidu.com/s?id=1714667126401049636&amp;wfr=spider&amp;for=pc</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/514257018">https://zhuanlan.zhihu.com/p/514257018</a></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220828225955.png" srcset="/img/loading.gif" lazyload /></p>
+<h4 id="使用推荐">3.6 使用推荐</h4>
+<p>如果当前业务方法是一组 增、改、删 ： <span class="citation"
+data-cites="Transactional">@Transactional</span>
+如果当前业务方法是一组查询：<span class="citation"
+data-cites="Transactionl">@Transactionl</span>(readOnly=true)
+如果当前业务方法是单个查询：<span class="citation"
+data-cites="Transactionl">@Transactionl</span>(propagation=propagation.SUPPORTS
+,readOnly=true)</p>
+<h3 id="事务失效">4. 事务失效</h3>
+<p>https://baijiahao.baidu.com/s?id=1714667126401049636&amp;wfr=spider&amp;for=pc</p>
+<p>https://zhuanlan.zhihu.com/p/514257018</p>
 
               
             </div>

@@ -295,13 +295,17 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-整理数据">1. 整理数据</h3>
-<p>首先，我们需要把数据整理成文档，可以是 txt、pdf、xlsx、markdown 等格式都可以。这里我们将<a target="_blank" rel="noopener" href="https://waimai.meituan.com/help/faq">美团外卖 - 常见问题</a>网页中的问题和答案转成 txt 文件，<a target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503081027259.txt">【传送门】</a></p>
-<h3 id="2-导入知识库">2. 导入知识库</h3>
-<h4 id="2-1-加载并解析文件">2.1 加载并解析文件</h4>
+              <h3 id="整理数据">1. 整理数据</h3>
+<p>首先，我们需要把数据整理成文档，可以是 txt、pdf、xlsx、markdown
+等格式都可以。这里我们将<a
+target="_blank" rel="noopener" href="https://waimai.meituan.com/help/faq">美团外卖 -
+常见问题</a>网页中的问题和答案转成 txt 文件，<a
+target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503081027259.txt">【传送门】</a></p>
+<h3 id="导入知识库">2. 导入知识库</h3>
+<h4 id="加载并解析文件">2.1 加载并解析文件</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">DocumentParser</span> documentParser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TextDocumentParser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Document</span> document <span class="token operator">=</span> documentParser<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token class-name">Main</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"meituan-qa.txt"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="2-2-切分文件">2.2 切分文件</h4>
+<h4 id="切分文件">2.2 切分文件</h4>
 <p>需要把文件中的内容切分成问答对。</p>
 <p>自定义分割方法（按空行分割，即两个换行）：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomerServiceDocumentSplitter</span> <span class="token keyword">implements</span> <span class="token class-name">DocumentSplitter</span> <span class="token punctuation">&#123;</span>
@@ -323,16 +327,18 @@
 <p>切分 Document 对象：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">DocumentSplitter</span> splitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomerServiceDocumentSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextSegment</span><span class="token punctuation">></span></span> segments <span class="token operator">=</span> splitter<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>document<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="2-3-文本向量化">2.3 文本向量化</h4>
+<h4 id="文本向量化">2.3 文本向量化</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EmbeddingModel</span> embeddingModel <span class="token operator">=</span> <span class="token class-name">ZhipuChatModelUtil</span><span class="token punctuation">.</span><span class="token function">getZhipuEmbeddingModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Embedding</span><span class="token punctuation">></span></span> embeddings <span class="token operator">=</span> embeddingModel<span class="token punctuation">.</span><span class="token function">embedAll</span><span class="token punctuation">(</span>segments<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">content</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503081138881.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" />
-<h4 id="2-4-向量存储">2.4 向量存储</h4>
-<p>得到向量后，就需要把文本和向量之间的映射关系存储下来，使用 CustomerServiceAgent 在回答问题时，能够根据向量相似度找到和用户问题相似的知识库问题。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503081138881.png" srcset="/img/loading.gif" lazyload style="zoom:35%;" /></p>
+<h4 id="向量存储">2.4 向量存储</h4>
+<p>得到向量后，就需要把文本和向量之间的映射关系存储下来，使用
+CustomerServiceAgent
+在回答问题时，能够根据向量相似度找到和用户问题相似的知识库问题。</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">EmbeddingStore</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TextSegment</span><span class="token punctuation">></span></span> embeddingStore <span class="token operator">=</span> <span class="token class-name">RedisEmbeddingStore</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">port</span><span class="token punctuation">(</span><span class="token number">16379</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">dimension</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 embeddingStore<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>embeddings<span class="token punctuation">,</span> segments<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-ContentRetriever">3. ContentRetriever</h3>
+<h3 id="contentretriever">3. ContentRetriever</h3>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ContentRetriever</span> contentRetriever <span class="token operator">=</span> <span class="token class-name">EmbeddingStoreContentRetriever</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">embeddingStore</span><span class="token punctuation">(</span>embeddingStore<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">embeddingModel</span><span class="token punctuation">(</span>embeddingModel<span class="token punctuation">)</span>
         <span class="token punctuation">.</span><span class="token function">maxResults</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token comment">// 最相似的5个结果</span>
@@ -341,9 +347,11 @@ embeddingStore<span class="token punctuation">.</span><span class="token functio
 <p>提问：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Query</span> query <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Query</span><span class="token punctuation">(</span><span class="token string">"余额提现什么时候到账？"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Content</span><span class="token punctuation">></span></span> retrieve <span class="token operator">=</span> contentRetriever<span class="token punctuation">.</span><span class="token function">retrieve</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h3 id="4-整合大模型">4.整合大模型</h3>
-<p>当我们能根据用户问题匹配到原始问题和答案后，该如何将问题的答案返回给用户呢？比如今天是 2025 年 3 月 8 号，用户问“今天的余额提现，最晚什么时候能到账？”，作为智能客服系统，能不能直接告诉客户具体的日期呢，而不是只返回一个“1-7个工作日内可退回您的支付账户”让客户来算日期，实现这个功能就可以结合大模型来实现了。</p>
-<h4 id="4-1-定义-Agent">4.1 定义 Agent</h4>
+<h3 id="整合大模型">4.整合大模型</h3>
+<p>当我们能根据用户问题匹配到原始问题和答案后，该如何将问题的答案返回给用户呢？比如今天是
+2025 年 3 月 8
+号，用户问“今天的余额提现，最晚什么时候能到账？”，作为智能客服系统，能不能直接告诉客户具体的日期呢，而不是只返回一个“1-7个工作日内可退回您的支付账户”让客户来算日期，实现这个功能就可以结合大模型来实现了。</p>
+<h4 id="定义-agent">4.1 定义 Agent</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">CustomerServiceAgent</span> <span class="token punctuation">&#123;</span>
 
     <span class="token class-name">String</span> <span class="token function">answer</span><span class="token punctuation">(</span><span class="token class-name">String</span> question<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -382,8 +390,9 @@ embeddingStore<span class="token punctuation">.</span><span class="token functio
 例如，如果今天是周一，那么最晚到账的日期将是周五。如果今天是周二，那么最晚到账的日期将是下周的周二。
 
 请您根据实际的工作日计算，从今天起算的第7个工作日即为最晚到账日期。如果您需要具体的日期，请提供今天的具体日期，我可以帮您计算出最晚到账的日期。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>我们发现虽然整合了大模型，但是大模型似乎对今天是不是周末、是不是工作日这些不太智能，那这就需要利用 langchain4j 的 Tools 技术了。</p>
-<h4 id="4-2-整合tools">4.2 整合tools</h4>
+<p>我们发现虽然整合了大模型，但是大模型似乎对今天是不是周末、是不是工作日这些不太智能，那这就需要利用
+langchain4j 的 Tools 技术了。</p>
+<h4 id="整合tools">4.2 整合tools</h4>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DateCalculator</span> <span class="token punctuation">&#123;</span>
     <span class="token annotation punctuation">@Tool</span><span class="token punctuation">(</span><span class="token string">"计算指定天数后的具体日期"</span><span class="token punctuation">)</span>
     <span class="token class-name">String</span> <span class="token function">date</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> days<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>

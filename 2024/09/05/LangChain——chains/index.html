@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. LLMChain LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生成的 p">
+    <meta name="description" content="1. LLMChain 　　LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 　　一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LangChain——chains">
 <meta property="og:url" content="http://example.com/2024/09/05/LangChain%E2%80%94%E2%80%94chains/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. LLMChain LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生成的 p">
+<meta property="og:description" content="1. LLMChain 　　LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。 　　一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409051056959.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052030736.png">
@@ -300,10 +300,14 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-LLMChain">1. LLMChain</h3>
-<p>LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents 的内部调用，被广泛应用。</p>
-<p>一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成 Prompt Template（提示模板），并将生成的 prompt （格式化后的字符串）传递给大模型，并返回大模型输出。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409051056959.png" srcset="/img/loading.gif" lazyload style="zoom:9%;" />
+              <h3 id="llmchain">1. LLMChain</h3>
+<p>　　LLMChain 是 LangChain 中最简单的链，作为其他复杂 Chains 和 Agents
+的内部调用，被广泛应用。</p>
+<p>　　一个 LLMChain 由 PromptTemplate 和语言模型（LLM or Chat
+Model）组成。它使用直接传入（或 memory 提供）的 key-value 来规范化生成
+Prompt Template（提示模板），并将生成的 prompt
+（格式化后的字符串）传递给大模型，并返回大模型输出。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409051056959.png" srcset="/img/loading.gif" lazyload style="zoom:9%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> ChatPromptTemplate
 <span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> OpenAI
 
@@ -316,17 +320,19 @@
     <span class="token comment"># chain = LLMChain(llm=llm, prompt=template)</span>
     chain <span class="token operator">=</span> template <span class="token operator">|</span> llm
     <span class="token keyword">print</span><span class="token punctuation">(</span>chain<span class="token punctuation">.</span>invoke<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">"user_input"</span><span class="token punctuation">:</span> <span class="token string">"What is the capital of France?"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="2-Sequential-Chain">2. Sequential Chain</h3>
-<p>串联式调用语言模型（将一个调用的输出作为另一个调用的输入）。</p>
-<p>顺序链（Sequential Chain ）允许用户连接多个链并将它们组合成执行特定场景的流水线（Pipeline）。</p>
-<p>顺序链的类型：</p>
+<h3 id="sequential-chain">2. Sequential Chain</h3>
+<p>　　串联式调用语言模型（将一个调用的输出作为另一个调用的输入）。</p>
+<p>　　顺序链（Sequential Chain
+）允许用户连接多个链并将它们组合成执行特定场景的流水线（Pipeline）。</p>
+<p>　　顺序链的类型：</p>
 <ul>
 <li>SimpleSequentialChain：最简单形式的顺序链，每个步骤都具有单一输入/输出，并且一个步骤的输出是下一个步骤的输入。</li>
 <li>SequentialChain：更通用形式的顺序链，允许多个输入/输出。</li>
 </ul>
-<h4 id="2-1-SimpleSequentialChain">2.1 SimpleSequentialChain</h4>
-<p>使用 SimpleSequentialChain 实现戏剧摘要和评论（单输入/单输出）</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052030736.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" />
+<h4 id="simplesequentialchain">2.1 SimpleSequentialChain</h4>
+<p>　　使用 SimpleSequentialChain
+实现戏剧摘要和评论（单输入/单输出）</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052030736.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>llm <span class="token keyword">import</span> LLMChain
 <span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>sequential <span class="token keyword">import</span> SimpleSequentialChain
 <span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> PromptTemplate
@@ -353,10 +359,10 @@
     review <span class="token operator">=</span> overall_chain<span class="token punctuation">.</span>invoke<span class="token punctuation">(</span><span class="token string">"三体人不是无法战胜的"</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>review<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>执行过程：</strong></p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052035582.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" />
-<h4 id="2-2-SequentialChain">2.2 SequentialChain</h4>
-<p>使用 SequentialChain 实现戏剧摘要和评论（多输入/多输出）</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052129423.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052035582.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" /></p>
+<h4 id="sequentialchain">2.2 SequentialChain</h4>
+<p>　　使用 SequentialChain 实现戏剧摘要和评论（多输入/多输出）</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409052129423.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     llm <span class="token operator">=</span> OpenAI<span class="token punctuation">(</span>temperature<span class="token operator">=</span><span class="token number">0.7</span><span class="token punctuation">,</span> max_tokens<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">)</span>
 
@@ -380,9 +386,9 @@
 <p>结果：</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">&#123;&#39;title&#39;: &#39;三体人不是无法战胜的&#39;, &#39;synopsis&#39;: &#39;\n\n《三体人不是无法战胜的》是一部充满挑战和希望的戏剧作品。故事讲述了一个来自外星球的文明，因为受到宇宙中的三体黑暗森林法则的影响，陷入了无休止的战争和混乱之中。面对强大的三体文明，人类陷入了绝境，但他们并没有放弃希望，而是通过不断的探索和努力，最终找到了战胜三体人的方法。这部戏剧将带领观众进入一个充满惊险和扣人心弦的未来世界，同时也反映出人类对于未知与挑战的勇敢精神。它不仅仅是一部科幻作品，更是一部关于人类意志和毅力的励志故事。让我们一起来见证人类如何战胜不可能，证明三体人并非无法被击败！&#39;, &#39;review&#39;: &#39; \n\n《三体人不是无法战胜的》是一部令人兴奋的戏剧作品，它带领观众进入一个未来充满挑战和希望的世界。该剧通过讲述来自外星球的文明与人类之间的战争，展现了人类面对困难时不屈不挠的精神。\n\n在这部作品中，三体黑暗森林法则成为了人类与外星文明的战争规则，给人类带来了巨大的挑战。面对强大的敌人，人类并没有屈服，而是通过不断的探索和努力，最终找到了战胜三体人的方法。这让人们感受到了人类意志和毅力的伟大力量。\n\n同时，该剧也反映出了人类对于未知与挑战的勇敢精神。人类在面对未知的外星文明时，没有恐惧，而是勇敢地迎接挑战，并最终取得了胜利。这种勇气和决心令人钦佩，也给观众带来了强烈的鼓舞和启发。\n\n《三体人不是无法战胜的》不仅仅是一部科幻作品，更是一部关于人类意志和毅力的励志故事。它深刻地揭示了人类的力量和潜力，令人们对未来充满希望。\n\n该剧的制作也非常出色，舞台设计精美，服装华丽，演员们的表演也十分精彩。观众将被带入一个充满惊险和扣人心弦的未来世界，沉浸在剧情中无法自拔。\n\n总的来说，《三体人不是无法战胜的》是一部令人振奋的戏剧作品，它不仅带来了视觉上的享受，更让人们重新认识和感受到了人类的力量。让我们一起来见证人类如何战胜不可能，证明三体人并非无法被击败！&#39;&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h3 id="3-Transform-Chain">3. Transform Chain</h3>
-<p>实现快捷处理超长文本。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409051130323.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" />
+<h3 id="transform-chain">3. Transform Chain</h3>
+<p>　　实现快捷处理超长文本。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409051130323.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>transform <span class="token keyword">import</span> TransformChain
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
@@ -434,11 +440,11 @@ llm_chain <span class="token operator">=</span> LLMChain<span class="token punct
 sequential_chain <span class="token operator">=</span> SimpleSequentialChain<span class="token punctuation">(</span>chains<span class="token operator">=</span><span class="token punctuation">[</span>transform_chain<span class="token punctuation">,</span> llm_chain<span class="token punctuation">]</span><span class="token punctuation">)</span>
 resp <span class="token operator">=</span> sequential_chain<span class="token punctuation">.</span>invoke<span class="token punctuation">(</span>joke_text<span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>resp<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="4-Router-Chain">4. Router Chain</h3>
-<p>实现条件判断的大模型调用</p>
-<p>建一个可定制的链路系统，用户可以提供不同的输入提示，并根据这些提示获取适当的响应。</p>
-<p>主要逻辑：从<code>prompt_infos</code>创建多个<code>LLMChain</code>对象，并将它们保存在一个字典中，然后创建一个默认的<code>ConversationChain</code>，最后创建一个带有路由功能的<code>MultiPromptChain</code>。</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409061315704.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" />
+<h3 id="router-chain">4. Router Chain</h3>
+<p>　　实现条件判断的大模型调用</p>
+<p>　　建一个可定制的链路系统，用户可以提供不同的输入提示，并根据这些提示获取适当的响应。</p>
+<p>　　主要逻辑：从<code>prompt_infos</code>创建多个<code>LLMChain</code>对象，并将它们保存在一个字典中，然后创建一个默认的<code>ConversationChain</code>，最后创建一个带有路由功能的<code>MultiPromptChain</code>。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409061315704.png" srcset="/img/loading.gif" lazyload style="zoom:10%;" /></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>conversation<span class="token punctuation">.</span>base <span class="token keyword">import</span> ConversationChain
 <span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>llm <span class="token keyword">import</span> LLMChain
 <span class="token keyword">from</span> langchain<span class="token punctuation">.</span>chains<span class="token punctuation">.</span>router <span class="token keyword">import</span> MultiPromptChain

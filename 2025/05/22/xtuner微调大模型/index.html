@@ -18,7 +18,7 @@
   
     <meta name="description" content="中文文档 github 用户文档 1. 安装xtuner conda create --name xtuner python&#x3D;3.10 -y conda activate xtuner  # 源码安装 git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.git cd xtuner pip install -e &#39;.[deepspeed]&#39;  # 验证 xtun">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xtuner 微调大模型">
+<meta property="og:title" content="微调大模型——xtuner">
 <meta property="og:url" content="http://example.com/2025/05/22/xtuner%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="中文文档 github 用户文档 1. 安装xtuner conda create --name xtuner python&#x3D;3.10 -y conda activate xtuner  # 源码安装 git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.git cd xtuner pip install -e &#39;.[deepspeed]&#39;  # 验证 xtun">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281426936.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281355398.png">
 <meta property="article:published_time" content="2025-05-22T10:40:19.000Z">
-<meta property="article:modified_time" content="2025-06-08T08:58:50.136Z">
+<meta property="article:modified_time" content="2025-06-10T11:52:36.488Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="微调">
@@ -39,7 +39,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>xtuner 微调大模型 - Hexo</title>
+  <title>微调大模型——xtuner - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -220,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="xtuner 微调大模型"></span>
+            <span id="subtitle" data-typed-text="微调大模型——xtuner"></span>
           
         </div>
 
@@ -294,13 +294,16 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">xtuner 微调大模型</h1>
+            <h1 style="display: none">微调大模型——xtuner</h1>
             
             <div class="markdown-body">
               
-              <p><a target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/index.html">中文文档</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/tree/main/docs/zh_cn/user_guides">github 用户文档</a></p>
-<h3 id="1-安装xtuner">1. 安装xtuner</h3>
+              <p><a
+target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/index.html">中文文档</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/tree/main/docs/zh_cn/user_guides">github
+用户文档</a></p>
+<h3 id="安装xtuner">1. 安装xtuner</h3>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">conda create <span class="token parameter variable">--name</span> xtuner <span class="token assign-left variable">python</span><span class="token operator">=</span><span class="token number">3.10</span> <span class="token parameter variable">-y</span>
 conda activate xtuner
 
@@ -311,13 +314,17 @@ pip <span class="token function">install</span> <span class="token parameter var
 
 <span class="token comment"># 验证</span>
 xtuner list-cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="2-微调">2. 微调</h3>
-<p><a target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/blob/main/docs/zh_cn/user_guides/single_turn_conversation.md">单轮对话 data pipeline</a></p>
-<h4 id="2-1-数据集准备">2.1 数据集准备</h4>
-<p><a target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/training/open_source_dataset.html">开源指令微调数据集</a></p>
-<h5 id="a-数据采集">a. 数据采集</h5>
-<p><a target="_blank" rel="noopener" href="https://modelscope.cn/datasets/w10442005/ruozhiba_qa">弱智吧问答数据</a></p>
-<h5 id="b-数据转换">b. 数据转换</h5>
+<h3 id="微调">2. 微调</h3>
+<p><a
+target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/blob/main/docs/zh_cn/user_guides/single_turn_conversation.md">单轮对话
+data pipeline</a></p>
+<h4 id="数据集准备">2.1 数据集准备</h4>
+<p><a
+target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/training/open_source_dataset.html">开源指令微调数据集</a></p>
+<h5 id="a.-数据采集">a. 数据采集</h5>
+<p><a
+target="_blank" rel="noopener" href="https://modelscope.cn/datasets/w10442005/ruozhiba_qa">弱智吧问答数据</a></p>
+<h5 id="b.-数据转换">b. 数据转换</h5>
 <p>转换脚本：</p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
 
@@ -345,18 +352,25 @@ target_data <span class="token operator">=</span> <span class="token punctuation
     json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>target_data<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ensure_ascii<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"数据已成功转换并保存到 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>target_file<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>转换后数据集：</p>
-<p><a target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281415328.json">target_data_1.json</a></p>
-<h4 id="2-1-准备配置文件">2.1 准备配置文件</h4>
+<p><a
+target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281415328.json">target_data_1.json</a></p>
+<h4 id="准备配置文件">2.1 准备配置文件</h4>
 <p>根据微调的模型选择对应的配置文件，以 qwen3 为例：</p>
-<p>xtuner 的目录中找到 xtuner/xtuner/configs/qwen/qwen1_5/qwen1_5_4b_chat/qwen1_5_4b_chat_qlora_alpaca_e3.py 复制一份至根目录。</p>
-<h4 id="2-2-修改配置文件">2.2 修改配置文件</h4>
-<p>修改待微调模型路径和数据路径为本地路径，并且修改数据集加载方式、prompt_template 等。</p>
+<p>xtuner 的目录中找到
+xtuner/xtuner/configs/qwen/qwen1_5/qwen1_5_4b_chat/qwen1_5_4b_chat_qlora_alpaca_e3.py
+复制一份至根目录。</p>
+<h4 id="修改配置文件">2.2 修改配置文件</h4>
+<p>修改待微调模型路径和数据路径为本地路径，并且修改数据集加载方式、prompt_template
+等。</p>
 <blockquote>
-<p>对话模板选择：<a target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/preparation/prompt_template.html">文档</a></p>
+<p>对话模板选择：<a
+target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/preparation/prompt_template.html">文档</a></p>
 <ul>
 <li>微调 chat 模型:</li>
 </ul>
-<p>使用模型所对应的对话模版，如 <code>internlm2-chat</code> 使用 <code>internlm2_chat</code>、<code>Qwen-Chat</code> 使用 <code>qwen_chat</code>。</p>
+<p>使用模型所对应的对话模版，如 <code>internlm2-chat</code> 使用
+<code>internlm2_chat</code>、<code>Qwen-Chat</code> 使用
+<code>qwen_chat</code>。</p>
 <ul>
 <li>全量微调 base 模型:</li>
 </ul>
@@ -364,7 +378,10 @@ target_data <span class="token operator">=</span> <span class="token punctuation
 <ul>
 <li>LoRA 微调 base 模型:</li>
 </ul>
-<p>使用默认对话模版 <code>default</code>。这是由于 LoRA / QLoRA 微调默认会关闭 <code>embed_tokens</code> 和 <code>lm_head</code> 的训练，此时如果引入未学习过的特殊 token（如对话模版中的 <code>&lt;|im_start|&gt;</code>），则会影响模型的训练。</p>
+<p>使用默认对话模版 <code>default</code>。这是由于 LoRA / QLoRA
+微调默认会关闭 <code>embed_tokens</code> 和 <code>lm_head</code>
+的训练，此时如果引入未学习过的特殊 token（如对话模版中的
+<code>&lt;|im_start|&gt;</code>），则会影响模型的训练。</p>
 </blockquote>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">### PART 1中</span>
 <span class="token comment">#微调模型存放的位置</span>
@@ -399,50 +416,51 @@ lora_alpha<span class="token operator">=</span><span class="token number">128</s
 <span class="token comment"># PART 3中</span>
 dataset<span class="token operator">=</span><span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>load_dataset<span class="token punctuation">,</span> path<span class="token operator">=</span><span class="token string">"json"</span><span class="token punctuation">,</span>data_files<span class="token operator">=</span>data_files<span class="token punctuation">)</span>
 dataset_map_fn<span class="token operator">=</span><span class="token boolean">None</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-3-启动微调">2.3 启动微调</h4>
+<h4 id="启动微调">2.3 启动微调</h4>
 <p>在完成上述操作后，便可以使用下面的指令启动微调任务了。</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none"># 单机单卡
 xtuner train  .&#x2F;qwen1_5_4b_chat_qlora_alpaca_e3.py <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>开始训练：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281423653.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281423653.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>在训练开始前，可以看到模型的输出如下所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281424812.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281424812.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>而在训练完全完成后，可以观察到模型的输出如下所示：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281426936.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<h3 id="3-模型转换-LoRA-合并">3. 模型转换 + LoRA 合并</h3>
-<p>在训练完成后，会得到几个 <code>.pth</code> 文件（例如 iter_2000.pth ，如果使用了 DeepSpeed，则将会是一个文件夹），这些文件存储了 QLoRA 算法训练过程所更新的参数，而<strong>不是</strong>模型的全部参数。因此我们需要将这些 <code>.pth</code> 文件转换为 HuggingFace 格式，并合并入原始的语言模型权重中。</p>
-<h4 id="3-1-模型转换">3.1 模型转换</h4>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281426936.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="模型转换-lora-合并">3. 模型转换 + LoRA 合并</h3>
+<p>在训练完成后，会得到几个 <code>.pth</code> 文件（例如 iter_2000.pth
+，如果使用了 DeepSpeed，则将会是一个文件夹），这些文件存储了 QLoRA
+算法训练过程所更新的参数，而<strong>不是</strong>模型的全部参数。因此我们需要将这些
+<code>.pth</code> 文件转换为 HuggingFace
+格式，并合并入原始的语言模型权重中。</p>
+<h4 id="模型转换">3.1 模型转换</h4>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 命令格式：</span>
 xtuner convert pth_to_hf <span class="token variable">$&#123;FINETUNE_CFG&#125;</span> <span class="token variable">$&#123;PTH_PATH&#125;</span> <span class="token variable">$&#123;SAVE_PATH&#125;</span>
 <span class="token comment"># 例如：</span>
 xtuner convert pth_to_hf qwen1_5_4b_chat_qlora_alpaca_e3.py ./work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800.pth  work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-2-LoRA-合并">3.2 LoRA 合并</h4>
+<h4 id="lora-合并">3.2 LoRA 合并</h4>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 命令格式：</span>
 xtuner convert merge <span class="token variable">$&#123;LLM&#125;</span> <span class="token variable">$&#123;LLM_ADAPTER&#125;</span> <span class="token variable">$&#123;SAVE_PATH&#125;</span>
 <span class="token comment"># 例如：</span>
 xtuner convert merge /root/autodl-tmp/models/Qwen/Qwen3-4B work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf/  /root/autodl-tmp/models/Qwen/Qwen3-4B_xtuner_merged --max-shard-size 4GB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="4-可视化训练过程">4. 可视化训练过程</h3>
-<p><a target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/training/visualization.html">文档</a></p>
+<h3 id="可视化训练过程">4. 可视化训练过程</h3>
+<p><a
+target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/training/visualization.html">文档</a></p>
 <p>WandB：</p>
-<ol>
-<li>
-<p>使用 WandB 前需安装依赖库 <code>wandb</code> 并登录至 wandb。</p>
+<ol type="1">
+<li><p>使用 WandB 前需安装依赖库 <code>wandb</code> 并登录至 wandb。</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ pip <span class="token function">install</span> wandb
 $ wandb login<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<p>获取token: <a target="_blank" rel="noopener" href="https://wandb.ai/authorize">https://wandb.ai/authorize</a></p>
-</li>
-<li>
-<p>设置 config 中的 <code>visualizer</code> 字段，并将 <code>vis_backends</code> 设置为 WandbVisBackend：</p>
+<p>获取token: https://wandb.ai/authorize</p></li>
+<li><p>设置 config 中的 <code>visualizer</code> 字段，并将
+<code>vis_backends</code> 设置为 WandbVisBackend：</p>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># set visualizer</span>
 + from mmengine.visualization <span class="token function">import</span> Visualizer, WandbVisBackend
 - visualizer <span class="token operator">=</span> None
-+ visualizer <span class="token operator">=</span> dict<span class="token punctuation">(</span>type<span class="token operator">=</span>Visualizer, <span class="token assign-left variable">vis_backends</span><span class="token operator">=</span><span class="token punctuation">[</span>dict<span class="token punctuation">(</span>type<span class="token operator">=</span>WandbVisBackend<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-</li>
-<li>
-<p>启动实验后，可在 wandb 网页端 <code>https://wandb.ai</code> 上查看可视化结果：</p>
-</li>
++ visualizer <span class="token operator">=</span> dict<span class="token punctuation">(</span>type<span class="token operator">=</span>Visualizer, <span class="token assign-left variable">vis_backends</span><span class="token operator">=</span><span class="token punctuation">[</span>dict<span class="token punctuation">(</span>type<span class="token operator">=</span>WandbVisBackend<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>启动实验后，可在 wandb 网页端 <code>https://wandb.ai</code>
+上查看可视化结果：</p></li>
 </ol>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281355398.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281355398.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 
               
             </div>
@@ -489,7 +507,7 @@ $ wandb login<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>xtuner 微调大模型</div>
+      <div>微调大模型——xtuner</div>
       <div>http://example.com/2025/05/22/xtuner微调大模型/</div>
     </div>
     <div class="license-meta">
@@ -542,8 +560,8 @@ $ wandb login<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/12/MCP/" title="MCP">
-                        <span class="hidden-mobile">MCP</span>
+                      <a href="/2025/05/12/MCP/" title="模型上下文协议 MCP">
+                        <span class="hidden-mobile">模型上下文协议 MCP</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

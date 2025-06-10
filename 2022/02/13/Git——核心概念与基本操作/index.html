@@ -16,24 +16,18 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 基本概念   工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：   图中左侧为工作区，右侧为版本库。“index” 为是暂存区（stage&#x2F;index）， “master” 是 master 分支所代表的目录树。   图">
+    <meta name="description" content="1. 基本概念    工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：    图中左侧为工作区，右侧为版本库。&quot;index&quot; 为是暂存区（stage&#x2F;index）， &quot;master&quot; 是 master 分支所代表的目录树。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——核心概念与基本操作">
 <meta property="og:url" content="http://example.com/2022/02/13/Git%E2%80%94%E2%80%94%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 基本概念   工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：   图中左侧为工作区，右侧为版本库。“index” 为是暂存区（stage&#x2F;index）， “master” 是 master 分支所代表的目录树。   图">
+<meta property="og:description" content="1. 基本概念    工作区：能看到的目录 暂存区：stage 或 index。一般存放在 .git&#x2F;index 中，所以把暂存区有时也叫作索引（index）。 版本库：工作区有一个隐藏目录 .git 就是 Git 的版本库。  文件入库流程：    图中左侧为工作区，右侧为版本库。&quot;index&quot; 为是暂存区（stage&#x2F;index）， &quot;master&quot; 是 master 分支所代表的目录树。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/07c78b7d376f4c8793b53a43f0a2a7fa.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220213233336.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232219.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232236.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220215233958.png">
 <meta property="article:published_time" content="2022-02-13T15:11:19.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.300Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/07c78b7d376f4c8793b53a43f0a2a7fa.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -298,69 +292,67 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-基本概念">1. 基本概念</h3>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/07c78b7d376f4c8793b53a43f0a2a7fa.png" srcset="/img/loading.gif" lazyload alt=""></p>
+              <h3 id="基本概念">1. 基本概念 </h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/07c78b7d376f4c8793b53a43f0a2a7fa.png" srcset="/img/loading.gif" lazyload /></p>
 <ul>
 <li><strong>工作区</strong>：能看到的目录</li>
-<li><strong>暂存区</strong>：stage 或 index。一般存放在 .git/index 中，所以把暂存区有时也叫作索引（index）。</li>
-<li><strong>版本库</strong>：工作区有一个隐藏目录 .git 就是 Git 的版本库。</li>
+<li><strong>暂存区</strong>：stage 或 index。一般存放在 .git/index
+中，所以把暂存区有时也叫作索引（index）。</li>
+<li><strong>版本库</strong>：工作区有一个隐藏目录 .git 就是 Git
+的版本库。</li>
 </ul>
 <p>文件入库流程：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220213233336.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220213233336.png" srcset="/img/loading.gif" lazyload /></p>
 <blockquote>
-<p>图中左侧为工作区，右侧为版本库。“index” 为是暂存区（stage/index）， “master” 是 master 分支所代表的目录树。</p>
+<p> 图中左侧为工作区，右侧为版本库。"index" 为是暂存区（stage/index），
+"master" 是 master 分支所代表的目录树。</p>
 <ul>
-<li>
-<p>图中的 objects 标识的区域为 Git 的对象库，实际位于 “.git/objects” 目录下，里面包含了创建的各种对象及内容。</p>
-</li>
-<li>
-<p>当对工作区修改（或新增）的文件执行 git add 命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</p>
-</li>
-<li>
-<p>当执行提交操作（git commit）时，暂存区的目录树写到版本库（对象库）中，master 分支会做相应的更新。即 master 指向的目录树就是提交时暂存区的目录树。</p>
-</li>
-<li>
-<p>当执行 git reset HEAD 命令时，暂存区的目录树会被重写，被 master 分支指向的目录树所替换，但是工作区不受影响。</p>
-</li>
-<li>
-<p>当执行 git rm --cached  &lt;file&gt; 命令时，会直接从暂存区删除文件，工作区则不做出改变。</p>
-</li>
-<li>
-<p>当执行 git checkout . 或者 git checkout –  &lt;file&gt; 命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区的改动。</p>
-</li>
-<li>
-<p>当执行 git checkout HEAD . 或者 git checkout HEAD  &lt;file&gt; 命令时，会用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。</p>
-</li>
+<li><p>图中的 objects 标识的区域为 Git 的对象库，实际位于 ".git/objects"
+目录下，里面包含了创建的各种对象及内容。</p></li>
+<li><p>当对工作区修改（或新增）的文件执行 git
+add 命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</p></li>
+<li><p>当执行提交操作（git
+commit）时，暂存区的目录树写到版本库（对象库）中，master
+分支会做相应的更新。即 master
+指向的目录树就是提交时暂存区的目录树。</p></li>
+<li><p>当执行 git reset HEAD 命令时，暂存区的目录树会被重写，被 master
+分支指向的目录树所替换，但是工作区不受影响。</p></li>
+<li><p>当执行 git rm --cached
+&lt;file&gt; 命令时，会直接从暂存区删除文件，工作区则不做出改变。</p></li>
+<li><p>当执行 git checkout . 或者 git checkout --
+&lt;file&gt; 命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区的改动。</p></li>
+<li><p>当执行 git checkout HEAD . 或者 git checkout HEAD
+&lt;file&gt; 命令时，会用 HEAD 指向的 master
+分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。</p></li>
 </ul>
 </blockquote>
-<h3 id="2-创建版本库">2. 创建版本库</h3>
-<h4 id="2-1-git-init-初始化仓库">2.1  git init 初始化仓库</h4>
+<h3 id="创建版本库">2. 创建版本库</h3>
+<h4 id="git-init-初始化仓库">2.1  git init 初始化仓库</h4>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> init
 Initialized empty Git repository <span class="token keyword">in</span> G:/learngit/.git/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="2-2-git-add-跟踪文件">2.2 git add 跟踪文件</h4>
-<p>git add  &lt;directory&gt;  添加指定目录至暂存区<br>
-git add -A            添加所有<br>
-git  add  &lt;file&gt;   跟踪指定文件</p>
+<h4 id="git-add-跟踪文件">2.2 git add 跟踪文件</h4>
+<p>git add &lt;directory&gt; 添加指定目录至暂存区 git add -A           
+添加所有 git  add  &lt;file&gt;   跟踪指定文件</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">add</span> README.md<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h4 id="2-3-git-commit-提交到仓库">2.3 git commit 提交到仓库</h4>
+<h4 id="git-commit-提交到仓库">2.3 git commit 提交到仓库</h4>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"wrote a readme file"</span>
 <span class="token punctuation">[</span>master <span class="token punctuation">(</span>root-commit<span class="token punctuation">)</span> <span class="token number">8438389</span><span class="token punctuation">]</span> wrote a readme <span class="token function">file</span>
  <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
  create mode <span class="token number">100644</span> README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-4-git-status-查看-git-状态">2.4 git status 查看 git 状态</h4>
+<h4 id="git-status-查看-git-状态">2.4 git status 查看 git 状态</h4>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> status
 On branch master
 nothing to commit, working directory clean<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="2-5-移出暂存区">2.5 移出暂存区</h4>
-<p>git rm --cached target -r<br>
-将指定目录及子目录移除出暂存区</p>
-<h3 id="3-版本管理">3. 版本管理</h3>
-<h4 id="3-1-git-diff-查看修改内容">3.1 git diff 查看修改内容</h4>
+<h4 id="移出暂存区">2.5 移出暂存区</h4>
+<p>git rm --cached target -r 将指定目录及子目录移除出暂存区</p>
+<h3 id="版本管理">3. 版本管理</h3>
+<h4 id="git-diff-查看修改内容">3.1 git diff 查看修改内容</h4>
 <ul>
 <li>git diff：比较的是工作区和暂存区之间的差异</li>
 <li>git diff HEAD：比较的是工作区和版本库之间的差异</li>
-<li>git diff --cached：比较的是工作区和版本库之间的差异</li>
-</ul>
+<li>git diff --cached：比较的是工作区和版本库之间的差异
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">diff</span> README.md
 <span class="token function">diff</span> <span class="token parameter variable">--git</span> a/README.md b/README.md
 index d8036c1<span class="token punctuation">..</span>013b5bc <span class="token number">100644</span>
@@ -370,12 +362,14 @@ index d8036c1<span class="token punctuation">..</span>013b5bc <span class="token
 <span class="token parameter variable">-Git</span> is a version control system.
 +Git is a distributed version control system.
  Git is <span class="token function">free</span> software.
-<span class="token punctuation">\</span> No newline at end of <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-2-git-reset-回退到上一版本">3.2 git reset 回退到上一版本</h4>
+<span class="token punctuation">\</span> No newline at end of <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+</ul>
+<h4 id="git-reset-回退到上一版本">3.2 git reset 回退到上一版本</h4>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD^
 HEAD is now at <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<p>在 Git 中，用 HEAD 表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
-<h4 id="3-3-回到回退之前版本">3.3 回到回退之前版本</h4>
+<p>在 Git
+中，用 HEAD 表示当前版本，上一个版本就是HEAD<sup>，上上一个版本就是HEAD，当然往上100个版本写100个</sup>比较容易数不过来，所以写成HEAD~100。</p>
+<h4 id="回到回退之前版本">3.3 回到回退之前版本</h4>
 <p>Git 提供了一个命令 git reflog 用来记录你的每一次命令。</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reflog
 <span class="token number">8438389</span> HEAD@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: reset: moving to HEAD^
@@ -385,20 +379,22 @@ HEAD is now at <span class="token number">8438389</span> wrote a readme <span cl
 Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
 $ <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> 43597ec
 HEAD is now at 43597ec <span class="token function">add</span> distributed<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-4-撤销工作区修改">3.4 撤销工作区修改</h4>
-<p>命令：<strong><font color="red">git checkout  –  file</font></strong></p>
+<h4 id="撤销工作区修改">3.4 撤销工作区修改</h4>
+<p>命令：<strong><font color="red">git checkout  -- 
+file</font></strong></p>
 <p>作用：撤销工作区的全部修改，这里有两种情况：</p>
 <p>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
 <p>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</p>
 <p>总之，就是让这个文件回到最近一次git commit或git add时的状态。</p>
-<h4 id="3-5-撤销暂存区修改">3.5 撤销暂存区修改</h4>
+<h4 id="撤销暂存区修改">3.5 撤销暂存区修改</h4>
 <p>命令： git  reset  HEAD  &lt;file&gt;</p>
 <p>作用：把暂存区的修改回退到工作区。HEAD 表示最新的版本。</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> reset HEAD README.md
 Unstaged changes after reset:
 M       README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-6-删除文件">3.6 删除文件</h4>
-<p>先手动删除文件，然后使用 git add &lt;file&gt; 的效果和 git rm &lt;file&gt; 是一样的。</p>
+<h4 id="删除文件">3.6 删除文件</h4>
+<p>先手动删除文件，然后使用 git add &lt;file&gt; 的效果和 git rm
+&lt;file&gt; 是一样的。</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">rm</span> test.txt
 <span class="token function">rm</span> <span class="token string">'test.txt'</span>
 
@@ -409,12 +405,10 @@ Changes to be committed:
   <span class="token punctuation">(</span>use <span class="token string">"git reset HEAD &lt;file>..."</span> to unstage<span class="token punctuation">)</span>
 
         deleted:    test.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="4-远程仓库">4. 远程仓库</h3>
-<h4 id="4-1-添加远程仓库">4.1 添加远程仓库</h4>
-<p>命令：git  remote  add  origin &lt;URL&gt;</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$  <span class="token function">git</span> remote <span class="token function">add</span> origin git@github.com:Zhangtao153/learngit.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h4 id="4-2-推送本地库内容到远程库">4.2 推送本地库内容到远程库</h4>
-<p>命令：git push origin &lt;branch-name&gt;</p>
+<h3 id="远程仓库">4. 远程仓库</h3>
+<h4 id="添加远程仓库">4.1 添加远程仓库</h4>
+<p>命令：git  remote  add  origin &lt;URL&gt; <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$  <span class="token function">git</span> remote <span class="token function">add</span> origin git@github.com:Zhangtao153/learngit.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div> #### 4.2
+推送本地库内容到远程库 命令：git push origin &lt;branch-name&gt;</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> push <span class="token parameter variable">-u</span> origin master
 Warning: Permanently added the RSA <span class="token function">host</span> key <span class="token keyword">for</span> IP address <span class="token string">'192.30.255.112'</span> to the list of known hosts.
 Counting objects: <span class="token number">10</span>, done.
@@ -427,7 +421,7 @@ To git@github.com:Zhangtao153/learngit.git
  * <span class="token punctuation">[</span>new branch<span class="token punctuation">]</span>      master -<span class="token operator">></span> master
 Branch master <span class="token builtin class-name">set</span> up to track remote branch master from origin.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>当前分支 master推送到远程</p>
-<h4 id="4-3-查看远程仓库">4.3 查看远程仓库</h4>
+<h4 id="查看远程仓库">4.3 查看远程仓库</h4>
 <p>git  remote  -v</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> remote
 origin
@@ -451,7 +445,7 @@ $ <span class="token function">git</span> remote show origin
     master merges with remote master
   Local ref configured <span class="token keyword">for</span> <span class="token string">'git push'</span><span class="token builtin class-name">:</span>
     master pushes to master <span class="token punctuation">(</span>up to <span class="token function">date</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="4-4-从远程库克隆">4.4 从远程库克隆</h4>
+<h4 id="从远程库克隆">4.4 从远程库克隆</h4>
 <p>git clone &lt;url&gt;</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> clone git@github.com:Zhangtao153/learngit.git
 Cloning into <span class="token string">'learngit'</span><span class="token punctuation">..</span>.
@@ -462,38 +456,38 @@ remote: Total <span class="token number">10</span> <span class="token punctuatio
 Receiving objects: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">10</span>/10<span class="token punctuation">)</span>, done.
 Resolving deltas: <span class="token number">100</span>% <span class="token punctuation">(</span><span class="token number">1</span>/1<span class="token punctuation">)</span>, done.
 Checking connectivity<span class="token punctuation">..</span>. done.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="4-5-本地创建和远程分支对应的分支">4.5 本地创建和远程分支对应的分支</h4>
+<h4
+id="本地创建和远程分支对应的分支">4.5 本地创建和远程分支对应的分支</h4>
 <p>从远程 clone 的代码库默认只有 master 分支。</p>
-<p>命令：<strong><font color="red">git  checkout  -b  dev  origin/dev</font></strong></p>
+<p>命令：<strong><font color="red">git  checkout  -b  dev 
+origin/dev</font></strong> </p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> dev origin/dev
 Switched to a new branch <span class="token string">'dev'</span>
 Branch <span class="token string">'dev'</span> <span class="token builtin class-name">set</span> up to track remote branch <span class="token string">'dev'</span> from <span class="token string">'origin'</span><span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="4-6-修改远程仓库">4.6 修改远程仓库</h4>
-<p>方法一：</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote set-url origin <span class="token operator">&lt;</span>url<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<p>方法二：</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">rm</span> origin
-<span class="token function">git</span> remote <span class="token function">add</span> origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="4-7-将本地分支与远程建立关联">4.7 将本地分支与远程建立关联</h4>
+<h4 id="修改远程仓库">4.6 修改远程仓库</h4>
+<p>方法一： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote set-url origin <span class="token operator">&lt;</span>url<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div> 方法二： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> remote <span class="token function">rm</span> origin
+<span class="token function">git</span> remote <span class="token function">add</span> origin <span class="token punctuation">[</span>url<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></p>
+<h4 id="将本地分支与远程建立关联">4.7 将本地分支与远程建立关联</h4>
 <p>git branch --track --set-upstream-to=origin/test test</p>
-<h3 id="5-分支管理">5. 分支管理</h3>
+<h3 id="分支管理">5. 分支管理</h3>
 <ul>
 <li>git branch 查看本地分支</li>
-<li>git branch -a  查看所有分支</li>
-<li>git branch -av  查看所有分支详细信息</li>
-<li>git branch -avv  查看本地分支和远程分支的关联信息</li>
+<li>git branch -a 查看所有分支</li>
+<li>git branch -av 查看所有分支详细信息</li>
+<li>git branch -avv 查看本地分支和远程分支的关联信息</li>
 </ul>
-<h4 id="5-1-创建切换分支">5.1 创建切换分支</h4>
+<h4 id="创建切换分支">5.1 创建切换分支</h4>
 <ul>
 <li>git branch &lt;branch name&gt; 基于当前分支新建分支</li>
-<li>git branch &lt;branch name&gt; &lt;commit id&gt;  基于提交新建分支</li>
+<li>git branch &lt;branch name&gt; &lt;commit id&gt;
+基于提交新建分支</li>
 </ul>
-<p>命令：<font color="red">git checkout  -b  dev 或  git switch -c dev </font></p>
+<p>命令：<font color="red">git checkout  -b  dev 或  git switch -c dev
+</font></p>
 <p>作用：创建并切换分支</p>
 <blockquote>
 <p>git checkout 命令加上 -b 参数表示创建并切换，相当于以下两条命令：</p>
-<p>$ git  branch  dev<br>
-$ git  checkout  dev</p>
+<p>$ git  branch  dev $ git  checkout  dev</p>
 </blockquote>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> dev
 Switched to a new branch <span class="token string">'dev'</span>
@@ -502,23 +496,24 @@ Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation
 $ <span class="token function">git</span> branch
 * dev
   master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="5-2-合并分支">5.2 合并分支</h4>
+<h4 id="合并分支">5.2 合并分支</h4>
 <p>命令：git  merge &lt;branch&gt;</p>
-<p>作用：合并指定分支到当前分支</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> merge dev
+<p>作用：合并指定分支到当前分支 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> merge dev
 Updating 35bc9a6<span class="token punctuation">..</span>83ef1fc
 Fast-forward
  README.md <span class="token operator">|</span> <span class="token number">3</span> ++-
- <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> &gt;
+Fast-forward “快进模式”，就是直接把 master 指向 dev 的当前提交，所以合并速度非常快。</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232219.png" srcset="/img/loading.gif" lazyload /></p>
 <blockquote>
-<p>Fast-forward “快进模式”，就是直接把 master 指向 dev 的当前提交，所以合并速度非常快。</p>
+<p>通常合并分支时，如果可能，Git会用Fast
+forward模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
+<p>如果要强制禁用Fast
+forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
 </blockquote>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232219.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<blockquote>
-<p>通常合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
-<p>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
-</blockquote>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232236.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220214232236.png" srcset="/img/loading.gif" lazyload /></p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> merge --no-ff <span class="token parameter variable">-m</span> <span class="token string">"merge with no-ff"</span> zth
 Merge made by the <span class="token string">'recursive'</span> strategy.
  README.md <span class="token operator">|</span> <span class="token number">2</span> +-
@@ -533,13 +528,12 @@ $ <span class="token function">git</span> log <span class="token parameter varia
 * 6707c86 <span class="token function">add</span> merge
 * 7e760b4 <span class="token function">add</span> on zth branch
 *   650cdbc <span class="token function">clear</span> on master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="5-3-删除分支">5.3 删除分支</h4>
-<p>命令：git   branch  -d   &lt;branch&gt;</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> branch <span class="token parameter variable">-d</span> dev
-Deleted branch dev <span class="token punctuation">(</span>was 83ef1fc<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<h4 id="5-4-查看分支合并情况">5.4 查看分支合并情况</h4>
-<p>命令：<font color="red"> git log --graph --pretty=oneline --abbrev-commit<br>
- 或：git log --graph --oneline </font></p>
+<h4 id="删除分支">5.3 删除分支</h4>
+<p>命令：git   branch  -d   &lt;branch&gt; <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> branch <span class="token parameter variable">-d</span> dev
+Deleted branch dev <span class="token punctuation">(</span>was 83ef1fc<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></p>
+<h4 id="查看分支合并情况">5.4 查看分支合并情况</h4>
+<p>命令：<font color="red"> git log --graph --pretty=oneline
+--abbrev-commit  或：git log --graph --oneline </font></p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> log <span class="token parameter variable">--graph</span> <span class="token parameter variable">--pretty</span><span class="token operator">=</span>oneline --abbrev-commit
 *   8e7b6c4 conflict fixed
 <span class="token operator">|</span><span class="token punctuation">\</span>
@@ -552,19 +546,18 @@ Deleted branch dev <span class="token punctuation">(</span>was 83ef1fc<span clas
 * a8d2e0d 手动删除
 * 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
 * <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="5-5-保存现场">5.5 保存现场</h4>
-<p>在创建一个新的分支用来修改 bug 时，当前分支的工作还没提交，可以通过 stash 功能把当前工作现场“储藏”起来，等以后恢复现场后继续工作。</p>
+<h4 id="保存现场">5.5 保存现场</h4>
+<p>在创建一个新的分支用来修改 bug
+时，当前分支的工作还没提交，可以通过 stash 功能把当前工作现场“储藏”起来，等以后恢复现场后继续工作。</p>
 <p>原因：<font color="red">所有分支共享工作区和暂存区</font></p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash
 Saved working directory and index state WIP on issue-004: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
-<p>git  stash  list</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash list
+<p>git  stash  list <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash list
 stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: WIP on issue-004: c5df1ca merge with no-ff
-stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<p>恢复现场方法：</p>
-<p>一： git stash apply 恢复，但是恢复后，stash内容并不删除，需要用git stash drop来删除；</p>
-<p>二： git stash pop，恢复的同时把stash内容也删了：</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash pop
+stash@<span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div> 恢复现场方法：</p>
+<p>一： git stash apply 恢复，但是恢复后，stash内容并不删除，需要用git
+stash drop来删除；</p>
+<p>二： git stash pop，恢复的同时把stash内容也删了： <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash pop
 On branch issue-004
 Changes not staged <span class="token keyword">for</span> commit:
   <span class="token punctuation">(</span>use <span class="token string">"git add &lt;file>..."</span> to update what will be committed<span class="token punctuation">)</span>
@@ -576,21 +569,29 @@ Dropped refs/stash@<span class="token punctuation">&#123;</span><span class="tok
 
 Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issue-004<span class="token punctuation">)</span>
 $ <span class="token function">git</span> stash list
-stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span>: WIP on dev: c5df1ca merge with no-ff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> stash apply stash@<span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h4 id="5-6-git-cherry-pick">5.6 git cherry-pick</h4>
+<h4 id="git-cherry-pick">5.6 git cherry-pick</h4>
 <p>作用：合并不同分支的若干个 commit 到当前分支</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220215233958.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<p>语法：</p>
-<p>git cherry-pick &lt;C commit-id&gt; &lt;D commit-id&gt; &lt;E commit-id&gt;</p>
-<h3 id="6-多人协作工作模式">6. 多人协作工作模式</h3>
-<p>首先，可以试图用 git push origin  &lt;branch-name&gt; 推送自己的修改；</p>
-<p>如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；</p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220215233958.png" srcset="/img/loading.gif" lazyload /></p>
+<p>语法： </p>
+<p>git cherry-pick &lt;C commit-id&gt; &lt;D commit-id&gt; &lt;E
+commit-id&gt;</p>
+<h3 id="多人协作工作模式">6. 多人协作工作模式</h3>
+<p>首先，可以试图用 git push origin
+&lt;branch-name&gt; 推送自己的修改；</p>
+<p>如果推送失败，则因为远程分支比你的本地更新，需要先用git
+pull试图合并；</p>
 <p>如果合并有冲突，则解决冲突，并在本地提交；</p>
-<p>没有冲突或者解决掉冲突后，再用 git push origin &lt;branch-name&gt; 推送就能成功！</p>
-<p>如果 git pull 提示 no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令 git branch --set-upstream-to &lt;branch-name&gt; origin/&lt;branch-name&gt;。</p>
-<h3 id="7-标签管理">7. 标签管理</h3>
-<h4 id="7-1-创建标签">7.1 创建标签</h4>
+<p>没有冲突或者解决掉冲突后，再用 git push origin
+&lt;branch-name&gt; 推送就能成功！</p>
+<p>如果 git pull 提示 no tracking
+information，则说明本地分支和远程分支的链接关系没有创建，用命令 git
+branch --set-upstream-to &lt;branch-name&gt;
+origin/&lt;branch-name&gt;。</p>
+<h3 id="标签管理">7. 标签管理</h3>
+<h4 id="创建标签">7.1 创建标签</h4>
 <p>命令：git  tag  &lt;name&gt;  [commit]</p>
 <p>-a 指定标签名，-m 指定说明文字</p>
 <p>首先选择分支，默认在最新提交的 commit 上。</p>
@@ -598,13 +599,11 @@ stash@<span class="token punctuation">&#123;</span><span class="token number">0<
 
 Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
 $ <span class="token function">git</span> tag v0.9 add2dbd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="7-2-查看所有标签">7.2 查看所有标签</h4>
-<p>git  tag</p>
-<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag
+<h4 id="查看所有标签">7.2 查看所有标签</h4>
+<p>git  tag <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag
 v0.9
-v1.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="7-3-查看标签信息">7.3 查看标签信息</h4>
-<p>git  show  &lt;tagname&gt;</p>
+v1.0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div> #### 7.3 查看标签信息 git  show 
+&lt;tagname&gt;</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag <span class="token parameter variable">-a</span> v0.8 <span class="token parameter variable">-m</span> <span class="token string">"version 0.8 release"</span> 94b83a0
 
 Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>dev<span class="token punctuation">)</span>
@@ -629,8 +628,8 @@ index 25ed040<span class="token punctuation">..</span>af0e009 <span class="token
  Git is a version control system.
 <span class="token parameter variable">-Git</span> is <span class="token function">free</span> software.哈哈zth  delete and update
 +Git is <span class="token function">free</span> software.哈哈zth  delete and update on issue-005<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="7-4-删除标签">7.4 删除标签</h4>
-<p>删除本地标签：</p>
+<h4 id="删除标签">7.4 删除标签</h4>
+<p>删除本地标签： </p>
 <p>git   tag   -d  &lt;tagname&gt;</p>
 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> tag <span class="token parameter variable">-d</span> v0.9
 Deleted tag <span class="token string">'v0.9'</span> <span class="token punctuation">(</span>was add2dbd<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
@@ -642,8 +641,8 @@ Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation
 $ <span class="token function">git</span> push origin  :refs/tags/v0.8
 To github.com:Zhangtao153/learngit.git
  - <span class="token punctuation">[</span>deleted<span class="token punctuation">]</span>         v0.8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="7-5-推送标签到远程">7.5 推送标签到远程</h4>
-<p>推送指定标签：</p>
+<h4 id="推送标签到远程">7.5 推送标签到远程</h4>
+<p> 推送指定标签：</p>
 <p>git push origin &lt;tagname&gt;</p>
 <p>推送全部尚未推送到远程的本地标签：</p>
 <p>git push origin --tags</p>

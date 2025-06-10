@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LLMs">
+    <meta name="description" content="Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LangChain——model I&#x2F;O(models、Prompts、OutputParser)">
 <meta property="og:url" content="http://example.com/2024/08/30/LangChain%E2%80%94%E2%80%94model%20I:O(models%E3%80%81Prompts%E3%80%81OutputParser)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LLMs">
+<meta property="og:description" content="Model I&#x2F;O 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。  Prompts：模板化、动态选择和管理模型输入 Models：以通用接口调用语言模型 Output Parser：从模型输出中提取信息，并规范化内容   1. 模型抽象 Model  语言模型(LL">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022025891.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408301931738.png">
@@ -297,54 +297,60 @@
             
             <div class="markdown-body">
               
-              <p><code>Model I/O</code> 是 LangChain 为开发者提供的一套面向 LLM 的标准化模型接口，包括模型输入（Prompts）、模型输出（Output Parsers）和模型本身（Models）。</p>
+              <p>　　<code>Model I/O</code> 是 LangChain 为开发者提供的一套面向 LLM
+的标准化模型接口，包括模型输入（Prompts）、模型输出（Output
+Parsers）和模型本身（Models）。</p>
 <ul>
 <li>Prompts：模板化、动态选择和管理模型输入</li>
 <li>Models：以通用接口调用语言模型</li>
 <li>Output Parser：从模型输出中提取信息，并规范化内容</li>
 </ul>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022025891.png" srcset="/img/loading.gif" lazyload style="zoom:20%;" />
-<h3 id="1-模型抽象-Model">1. 模型抽象 Model</h3>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022025891.png" srcset="/img/loading.gif" lazyload style="zoom:20%;" /></p>
+<h3 id="模型抽象-model">1. 模型抽象 Model</h3>
 <ul>
-<li>语言模型(LLMs): LangChain 的核心组件。LangChain 并不提供自己的 LLMs，而是为与许多不同的 LLMs（OpenAI、Cohere、Hugging Face等）进行交互提供了一个标准接口。</li>
-<li>聊天模型(Chat Models): 语言模型的一种变体。虽然聊天模型在内部使用了语言模型，但它们提供的接口略有不同。与其暴露一个“输入文本，输出文本”的 API 不同，它们提供了一个以“聊天消息”作为输入和输出的接口。</li>
+<li>语言模型(LLMs): LangChain 的核心组件。LangChain 并不提供自己的
+LLMs，而是为与许多不同的 LLMs（OpenAI、Cohere、Hugging
+Face等）进行交互提供了一个标准接口。</li>
+<li>聊天模型(Chat Models):
+语言模型的一种变体。虽然聊天模型在内部使用了语言模型，但它们提供的接口略有不同。与其暴露一个“输入文本，输出文本”的
+API 不同，它们提供了一个以“聊天消息”作为输入和输出的接口。</li>
 </ul>
 <p>（注：对比 OpenAI Completion API和 Chat Completion API）</p>
-<h4 id="1-1-语言模型（LLMs">1.1 语言模型（LLMs)</h4>
+<h4 id="语言模型llms">1.1 语言模型（LLMs)</h4>
 <p>类继承关系：</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">BaseLanguageModel --&gt; BaseLLM --&gt; LLM --&gt; &lt;name&gt;  # Examples: AI21, HuggingFaceHub, OpenAI<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408301931738.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408301931738.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>主要抽象:</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">LLMResult, PromptValue,
 CallbackManagerForLLMRun, AsyncCallbackManagerForLLMRun,
 CallbackManager, AsyncCallbackManager,
 AIMessage, BaseMessage<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="1-BaseLanguageModel">1. BaseLanguageModel</h5>
-<p>这个基类为语言模型定义了一个接口，该接口允许用户以不同的方式与模型交互（例如通过提示或消息）。<code>generate_prompt</code> 是其中的一个主要方法，它接受一系列提示，并返回模型的生成结果。</p>
-<p>主要提供三种方法：</p>
-<ul>
-<li>generate_prompt: 为一系列的提示词生成语言模型输出。</li>
-<li>predict: 将单个字符串传递给语言模型并返回字符串预测。</li>
-<li>predict_messages: 将一系列 BaseMessages（对应于单个模型调用）传递给语言模型，并返回 BaseMessage 预测。</li>
-</ul>
-<p>每种方法都有对应的异步方法。</p>
-<h5 id="2-LLMs-已支持模型清单">2. LLMs 已支持模型清单</h5>
-<p><strong>开发者文档：<a target="_blank" rel="noopener" href="https://python.langchain.com/docs/integrations/llms/">https://python.langchain.com/docs/integrations/llms/</a></strong></p>
-<p><strong>代码实现：<a target="_blank" rel="noopener" href="https://github.com/langchain-ai/langchain/tree/master/libs/langchain/langchain/llms">https://github.com/langchain-ai/langchain/tree/master/libs/langchain/langchain/llms</a></strong></p>
-<h5 id="3-调用语言模型">3.调用语言模型</h5>
+<h5 id="baselanguagemodel">1. BaseLanguageModel</h5>
+<p>　　这个基类为语言模型定义了一个接口，该接口允许用户以不同的方式与模型交互（例如通过提示或消息）。<code>generate_prompt</code>
+是其中的一个主要方法，它接受一系列提示，并返回模型的生成结果。</p>
+<p>　　主要提供三种方法： - generate_prompt:
+为一系列的提示词生成语言模型输出。 - predict:
+将单个字符串传递给语言模型并返回字符串预测。 - predict_messages:
+将一系列 BaseMessages（对应于单个模型调用）传递给语言模型，并返回
+BaseMessage 预测。</p>
+<p>　　每种方法都有对应的异步方法。</p>
+<h5 id="llms-已支持模型清单">2. LLMs 已支持模型清单</h5>
+<p>　　<strong>开发者文档：https://python.langchain.com/docs/integrations/llms/</strong></p>
+<p>　　<strong>代码实现：https://github.com/langchain-ai/langchain/tree/master/libs/langchain/langchain/llms</strong></p>
+<h5 id="调用语言模型">3.调用语言模型</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> OpenAI
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     llm <span class="token operator">=</span> OpenAI<span class="token punctuation">(</span>model_name<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo-instruct"</span><span class="token punctuation">)</span>
     llm<span class="token punctuation">.</span>max_tokens <span class="token operator">=</span> <span class="token number">1024</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>llm<span class="token punctuation">.</span>invoke<span class="token punctuation">(</span><span class="token string">"讲一个笑话"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="1-2-聊天模型（Chat-Models">1.2 聊天模型（Chat Models)</h4>
+<h4 id="聊天模型chat-models">1.2 聊天模型（Chat Models)</h4>
 <p>类继承关系：</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">BaseLanguageModel --&gt; BaseChatModel --&gt; &lt;name&gt;  # Examples: ChatOpenAI, ChatGooglePalm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022048040.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022048040.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>主要抽象：</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">AIMessage, BaseMessage, HumanMessage<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<h5 id="1-调用聊天模型">1. 调用聊天模型</h5>
+<h5 id="调用聊天模型">1. 调用聊天模型</h5>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> ChatOpenAI
 <span class="token keyword">from</span> langchain<span class="token punctuation">.</span>schema <span class="token keyword">import</span> <span class="token punctuation">(</span>
     AIMessage<span class="token punctuation">,</span>
@@ -363,16 +369,18 @@ AIMessage, BaseMessage<span aria-hidden="true" class="line-numbers-rows"><span><
     <span class="token comment"># langchain_core.messages.ai.AIMessage</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token punctuation">(</span>chat_result<span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>chat_result<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="2-模型输入-Prompts">2. 模型输入 Prompts</h3>
-<p>一个语言模型的提示是用户提供的一组指令或输入，用于引导模型的响应，帮助它理解上下文并生成相关和连贯的基于语言的输出，例如回答问题、完成句子或进行对话。</p>
+<h3 id="模型输入-prompts">2. 模型输入 Prompts</h3>
+<p>　　一个语言模型的提示是用户提供的一组指令或输入，用于引导模型的响应，帮助它理解上下文并生成相关和连贯的基于语言的输出，例如回答问题、完成句子或进行对话。</p>
 <ul>
 <li>Prompt Templates：参数化的模型输入</li>
 <li>Example Selectors：动态选择要包含在提示中的示例</li>
 </ul>
-<h4 id="2-1-Prompt-Templates">2.1 Prompt Templates</h4>
-<p><strong>Prompt Templates 提供了一种预定义、动态注入、模型无关和参数化的提示词生成方式，以便在不同的语言模型之间重用模板。</strong></p>
-<p>一个模板可能包括指令、少量示例以及适用于特定任务的具体背景和问题。</p>
-<p>通常，提示要么是一个字符串（LLMs），要么是一组聊天消息（Chat Model）。</p>
+<h4 id="prompt-templates">2.1 Prompt Templates</h4>
+<p>　　<strong>Prompt Templates
+提供了一种预定义、动态注入、模型无关和参数化的提示词生成方式，以便在不同的语言模型之间重用模板。</strong></p>
+<p>　　一个模板可能包括指令、少量示例以及适用于特定任务的具体背景和问题。</p>
+<p>　　通常，提示要么是一个字符串（LLMs），要么是一组聊天消息（Chat
+Model）。</p>
 <p>类继承关系:</p>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">BasePromptTemplate --&gt; PipelinePromptTemplate
                        StringPromptTemplate --&gt; PromptTemplate
@@ -391,18 +399,22 @@ BaseMessagePromptTemplate --&gt; MessagesPlaceholder
 
 PromptValue --&gt; StringPromptValue
                 ChatPromptValue<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="1-PromptTemplate">1. PromptTemplate</h5>
-<p>通常，PromptTemplate 类的实例，使用 Python 的 str.format 语法生成模板化提示；也可以使用其他模板语法（例如jinja2）。</p>
-<p><strong>使用 from_template 方法实例化 PromptTemplate：</strong></p>
+<h5 id="prompttemplate">1. PromptTemplate</h5>
+<p>　　通常，PromptTemplate 类的实例，使用 Python 的 str.format
+语法生成模板化提示；也可以使用其他模板语法（例如jinja2）。</p>
+<p>　　<strong>使用 from_template 方法实例化
+PromptTemplate：</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> PromptTemplate
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
     prompt_template <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span>from_template<span class="token punctuation">(</span><span class="token string">"Tell me a &#123;adjective&#125; joke about &#123;content&#125;."</span><span class="token punctuation">)</span>
     prompt <span class="token operator">=</span> prompt_template<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>adjective<span class="token operator">=</span><span class="token string">"funny"</span><span class="token punctuation">,</span> content<span class="token operator">=</span><span class="token string">"chickens"</span><span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>prompt<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>使用构造函数实例化 PromptTemplate：</strong></p>
+<p>　　<strong>使用构造函数实例化 PromptTemplate：</strong></p>
 <blockquote>
-<p>使用构造函数实例化 <code>prompt_template</code> 时必须传入参数：<code>input_variables</code> 和 <code>template</code>。</p>
+<p>使用构造函数实例化 <code>prompt_template</code>
+时必须传入参数：<code>input_variables</code> 和
+<code>template</code>。</p>
 <p>在生成提示过程中，会检查输入变量与模板字符串中的变量是否匹配，如果不匹配，则会引发异常；</p>
 </blockquote>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
@@ -415,12 +427,13 @@ PromptValue --&gt; StringPromptValue
     llm <span class="token operator">=</span> OpenAI<span class="token punctuation">(</span>model_name<span class="token operator">=</span><span class="token string">"gpt-3.5-turbo-instruct"</span><span class="token punctuation">,</span> max_tokens<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">)</span>
     result <span class="token operator">=</span> llm<span class="token punctuation">.</span>invoke<span class="token punctuation">(</span>prompt<span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"result: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p><strong>使用 jinja2 生成模板化提示：</strong></p>
+<p>　　<strong>使用 jinja2 生成模板化提示：</strong></p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">jinja2_template <span class="token operator">=</span> <span class="token string">"Tell me a &#123;&#123; adjective &#125;&#125; joke about &#123;&#123; content &#125;&#125;"</span>
 prompt <span class="token operator">=</span> PromptTemplate<span class="token punctuation">.</span>from_template<span class="token punctuation">(</span>jinja2_template<span class="token punctuation">,</span> template_format<span class="token operator">=</span><span class="token string">"jinja2"</span><span class="token punctuation">)</span>
 prompt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>adjective<span class="token operator">=</span><span class="token string">"funny"</span><span class="token punctuation">,</span> content<span class="token operator">=</span><span class="token string">"chickens"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="2-ChatPromptTemplate">2. ChatPromptTemplate</h5>
-<p>使用 from_messages 方法实例化 ChatPromptTemplate，生成适用于聊天模型的提示。</p>
+<h5 id="chatprompttemplate">2. ChatPromptTemplate</h5>
+<p>　　使用 from_messages 方法实例化
+ChatPromptTemplate，生成适用于聊天模型的提示。</p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> ChatPromptTemplate
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
@@ -437,13 +450,13 @@ prompt<span class="token punctuation">.</span><span class="token builtin">format
     <span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>messages<span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>messages<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>content<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h5 id="3-FewShotPromptTemplate">3. FewShotPromptTemplate</h5>
-<p>构造 few-shot prompt 的方法通常有两种：</p>
+<h5 id="fewshotprompttemplate">3. FewShotPromptTemplate</h5>
+<p>　　构造 few-shot prompt 的方法通常有两种：</p>
 <ul>
 <li>从示例集（set of examples）中手动选择；</li>
 <li>通过示例选择器（Example Selector）自动选择.</li>
 </ul>
-<h6 id="a-手动选择">a. 手动选择</h6>
+<h6 id="a.-手动选择">a. 手动选择</h6>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> FewShotPromptTemplate<span class="token punctuation">,</span> PromptTemplate
 
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
@@ -501,8 +514,9 @@ prompt<span class="token punctuation">.</span><span class="token builtin">format
     <span class="token punctuation">)</span>
 
     <span class="token keyword">print</span><span class="token punctuation">(</span>few_shot_prompt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token operator">=</span><span class="token string">"玛丽·波尔·华盛顿的父亲是谁?"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h6 id="b-Example-Selectors">b. Example Selectors</h6>
-<p>如果有大量的参考示例，就得选择哪些要包含在提示中。最好是根据某种条件或者规则来自动选择，Example Selector 就是负责这个任务的类。</p>
+<h6 id="b.-example-selectors">b. Example Selectors</h6>
+<p>　　如果有大量的参考示例，就得选择哪些要包含在提示中。最好是根据某种条件或者规则来自动选择，Example
+Selector 就是负责这个任务的类。</p>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">BaseExampleSelector</span><span class="token punctuation">(</span>ABC<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token triple-quoted-string string">"""Interface for selecting examples to include in prompts."""</span>
     <span class="token comment"># Add new example to store.</span>
@@ -551,14 +565,14 @@ prompt<span class="token punctuation">.</span><span class="token builtin">format
     <span class="token punctuation">)</span>
 
     <span class="token keyword">print</span><span class="token punctuation">(</span>similar_prompt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>adjective<span class="token operator">=</span><span class="token string">"worried"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-Output-Parser">3. Output Parser</h3>
-<p>很多时候，希望获得<strong>更结构化的信息</strong>。这就是输出解析器的价值所在。</p>
-<p>输出解析器是帮助结构化语言模型响应的类。它们必须实现两种主要方法：</p>
+<h3 id="output-parser">3. Output Parser</h3>
+<p>　　很多时候，希望获得<strong>更结构化的信息</strong>。这就是输出解析器的价值所在。</p>
+<p>　　输出解析器是帮助结构化语言模型响应的类。它们必须实现两种主要方法：</p>
 <ul>
 <li>get_format_instructions：返回一个包含有关如何格式化语言模型输出的字符串的方法。</li>
 <li>parse：接受一个字符串，并将其解析成某种结构。</li>
 </ul>
-<h4 id="3-1-列表解析-List-Parser">3.1 列表解析 List Parser</h4>
+<h4 id="列表解析-list-parser">3.1 列表解析 List Parser</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>output_parsers <span class="token keyword">import</span> NumberedListOutputParser
 <span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> PromptTemplate
 <span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> OpenAI
@@ -585,7 +599,7 @@ prompt<span class="token punctuation">.</span><span class="token builtin">format
     <span class="token comment"># 使用之前创建的输出解析器来解析模型的输出</span>
     result <span class="token operator">=</span> output_parser<span class="token punctuation">.</span>parse<span class="token punctuation">(</span>output<span class="token punctuation">)</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h4 id="3-2-日期解析-Datatime-Parser">3.2 日期解析 Datatime Parser</h4>
+<h4 id="日期解析-datatime-parser">3.2 日期解析 Datatime Parser</h4>
 <div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> langchain<span class="token punctuation">.</span>output_parsers <span class="token keyword">import</span> DatetimeOutputParser
 <span class="token keyword">from</span> langchain_core<span class="token punctuation">.</span>prompts <span class="token keyword">import</span> PromptTemplate
 <span class="token keyword">from</span> langchain_openai <span class="token keyword">import</span> OpenAI

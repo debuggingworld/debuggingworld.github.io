@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 分布式训练基本概念 1.1 为什么需要分布式训练 计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。 内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。 1.2 分布式训练的并行策略 1. 数据并行（Data Parallelism） 原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。 同步方式：通过 All-Red">
+    <meta name="description" content="1. 分布式训练基本概念 1.1 为什么需要分布式训练 　　计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。 　　内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。 1.2 分布式训练的并行策略 1. 数据并行（Data Parallelism） 　　原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。 　　同步方式：通过">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式微调大模型（LLamA-Factory、xtuner）">
 <meta property="og:url" content="http://example.com/2025/05/24/%E5%88%86%E5%B8%83%E5%BC%8F%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 分布式训练基本概念 1.1 为什么需要分布式训练 计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。 内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。 1.2 分布式训练的并行策略 1. 数据并行（Data Parallelism） 原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。 同步方式：通过 All-Red">
+<meta property="og:description" content="1. 分布式训练基本概念 1.1 为什么需要分布式训练 　　计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。 　　内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。 1.2 分布式训练的并行策略 1. 数据并行（Data Parallelism） 　　原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。 　　同步方式：通过">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301904397.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301913537.png">
@@ -299,82 +299,91 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-分布式训练基本概念">1. 分布式训练基本概念</h3>
-<h4 id="1-1-为什么需要分布式训练">1.1 为什么需要分布式训练</h4>
-<p>计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。</p>
-<p>内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。</p>
-<h4 id="1-2-分布式训练的并行策略">1.2 分布式训练的并行策略</h4>
-<h5 id="1-数据并行（Data-Parallelism）">1. 数据并行（Data Parallelism）</h5>
-<p>原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。</p>
-<p>同步方式：通过 All-Reduce 操作同步梯度（如 PyTorch 的 DistributedDataParallel）。</p>
-<p>挑战：通信开销大，显存占用高（需存储完整模型参数和优化器状态）。</p>
-<h5 id="2-模型并行（Model-Parallelism）">2. 模型并行（Model Parallelism）</h5>
-<p>原理：将模型切分到不同设备（如按层或张量分片）。</p>
-<p>类型：</p>
-<p>1. 横向并行（层拆分）：将模型的层分配到不同设备。</p>
-<p>2. 纵向并行（张量拆分）：如 Megatron-LM 将矩阵乘法分片。</p>
-<p>挑战：设备间通信频繁，负载均衡需精细设计。</p>
-<h5 id="3-流水线并行（Pipeline-Parallelism）">3. 流水线并行（Pipeline Parallelism）</h5>
-<p>原理：将模型按层划分为多个阶段（stage），数据分块后按流水线执行。</p>
-<p>优化：微批次（Micro-batching）减少流水线气泡（Bubble）。</p>
-<p>挑战：需平衡阶段划分，避免资源闲置。</p>
-<h5 id="4-混合并行（3D并行）">4. 混合并行（3D并行）</h5>
-<p>组合策略：结合数据并行、模型并行、流水线并行，典型应用如训练千亿级模型。</p>
-<p>案例：微软 Turing-NLG、Meta 的 LLaMA-2。</p>
-<h4 id="1-3-DeepSpeed">1.3 DeepSpeed</h4>
-<h5 id="1-基本概念">1. 基本概念</h5>
-<p>DeepSpeed 是由微软开发的开源深度学习优化库，专为大规模模型训练设计，其核心技术通过显存优化、计算加速、通信优化三个维度突破传统分布式训练的局限。</p>
-<p>核心目标：降低大模型训练成本，提升显存和计算效率。</p>
-<p>集成生态：与 PyTorch 无缝兼容，支持 Hugging FaceTransformers 库。</p>
-<h5 id="2-核心技术">2. 核心技术</h5>
+              <h3 id="分布式训练基本概念">1. 分布式训练基本概念</h3>
+<h4 id="为什么需要分布式训练">1.1 为什么需要分布式训练</h4>
+<p>　　计算资源需求：训练大模型需要海量计算（如GPT-3需数万GPU小时），分布式训练可加速训练过程。</p>
+<p>　　内存瓶颈：单卡显存不足以容纳大模型参数、梯度及优化器状态。</p>
+<h4 id="分布式训练的并行策略">1.2 分布式训练的并行策略</h4>
+<h5 id="数据并行data-parallelism">1. 数据并行（Data Parallelism）</h5>
+<p>　　原理：将数据划分为多个批次，分发到不同设备，每个设备拥有完整的模型副本。</p>
+<p>　　同步方式：通过 All-Reduce 操作同步梯度（如 PyTorch 的
+DistributedDataParallel）。</p>
+<p>　　挑战：通信开销大，显存占用高（需存储完整模型参数和优化器状态）。</p>
+<h5 id="模型并行model-parallelism">2. 模型并行（Model Parallelism）</h5>
+<p>　　原理：将模型切分到不同设备（如按层或张量分片）。</p>
+<p>　　类型：</p>
+<p>　　　1. 横向并行（层拆分）：将模型的层分配到不同设备。</p>
+<p>　　　2. 纵向并行（张量拆分）：如 Megatron-LM 将矩阵乘法分片。</p>
+<p>　　挑战：设备间通信频繁，负载均衡需精细设计。</p>
+<h5 id="流水线并行pipeline-parallelism">3. 流水线并行（Pipeline
+Parallelism）</h5>
+<p>　　原理：将模型按层划分为多个阶段（stage），数据分块后按流水线执行。</p>
+<p>　　优化：微批次（Micro-batching）减少流水线气泡（Bubble）。</p>
+<p>　　挑战：需平衡阶段划分，避免资源闲置。</p>
+<h5 id="混合并行3d并行">4. 混合并行（3D并行）</h5>
+<p>　　组合策略：结合数据并行、模型并行、流水线并行，典型应用如训练千亿级模型。</p>
+<p>　　案例：微软 Turing-NLG、Meta 的 LLaMA-2。</p>
+<h4 id="deepspeed">1.3 DeepSpeed</h4>
+<h5 id="基本概念">1. 基本概念</h5>
+<p>　　DeepSpeed
+是由微软开发的开源深度学习优化库，专为大规模模型训练设计，其核心技术通过显存优化、计算加速、通信优化三个维度突破传统分布式训练的局限。</p>
+<p>　　核心目标：降低大模型训练成本，提升显存和计算效率。</p>
+<p>　　集成生态：与 PyTorch 无缝兼容，支持 Hugging FaceTransformers
+库。</p>
+<h5 id="核心技术">2. 核心技术</h5>
 <p><strong>（１）ZeRO（Zero Redundancy Optimizer）</strong></p>
-<p>原理：通过分片优化器状态、梯度、参数，消除数据并行中的显存冗余。</p>
-<p>阶段划分：</p>
-<p>ZeRO-1：优化器状态分片。</p>
-<p>ZeRO-2：梯度分片 + 优化器状态分片。</p>
-<p>ZeRO-3：参数分片 + 梯度分片 + 优化器状态分片。</p>
-<p>优势：显存占用随设备数线性下降，支持训练更大模型。</p>
+<p>　　原理：通过分片优化器状态、梯度、参数，消除数据并行中的显存冗余。</p>
+<p>　　阶段划分：</p>
+<p>　　　ZeRO-1：优化器状态分片。</p>
+<p>　　　ZeRO-2：梯度分片 + 优化器状态分片。　</p>
+<p>　　　ZeRO-3：参数分片 + 梯度分片 + 优化器状态分片。</p>
+<p>　　优势：显存占用随设备数线性下降，支持训练更大模型。</p>
 <p><strong>（2）显存优化技术</strong></p>
-<p>梯度检查点（Activation Checkpointing）：用时间换空间，减少激活值显存占用。</p>
-<p>CPU Offloading：将优化器状态和梯度卸载到 CPU 内存。</p>
-<p>混合精度训练：FP16/BP16与动态损失缩放（Loss Scaling）。</p>
-<p>​	其他特性：</p>
-<p>大规模推理支持：模型并行推理（如 ZeRO-Inference）。</p>
-<p>自适应通信优化：自动选择最佳通信策略（如 All-Reduce vs. All-Gather）。</p>
+<p>　　梯度检查点（Activation
+Checkpointing）：用时间换空间，减少激活值显存占用。</p>
+<p>　　CPU Offloading：将优化器状态和梯度卸载到 CPU 内存。</p>
+<p>　　混合精度训练：FP16/BP16与动态损失缩放（Loss Scaling）。</p>
+<p>​ 其他特性：</p>
+<p>　　　大规模推理支持：模型并行推理（如 ZeRO-Inference）。</p>
+<p>　　　自适应通信优化：自动选择最佳通信策略（如 All-Reduce vs.
+All-Gather）。</p>
 <p><strong>（3）优势与特点</strong></p>
-<p>显存效率高：ZeRO-3 可将显存占用降低至 1/设备数。</p>
-<p>易用性强：通过少量代码修改即可应用（如 DeepSpeed 配置 JSON 文件）。</p>
-<p>扩展性优秀：支持千卡级集群训练。</p>
-<p>开源社区支持：持续更新，与 Hugging Face 等生态深度集成。</p>
+<p>　　显存效率高：ZeRO-3 可将显存占用降低至 1/设备数。</p>
+<p>　　易用性强：通过少量代码修改即可应用（如 DeepSpeed 配置 JSON
+文件）。</p>
+<p>　　扩展性优秀：支持千卡级集群训练。</p>
+<p>　　开源社区支持：持续更新，与 Hugging Face 等生态深度集成。</p>
 <p><strong>（4） 使用场景</strong></p>
-<p>训练百亿/千亿参数模型（如GPT-3、Turing-NLG）。</p>
-<p>资源受限环境：单机多卡训练时通过 Offloading 扩展模型规模。</p>
-<p>快速实验：通过 ZeRO-2 加速中等规模模型训练。</p>
-<h3 id="2-LLamA-Factory-分布式训练">2. LLamA-Factory 分布式训练</h3>
-<p><a target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/advanced/distributed.html">文档</a></p>
-<ol>
+<p>　　训练百亿/千亿参数模型（如GPT-3、Turing-NLG）。</p>
+<p>　　资源受限环境：单机多卡训练时通过 Offloading 扩展模型规模。</p>
+<p>　　快速实验：通过 ZeRO-2 加速中等规模模型训练。</p>
+<h3 id="llama-factory-分布式训练">2. LLamA-Factory 分布式训练</h3>
+<p><a
+target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/advanced/distributed.html">文档</a></p>
+<ol type="1">
 <li>不开启 DeepSpeed</li>
 </ol>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301904397.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<ol start="2">
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301904397.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ol start="2" type="1">
 <li>开启 DeepSpeed ZeRO-2</li>
 </ol>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301913537.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301913537.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>显存占用：</p>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301921929.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" />
-<h3 id="3-xtuner-分布式训练">3. xtuner 分布式训练</h3>
-<p><a target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/acceleration/deepspeed.html">文档</a></p>
-<ol>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301921929.png" srcset="/img/loading.gif" lazyload style="zoom:45%;" /></p>
+<h3 id="xtuner-分布式训练">3. xtuner 分布式训练</h3>
+<p><a
+target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/acceleration/deepspeed.html">文档</a></p>
+<ol type="1">
 <li>不开启 DeepSpeed</li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token assign-left variable">NPROC_PER_NODE</span><span class="token operator">=</span><span class="token number">2</span> xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301933524.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<ol start="2">
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301933524.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ol start="2" type="1">
 <li>开启 DeepSpeed ZeRO-2</li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">NPROC_PER_NODE&#x3D;2 xtuner train  .&#x2F;qwen1_5_4b_chat_qlora_alpaca_e3.py --deepspeed deepspeed_zero2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
-<img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301929314.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
-<ol start="3">
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301929314.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<ol start="3" type="1">
 <li>DeepSpeed ZeRO-3 + CPU Offloading</li>
 </ol>
 <div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token assign-left variable">NPROC_PER_NODE</span><span class="token operator">=</span><span class="token number">2</span> xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py <span class="token parameter variable">--deepspeed</span> deepspeed_zero3_offload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
@@ -467,9 +476,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/06/05/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8E%A8%E7%90%86%E4%B8%8E%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2/" title="分布式推理与量化部署">
+                      <a href="/2025/06/05/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8E%A8%E7%90%86%E4%B8%8E%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2/" title="分布式推理与量化部署(vLLM、LMDeploy)">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">分布式推理与量化部署</span>
+                        <span class="hidden-mobile">分布式推理与量化部署(vLLM、LMDeploy)</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -477,8 +486,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/22/xtuner%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/" title="xtuner 微调大模型">
-                        <span class="hidden-mobile">xtuner 微调大模型</span>
+                      <a href="/2025/05/22/xtuner%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/" title="微调大模型——xtuner">
+                        <span class="hidden-mobile">微调大模型——xtuner</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

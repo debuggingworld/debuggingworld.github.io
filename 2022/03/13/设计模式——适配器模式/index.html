@@ -16,23 +16,19 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 模式定义 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。 适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。 优点：  符合单一职责原则 符合开闭原则  应用场景：  以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。 使用第三方">
+    <meta name="description" content="1. 模式定义 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。 适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。 优点： 1. 符合单一职责原则 2. 符合开闭原则 应用场景： + 以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式——适配器模式">
 <meta property="og:url" content="http://example.com/2022/03/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 模式定义 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。 适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。 优点：  符合单一职责原则 符合开闭原则  应用场景：  以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。 使用第三方">
+<meta property="og:description" content="1. 模式定义 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。 适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。 优点： 1. 符合单一职责原则 2. 符合开闭原则 应用场景： + 以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175600.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175504.png">
-<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313231941.png">
 <meta property="article:published_time" content="2022-03-13T09:33:39.000Z">
 <meta property="article:modified_time" content="2024-08-10T02:39:45.315Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="设计模式">
 <meta property="article:tag" content="结构型模式">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175600.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -297,26 +293,21 @@
             
             <div class="markdown-body">
               
-              <h3 id="1-模式定义">1. 模式定义</h3>
+              <h3 id="模式定义">1. 模式定义</h3>
 <p>将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。</p>
 <p>适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。</p>
-<p><strong>优点：</strong></p>
-<ol>
-<li>符合单一职责原则</li>
-<li>符合开闭原则</li>
-</ol>
-<p><strong>应用场景：</strong></p>
-<ul>
-<li>以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。</li>
-<li>使用第三方提供的组件，但组件接口定义和自己要求的接口定义不同。</li>
-</ul>
+<p><strong>优点：</strong> 1. 符合单一职责原则 2. 符合开闭原则</p>
+<p><strong>应用场景：</strong> +
+以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。
++ 使用第三方提供的组件，但组件接口定义和自己要求的接口定义不同。</p>
 <p>对象适配器：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175600.png" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175600.png" srcset="/img/loading.gif" lazyload /></p>
 <p>类适配器：</p>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175504.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="2-示例">2. 示例</h3>
-<p>对象适配器：</p>
-<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectAdapterTest</span> <span class="token punctuation">&#123;</span>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313175504.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="示例">2. 示例</h3>
+<p>对象适配器： <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectAdapterTest</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Adaptee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         target<span class="token punctuation">.</span><span class="token function">output5V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -346,8 +337,7 @@
         <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"原始电压： %d v ‐ > 输出电压： %d v "</span><span class="token punctuation">,</span>v<span class="token punctuation">,</span><span class="token number">5</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<p>类适配器：</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 类适配器：</p>
 <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ClassAdapterTest</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -363,10 +353,11 @@
         <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
-<h3 id="3-JDK-中的应用">3. JDK 中的应用</h3>
-<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313231941.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="4-Spring-中的应用">4. Spring 中的应用</h3>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuan882696yan/article/details/105602359">https://blog.csdn.net/yuan882696yan/article/details/105602359</a></p>
+<h3 id="jdk-中的应用">3. JDK 中的应用</h3>
+<p><img
+src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220313231941.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="spring-中的应用">4. Spring 中的应用</h3>
+<p>https://blog.csdn.net/yuan882696yan/article/details/105602359</p>
 
               
             </div>
