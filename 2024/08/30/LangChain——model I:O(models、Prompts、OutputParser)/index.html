@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408301931738.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202409022048040.png">
 <meta property="article:published_time" content="2024-08-30T11:29:44.000Z">
-<meta property="article:modified_time" content="2024-09-12T03:21:00.605Z">
+<meta property="article:modified_time" content="2025-06-19T09:55:48.728Z">
 <meta property="article:author" content="debuggingWorld">
 <meta property="article:tag" content="人工智能">
 <meta property="article:tag" content="LangChain">
@@ -328,11 +328,14 @@ AIMessage, BaseMessage<span aria-hidden="true" class="line-numbers-rows"><span><
 <h5 id="baselanguagemodel">1. BaseLanguageModel</h5>
 <p>　　这个基类为语言模型定义了一个接口，该接口允许用户以不同的方式与模型交互（例如通过提示或消息）。<code>generate_prompt</code>
 是其中的一个主要方法，它接受一系列提示，并返回模型的生成结果。</p>
-<p>　　主要提供三种方法： - generate_prompt:
-为一系列的提示词生成语言模型输出。 - predict:
-将单个字符串传递给语言模型并返回字符串预测。 - predict_messages:
-将一系列 BaseMessages（对应于单个模型调用）传递给语言模型，并返回
-BaseMessage 预测。</p>
+<p>　　主要提供三种方法：</p>
+<ul>
+<li>generate_prompt: 为一系列的提示词生成语言模型输出。</li>
+<li>predict: 将单个字符串传递给语言模型并返回字符串预测。</li>
+<li>predict_messages: 将一系列
+BaseMessages（对应于单个模型调用）传递给语言模型，并返回 BaseMessage
+预测。</li>
+</ul>
 <p>　　每种方法都有对应的异步方法。</p>
 <h5 id="llms-已支持模型清单">2. LLMs 已支持模型清单</h5>
 <p>　　<strong>开发者文档：https://python.langchain.com/docs/integrations/llms/</strong></p>
