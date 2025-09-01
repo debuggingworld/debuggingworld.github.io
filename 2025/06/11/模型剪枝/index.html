@@ -1,0 +1,1263 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 模型压缩的概述 　　深度学习因其计算复杂度或参数见余，在一些场景和设备上限制了相应的模型部署，需要借助模型压缩、优化加速、异构计算等方法突破瓶颈。模型压缩算法能够有效降低参数余，从而减少存储占用、通信带宽和计算复杂度，有助于深度学习的应用部署，具体可划分为如下几种方法：  剪枝（Pruning）：剪枝技术通过移除网络中不重要的参数或神经元来减少模型的大小和计算复杂度。 知识蒸馏（Knowled">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模型压缩——剪枝">
+<meta property="og:url" content="http://example.com/2025/06/11/%E6%A8%A1%E5%9E%8B%E5%89%AA%E6%9E%9D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1 模型压缩的概述 　　深度学习因其计算复杂度或参数见余，在一些场景和设备上限制了相应的模型部署，需要借助模型压缩、优化加速、异构计算等方法突破瓶颈。模型压缩算法能够有效降低参数余，从而减少存储占用、通信带宽和计算复杂度，有助于深度学习的应用部署，具体可划分为如下几种方法：  剪枝（Pruning）：剪枝技术通过移除网络中不重要的参数或神经元来减少模型的大小和计算复杂度。 知识蒸馏（Knowled">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112048624.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112051964.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112059203.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506121747825.png">
+<meta property="article:published_time" content="2025-06-11T12:44:44.000Z">
+<meta property="article:modified_time" content="2025-09-01T02:21:27.790Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="模型压缩">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112048624.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>模型压缩——剪枝 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="模型压缩——剪枝"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-11 20:44" pubdate>
+          2025年6月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          26k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          80 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">模型压缩——剪枝</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="模型压缩的概述">1 模型压缩的概述</h3>
+<p>　　深度学习因其计算复杂度或参数见余，在一些场景和设备上限制了相应的模型部署，需要借助模型压缩、优化加速、异构计算等方法突破瓶颈。模型压缩算法能够有效降低参数余，从而减少存储占用、通信带宽和计算复杂度，有助于深度学习的应用部署，具体可划分为如下几种方法：</p>
+<ul>
+<li>剪枝（Pruning）：剪枝技术通过移除网络中不重要的参数或神经元来减少模型的大小和计算复杂度。</li>
+<li>知识蒸馏（Knowledge
+Distillation）：知识蒸馏技术通过将复杂模型（教师模型）的知识传递给较小的模型（学生模型）来进行模型压缩。</li>
+<li>量化（Quantization）：量化技术通过减少模型参数和计算的数值精度来压缩模型。</li>
+<li>网络结构简化：网络结构简化是指通过设计更高效的网络结构来减少计算复杂度和参数数量。</li>
+</ul>
+<style>
+.collapsible {
+    margin: 1.5rem 0px;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(229, 230, 235);
+    border-radius: 2px;
+    font-size: 15px;
+}
+.collapsible summary p {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+</style>
+<h3 id="什么是剪枝">2 什么是剪枝</h3>
+<p>　　神经网络在训练过程中为了捕捉数据中的复杂模式，通常会过参数化，这导致模型拥有大量对最终输出贡献不大的冗余参数。而模型剪枝就是指从深度学习神经网络模型中删除冗余参数（即将其置为
+0）的技术，它能够在不牺牲太多准确性的前提下压缩模型大小并提高模型的推理速度。</p>
+<blockquote>
+<p>一般来说，只有权重参数（weight）被修剪，而偏置参数（bias）保持不变，因为对偏置的修剪往往会带来更大的负面影响。</p>
+</blockquote>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112048624.png" srcset="/img/loading.gif" lazyload style="zoom:60%;" /></p>
+<p>主要有两种方式来实现模型剪枝，即训练时剪枝和训练后剪枝：</p>
+<ul>
+<li>训练时剪枝（train-time pruning）
+训练时剪枝是在模型训练过程中动态进行剪枝操作的方法。这种方法的核心思想是在训练过程中逐步剪枝，从而使模型在训练结束时已经是一个剪枝后的模型。其优点是剪枝过程与模型训练过程紧密结合，能够在训练结束时直接得到剪枝后的模型，避免了额外的后续微调步骤，节省了训练时间和计算资源。缺点是在训练过程中剪枝可能导致模型训练的不稳定，需要精细调整超参数和剪枝策略，增加了实现的复杂性。</li>
+<li>训练后剪枝（post-training pruning）
+训练后剪枝是在模型完成训练后对其进行剪枝的方法。先训练一个完整的模型，然后在训练结束后对模型进行剪枝，再进行微调以恢复性能。其优点是剪枝步骤相对独立，无需在训练过程中动态调整剪枝操作，可以根据最终模型的需求选择最优的剪枝策略，再进行微调，以达到更好的性能恢复。缺点是剪枝后可能需要多次微调，才能恢复模型性能。</li>
+</ul>
+<p>在上述两种实现方式中，训练后剪枝更为常用，因为它在实施上简单直接，不需要在训练过程中动态调整剪枝操作，剪枝步骤相对独立且容易实施。</p>
+<h3 id="剪枝的分类">3. 剪枝的分类</h3>
+<h4 id="按剪枝的粒度分">3.1 按剪枝的粒度分</h4>
+<p>根据剪枝的粒度分，剪枝方法可以大致分为以下六种：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112051964.png" srcset="/img/loading.gif" lazyload style="zoom:70%;" /></p>
+<blockquote>
+<p>上图展示了在输入通道（即卷积核通道数）是
+3，输出通道（即卷积核个数）是 2
+的卷积层上进行六种不同粒度剪枝操作的效果。</p>
+</blockquote>
+<ul>
+<li><p>Fine-grained Pruning（细粒度剪枝）</p>
+<p>细粒度剪枝是指在最细粒度上进行剪枝，即删除某些单个的权重值。这种方法能够在较少的准确率损失下实现更高的剪枝率，但缺点是剪枝后的稀疏矩阵是不规则的（即非零元素的分布是不规则的），这不利于压缩存储和加速计算，需要专门的软硬件支持。</p></li>
+<li><p>Vector-level Pruning（向量级剪枝）</p>
+<p>向量级剪枝是指在向量这一层次上进行参数移除，例如一个神经元的输出权重向量或卷积层中一个滤波器的权重向量。这比细粒度剪枝的范围更大，能够减少剪枝后矩阵的不规则性，便于硬件加速，但在牺牲少量模型表达能力的同时，可能不如细粒度剪枝那样精细地优化模型大小和性能。</p></li>
+<li><p>Kernel-level Pruning（核级剪枝）</p>
+<p>核级剪枝是针对卷积神经网络中的卷积核进行的，即整体移除一个卷积核的所有权重。减少了计算量和模型尺寸，但可能会影响模型捕获细节的能力，因为整个特征检测器被移除。</p></li>
+<li><p>Filter-level Pruning（滤波器级剪枝）</p>
+<p>实质上与核级剪枝相似，滤波器级剪枝专注于从卷积层中移除完整的滤波器。这一策略简化了网络结构，显著降低了计算成本和内存使用，不过可能需要更多的调参来维持原有性能。</p></li>
+<li><p>Channel-level Pruning（通道级剪枝）</p>
+<p>通道级剪枝针对具有通道结构的层，比如卷积层中的通道，移除整个通道的特征映射。这不仅减少了参数量，还可能因通道间潜在的冗余而减少信息重复，但要求对通道重要性有精准的评估，以免损害模型的表达能力。</p></li>
+<li><p>Layer-level Pruning（层级剪枝）</p>
+<p>层级剪枝是最粗粒度的剪枝策略，直接移除整个网络层。这种方法极大地简化了模型结构，加快了推理速度，降低了资源消耗，但需谨慎执行，以防过度简化导致性能急剧下降，需深入分析每一层对最终任务的重要性。</p></li>
+</ul>
+<h4 id="按照剪枝后矩阵是否规则">3.2 按照剪枝后矩阵是否规则</h4>
+<p>按照剪枝后的稀疏矩阵是否规则，剪枝算法也可以分为：</p>
+<ul>
+<li><p>非结构化化剪枝（Unstructured Pruning）</p>
+<p>即细粒度剪枝。非结构化稀疏具有更高的模型压缩率和准确性，在通用硬件上的加速效果不好。因为其计算特征上的“不规则”，导致需要特定硬件支持才能实现加速效果。</p></li>
+<li><p>结构化剪枝（Structured Pruning）</p>
+<p>即向量级、核级、滤波器级、通道级以及层级剪枝。与非结构化剪枝相比，结构化剪枝通常通常会牺牲模型的准确率和压缩比。结构化稀疏对非零权值的位置进行了限制，在剪枝过程中会将一些数值较大的权值移除，从而影响模型准确率。结构化稀疏虽然牺牲了模型压缩率或准确率，但在通用硬件上的加速效果好，所以其被广泛应用。因为结构化稀疏使得权值矩阵更规则更加结构化，更利于硬件加速。</p></li>
+</ul>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506112059203.png" srcset="/img/loading.gif" lazyload style="zoom:67%;" /></p>
+<h4 id="按照不同的修剪范围">3.3 按照不同的修剪范围</h4>
+<ul>
+<li>局部剪枝（Local Pruning）
+局部剪枝是指在模型的特定部分或局部区域进行参数的删除，它允许更精细地控制模型的哪个部分将被简化。这种方法基于这样的假设：模型的不同部分对最终性能的贡献不同，通过有针对性地剪枝某些局部区域，可以更有效地减少计算量和内存占用，同时尽量保持模型的关键性能。</li>
+<li>全局剪枝（Global Pruning）
+全局剪枝则是指在整个模型范围内统一进行参数的剪除，不特别区分模型的不同部分。这种方法会基于某种全局性标准（例如基于权值的
+L1
+范数）来决定哪些参数被剪枝。全局剪枝简化了剪枝过程的复杂度，因为它应用的是统一的剪枝比例或标准，但可能不够灵活，无法充分考虑到模型内部不同部分的差异性对性能的影响。全局剪枝的一个直接结果是模型的整体稀疏度一致，这有时可能导致某些关键区域的性能下降。</li>
+</ul>
+<h3 id="pytorch-剪枝">4. PyTorch 剪枝</h3>
+<h4 id="pytorch-剪枝的原理">4.1 PyTorch 剪枝的原理</h4>
+<p>　　PyTroch 中神经网络模型或模块类都是继承自 torch.nn.Module
+类的，该类中和剪枝实现相关的关键属性包括
+<code>_modules</code>、<code>_parameters</code> 以及
+<code>_buffers</code>。以下是对这些属性的详细介绍：</p>
+<ul>
+<li><code>_parameters</code>：<code>_parameters</code> 是一个
+OrderedDict 对象，用于存储当前模块的所有可学习参数（如 weight 和
+bias）及其参数名称，这些参数会在训练过程中被优化器更新。</li>
+<li><code>_buffers</code>：<code>_buffers</code>是一个 OrderedDict
+对象，用于存储当前模块的所有非学习参数（如 BN 层的 running mean 和
+running
+variance，或者存储剪枝掩码）。这些参数不会在训练过程中被优化器更新，而是用于存储模型状态的一部分。</li>
+<li><code>_forward_pre_hooks</code>：<code>_forward_pre_hooks</code>
+是一个 OrderedDict
+对象，用于存储在前向传播前需要调用的钩子（hook）函数及其序号，这些钩子函数会在模型的前向传播前执行一些自定义操作。</li>
+</ul>
+<p>并且上述这些属性中的元素都可以通过 del
+方式删除以及使用模块对象提供的方法进行查询和添加。</p>
+<p>另外，若模块（如
+nn.Linear、nn.Conv2d）拥有训练参数，则这些训练参数不仅会存储在
+<code>_parameters</code> 中，也会存储在模块对象的 weight 以及 bias
+属性中，这些属性是 torch.Tensor 对象（实际上是
+torch.nn.parameter.Parameter 类型，它 torch.Tensor 类型的子类）：</p>
+<ul>
+<li>weight：weight
+是一个张量，表示模块的权重参数。它用于在前向传播时与输入进行矩阵进行线性运算。</li>
+<li>bias：bias也是一个张量，表示模块的偏置参数。它在前向传播过程中应用于加到线性变换结果上的偏置值。</li>
+</ul>
+<p>掌握了以上预备知识后，继续介绍 PyTorch
+剪枝的实现原理，首先定义一个简单的神经网络模型便于演示，以 LeNet
+网络为例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><span class="hljs-keyword">from</span> torch.nn.utils <span class="hljs-keyword">import</span> prune<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LeNet</span>(<span class="hljs-params">nn.Module</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, num_classes=<span class="hljs-number">10</span></span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.conv1 = nn.Conv2d(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, kernel_size=<span class="hljs-number">5</span>)<br>        self.conv2 = nn.Conv2d(<span class="hljs-number">6</span>, <span class="hljs-number">16</span>, kernel_size=<span class="hljs-number">5</span>)<br>        self.fc1 = nn.Linear(<span class="hljs-number">16</span> * <span class="hljs-number">4</span> * <span class="hljs-number">4</span>, <span class="hljs-number">120</span>)<br>        self.fc2 = nn.Linear(<span class="hljs-number">120</span>, <span class="hljs-number">84</span>)<br>        self.fc3 = nn.Linear(<span class="hljs-number">84</span>, num_classes)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span>(<span class="hljs-params">self, x</span>):</span><br>        x = F.relu(self.conv1(x))<br>        x = F.max_pool2d(x, <span class="hljs-number">2</span>)<br>        x = F.relu(self.conv2(x))<br>        x = F.max_pool2d(x, <span class="hljs-number">2</span>)<br>        x = x.view(x.size(<span class="hljs-number">0</span>), -<span class="hljs-number">1</span>)<br>        x = F.relu(self.fc1(x))<br>        x = F.relu(self.fc2(x))<br>        x = self.fc3(x)<br>        <span class="hljs-keyword">return</span> x<br></code></pre></td></tr></table></figure>
+<p>为了方便进行研究，我们只对上述网络中 fc3
+线性层模块的权重参数（weight）进行研究，首先获取代表 fc3的模块对象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">model = LeNet()<br>module = model.fc3<br></code></pre></td></tr></table></figure>
+<p>接下来对剪枝不同阶段时，个属性参数的变化进行介绍：</p>
+<ol type="1">
+<li><p>剪枝前</p>
+<ul>
+<li><p>module 的 weight 属性和 <code>_parameters</code> 属性中的 weight
+参数其实是同一个张量对象。也就是说剪枝前的反向传播会同时更新 weight
+属性和 <code>_parameters</code> 属性中的 weight
+参数。例如我们输出它们的对象标识：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(module._parameters[<span class="hljs-string">&#x27;weight&#x27;</span>]))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(module.weight))<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">1769318681312
+1769318681312
+</code></pre>
+</details></li>
+<li><p>由于还未进行剪枝，所以 model 的 <code>_buffers</code>
+缓冲区暂时是空的（这是由于还未在其中生成用于剪枝的掩码张量）。例如我们输出
+<code>_buffers</code> 的长度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">len</span>(module._buffers))<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">0
+</code></pre>
+</details></li>
+</ul></li>
+<li><p>剪枝时</p>
+<p>现在对 module 的权重参数进行随机非结构化剪枝，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">prune.random_unstructured(module, name=<span class="hljs-string">&quot;weight&quot;</span>, amount=<span class="hljs-number">0.5</span>)<br></code></pre></td></tr></table></figure>
+<p>剪枝时，PyTorch 会具体执行以下步骤：</p>
+<ul>
+<li><p>在 module 的 <code>_parameters</code> 属性中新增一个名为
+weight_orig 的参数，该参数存储了剪枝前的原始权重张量。并且会删除
+<code>_parameters</code> 属性中原来的 weight
+参数（即将原始权重张量的新引用 weight_orig 添加进了
+<code>_parameters</code>，并将旧引用 weight 从 <code>_parameters</code>
+中删除了）。例如输出剪枝前后 <code>_parameters</code> 中的参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Before pruning:&quot;</span>)<br>[<span class="hljs-built_in">print</span>(k, v.shape, <span class="hljs-built_in">id</span>(v)) <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> module._parameters.items()]<br>prune.random_unstructured(module, name=<span class="hljs-string">&quot;weight&quot;</span>, amount=<span class="hljs-number">0.5</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;After pruning:&quot;</span>)<br>[<span class="hljs-built_in">print</span>(k, v.shape, <span class="hljs-built_in">id</span>(v)) <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> module._parameters.items()]<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">Before pruning:
+bias torch.Size([10]) 1769318681392
+weight torch.Size([10, 84]) 1769318681312
+After pruning:
+bias torch.Size([10]) 1769318681392
+weight_orig torch.Size([10, 84]) 1769318681312
+</code></pre>
+</details></li>
+<li><p>会在 module 的 <code>_buffers</code>
+属性中创建一个与权重参数形状相同的掩码张量
+weight_mask，剪枝的位置在掩码中被设置为零。例如输出剪枝后的
+<code>_buffers</code> 属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(module._buffers)<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">OrderedDict([('weight_mask', tensor([[0., 0., 1., 1., 1., 1., 1., 1., 1., 0., 1., 1., 0., 1., 0., 0., 1., 0.,
+    1., 1., 1., 0., 1., 1., 0., 1., 1., 0., 0., 1., 0., 1., 0., 0., 0., 1.,
+    0., 1., 0., 0., 0., 1., 1., 1., 0., 1., 1., 0., 0., 0., 1., 1., 0., 1.,
+    1., 1., 0., 1., 0., 1., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 1., 0.,
+    1., 0., 1., 0., 0., 0., 1., 1., 1., 0., 1., 0.],
+# 省略8行
+   [0., 0., 1., 0., 0., 0., 1., 1., 0., 1., 0., 1., 0., 1., 1., 0., 0., 1.,
+    1., 1., 1., 0., 0., 1., 1., 0., 0., 0., 1., 1., 0., 0., 0., 0., 1., 1.,
+    0., 1., 1., 0., 0., 0., 1., 0., 0., 1., 0., 1., 0., 0., 1., 1., 0., 0.,
+    1., 1., 1., 0., 0., 1., 0., 0., 1., 1., 1., 0., 0., 1., 0., 0., 0., 0.,
+    1., 1., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0.]]))])
+</code></pre>
+</details></li>
+<li><p>对 module 的 weight
+属性进行重参数化，即将掩码应用到参与前向传播的权重参数上（<code>module.weight = weight_mask * weight_orig</code>）。例如输出
+<code>weight</code> 属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(module.weight)<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">tensor([[ 0.0000, -0.0000, -0.0918, -0.0204,  0.0444, -0.0631,  0.0495,  0.0694,
+     0.0566, -0.0000,  0.0642, -0.0855, -0.0000, -0.0551, -0.0000, -0.0000,
+     0.0159,  0.0000,  0.0345, -0.0151, -0.0336, -0.0000, -0.0944, -0.0476,
+     0.0000, -0.0079,  0.0647,  0.0000,  0.0000,  0.0558, -0.0000, -0.0190,
+     0.0000,  0.0000, -0.0000, -0.0531,  0.0000, -0.0569,  0.0000,  0.0000,
+     0.0000,  0.0567,  0.0818, -0.0130,  0.0000, -0.0915, -0.0170, -0.0000,
+    -0.0000,  0.0000,  0.0291, -0.0265, -0.0000,  0.0054,  0.0695,  0.1014,
+     0.0000, -0.0581, -0.0000, -0.1043, -0.0000, -0.0000, -0.0000,  0.0153,
+    -0.0820, -0.0215,  0.0000, -0.0000,  0.0000, -0.0000,  0.0226, -0.0000,
+    -0.0038, -0.0000,  0.0826,  0.0000, -0.0000,  0.0000,  0.0801,  0.0692,
+     0.1081, -0.0000,  0.0274, -0.0000],
+   # 省略8行
+   [-0.0000,  0.0000,  0.0752, -0.0000,  0.0000,  0.0000, -0.0273, -0.0308,
+    -0.0000, -0.0962,  0.0000,  0.0268,  0.0000,  0.0777,  0.0210, -0.0000,
+    -0.0000,  0.0507,  0.0736, -0.0917, -0.0100,  0.0000,  0.0000,  0.0922,
+     0.0657,  0.0000, -0.0000,  0.0000,  0.0682, -0.0926, -0.0000, -0.0000,
+     0.0000, -0.0000, -0.0571,  0.0771, -0.0000,  0.0821,  0.0468,  0.0000,
+    -0.0000, -0.0000,  0.0317, -0.0000, -0.0000,  0.0643, -0.0000, -0.0041,
+     0.0000, -0.0000,  0.0845,  0.0621,  0.0000,  0.0000,  0.0761, -0.0151,
+     0.0584, -0.0000, -0.0000,  0.0290, -0.0000, -0.0000,  0.0699,  0.0089,
+     0.0859, -0.0000,  0.0000, -0.0684,  0.0000,  0.0000, -0.0000,  0.0000,
+     0.0279,  0.0149, -0.0000, -0.0000, -0.0132, -0.0531,  0.0495, -0.0000,
+     0.0000,  0.0000, -0.0000, -0.0000]], grad_fn=<MulBackward0>)
+     </code></pre>
+</details></li>
+<li><p>会在 module 的 <code>_forward_pre_hooks</code>
+属性中注册一个剪枝方法（其实是一个剪枝类对象，在此案例中是
+RandomUnstructured
+类对象），该剪枝方法会在每次前向传播之前被调用。例如输出 module 的
+<code>_forward_pre_hooks</code> 属性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(module._forward_pre_hooks)<br></code></pre></td></tr></table></figure>
+<details class="collapsible">
+<summary>
+<p>点击查看输出结果</p>
+</summary>
+<pre  class=" language-shell"  data-language="shell"><code class="language-shell">OrderedDict([(0, &lt;torch.nn.utils.prune.RandomUnstructured object at 0x00000174F3BEC280&gt;)])
+     </code></pre>
+</details></li>
+</ul></li>
+</ol>
+<h4 id="pytorch-的剪枝函数">4.2 PyTorch 的剪枝函数</h4>
+<p>　　PyTorch 剪枝功能在 torch.nn.utils.prune
+模块中实现，主要的剪枝类如下图所示：</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506121747825.png" srcset="/img/loading.gif" lazyload style="zoom:12%;" /></p>
+<p>　　以上的剪枝类中 BasePruningMethod 类是 PyTorch
+中剪枝模块的基础抽象类，它定义了剪枝方法所需的基本接口和属性，它不直接用于剪枝操作，而是供其他具体剪枝方法继承。其他具体的剪枝类从它继承而来的，根据需要进行了定制化和扩展，它们具体功能如下：</p>
+<ul>
+<li>PruningContainer
+类：是一个容器类，用于将多个剪枝方法组合在一起应用于模型的不同部分。它可以包含多个剪枝方法对象，统一管理和应用这些剪枝方法。</li>
+<li>Identity
+类：实现了在不修剪任何单元的情况下应用剪枝重参数化的功能，通常作为基准或占位符使用。</li>
+<li>RandomUnstructured 类：实现了随机非结构化剪枝的功能。</li>
+<li>L1Unstructured 类：实现了基于 L1 范数的非结构化剪枝的功能。</li>
+<li>RandomStructured 类：实现了随机结构化剪枝的功能。</li>
+<li>LnStructured 类：实现基于 Ln 范数的构化剪枝的功能。</li>
+<li>CustomFromMask
+类：实现了根据预定义的掩码对权重张量进行自定义结构化剪枝的功能。</li>
+</ul>
+<p>　　虽然在 torch.nn.utils.prune
+模块中定义了这些剪枝类，但我们通常不直接实例化和使用它们，而是通过
+<code>torch.nn.utils.prune</code>
+模块提供的便捷函数来进行剪枝操作。这些便捷函数对底层的剪枝类进行了封装，使剪枝操作更加简洁和易于使用。下面是对封装函数的详细介绍：</p>
+<ol type="1">
+<li><p>identity 函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">identity</span>(<span class="hljs-params">module, name</span>)</span><br></code></pre></td></tr></table></figure>
+<p>函数 identity
+的作用是在不实际移除任何神经网络单元的情况下，对指定模块中的某个参数实施剪枝操作的重新参数化过程。此操作直接修改输入的
+module 并将其返回。 参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="2" type="1">
+<li><p>random_unstructured 函数 函数 random_unstructured
+作用是执行随机非结构化剪枝操作。从 module 中名为 name
+的参数中随机移除指定数量的单元（当前未剪枝的）。此操作直接修改输入的
+module 并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_unstructured</span>(<span class="hljs-params">module, name, amount</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+<li>amount（int 或 float）：若为 float，应介于 0.0 到 1.0
+之间，表示参数被剪枝的比例；若为 int，则直接表示剪枝的参数个数。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="3" type="1">
+<li><p>l1_unstructured 函数 函数 l1_unstructured 作用是根据 L1
+范数执行非结构化剪枝操作。从 module 中名为 name 的参数中移除具有最低 L1
+范数的指定数量的单元（当前未剪枝的）。此操作直接修改输入的 module
+并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">l1_unstructured</span>(<span class="hljs-params">module, name, amount, importance_scores=<span class="hljs-literal">None</span></span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+<li>amount（int 或 float）：若为 float，应介于 0.0 到 1.0
+之间，表示参数被剪枝的比例；若为 int，则直接表示剪枝的参数个数。</li>
+<li>importance_scores（torch.Tensor,
+optional）：形状与模块参数相同的重要性分数张量，用于确定剪枝掩码。如果不提供或为
+None，则使用模块参数本身计算重要性。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="4" type="1">
+<li><p>random_structured 函数 函数 random_structured
+执行随机结构化剪枝操作。从 module 中名为 name 的参数中沿着指定的 dim
+维度随机选择并移指定数量的结构（如向量、卷积核，通道等）。此操作直接修改输入的
+module 并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_structured</span>(<span class="hljs-params">module, name, amount, dim</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+<li>amount（int 或 float）：若为 float，应介于 0.0 到 1.0
+之间，表示参数被剪枝的比例；若为 int，则直接表示剪枝的参数个数。</li>
+<li>dim（int）：指定要进行剪枝的维度索引。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="5" type="1">
+<li><p>ln_structured 函数 函数 ln_structured 依据指定维度上的最低 Ln
+范数执行结构化剪枝操作。移除选定数量的通道。从 module 中名为 name
+的参数中沿着指定的 dim 维度中移除具有最低 Ln
+范数的指定数量的结构（如向量、卷积核，通道等）。此操作直接修改输入的
+module 并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ln_structured</span>(<span class="hljs-params">module, name, amount, n, dim, importance_scores=<span class="hljs-literal">None</span></span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+<li>amount（int 或 float）：若为 float，应介于 0.0 到 1.0
+之间，表示参数被剪枝的比例；若为 int，则直接表示剪枝的参数个数。</li>
+<li>n（int 或 float）：规定了用于计算范数的类型，对应于 torch.norm
+函数中的 p 参数，用于衡量权重的重要性。</li>
+<li>dim（int）：指定要进行剪枝的维度索引。</li>
+<li>importance_scores（torch.Tensor,
+optional）：形状与模块参数相同的重要性分数张量，用于确定剪枝掩码。如果不提供或为
+None，则使用模块参数本身计算重要性。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul>
+<hr /></li>
+<li><p>global_unstructured 函数 函数 global_unstructured
+作用是执行全局非结构化剪枝操作，它的核心作用是在不考虑参数空间结构的情况下，基于全局重要性评估，统一决定哪些参数进行剪枝。这允许开发者跨多个层或模块统一剪枝标准，简化剪枝过程，尤其适合于想要快速减小模型大小而不过多考虑特定结构影响的情况。此操作直接修改输入的
+module 并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">global_unstructured</span>(<span class="hljs-params">parameters, pruning_method, importance_scores=<span class="hljs-literal">None</span>, **kwargs</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>parameters（Iterable of (module, name) tuples）：这是一个包含多个
+<code>(module, name)</code> 对的可迭代对象，其中 module 是 nn.Module
+类型的神经网络层，name 是该层中参数的名称（通常是权重 weight 或偏置
+bias）。这些参数将被全局地、非结构化地进行剪枝。</li>
+<li>pruning_method（function）：一个剪枝函数，用于确定进行非结构化剪枝的方式。内置的非结构化剪枝方法有：
+（1）L1Unstructured （2）RandomUnstructured</li>
+<li>importance_scores（dict, optional）: 一个字典，映射每个
+<code>(module, name)</code>
+对到一个同形状的重要性分数张量。这些分数用于决定剪枝哪些元素。如果不提供或为
+None，则使用模块参数本身计算重要性。</li>
+<li>kwargs：其他关键字参数，最常见的是
+amount，用于指定剪枝的数量或比例。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="7" type="1">
+<li><p>custom_from_mask 函数 custom_from_mask
+函数允许用户使用预先计算好的掩码（mask）来对模块中的特定参数进行剪枝。这个函数主要用于自定义剪枝策略，当用户已经知道哪些元素应该被剪枝，或者从其他来源获取了剪枝掩码时使用。此操作直接修改输入的
+module 并将其返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">custom_from_mask</span>(<span class="hljs-params">module, name, mask</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）：需要进行剪枝的神经网络模块。</li>
+<li>name（str）：模块中待进行剪枝的参数名称。</li>
+<li>mask（Tensor）：二进制掩码张量，其形状与目标参数相同。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>经过剪枝后的模型模块。</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="8" type="1">
+<li><p>remove 函数 remove
+函数的作用是从给定的模块中移除之前应用的剪枝重新参数化，以及从前向传播钩子中移除剪枝方法。这意味着，虽然之前被剪枝的参数状态（按照剪枝掩码永久剪枝）会被保留，但是与剪枝相关的额外组件（原始参数和掩码）会被清理，使得模型更加简洁，以便于后续的部署或进一步处理。</p>
+<p>该操作并不“撤销”剪枝，也就是说，被剪枝的权重并不会被恢复。它只是移除了剪枝的痕迹，使得模型看起来像一个未经剪枝的模型，但是剪枝的效果（即参数的缺失）仍然存在。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove</span>(<span class="hljs-params">module, name</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）： 需要移除剪枝设置的神经网络模块。</li>
+<li>name（str）：要移除剪枝参数的名称，该参数在之前已经被剪枝过。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>None</li>
+</ul></li>
+</ol>
+<hr />
+<ol start="9" type="1">
+<li><p>is_pruned 函数 is_pruned
+函数用于检查给定的神经网络模块是否已经应用了剪枝操作。它通过检测模块中是否存在继承自
+BasePruningMethod 的前向传播预钩子来判断模块是否已被剪枝。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_pruned</span>(<span class="hljs-params">module</span>)</span><br></code></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ul>
+<li>module（nn.Module）： 需要检查是否经过剪枝的神经网络模块。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>果模块已应用剪枝，则返回 True；否则，返回 False。</li>
+</ul></li>
+</ol>
+<h3 id="剪枝的代码实现">5. 剪枝的代码实现</h3>
+<h4 id="导入必要的依赖">5.1 导入必要的依赖</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F<br><span class="hljs-keyword">import</span> tqdm<br><span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> torch.nn.utils <span class="hljs-keyword">import</span> prune<br><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> DataLoader<br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> transforms, models<br><span class="hljs-keyword">from</span> torchvision.datasets <span class="hljs-keyword">import</span> CIFAR10<br></code></pre></td></tr></table></figure>
+<h4 id="定义训练早停类">5.2 定义训练早停类</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EarlyStopping</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, patience=<span class="hljs-number">100</span>, min_delta=<span class="hljs-number">0</span></span>):</span><br>        <span class="hljs-keyword">if</span> patience &lt;= <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&#x27;patience must be a positive integer&#x27;</span>)<br>        <span class="hljs-keyword">if</span> min_delta &lt; <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&#x27;min_delta must be a positive number&#x27;</span>)<br><br>        self.patience = patience<br>        self.current_patience = patience<br>        self.min_delta = min_delta<br>        self.early_stop = <span class="hljs-literal">False</span><br>        self.best_acc = <span class="hljs-number">0</span><br>        self.best_loss = <span class="hljs-literal">None</span><br>        self.best_epoch = <span class="hljs-literal">None</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span>(<span class="hljs-params">self, val_loss, val_acc, epoch</span>):</span><br>        <span class="hljs-keyword">if</span> val_acc &gt; self.best_acc + self.min_delta:<br>            self.current_patience = self.patience<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>: &#x27;</span><br>                  <span class="hljs-string">f&quot;best acc improved from <span class="hljs-subst">&#123;self.best_acc:<span class="hljs-number">.4</span>f&#125;</span> to <span class="hljs-subst">&#123;val_acc:<span class="hljs-number">.4</span>f&#125;</span>, &quot;</span><br>                  <span class="hljs-string">f&#x27;current patience reset to <span class="hljs-subst">&#123;self.patience&#125;</span>&#x27;</span>)<br>            self.best_acc = val_acc<br>            self.best_loss = val_loss<br>            self.best_epoch = epoch<br>        <span class="hljs-keyword">else</span>:<br>            self.current_patience -= <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> self.current_patience &lt;= <span class="hljs-number">0</span>:<br>                self.early_stop = <span class="hljs-literal">True</span><br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.patience&#125;</span> patience exhausted, early stopping! &quot;</span><br>                      <span class="hljs-string">f&quot;Best acc: <span class="hljs-subst">&#123;self.best_acc:<span class="hljs-number">.4</span>f&#125;</span>, &quot;</span><br>                      <span class="hljs-string">f&quot;and best loss: <span class="hljs-subst">&#123;self.best_loss:<span class="hljs-number">.4</span>f&#125;</span>,&quot;</span><br>                      <span class="hljs-string">f&quot;appear at epoch <span class="hljs-subst">&#123;self.best_epoch&#125;</span>&quot;</span>)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>: &#x27;</span><br>                      <span class="hljs-string">f&#x27;best acc did not improve from <span class="hljs-subst">&#123;self.best_acc:<span class="hljs-number">.4</span>f&#125;</span>, &#x27;</span><br>                      <span class="hljs-string">f&#x27;current patience: <span class="hljs-subst">&#123;self.current_patience&#125;</span>/<span class="hljs-subst">&#123;self.patience&#125;</span>&#x27;</span>)<br>        <span class="hljs-keyword">return</span> self.early_stop<br></code></pre></td></tr></table></figure>
+<h4 id="定义训练基础类">5.3 定义训练基础类</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseTrainer</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self,</span></span><br><span class="hljs-params"><span class="hljs-function">                 num_epochs,</span></span><br><span class="hljs-params"><span class="hljs-function">                 batch_size,</span></span><br><span class="hljs-params"><span class="hljs-function">                 save_dir=<span class="hljs-string">&quot;weight&quot;</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 device=<span class="hljs-string">&quot;cuda&quot;</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 num_workers=<span class="hljs-number">0</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 patience=<span class="hljs-number">10</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 min_delta=<span class="hljs-number">0</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 </span>):</span><br>        <span class="hljs-comment"># 设置随机种子</span><br>        seed = <span class="hljs-number">42</span><br>        torch.manual_seed(seed)<br>        torch.cuda.manual_seed(seed)<br>        torch.cuda.manual_seed_all(seed)<br>        torch.backends.cudnn.deterministic = <span class="hljs-literal">True</span><br>        torch.backends.cudnn.benchmark = <span class="hljs-literal">False</span><br><br>        <span class="hljs-comment"># 设置设备</span><br>        <span class="hljs-keyword">if</span> device == <span class="hljs-string">&quot;cuda&quot;</span> <span class="hljs-keyword">and</span> torch.cuda.is_available():<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Using GPU for training&quot;</span>)<br>            self.device = torch.device(<span class="hljs-string">&quot;cuda&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> torch.cuda.is_available():<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;CUDA is not available, using CPU instead&quot;</span>)<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Using CPU for training&quot;</span>)<br>            self.device = torch.device(<span class="hljs-string">&quot;cpu&quot;</span>)<br><br>        <span class="hljs-comment"># 定义输出位置</span><br>        self.save_dir = save_dir<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(self.save_dir):  <span class="hljs-comment"># 如果不存在该目录，则创建该目录</span><br>            os.makedirs(self.save_dir)<br><br>        <span class="hljs-comment"># 加载模型</span><br>        self.model = self.load_model()<br>        self.model.to(self.device)<br><br>        <span class="hljs-comment"># 定义训练参数</span><br>        self.num_epochs = num_epochs<br>        self.batch_size = batch_size<br>        self.num_workers = num_workers<br>        self.optimizer, self.scheduler = self.load_optimizer_and_scheduler()<br>        self.early_stopping = EarlyStopping(patience=patience, min_delta=min_delta)<br>        self.history = []<br>        self.train_loader, self.test_loader = self.get_data_loader()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_data_loader</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-comment"># 计算训练集的mean和std</span><br>        dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=transforms.ToTensor())<br>        data_loader = DataLoader(dataset, batch_size=<span class="hljs-built_in">len</span>(dataset), num_workers=self.num_workers)<br>        data = <span class="hljs-built_in">next</span>(<span class="hljs-built_in">iter</span>(data_loader))<br>        mean = torch.mean(data[<span class="hljs-number">0</span>], dim=(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)).tolist()  <span class="hljs-comment"># 计算均值</span><br>        std = torch.std(data[<span class="hljs-number">0</span>], dim=(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)).tolist()  <span class="hljs-comment"># 计算标准差</span><br><br>        <span class="hljs-comment"># 定义数据预处理</span><br>        train_transform = transforms.Compose([  <span class="hljs-comment"># 定义训练集的预处理</span><br>            transforms.RandomCrop(<span class="hljs-number">32</span>, padding=<span class="hljs-number">4</span>),  <span class="hljs-comment"># 随机裁剪，增强模型对图像位置的鲁棒性</span><br>            transforms.RandomHorizontalFlip(),  <span class="hljs-comment"># 随机水平翻转，增加数据的多样性</span><br>            transforms.ColorJitter(brightness=<span class="hljs-number">0.2</span>, contrast=<span class="hljs-number">0.2</span>, saturation=<span class="hljs-number">0.2</span>),  <span class="hljs-comment"># 颜色抖动，增强模型对颜色变化的鲁棒性</span><br>            transforms.RandomRotation(<span class="hljs-number">15</span>),  <span class="hljs-comment"># 随机旋转，增加模型对旋转变换的鲁棒性</span><br>            transforms.ToTensor(),<br>            transforms.Normalize(mean, std),<br>        ])<br><br>        test_transform = transforms.Compose([  <span class="hljs-comment"># 定义测试集的预处理</span><br>            transforms.ToTensor(),<br>            transforms.Normalize(mean, std)<br>        ])<br><br>        <span class="hljs-comment"># 创建数据集和数据加载器</span><br>        train_dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=train_transform)<br>        test_dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">False</span>, download=<span class="hljs-literal">True</span>, transform=test_transform)<br>        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=<span class="hljs-literal">True</span>, num_workers=self.num_workers)<br>        test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=<span class="hljs-literal">False</span>, num_workers=self.num_workers)<br>        <span class="hljs-keyword">return</span> train_loader, test_loader<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_model</span>(<span class="hljs-params">self</span>):</span><br>        num_classes = <span class="hljs-number">10</span><br>        model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)<br>        model.fc = torch.nn.Linear(model.fc.in_features, num_classes)<br>        <span class="hljs-keyword">return</span> model<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_optimizer_and_scheduler</span>(<span class="hljs-params">self</span>):</span><br>        lr = <span class="hljs-number">0.01</span><br>        momentum = <span class="hljs-number">0.9</span><br>        weight_decay = <span class="hljs-number">1e-4</span><br>        optimizer = torch.optim.SGD(self.model.parameters(), lr=lr, momentum=momentum, weight_decay=weight_decay)<br>        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.num_epochs)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Optimizer: <span class="hljs-subst">&#123;optimizer.__class__.__name__&#125;</span>, lr=<span class="hljs-subst">&#123;lr&#125;</span>, momentum=<span class="hljs-subst">&#123;momentum&#125;</span>, weight_decay=<span class="hljs-subst">&#123;weight_decay&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Scheduler: <span class="hljs-subst">&#123;scheduler.__class__.__name__&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;You can change the optimizer and scheduler in the load_optimizer_and_scheduler method!&quot;</span>)<br>        <span class="hljs-keyword">return</span> optimizer, scheduler<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_model</span>(<span class="hljs-params">self, filename</span>):</span><br>        torch.save(self.model.state_dict(), os.path.join(self.save_dir, <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;filename&#125;</span>.pt&quot;</span>))<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_graph</span>(<span class="hljs-params">self, epoch</span>):</span><br>        <span class="hljs-comment"># 展示训练过程</span><br>        history_np = np.array(self.history)<br>        plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>))  <span class="hljs-comment"># 创建一个10*10的画布绘制损失曲线图</span><br>        plt.plot(np.arange(<span class="hljs-number">1</span>, epoch + <span class="hljs-number">1</span>), (history_np[:, [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>]]))  <span class="hljs-comment"># 画出训练集损失和验证集损失</span><br>        plt.legend([<span class="hljs-string">&#x27;Train Loss&#x27;</span>, <span class="hljs-string">&#x27;Test Loss&#x27;</span>])  <span class="hljs-comment"># 显示图例</span><br>        plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)  <span class="hljs-comment"># 设置x轴标签</span><br>        plt.ylabel(<span class="hljs-string">&#x27;Loss&#x27;</span>)  <span class="hljs-comment"># 设置y轴标签</span><br>        x_ticks = np.arange(<span class="hljs-number">0</span>, epoch + <span class="hljs-number">1</span>, step=<span class="hljs-number">10</span>)<br>        x_ticks[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>  <span class="hljs-comment"># epoch是从1开始的</span><br>        plt.xticks(x_ticks)  <span class="hljs-comment"># 设置坐标轴刻度</span><br>        plt.yticks(np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">2.05</span>, <span class="hljs-number">0.1</span>))  <span class="hljs-comment"># 设置坐标轴刻度</span><br>        plt.grid()  <span class="hljs-comment"># 画出网格</span><br>        plt.gca().set_ylim([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>])  <span class="hljs-comment"># 设置y轴范围</span><br>        best_test_loss_idx = np.argmin(history_np[:, <span class="hljs-number">2</span>])<br>        best_test_loss = history_np[best_test_loss_idx, <span class="hljs-number">2</span>]<br>        plt.text(<br>            <span class="hljs-number">0.1</span>,<br>            <span class="hljs-number">1.05</span>,<br>            <span class="hljs-string">f&#x27;Best test loss: <span class="hljs-subst">&#123;best_test_loss:<span class="hljs-number">.4</span>f&#125;</span>, epoch: <span class="hljs-subst">&#123;best_test_loss_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>,<br>            ha=<span class="hljs-string">&#x27;center&#x27;</span>,<br>            va=<span class="hljs-string">&#x27;center&#x27;</span>,<br>            transform=plt.gca().transAxes<br>        )<br>        plt.savefig(os.path.join(self.save_dir, <span class="hljs-string">&#x27;loss_curve.png&#x27;</span>))  <span class="hljs-comment"># 保存图片</span><br>        plt.close()  <span class="hljs-comment"># 关闭画布</span><br><br>        plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>))  <span class="hljs-comment"># 创建一个10*10的画布绘制准确率曲线图</span><br>        plt.plot(np.arange(<span class="hljs-number">1</span>, epoch + <span class="hljs-number">1</span>), (history_np[:, [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>]]))  <span class="hljs-comment"># 画出训练集准确率和验证集准确率</span><br>        plt.legend([<span class="hljs-string">&#x27;Train Accuracy&#x27;</span>, <span class="hljs-string">&#x27;Test Accuracy&#x27;</span>])  <span class="hljs-comment"># 显示图例</span><br>        plt.xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)  <span class="hljs-comment"># 设置x轴标签</span><br>        plt.ylabel(<span class="hljs-string">&#x27;Accuracy&#x27;</span>)  <span class="hljs-comment"># 设置y轴标签</span><br>        x_ticks = np.arange(<span class="hljs-number">0</span>, epoch + <span class="hljs-number">1</span>, step=<span class="hljs-number">10</span>)<br>        x_ticks[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>  <span class="hljs-comment"># epoch是从1开始的</span><br>        plt.xticks(x_ticks)  <span class="hljs-comment"># 设置坐标轴刻度</span><br>        plt.yticks(np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">1.05</span>, <span class="hljs-number">0.05</span>))  <span class="hljs-comment"># 设置坐标轴刻度</span><br>        plt.grid()  <span class="hljs-comment"># 画出网格</span><br>        best_test_acc_idx = np.argmax(history_np[:, <span class="hljs-number">3</span>])<br>        best_test_acc = history_np[best_test_acc_idx, <span class="hljs-number">3</span>]<br>        plt.text(<br>            <span class="hljs-number">0.1</span>,<br>            <span class="hljs-number">1.05</span>,<br>            <span class="hljs-string">f&#x27;Best test acc: <span class="hljs-subst">&#123;best_test_acc:<span class="hljs-number">.4</span>f&#125;</span>, epoch: <span class="hljs-subst">&#123;best_test_acc_idx + <span class="hljs-number">1</span>&#125;</span>&#x27;</span>,<br>            ha=<span class="hljs-string">&#x27;center&#x27;</span>,<br>            va=<span class="hljs-string">&#x27;center&#x27;</span>,<br>            transform=plt.gca().transAxes<br>        )<br>        plt.savefig(os.path.join(self.save_dir, <span class="hljs-string">&#x27;acc_curve.png&#x27;</span>))  <span class="hljs-comment"># 保存图片</span><br>        plt.close()  <span class="hljs-comment"># 关闭画布</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train</span>(<span class="hljs-params">self, epoch</span>):</span><br>        train_total_loss = <span class="hljs-number">0</span><br>        train_total_acc = <span class="hljs-number">0</span><br>        self.model.train()<br>        <span class="hljs-keyword">for</span> images, labels <span class="hljs-keyword">in</span> tqdm.tqdm(self.train_loader, total=<span class="hljs-built_in">len</span>(self.train_loader),<br>                                        desc=<span class="hljs-string">f&#x27;Training Epoch <span class="hljs-subst">&#123;epoch&#125;</span>/<span class="hljs-subst">&#123;self.num_epochs&#125;</span>&#x27;</span>, delay=<span class="hljs-number">0.1</span>):<br>            images = images.to(self.device)<br>            labels = labels.to(self.device)<br>            outputs = self.model(images)<br>            loss = F.cross_entropy(outputs, labels)<br>            self.optimizer.zero_grad()<br>            loss.backward()<br>            self.optimizer.step()<br>            train_total_loss += loss.item()<br>            train_total_acc += (outputs.argmax(dim=<span class="hljs-number">1</span>) == labels).<span class="hljs-built_in">float</span>().<span class="hljs-built_in">sum</span>().item()<br>        train_avg_loss = train_total_loss / <span class="hljs-built_in">len</span>(self.train_loader)<br>        train_avg_acc = train_total_acc / <span class="hljs-built_in">len</span>(self.train_loader.dataset)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>/<span class="hljs-subst">&#123;self.num_epochs&#125;</span>, Train Loss: <span class="hljs-subst">&#123;train_avg_loss:<span class="hljs-number">.4</span>f&#125;</span>, Train Acc: <span class="hljs-subst">&#123;train_avg_acc:<span class="hljs-number">.4</span>f&#125;</span>&#x27;</span>)<br>        <span class="hljs-keyword">return</span> train_avg_loss, train_avg_acc<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test</span>(<span class="hljs-params">self, epoch</span>):</span><br>        test_total_loss = <span class="hljs-number">0</span><br>        test_total_acc = <span class="hljs-number">0</span><br>        self.model.<span class="hljs-built_in">eval</span>()<br>        <span class="hljs-keyword">with</span> torch.no_grad():<br>            <span class="hljs-keyword">for</span> images, labels <span class="hljs-keyword">in</span> tqdm.tqdm(self.test_loader, total=<span class="hljs-built_in">len</span>(self.test_loader),<br>                                            desc=<span class="hljs-string">f&#x27;Testing Epoch <span class="hljs-subst">&#123;epoch&#125;</span>/<span class="hljs-subst">&#123;self.num_epochs&#125;</span>&#x27;</span>, delay=<span class="hljs-number">0.1</span>):<br>                images = images.to(self.device)<br>                labels = labels.to(self.device)<br>                outputs = self.model(images)<br>                loss = F.cross_entropy(outputs, labels)<br>                test_total_loss += loss.item()<br>                test_total_acc += (outputs.argmax(dim=<span class="hljs-number">1</span>) == labels).<span class="hljs-built_in">float</span>().<span class="hljs-built_in">sum</span>().item()<br>        test_avg_loss = test_total_loss / <span class="hljs-built_in">len</span>(self.test_loader)<br>        test_avg_acc = test_total_acc / <span class="hljs-built_in">len</span>(self.test_loader.dataset)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Epoch <span class="hljs-subst">&#123;epoch&#125;</span>/<span class="hljs-subst">&#123;self.num_epochs&#125;</span>, Test Loss: <span class="hljs-subst">&#123;test_avg_loss:<span class="hljs-number">.4</span>f&#125;</span>, Test Acc: <span class="hljs-subst">&#123;test_avg_acc:<span class="hljs-number">.4</span>f&#125;</span>&#x27;</span>)<br>        <span class="hljs-keyword">return</span> test_avg_loss, test_avg_acc<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self</span>):</span><br>        start_time = time.time()  <span class="hljs-comment"># 记录开始时间</span><br>        <span class="hljs-keyword">if</span> self.history:<br>            <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&quot;This object has already run, please create a new object&quot;</span>)<br>        <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span> + self.num_epochs):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Current lr: <span class="hljs-subst">&#123;self.scheduler.get_last_lr()[<span class="hljs-number">0</span>]:<span class="hljs-number">.6</span>f&#125;</span>&quot;</span>)<br>            train_loss, train_acc = self.train(epoch)<br>            test_loss, test_acc = self.test(epoch)<br>            self.history.append((train_loss, train_acc, test_loss, test_acc))<br>            self.scheduler.step()<br>            self.save_graph(epoch)<br>            self.save_model(<span class="hljs-string">&quot;last&quot;</span>)<br>            <span class="hljs-keyword">if</span> self.early_stopping(test_loss, test_acc, epoch):<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">if</span> self.early_stopping.current_patience == self.early_stopping.patience:<br>                self.save_model(<span class="hljs-string">&quot;best&quot;</span>)<br>            <span class="hljs-built_in">print</span>()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Training finished. &quot;</span><br>              <span class="hljs-string">f&quot;Best acc: <span class="hljs-subst">&#123;self.early_stopping.best_acc:<span class="hljs-number">.4</span>f&#125;</span> &quot;</span><br>              <span class="hljs-string">f&quot;and best loss: <span class="hljs-subst">&#123;self.early_stopping.best_loss:<span class="hljs-number">.4</span>f&#125;</span> &quot;</span><br>              <span class="hljs-string">f&quot;appear at epoch <span class="hljs-subst">&#123;self.early_stopping.best_epoch&#125;</span>&quot;</span>)<br>        end_time = time.time()  <span class="hljs-comment"># 记录结束时间</span><br>        period = <span class="hljs-built_in">round</span>(end_time - start_time)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;All time: <span class="hljs-subst">&#123;period&#125;</span> s&#x27;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;All Time: <span class="hljs-subst">&#123;period // <span class="hljs-number">60</span>:d&#125;</span> min <span class="hljs-subst">&#123;period % <span class="hljs-number">60</span>:d&#125;</span> s&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h4 id="定义剪枝训练类">5.4 定义剪枝训练类</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PruneTrainer</span>(<span class="hljs-params">BaseTrainer</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self,</span></span><br><span class="hljs-params"><span class="hljs-function">                 num_epochs,</span></span><br><span class="hljs-params"><span class="hljs-function">                 batch_size,</span></span><br><span class="hljs-params"><span class="hljs-function">                 save_dir=<span class="hljs-string">&quot;weight&quot;</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 device=<span class="hljs-string">&quot;cuda&quot;</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 num_workers=<span class="hljs-number">0</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 patience=<span class="hljs-number">10</span>,</span></span><br><span class="hljs-params"><span class="hljs-function">                 min_delta=<span class="hljs-number">0</span></span></span><br><span class="hljs-params"><span class="hljs-function">                 </span>):</span><br>        <span class="hljs-built_in">super</span>().__init__(num_epochs, batch_size, save_dir, device, num_workers, patience, min_delta)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_data_loader</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-comment"># 计算训练集的mean和std</span><br>        dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=transforms.ToTensor())<br>        data_loader = DataLoader(dataset, batch_size=<span class="hljs-built_in">len</span>(dataset), num_workers=self.num_workers)<br>        data = <span class="hljs-built_in">next</span>(<span class="hljs-built_in">iter</span>(data_loader))<br>        mean = torch.mean(data[<span class="hljs-number">0</span>], dim=(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)).tolist()  <span class="hljs-comment"># 计算均值</span><br>        std = torch.std(data[<span class="hljs-number">0</span>], dim=(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)).tolist()  <span class="hljs-comment"># 计算标准差</span><br><br>        <span class="hljs-comment"># 定义数据预处理</span><br>        train_transform = transforms.Compose([  <span class="hljs-comment"># 定义训练集的预处理</span><br>            transforms.RandomCrop(<span class="hljs-number">32</span>, padding=<span class="hljs-number">4</span>),  <span class="hljs-comment"># 随机裁剪，增强模型对图像位置的鲁棒性</span><br>            transforms.RandomHorizontalFlip(),  <span class="hljs-comment"># 随机水平翻转，增加数据的多样性</span><br>            transforms.ColorJitter(brightness=<span class="hljs-number">0.2</span>, contrast=<span class="hljs-number">0.2</span>, saturation=<span class="hljs-number">0.2</span>),  <span class="hljs-comment"># 颜色抖动，增强模型对颜色变化的鲁棒性</span><br>            transforms.RandomRotation(<span class="hljs-number">15</span>),  <span class="hljs-comment"># 随机旋转，增加模型对旋转变换的鲁棒性</span><br>            transforms.ToTensor(),<br>            transforms.Normalize(mean, std),<br>        ])<br><br>        test_transform = transforms.Compose([  <span class="hljs-comment"># 定义测试集的预处理</span><br>            transforms.ToTensor(),<br>            transforms.Normalize(mean, std)<br>        ])<br><br>        <span class="hljs-comment"># 创建数据集和数据加载器</span><br>        train_dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">True</span>, download=<span class="hljs-literal">True</span>, transform=train_transform)<br>        test_dataset = CIFAR10(root=<span class="hljs-string">&#x27;data&#x27;</span>, train=<span class="hljs-literal">False</span>, download=<span class="hljs-literal">True</span>, transform=test_transform)<br>        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=<span class="hljs-literal">True</span>, num_workers=self.num_workers)<br>        test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=<span class="hljs-literal">False</span>, num_workers=self.num_workers)<br>        <span class="hljs-keyword">return</span> train_loader, test_loader<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_model</span>(<span class="hljs-params">self</span>):</span><br>        num_classes = <span class="hljs-number">10</span><br>        model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)<br>        model.fc = torch.nn.Linear(model.fc.in_features, num_classes)<br>        <span class="hljs-keyword">return</span> model<br></code></pre></td></tr></table></figure>
+<h4 id="定义施加剪枝和移除剪枝的函数">5.5
+定义施加剪枝和移除剪枝的函数</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply_pruning</span>(<span class="hljs-params">model, prune_rate</span>):</span><br>    <span class="hljs-keyword">for</span> name, module <span class="hljs-keyword">in</span> model.named_modules():<br>        <span class="hljs-comment"># 对layer进行L1结构化剪枝</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(module, torch.nn.Conv2d):  <span class="hljs-comment"># 不对resent18的全连接层进行剪枝，因为是输出层</span><br>            <span class="hljs-keyword">if</span> prune_rate &gt; <span class="hljs-number">0</span>:<br>                prune.l1_unstructured(module, <span class="hljs-string">&#x27;weight&#x27;</span>, amount=prune_rate)<br>            <span class="hljs-keyword">else</span>:<br>                prune.identity(module, <span class="hljs-string">&#x27;weight&#x27;</span>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove_pruning</span>(<span class="hljs-params">model</span>):</span><br>    <span class="hljs-keyword">for</span> name, module <span class="hljs-keyword">in</span> model.named_modules():<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(module, torch.nn.Conv2d) <span class="hljs-keyword">or</span> <span class="hljs-built_in">isinstance</span>(module, torch.nn.Linear):<br>            <span class="hljs-keyword">if</span> prune.is_pruned(module):<br>                prune.remove(module, <span class="hljs-string">&#x27;weight&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h4 id="开始训练">5.6 开始训练</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    total_prune_rate = <span class="hljs-number">0</span><br>    per_prune_rate = <span class="hljs-number">0.5</span><br>    acc_decay_tol = <span class="hljs-number">0.02</span><br>    prune_trainer = PruneTrainer(<br>        num_epochs=<span class="hljs-number">100</span>,<br>        batch_size=<span class="hljs-number">256</span>,<br>        patience=<span class="hljs-number">20</span>,<br>        min_delta=<span class="hljs-number">0</span>,<br>        num_workers=<span class="hljs-number">2</span>,<br>        save_dir=<span class="hljs-string">f&quot;prune/rate_<span class="hljs-subst">&#123;total_prune_rate&#125;</span>&quot;</span>)<br>    apply_pruning(prune_trainer.model, <span class="hljs-number">0</span>)  <span class="hljs-comment"># 将模型剪枝化</span><br>    prune_trainer.run()<br>    history_best_acc = prune_trainer.early_stopping.best_acc<br>    pre_weight = torch.load(<span class="hljs-string">f&quot;prune/rate_<span class="hljs-subst">&#123;total_prune_rate&#125;</span>/best.pt&quot;</span>)<br>    pre_total_prune_rate = <span class="hljs-number">0</span><br>    pre_best_acc = prune_trainer.early_stopping.best_acc<br><br>    <span class="hljs-keyword">while</span> total_prune_rate &lt; <span class="hljs-number">1</span>:<br>        total_prune_rate += (<span class="hljs-number">1</span> - total_prune_rate) * per_prune_rate<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;prune rate: <span class="hljs-subst">&#123;total_prune_rate&#125;</span>&quot;</span>)<br>        prune_trainer = PruneTrainer(<br>            num_epochs=<span class="hljs-number">100</span>,<br>            batch_size=<span class="hljs-number">256</span>,<br>            patience=<span class="hljs-number">20</span>,<br>            min_delta=<span class="hljs-number">0</span>,<br>            num_workers=<span class="hljs-number">2</span>,<br>            save_dir=<span class="hljs-string">f&quot;prune/rate_<span class="hljs-subst">&#123;total_prune_rate&#125;</span>&quot;</span>)<br>        apply_pruning(prune_trainer.model, <span class="hljs-number">0</span>)<br>        prune_trainer.model.load_state_dict(pre_weight)<br>        apply_pruning(prune_trainer.model, total_prune_rate)<br>        prune_trainer.run()<br>        <span class="hljs-keyword">if</span> prune_trainer.early_stopping.best_acc &lt; history_best_acc - acc_decay_tol:<br>            <span class="hljs-comment"># 将上次的剪枝作为最终结果</span><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;acc decay more than <span class="hljs-subst">&#123;acc_decay_tol&#125;</span>, stop pruning, &quot;</span><br>                  <span class="hljs-string">f&quot;final prune rate: <span class="hljs-subst">&#123;pre_total_prune_rate&#125;</span>, &quot;</span><br>                  <span class="hljs-string">f&quot;final best acc: <span class="hljs-subst">&#123;pre_best_acc&#125;</span>&quot;</span>)<br>            prune_trainer.model.load_state_dict(pre_weight)<br>            remove_pruning(prune_trainer.model)<br>            torch.save(prune_trainer.model.state_dict(), <span class="hljs-string">f&quot;prune/best.pt&quot;</span>)<br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># 继续剪枝</span><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;history_best_acc: <span class="hljs-subst">&#123;history_best_acc&#125;</span>, &quot;</span><br>                  <span class="hljs-string">f&quot;current best_acc: <span class="hljs-subst">&#123;prune_trainer.early_stopping.best_acc&#125;</span>, &quot;</span><br>                  <span class="hljs-string">f&quot;acc decay less than <span class="hljs-subst">&#123;acc_decay_tol&#125;</span>, continue pruning\n&quot;</span>)<br>            <span class="hljs-keyword">if</span> prune_trainer.early_stopping.best_acc &gt; history_best_acc:<br>                history_best_acc = prune_trainer.early_stopping.best_acc<br>            pre_weight = prune_trainer.model.state_dict()<br>            pre_total_prune_rate = total_prune_rate<br>            pre_best_acc = prune_trainer.early_stopping.best_acc<br></code></pre></td></tr></table></figure>
+<p>　　</p>
+<blockquote>
+<p>转载自：https://www.cnblogs.com/marui199710/articles/18283785</p>
+</blockquote>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">#模型压缩</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>模型压缩——剪枝</div>
+      <div>http://example.com/2025/06/11/模型剪枝/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月11日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/12/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E2%80%94%E2%80%94%E8%92%B8%E9%A6%8F/" title="模型压缩——知识蒸馏">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">模型压缩——知识蒸馏</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/05/%E5%88%86%E5%B8%83%E5%BC%8F%E6%8E%A8%E7%90%86%E4%B8%8E%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2/" title="分布式推理与量化部署(vLLM、LMDeploy)">
+                        <span class="hidden-mobile">分布式推理与量化部署(vLLM、LMDeploy)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

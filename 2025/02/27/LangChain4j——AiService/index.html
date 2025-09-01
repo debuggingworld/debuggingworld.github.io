@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Supercharge your Java application with the power of LLMs 官网：https:&#x2F;&#x2F;docs.langchain4j.dev&#x2F;  1. HelloWorld 依赖： 12345678910&lt;dependency&gt;    &lt;groupId&gt;dev.langchain4j&lt;&#x2F;groupId&gt;    &lt;arti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LangChain4j——AiService">
+<meta property="og:url" content="http://example.com/2025/02/27/LangChain4j%E2%80%94%E2%80%94AiService/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Supercharge your Java application with the power of LLMs 官网：https:&#x2F;&#x2F;docs.langchain4j.dev&#x2F;  1. HelloWorld 依赖： 12345678910&lt;dependency&gt;    &lt;groupId&gt;dev.langchain4j&lt;&#x2F;groupId&gt;    &lt;arti">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503091614093.png">
+<meta property="article:published_time" content="2025-02-27T03:09:03.000Z">
+<meta property="article:modified_time" content="2025-09-01T02:21:27.784Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="LangChain4j">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503091614093.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>LangChain4j——AiService - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LangChain4j——AiService"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-02-27 11:09" pubdate>
+          2025年2月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LangChain4j——AiService</h1>
+            
+            <div class="markdown-body">
+              
+              <p>Supercharge your Java application with the power of LLMs
+官网：https://docs.langchain4j.dev/</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202503091614093.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<h3 id="helloworld">1. HelloWorld</h3>
+<p>依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>dev.langchain4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>langchain4j<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0-beta1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>dev.langchain4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>langchain4j-open-ai<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0-beta1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="对话">1.1 对话</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">ChatLanguageModel model = OpenAiChatModel.builder().apiKey(<span class="hljs-string">&quot;demo&quot;</span>).modelName(<span class="hljs-string">&quot;gpt-4o-mini&quot;</span>).build();<br>String answer = model.chat(<span class="hljs-string">&quot;你好，你是谁？&quot;</span>);<br>System.out.println(answer);<br></code></pre></td></tr></table></figure>
+<h4 id="多轮对话">1.2 多轮对话</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">ChatLanguageModel model = OpenAiChatModel.builder().apiKey(<span class="hljs-string">&quot;demo&quot;</span>).modelName(<span class="hljs-string">&quot;gpt-4o-mini&quot;</span>).build();<br><br>UserMessage userMessage = UserMessage.userMessage(<span class="hljs-string">&quot;你好，我是无极&quot;</span>);<br>AiMessage aiMessage = model.chat(userMessage).aiMessage();<br>AiMessage aiMessage2 = model.chat(userMessage, aiMessage, UserMessage.userMessage(<span class="hljs-string">&quot;我是谁&quot;</span>)).aiMessage();<br>System.out.println(aiMessage2);<br></code></pre></td></tr></table></figure>
+<h4 id="流式输出">1.3 流式输出</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java">Duration sixtySeconds = Duration.ofSeconds(<span class="hljs-number">60</span>);<br>StreamingChatLanguageModel streamingChatModel = ZhipuAiStreamingChatModel.builder().apiKey(apiKey) .callTimeout(sixtySeconds).connectTimeout(sixtySeconds).writeTimeout(sixtySeconds).readTimeout(sixtySeconds).build();<br><br>streamingChatModel.chat(<span class="hljs-string">&quot;你好，你是谁？&quot;</span>, <span class="hljs-keyword">new</span> StreamingChatResponseHandler() &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onPartialResponse</span><span class="hljs-params">(String partialResponse)</span> </span>&#123;<br>        System.out.println(partialResponse);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCompleteResponse</span><span class="hljs-params">(ChatResponse completeResponse)</span> </span>&#123;<br>        System.out.println(completeResponse.aiMessage());<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onError</span><span class="hljs-params">(Throwable error)</span> </span>&#123;<br>        System.out.println(error.getMessage());<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<h4 id="多模态模型">1.4 多模态模型</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">ImageModel imageModel = ZhipuAiImageModel.builder().apiKey(apiKey).callTimeout(sixtySeconds)<br>        .connectTimeout(sixtySeconds).writeTimeout(sixtySeconds).readTimeout(sixtySeconds).build();<br>Image image = imageModel.generate(<span class="hljs-string">&quot;一只可爱的猫&quot;</span>).content();<br>System.out.println(image.url());<br>System.out.println(image.base64Data());<br></code></pre></td></tr></table></figure>
+<h3 id="aiservice">2. AiService</h3>
+<h4 id="基本用法">2.1 基本用法</h4>
+<p>首先，我们定义一个接口Writer，表示作家：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Writer</span> </span>&#123;<br>    <span class="hljs-function">String <span class="hljs-title">write</span><span class="hljs-params">(String title)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>利用定义AiService来创建一个Writer代理对象，然后获取模型回答结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">ChatLanguageModel model = ZhipuChatModelUtil.getZhipuChatModel();<br>Writer writer = AiServices.create(Writer.class, model);<br><br>String result = writer.write(<span class="hljs-string">&quot;写一篇关于机器学习算法的文章,两百字左右&quot;</span>);<br>System.out.println(result);<br></code></pre></td></tr></table></figure>
+<h4 id="systemmessage">2.2 <span class="citation"
+data-cites="SystemMessage">@SystemMessage</span></h4>
+<p>我们只需要在接口方法上定义 <span class="citation"
+data-cites="SystemMessage">@SystemMessage</span>，就可以指定系统提示词。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Writer</span> </span>&#123;<br>    <span class="hljs-meta">@SystemMessage(&quot;你是一名资深机器学习专家，根据输入的主题写一篇200字左右的论文&quot;)</span><br>    <span class="hljs-function">String <span class="hljs-title">write</span><span class="hljs-params">(String title)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">Writer writer = AiServices.create(Writer.class, model);<br>String result = writer.write(<span class="hljs-string">&quot;强化学习&quot;</span>);<br>System.out.println(result);<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css">标题：强化学习在复杂决策环境中的应用与挑战<br><br>摘要：强化学习作为一种先进的学习范式，通过智能体与环境交互，实现决策优化。本文综述了强化学习的基本原理、算法及其在复杂决策环境中的应用。首先介绍了强化学习的基本概念和主要算法，如<span class="hljs-selector-tag">Q</span>学习、SARSA、深度<span class="hljs-selector-tag">Q</span>网络等。接着探讨了强化学习在机器人控制、游戏、推荐系统等领域的应用实例。然而，强化学习在实际应用中仍面临诸多挑战，如样本效率、稀疏奖励、长期依赖等。本文最后分析了强化学习的研究趋势和未来发展方向。<br><br>关键词：强化学习；复杂决策；应用；挑战；研究趋势<br></code></pre></td></tr></table></figure>
+<h4 id="v">2.3 <span class="citation" data-cites="V">@V</span></h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Writer</span> </span>&#123;<br>    <span class="hljs-meta">@SystemMessage(&quot;你是一名资深机器学习专家，根据输入的主题写一篇&#123;&#123;num&#125;&#125;字左右的论文&quot;)</span><br>    <span class="hljs-function">String <span class="hljs-title">write</span><span class="hljs-params">(<span class="hljs-meta">@UserMessage</span> String title, <span class="hljs-meta">@V(&quot;num&quot;)</span> <span class="hljs-keyword">int</span> num)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中{num}就是变量，该变量的值由用户在调用write方法时指定，注意由于write()有两个参数了，需要在title参数前面定义@UserMessage，表示title是用户消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">String result = writer.write(<span class="hljs-string">&quot;强化学习&quot;</span>,<span class="hljs-number">200</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="moderate-和-moderationmodel">2.4 <span class="citation"
+data-cites="Moderate">@Moderate</span> 和 ModerationModel</h4>
+<p>敏感词校验</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Writer</span> </span>&#123;<br>    <span class="hljs-meta">@Moderate</span><br>    <span class="hljs-function">String <span class="hljs-title">write</span><span class="hljs-params">(String title)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">ChatLanguageModel model = ZhipuChatModelUtil.getZhipuChatModel();<br>ModerationModel moderationModel = OpenAiModerationModel.builder().apiKey(<span class="hljs-string">&quot;demo&quot;</span>).build();<br>Writer writer = AiServices.builder(Writer.class).chatLanguageModel(model).moderationModel(moderationModel).build();<br><br>String result = writer.write(<span class="hljs-string">&quot;如何杀人&quot;</span>);<br>System.out.println(result);<br></code></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js">Exception <span class="hljs-keyword">in</span> thread <span class="hljs-string">&quot;main&quot;</span> dev.langchain4j.service.ModerationException: Text <span class="hljs-string">&quot;如何杀人&quot;</span> violates content policy<br>	at dev.langchain4j.service.AiServices.verifyModerationIfNeeded(AiServices.java:<span class="hljs-number">453</span>)<br>	at dev.langchain4j.service.DefaultAiServices$1.invoke(DefaultAiServices.java:<span class="hljs-number">217</span>)<br>	at jdk.proxy2/jdk.proxy2.$Proxy4.write(Unknown Source)<br>	at com.debug.ai.spring_ai_test.AiService.Main.main(Main.java:<span class="hljs-number">24</span>)<br></code></pre></td></tr></table></figure>
+<h4 id="源码分析">2.5 源码分析</h4>
+<h5 id="代理对象的创建流程">1. 代理对象的创建流程</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 验证是否配置了ChatModel</span><br>    performBasicValidation();<br>  <br>    <span class="hljs-keyword">for</span> (Method method : context.aiServiceClass.getMethods()) &#123;<br>        <span class="hljs-comment">// 验证接口中是否有方法上加了@Moderate，但是又没有配置 ModerationModel</span><br>        <span class="hljs-keyword">if</span> (method.isAnnotationPresent(Moderate.class) &amp;&amp; context.moderationModel == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> illegalConfiguration(<span class="hljs-string">&quot;The @Moderate annotation is present, but the moderationModel is not set up. Please ensure a valid moderationModel is configured before using the @Moderate annotation.&quot;</span>);<br>        &#125;<br>      <br>        <span class="hljs-comment">// 确保不使用通配符和/ 或参数化类型作为服务方法返回类型</span><br>        <span class="hljs-keyword">if</span> (method.getReturnType() == Result.class<br>                || method.getReturnType() == List.class<br>                || method.getReturnType() == Set.class) &#123;<br>            TypeUtils.validateReturnTypesAreProperlyParametrized(method.getName(),method.getGenericReturnType());<br>        &#125;<br><br>        <span class="hljs-comment">// 验证是不是没有提供 ChatMemoryProvider，但使用了 @MemoryId</span><br>        <span class="hljs-keyword">if</span> (context.chatMemoryProvider == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">for</span> (Parameter parameter : method.getParameters()) &#123;<br>                <span class="hljs-keyword">if</span> (parameter.isAnnotationPresent(MemoryId.class)) &#123;<br>                    <span class="hljs-keyword">throw</span> illegalConfiguration(<span class="hljs-string">&quot;In order to use @MemoryId, please configure the ChatMemoryProvider on the &#x27;%s&#x27;.&quot;</span>, context.aiServiceClass.getName());<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// JDK动态代理创建代理对象</span><br>    Object proxyInstance = Proxy.newProxyInstance(<br>            context.aiServiceClass.getClassLoader(),<br>            <span class="hljs-keyword">new</span> Class&lt;?&gt;[] &#123;context.aiServiceClass&#125;,<br>            <span class="hljs-keyword">new</span> InvocationHandler() &#123;<br><br>                <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ExecutorService executor = Executors.newCachedThreadPool();<br><br>                <span class="hljs-meta">@Override</span><br>                <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;  <br>                <span class="hljs-comment">// ...</span><br>                &#125;<br>            &#125;);<br><br>    <span class="hljs-keyword">return</span> (T) proxyInstance;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="代理对象的方法执行流程">2. 代理对象的方法执行流程</h5>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (method.getDeclaringClass() == Object.class) &#123;<br>        <span class="hljs-comment">// methods like equals(), hashCode() and toString() should not be handled by this proxy</span><br>        <span class="hljs-keyword">return</span> method.invoke(<span class="hljs-keyword">this</span>, args);<br>    &#125;<br><br>    <span class="hljs-comment">// 参数校验：如果有多个参数，是不是都带有注解</span><br>    validateParameters(method);<br><br>    <span class="hljs-comment">// @MemoryId 注解的值或者默认值</span><br>    Object memoryId = findMemoryId(method, args).orElse(DEFAULT);<br><br>    <span class="hljs-comment">// 获取 @SystemMessage 注解的所有值拼接成多行，并替换变量</span><br>    Optional&lt;SystemMessage&gt; systemMessage = prepareSystemMessage(memoryId, method, args);<br>  <br>    <span class="hljs-comment">// 获取方法上@UserMessage &amp; 参数上@UserMessage</span><br>    <span class="hljs-comment">// 同时存在抛错</span><br>    <span class="hljs-comment">// 都不存在，如果第一次参数没有注解，将第一个参数作为userMessage</span><br>    UserMessage userMessage = prepareUserMessage(method, args);<br>    <span class="hljs-comment">// 获取历史消息或者retrieved内容</span><br>    AugmentationResult augmentationResult = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">if</span> (context.retrievalAugmentor != <span class="hljs-keyword">null</span>) &#123;<br>        List&lt;ChatMessage&gt; chatMemory = context.hasChatMemory()<br>                ? context.chatMemory(memoryId).messages()<br>                : <span class="hljs-keyword">null</span>;<br>        Metadata metadata = Metadata.from(userMessage, memoryId, chatMemory);<br>        AugmentationRequest augmentationRequest = <span class="hljs-keyword">new</span> AugmentationRequest(userMessage, metadata);<br>        augmentationResult = context.retrievalAugmentor.augment(augmentationRequest);<br>        userMessage = (UserMessage) augmentationResult.chatMessage();<br>    &#125;<br><br>    <span class="hljs-comment">// TODO give user ability to provide custom OutputParser</span><br>    Type returnType = method.getGenericReturnType();<br><br>    <span class="hljs-keyword">boolean</span> streaming = returnType == TokenStream.class || canAdaptTokenStreamTo(returnType);<br><br>    <span class="hljs-keyword">boolean</span> supportsJsonSchema =<br>            supportsJsonSchema(); <span class="hljs-comment">// TODO should it be called for returnType==String?</span><br>    Optional&lt;JsonSchema&gt; jsonSchema = Optional.empty();<br>    <span class="hljs-keyword">if</span> (supportsJsonSchema &amp;&amp; !streaming) &#123;<br>        jsonSchema = jsonSchemaFrom(returnType);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> ((!supportsJsonSchema || jsonSchema.isEmpty()) &amp;&amp; !streaming) &#123;<br>        <span class="hljs-comment">// TODO append after storing in the memory?</span><br>        userMessage = appendOutputFormatInstructions(returnType, userMessage);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (context.hasChatMemory()) &#123;<br>        ChatMemory chatMemory = context.chatMemory(memoryId);<br>        systemMessage.ifPresent(chatMemory::add);<br>        chatMemory.add(userMessage);<br>    &#125;<br><br>    List&lt;ChatMessage&gt; messages;<br>    <span class="hljs-keyword">if</span> (context.hasChatMemory()) &#123;<br>        messages = context.chatMemory(memoryId).messages();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        messages = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>        systemMessage.ifPresent(messages::add);<br>        messages.add(userMessage);<br>    &#125;<br><br>    Future&lt;Moderation&gt; moderationFuture = triggerModerationIfNeeded(method, messages);<br><br>    ToolExecutionContext toolExecutionContext =<br>            context.toolService.executionContext(memoryId, userMessage);<br><br>    <span class="hljs-keyword">if</span> (streaming) &#123;<br>        TokenStream tokenStream = <span class="hljs-keyword">new</span> AiServiceTokenStream(<br>                messages,<br>                toolExecutionContext.toolSpecifications(),<br>                toolExecutionContext.toolExecutors(),<br>                augmentationResult != <span class="hljs-keyword">null</span> ? augmentationResult.contents() : <span class="hljs-keyword">null</span>,<br>                context,<br>                memoryId);<br>        <span class="hljs-comment">// TODO moderation</span><br>        <span class="hljs-keyword">if</span> (returnType == TokenStream.class) &#123;<br>            <span class="hljs-keyword">return</span> tokenStream;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> adapt(tokenStream, returnType);<br>        &#125;<br>    &#125;<br><br>    ResponseFormat responseFormat = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">if</span> (supportsJsonSchema &amp;&amp; jsonSchema.isPresent()) &#123;<br>        responseFormat = ResponseFormat.builder()<br>                .type(JSON)<br>                .jsonSchema(jsonSchema.get())<br>                .build();<br>    &#125;<br><br>    ChatRequestParameters parameters = ChatRequestParameters.builder()<br>            .toolSpecifications(toolExecutionContext.toolSpecifications())<br>            .responseFormat(responseFormat)<br>            .build();<br><br>    ChatRequest chatRequest = ChatRequest.builder()<br>            .messages(messages)<br>            .parameters(parameters)<br>            .build();<br><br>    ChatResponse chatResponse = context.chatModel.chat(chatRequest);<br><br>    verifyModerationIfNeeded(moderationFuture);<br><br>    ToolExecutionResult toolExecutionResult = context.toolService.executeInferenceAndToolsLoop(<br>            chatResponse,<br>            parameters,<br>            messages,<br>            context.chatModel,<br>            context.hasChatMemory() ? context.chatMemory(memoryId) : <span class="hljs-keyword">null</span>,<br>            memoryId,<br>            toolExecutionContext.toolExecutors());<br><br>    chatResponse = toolExecutionResult.chatResponse();<br>    FinishReason finishReason = chatResponse.metadata().finishReason();<br>    Response&lt;AiMessage&gt; response = Response.from(<br>            chatResponse.aiMessage(), toolExecutionResult.tokenUsageAccumulator(), finishReason);<br><br>    Object parsedResponse = serviceOutputParser.parse(response, returnType);<br>    <span class="hljs-keyword">if</span> (typeHasRawClass(returnType, Result.class)) &#123;<br>        <span class="hljs-keyword">return</span> Result.builder()<br>                .content(parsedResponse)<br>                .tokenUsage(toolExecutionResult.tokenUsageAccumulator())<br>                .sources(augmentationResult == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : augmentationResult.contents())<br>                .finishReason(finishReason)<br>                .toolExecutions(toolExecutionResult.toolExecutions())<br>                .build();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> parsedResponse;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/LangChain4j/">#LangChain4j</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LangChain4j——AiService</div>
+      <div>http://example.com/2025/02/27/LangChain4j——AiService/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年2月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/03/LangChain4j%E2%80%94%E2%80%94ChatMemory%E3%80%81Tools%E3%80%81Embedding/" title="LangChain4j——ChatMemory、Tools、Embedding">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LangChain4j——ChatMemory、Tools、Embedding</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/24/LangChain%E2%80%94%E2%80%94%E5%AE%9E%E6%88%98%EF%BC%9A%E6%88%BF%E4%BA%A7%E9%94%80%E5%94%AE%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA/" title="LangChain——房产销售聊天机器人">
+                        <span class="hidden-mobile">LangChain——房产销售聊天机器人</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

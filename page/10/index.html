@@ -239,15 +239,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" target="_blank">
-          Go——流程控制
+        <a href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
+          设计模式——观察者模式
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
         <div>
           
-          1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    1234567
+          1. 模式定义 定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。  使用场景： + 事件多级触发场景 + 跨系统的消息交换场景，如消息队列、事件总线的处理机制 优点： + 解除耦合，让耦合的双方都依赖于抽象（符合开闭原则） + 可以在运行时建立对象之间的关系 缺点： + 耗时：注册较多的观察者的时候，通知比较耗时 + 如果
         </div>
       </a>
 
@@ -255,313 +255,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-29 10:54" pubdate>
-              2021-12-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_blank">
-          Go——运算符
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_blank">
-        <div>
-          
-          1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-28 22:34" pubdate>
-              2021-12-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/22/Go%E2%80%94%E2%80%94testify/" target="_blank">
-          Go——testify
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/22/Go%E2%80%94%E2%80%94testify/" target="_blank">
-        <div>
-          
-          testify 扩展了 testing 标准库，断言库 assert，测试替身 mock 和测试套件 suite 等，让我们编写测试代码更容易！ 1. 引入 安装 testify 库： 1$ go get -u github.com&#x2F;stretchr&#x2F;testify 如果 go get 失败： 12$ go env -w GO111MODULE&#x3D;on$ go env -w GOPROXY&#x3D;http
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-22 23:39" pubdate>
-              2021-12-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" target="_blank">
-          Go——测试
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/20/Go%E2%80%94%E2%80%94%E6%B5%8B%E8%AF%95/" target="_blank">
-        <div>
-          
-          1. 基本测试框架 在 Go 语言中，所有的测试都需要以 _test.go 结尾，这样 go build 不会去编译 _test.go 结尾的文件，而 go test 会去编译 _test.go 结尾的文件。 在编写测试的时候，会用到 testing 这个包，在这个包中，常用的类型有下面这些:  testing.T（单元测试） testing.B（基准测试） testing.M（TestMain
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-20 22:30" pubdate>
-              2021-12-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_blank">
-          Go——变量、常量与数据类型
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/18/Go%E2%80%94%E2%80%94%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_blank">
-        <div>
-          
-          1. 变量 1.1 变量的声明  指定变量类型，如果没有初始化，则变量默认为零值。 根据值自行判定变量类型 简短形式，使用 :&#x3D; 赋值操作符（只能声明局部变量）  【注】局部变量声明后未使用，编译报错。 &gt;申明变量没有初始化就为零值 &gt; + 数值类型为 0 &gt; + 布尔类型为 false &gt; + 字符串为 &quot;&quot;（空字符串） &gt; + 复杂类型为 nil（指针、切片、ma
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-18 23:29" pubdate>
-              2021-12-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Golang/">#Golang</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/12/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——模板模式
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2021/12/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F/" target="_blank">
-        <div>
-          
-          1. 模式定义 定义一个操作的算法骨架，而将一些步骤延迟到子类中。Template Method 使得子类可以不改变一个算法的结构即可重定义该算法的某些 特定步骤。 优点： 1. 封装不变部分，扩展可变部分。 2. 提取公共代码，便于维护。 3. 行为由父类控制，子类实现。 缺点： + 每一个不同的实现都需要一个子类来实现，导致类的个数增加，使得系统更加庞大。  2. 示例 12345678910
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-17 21:42" pubdate>
-              2021-12-17
+            <time datetime="2022-03-12 17:43" pubdate>
+              2022-03-12
             </time>
           </div>
         
@@ -607,15 +302,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——责任链模式
+        <a href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
+          Kubernetes——k8s架构与核心组件
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
         <div>
           
-          1. 模式定义 为请求创建了一个接收者对象的链。 为了避免请求发送者与多个请求处理者耦合在一起，于是将所有请求的处理者通过前一对象记住其下一个对象的引用而连成一条链；当有请求发生时，可将请求沿着这条链传递，直到有对象处理它为止。 优点： 1. 降低耦合。它将请求的发送者和接收者解耦。 2. 可以控制执行顺序。可以动态增删责任以及调动他们的顺序。 5. 符合开闭原则和单一职责原则 缺点： 1. 不能
+          1. 什么是 Kubernetes Kubernetes(K8S)是由 Google 开源的生产级容器编排系统，是 Google 多年大规模容器管理技术 Borg 的开源版本 Kurbernets的本质是一组服务器集群，它可以在集群的每个节点上运行特定的程序，来对节点中的容器进行管理。它的目的就是实现资源管理的自动化，主要提供了如下的主要功能：  自我修复：一旦某一个容器崩溃，能够在1秒钟左右迅速
         </div>
       </a>
 
@@ -623,8 +318,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-15 22:43" pubdate>
-              2021-12-15
+            <time datetime="2022-03-11 23:45" pubdate>
+              2022-03-11
             </time>
           </div>
         
@@ -639,7 +334,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/Kubernetes/" class="category-chain-item">Kubernetes</a>
   
   
 
@@ -654,9 +349,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#行为型模式</a>
+              <a href="/tags/Kubernetes/">#Kubernetes</a>
             
           </div>
         
@@ -670,15 +363,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/13/GO%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
-          GO——入门
+        <a href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+          jenkins——构建持续集成环境
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/13/GO%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8/" target="_blank">
+      <a class="index-excerpt" href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
         <div>
           
-          1. 认识 Go 语言 1.1 GO 语言的 logo  #### 1.2 Go 语言的吉祥物  gopher 是一种生活在加拿大的小动物，中文名叫做囊地鼠。 ### 2. Go 语言特性 &gt; + 自动垃圾回收 &gt; + 更丰富的内置类型 &gt; + 函数多返回值 &gt; + 错误处理 &gt; + 匿名函数和闭包 &gt; + 类型和接口 &gt; + 并发编程 &gt; + 反射
+          更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取 拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;
         </div>
       </a>
 
@@ -686,8 +379,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-13 23:37" pubdate>
-              2021-12-13
+            <time datetime="2022-03-08 23:32" pubdate>
+              2022-03-08
             </time>
           </div>
         
@@ -702,7 +395,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Golang/" class="category-chain-item">Golang</a>
+  <a href="/categories/jenkins/" class="category-chain-item">jenkins</a>
   
   
 
@@ -717,7 +410,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Golang/">#Golang</a>
+              <a href="/tags/jenkins/">#jenkins</a>
             
           </div>
         
@@ -731,15 +424,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——策略模式
+        <a href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+          maven——nexus私服搭建
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/10/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
         <div>
           
-          1. 模式定义 定义了算法族，分别封装起来，让他们之间可以相互替换，此模式的变化独立于算法的使用者。  解决场景：一般是具有同类可替代的行为逻辑算法场景。比如；不同类型的交易方式（信用卡、支付宝、微信）、生成唯一 ID 策略（UUID、DB自增、DB+Redis、雪花算法、Leaf 算法）等，都可以使用策略模式进行行为包装，供给外部使用。 2. 示例 场景：模拟在购买商品时使用各种类型优惠券(满减
+          1. 私服使用场景  公司不能连接公网，可以用一个私服务来统一连接 公司内部 jar 组件的共享  2. nexus 下载安装 nexus 下载地址： https:&#x2F;&#x2F;sonatype-download.global.ssl.fastly.net&#x2F;nexus&#x2F;oss&#x2F;nexus-2.14.5-02-bundle.tar.gz 解压并设置环境变量 解压： 1tar -zxvf nexus-2.14.
         </div>
       </a>
 
@@ -747,8 +440,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-10 21:03" pubdate>
-              2021-12-10
+            <time datetime="2022-02-28 22:19" pubdate>
+              2022-02-28
             </time>
           </div>
         
@@ -763,7 +456,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
   
   
 
@@ -778,9 +471,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#行为型模式</a>
+              <a href="/tags/maven/">#maven</a>
             
           </div>
         
@@ -794,15 +485,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/12/09/java%E2%80%94%E2%80%94%E6%B3%9B%E5%9E%8B/" target="_blank">
-          java——泛型
+        <a href="/2022/02/28/docker%E2%80%94%E2%80%94docker%20compose%20%E5%AE%9E%E8%B7%B5/" target="_blank">
+          docker——docker compose 实践
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2021/12/09/java%E2%80%94%E2%80%94%E6%B3%9B%E5%9E%8B/" target="_blank">
+      <a class="index-excerpt" href="/2022/02/28/docker%E2%80%94%E2%80%94docker%20compose%20%E5%AE%9E%E8%B7%B5/" target="_blank">
         <div>
           
-          1.理解泛型 什么是泛型？为什么要使用泛型？ Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许程序员在编译时检测到非法的类型。 泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。 泛型，即“参数化类型”。就是将类型由原来的具体的类型参数化（称之为类型形参），然后在使用&#x2F;调用时传入具体的类型（类型实参）。 泛型可以用
+          docker-compose.yml 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879services:  minio:    image: xxxx
         </div>
       </a>
 
@@ -810,8 +501,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-09 21:50" pubdate>
-              2021-12-09
+            <time datetime="2022-02-28 20:03" pubdate>
+              2022-02-28
             </time>
           </div>
         
@@ -826,7 +517,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  <a href="/categories/docker/" class="category-chain-item">docker</a>
   
   
 
@@ -841,7 +532,312 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/java/">#java</a>
+              <a href="/tags/docker/">#docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
+          maven——生命周期与自定义插件开发
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
+        <div>
+          
+          1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1. 每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 2. 规范统一了 maven 的执行路径。 可以通过命令 mvn ${
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-28 20:03" pubdate>
+              2022-02-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/maven/">#maven</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
+          maven——基本概念与核心配置
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
+        <div>
+          
+          1. maven 安装与核心概念 maven 的功能：编译、打包、测试、依赖管理 1.1 安装  官网下载 Maven （http:&#x2F;&#x2F;maven.apache.org&#x2F;download.cgi） 解压指定目录 配置环境变量 检查安装是否成功 （mvn -version）  安装参考 1.2 maven 编译  创建 maven 项目 创建 src 文件 编写 pom 文件 执行编译命令  123
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-25 22:29" pubdate>
+              2022-02-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/maven/">#maven</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/" target="_blank">
+          Git——搭建私有Git服务
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/02/23/Git%E2%80%94%E2%80%94%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89Git%E6%9C%8D%E5%8A%A1/" target="_blank">
+        <div>
+          
+          1. git 支持的四种通信协议  Local(本地协议) ssh http(Dumb、Smart) git  1. 1 Local(本地协议) 基于本地文件系统或共享（NFS）文件系统进行访问. 优点：简单，直接使用了现有的文件权限和网络访问权限。 缺点：这种协议的缺陷就是共享文件系统本身的局限，只能在局域网，而且速度也慢。 适应场景：小团队，小项目临时搭建版本服务。  从本地 f&#x2F;git&#x2F;at
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-23 20:56" pubdate>
+              2022-02-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/" target="_blank">
+          Git——reset的三种模式
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/02/22/Git%E2%80%94%E2%80%94reset%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F/" target="_blank">
+        <div>
+          
+          1. reset 的三种模式   --hard：stage区和工作目录里的内容会被完全重置为和指定 HEAD 位置相同的内容。 --soft：保留工作目录和暂存区中未提交的内容，并把重置 HEAD 所带来的新的差异（回滚掉的commit较回滚后最新commit的修改）放进暂存区。 --mixed（默认）：工作区、暂存区未提交的内容以及由 reset 所导致的新差异，都会被放进工作区。   2. r
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-22 21:58" pubdate>
+              2022-02-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" target="_blank">
+          Git——底层原理
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2022/02/20/Git%E2%80%94%E2%80%94%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" target="_blank">
+        <div>
+          
+          1. GIT 存储对像 Git 是一个内容寻址文件系统，其核心部分是一个简单的键值对数据库（key-value data store），可以向数据库中插入任意内容，它会返回一个用于取回该值的hash 键。 git 键值库中插入数据： 12echo &quot;hello debuggingWorld&quot; | git hash-object -w --stdincfd6e024dbae18e
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-20 22:14" pubdate>
+              2022-02-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Git/" class="category-chain-item">Git</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -853,7 +849,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/9/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/11/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/9/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/#board">11</a><a class="page-number" href="/page/12/#board">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/11/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

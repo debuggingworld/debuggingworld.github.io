@@ -239,15 +239,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——享元模式
+        <a href="/2022/11/28/Mybatis%E2%80%94%E2%80%94%E5%8A%A8%E6%80%81sql-%E7%BC%93%E5%AD%98/" target="_blank">
+          Mybatis——动态SQL&amp;缓存
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/11/28/Mybatis%E2%80%94%E2%80%94%E5%8A%A8%E6%80%81sql-%E7%BC%93%E5%AD%98/" target="_blank">
         <div>
           
-          1. 模式定义 运用共享技术来有效地支持大量细粒度对象的复用。它通过共享已经存在的对象来大幅度减少需要创建的对象数量、避免大量相似类的开销，从而提高系统资源的利用率。 优点： 如果系统有大量类似的对象，可以节省大量的内存及CPU资源  2. 示例 1234567891011121314151617181920212223242526272829303132333435363738394041424
+          1. 动态 SQL 动态 sql 是基于 OGNL 的表达式的。 1.1 if 123456789&lt;select id&#x3D;&quot;selectUser&quot; resultMap&#x3D;&quot;userMap&quot;&gt;    SELECT * FROM t_user WHERE    &lt;if test&#x3D;&quot;createTime !&#x3D; 0&quot;&gt;
         </div>
       </a>
 
@@ -255,8 +255,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-21 20:56" pubdate>
-              2022-03-21
+            <time datetime="2022-11-28 23:38" pubdate>
+              2022-11-28
             </time>
           </div>
         
@@ -271,7 +271,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/Mybatis/" class="category-chain-item">Mybatis</a>
   
   
 
@@ -286,9 +286,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#结构型模式</a>
+              <a href="/tags/Mybatis/">#Mybatis</a>
             
           </div>
         
@@ -302,15 +300,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——外观模式
+        <a href="/2022/11/23/Mybatis%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%A4%84%E7%90%86-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/" target="_blank">
+          Mybatis——参数\查询结果处理&amp;高级结果映射
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/11/23/Mybatis%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%A4%84%E7%90%86-%E9%AB%98%E7%BA%A7%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84/" target="_blank">
         <div>
           
-          1. 模式定义 外观（Facade）模式又叫作门面模式，是一种通过为多个复杂的子系统提供一个一致的接口，而使这些子系统更加容易被访问的模式。该模式对外有一个统一接口，外部应用程序不用关心内部子系统的具体细节，这样会大大降低应用程序的复杂度，提高了程序的可维护性。 应用场景： + 对分层结构系统构建时，使用外观模式定义子系统中每层的入口点可以简化子系统之间的依赖关系。 + 当一个复杂系统的子系统很多
+          1. 参数处理 1. 1 参数取值方式 sql 语句有两种取值方式，分别是 #{} 和 ${}。  #{} 是预编译处理，${} 是字符串替换。 Mybatis 在处理 #{} 时，会将 sql 中的 #{} 替换为 ? 号，调用 PreparedStatement 的 set 方法来赋值； Mybatis 在处理 ${} 替换成变量的值。 使用 #{} 可以有效的防止 SQL 注入，提高系统安全
         </div>
       </a>
 
@@ -318,8 +316,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-17 20:41" pubdate>
-              2022-03-17
+            <time datetime="2022-11-23 21:56" pubdate>
+              2022-11-23
             </time>
           </div>
         
@@ -334,7 +332,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/Mybatis/" class="category-chain-item">Mybatis</a>
   
   
 
@@ -349,9 +347,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#结构型模式</a>
+              <a href="/tags/Mybatis/">#Mybatis</a>
             
           </div>
         
@@ -365,15 +361,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——装饰器模式
+        <a href="/2022/11/16/Mybatis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" target="_blank">
+          Mybatis——入门&amp;日志&amp;配置文件详解
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A3%85%E9%A5%B0%E5%99%A8%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/11/16/Mybatis%E2%80%94%E2%80%94%E5%85%A5%E9%97%A8-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3/" target="_blank">
         <div>
           
-          1. 模式定义 在不改变原有对象的基础上，将功能附加到对象上。 应用场景： 扩展一个类的功能或给一个类添加附加职责 优点: 1. 不改变原有对象的情况下给一个对象扩展功能 2. 使用不同的组合可以实现不同的效果 3. 符合开闭原则  2. 示例 12345678910111213141516171819202122232425262728293031323334353637383940414243
+          1. 简介 MyBatis 是一款优秀的持久层框架&#x2F;半自动的ORM，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO 为数据库中的记录。 优点： 1. 与 JDBC 相比，减少了50%的代码量 2. 最简单的持久化框架，简单易学
         </div>
       </a>
 
@@ -381,8 +377,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-14 22:22" pubdate>
-              2022-03-14
+            <time datetime="2022-11-16 23:08" pubdate>
+              2022-11-16
             </time>
           </div>
         
@@ -397,7 +393,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/Mybatis/" class="category-chain-item">Mybatis</a>
   
   
 
@@ -412,9 +408,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
-            
-              <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#结构型模式</a>
+              <a href="/tags/Mybatis/">#Mybatis</a>
             
           </div>
         
@@ -428,15 +422,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——适配器模式
+        <a href="/2022/11/06/SpringMVC%E2%80%94%E2%80%94%E7%88%B6%E5%AD%90%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
+          SpringMVC——父子容器启动源码解析
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/11/06/SpringMVC%E2%80%94%E2%80%94%E7%88%B6%E5%AD%90%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          1. 模式定义 将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。 适配器模式分为类结构型模式（继承）和对象结构型模式（聚合）两种。前者类之间的耦合度比后者高，且对外暴露了不需要的方法（违反了迪米特法则）。 优点： 1. 符合单一职责原则 2. 符合开闭原则 应用场景： + 以前开发的系统存在满足新系统功能需求的类，但其接口同新系统的接口不一致。
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;637251aa6376897f2b764170 1. SPI SPI 全称 Service Provider Interface，是 Java 提供的一套用来被第三方实现或者扩展的接口，它可以用来启用框架扩展和替换组件。 SPI 的作用就是为这些被扩展的 API 寻找服务实现。 1.1 SPI 和 API  API （App
         </div>
       </a>
 
@@ -444,8 +438,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-13 17:33" pubdate>
-              2022-03-13
+            <time datetime="2022-11-06 22:19" pubdate>
+              2022-11-06
             </time>
           </div>
         
@@ -460,7 +454,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
   
   
 
@@ -475,9 +469,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
+              <a href="/tags/SpringMVC/">#SpringMVC</a>
             
-              <a href="/tags/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#结构型模式</a>
+              <a href="/tags/%E6%BA%90%E7%A0%81/">#源码</a>
             
           </div>
         
@@ -491,15 +485,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
-          设计模式——观察者模式
+        <a href="/2022/11/03/SpringMVC%E2%80%94%E2%80%94%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
+          SpringMVC——请求过程源码解析
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/12/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_blank">
+      <a class="index-excerpt" href="/2022/11/03/SpringMVC%E2%80%94%E2%80%94%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          1. 模式定义 定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。  使用场景： + 事件多级触发场景 + 跨系统的消息交换场景，如消息队列、事件总线的处理机制 优点： + 解除耦合，让耦合的双方都依赖于抽象（符合开闭原则） + 可以在运行时建立对象之间的关系 缺点： + 耗时：注册较多的观察者的时候，通知比较耗时 + 如果
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;6367b742e401fd612f4d38c6 1. 从 Servlet 到 SpringMVC 传统Servlet：  弊端： 1.xml 下配置 servlet 映射非常麻烦，开发效率低。 2.必须要继承父类、重写方法，侵入性强。 3.参数解析麻烦 4.数据响应麻烦，手动转成 json 并设置 Content-type
         </div>
       </a>
 
@@ -507,8 +501,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-12 17:43" pubdate>
-              2022-03-12
+            <time datetime="2022-11-03 20:58" pubdate>
+              2022-11-03
             </time>
           </div>
         
@@ -523,7 +517,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="category-chain-item">设计模式</a>
+  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
   
   
 
@@ -538,9 +532,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a>
+              <a href="/tags/SpringMVC/">#SpringMVC</a>
             
-              <a href="/tags/%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">#行为型模式</a>
+              <a href="/tags/%E6%BA%90%E7%A0%81/">#源码</a>
             
           </div>
         
@@ -554,15 +548,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
-          Kubernetes——k8s架构与核心组件
+        <a href="/2022/10/23/SpringMVC%E2%80%94%E2%80%94%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD-%E6%8B%A6%E6%88%AA%E5%99%A8-%E5%9B%BD%E9%99%85%E5%8C%96-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_blank">
+          SpringMVC——上传下载&amp;拦截器&amp;国际化&amp;异常处理
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/11/Kubernetes%E2%80%94%E2%80%94k8s%E6%9E%B6%E6%9E%84%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
+      <a class="index-excerpt" href="/2022/10/23/SpringMVC%E2%80%94%E2%80%94%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD-%E6%8B%A6%E6%88%AA%E5%99%A8-%E5%9B%BD%E9%99%85%E5%8C%96-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" target="_blank">
         <div>
           
-          1. 什么是 Kubernetes Kubernetes(K8S)是由 Google 开源的生产级容器编排系统，是 Google 多年大规模容器管理技术 Borg 的开源版本 Kurbernets的本质是一组服务器集群，它可以在集群的每个节点上运行特定的程序，来对节点中的容器进行管理。它的目的就是实现资源管理的自动化，主要提供了如下的主要功能：  自我修复：一旦某一个容器崩溃，能够在1秒钟左右迅速
+          1. 文件下载 1.1 servlet 原生 API 实现下载 【注】idea 需先添加 Tomcat 依赖  123456789101112131415161718@WebServlet(&quot;&#x2F;download&quot;)public class DownloadServlet extends HttpServlet &amp;#123;    @Override    protected v
         </div>
       </a>
 
@@ -570,8 +564,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-11 23:45" pubdate>
-              2022-03-11
+            <time datetime="2022-10-23 22:04" pubdate>
+              2022-10-23
             </time>
           </div>
         
@@ -586,7 +580,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Kubernetes/" class="category-chain-item">Kubernetes</a>
+  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
   
   
 
@@ -601,7 +595,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Kubernetes/">#Kubernetes</a>
+              <a href="/tags/SpringMVC/">#SpringMVC</a>
             
           </div>
         
@@ -615,15 +609,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
-          jenkins——构建持续集成环境
+        <a href="/2022/10/06/SpringMVC%E2%80%94%E2%80%94%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96-%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81/" target="_blank">
+          SpringMVC——JSON处理&amp;数据格式化&amp;数据验证
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/03/08/jenkins%E2%80%94%E2%80%94%E6%9E%84%E5%BB%BA%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E7%8E%AF%E5%A2%83/" target="_blank">
+      <a class="index-excerpt" href="/2022/10/06/SpringMVC%E2%80%94%E2%80%94%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96-%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81/" target="_blank">
         <div>
           
-          更新机制是指项目如何进行更新，主要有两种方式：一种是自动推送，另外一种是手动拉取。前者用于开发环境、后者可以用于所有环境。 1. 手动拉取 拉取更新流程：  上述流程由 deploy.sh 脚本实现： 123456789101112#!&#x2F;bin&#x2F;bash -ecd &quot;&#96;dirname $0&#96;&quot;. .&#x2F;pom.sh#1. download war, ready envecho &amp;
+          1. JSON 处理 pom.xml： 123456789101112131415&lt;dependency&gt;	&lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;	&lt;artifactId&gt;jackson-core&lt;&#x2F;artifactId&gt;	&lt;version&gt;2.13.4&lt;&#x2F;versio
         </div>
       </a>
 
@@ -631,8 +625,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-08 23:32" pubdate>
-              2022-03-08
+            <time datetime="2022-10-06 21:54" pubdate>
+              2022-10-06
             </time>
           </div>
         
@@ -647,7 +641,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/jenkins/" class="category-chain-item">jenkins</a>
+  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
   
   
 
@@ -662,7 +656,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/jenkins/">#jenkins</a>
+              <a href="/tags/SpringMVC/">#SpringMVC</a>
             
           </div>
         
@@ -676,15 +670,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
-          maven——nexus私服搭建
+        <a href="/2022/09/14/SpringMVC%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8&amp;%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86&amp;%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86/" target="_blank">
+          SpringMVC——使用&amp;请求处理&amp;响应处理
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94nexus%E7%A7%81%E6%9C%8D%E6%90%AD%E5%BB%BA/" target="_blank">
+      <a class="index-excerpt" href="/2022/09/14/SpringMVC%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8&amp;%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86&amp;%E5%93%8D%E5%BA%94%E5%A4%84%E7%90%86/" target="_blank">
         <div>
           
-          1. 私服使用场景  公司不能连接公网，可以用一个私服务来统一连接 公司内部 jar 组件的共享  2. nexus 下载安装 nexus 下载地址： https:&#x2F;&#x2F;sonatype-download.global.ssl.fastly.net&#x2F;nexus&#x2F;oss&#x2F;nexus-2.14.5-02-bundle.tar.gz 解压并设置环境变量 解压： 1tar -zxvf nexus-2.14.
+          1. SpringMVC 执行流程   DispatcherServlet：前端控制器，是整个 SpringMVC 的控制中心。DispatcherServlet 接收用户发出的请求并拦截。 HandlerMapping：处理器映射。DispatcherServlet 调用 HandlerMapping，HandlerMapping 根据请求 url 查找 Handler。 返回处理器执行链，根据
         </div>
       </a>
 
@@ -692,8 +686,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-28 22:19" pubdate>
-              2022-02-28
+            <time datetime="2022-09-14 20:54" pubdate>
+              2022-09-14
             </time>
           </div>
         
@@ -708,7 +702,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  <a href="/categories/SpringMVC/" class="category-chain-item">SpringMVC</a>
   
   
 
@@ -723,7 +717,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">#maven</a>
+              <a href="/tags/SpringMVC/">#SpringMVC</a>
             
           </div>
         
@@ -737,15 +731,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
-          maven——生命周期与自定义插件开发
+        <a href="/2022/08/29/Spring%E2%80%94%E2%80%94%E4%BA%8B%E5%8A%A1%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
+          Spring——事务源码解析
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/28/maven%E2%80%94%E2%80%94%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" target="_blank">
+      <a class="index-excerpt" href="/2022/08/29/Spring%E2%80%94%E2%80%94%E4%BA%8B%E5%8A%A1%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" target="_blank">
         <div>
           
-          1. 生命周期 1.1 生命周期的概念与意义 在项目构建时通常会包含清理、编译、测试、打包、验证、部署，文档生成等步骤，maven 统一对其进行了整理抽像成三个生命周期 (lifecycle)及各自对应的多个阶段(phase)。这么做的意义是： 1. 每个阶段都成为了一个扩展点，可以采用不同的方式来实现，提高了扩展性与灵活性。 2. 规范统一了 maven 的执行路径。 可以通过命令 mvn ${
+          https:&#x2F;&#x2F;www.processon.com&#x2F;view&#x2F;link&#x2F;631f3fa10e3e7420767c11fe 1. @EnableTransactionManagement工作原理 开启 Spring 事务本质上就是增加了一个 Advisor，但我们使用 @EnableTransactionManagement 注解来开启 Spring 事务是该注解向 Spring 容器中添加了两个
         </div>
       </a>
 
@@ -753,8 +747,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-28 20:03" pubdate>
-              2022-02-28
+            <time datetime="2022-08-29 20:46" pubdate>
+              2022-08-29
             </time>
           </div>
         
@@ -769,7 +763,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  <a href="/categories/Spring/" class="category-chain-item">Spring</a>
   
   
 
@@ -784,7 +778,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">#maven</a>
+              <a href="/tags/Spring/">#Spring</a>
+            
+              <a href="/tags/%E6%BA%90%E7%A0%81/">#源码</a>
             
           </div>
         
@@ -798,15 +794,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
-          maven——基本概念与核心配置
+        <a href="/2022/08/27/Spring%E2%80%94%E2%80%94%E4%BA%8B%E5%8A%A1/" target="_blank">
+          Spring——事务
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/02/25/maven%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE/" target="_blank">
+      <a class="index-excerpt" href="/2022/08/27/Spring%E2%80%94%E2%80%94%E4%BA%8B%E5%8A%A1/" target="_blank">
         <div>
           
-          1. maven 安装与核心概念 maven 的功能：编译、打包、测试、依赖管理 1.1 安装  官网下载 Maven （http:&#x2F;&#x2F;maven.apache.org&#x2F;download.cgi） 解压指定目录 配置环境变量 检查安装是否成功 （mvn -version）  安装参考 1.2 maven 编译  创建 maven 项目 创建 src 文件 编写 pom 文件 执行编译命令  123
+          1. Spring JdbcTemplate 1.1 配置数据源 pom: 123456789101112131415161718192021222324252627282930313233343536373839&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;org.springframework&lt;&#x2F;grou
         </div>
       </a>
 
@@ -814,8 +810,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-25 22:29" pubdate>
-              2022-02-25
+            <time datetime="2022-08-27 18:34" pubdate>
+              2022-08-27
             </time>
           </div>
         
@@ -830,7 +826,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/maven/" class="category-chain-item">maven</a>
+  <a href="/categories/Spring/" class="category-chain-item">Spring</a>
   
   
 
@@ -845,7 +841,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/maven/">#maven</a>
+              <a href="/tags/Spring/">#Spring</a>
             
           </div>
         
@@ -857,7 +853,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/#board">11</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/6/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/#board">8</a><a class="page-number" href="/page/9/#board">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/8/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
