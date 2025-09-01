@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -239,6 +239,69 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2025/04/23/%E5%9F%BA%E4%BA%8EGPT2%E4%B8%AD%E6%96%87%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9A%E5%88%B6%E5%8C%96/" target="_blank">
+          基于GPT2中文生成模型定制化
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2025/04/23/%E5%9F%BA%E4%BA%8EGPT2%E4%B8%AD%E6%96%87%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9A%E5%88%B6%E5%8C%96/" target="_blank">
+        <div>
+          
+          1. 模型调用 1.1 模型配置 模型名：models--uer--gpt2-chinese-poem 配置信息： &amp;#123;   &quot;activation_function&quot;: &quot;gelu_new&quot;,   &quot;architectures&quot;: [     &quot;GPT2LMHeadModel&quot;   ],   &quot;attn_pdrop&quot;: 0.1,   &quot;embd_pdrop&quot;: 0.1,   &quot;gradi
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-23 10:54" pubdate>
+              2025-04-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+            
+              <a href="/tags/GPT/">#GPT</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2025/04/10/%E5%9F%BA%E4%BA%8EBert%E7%9A%84%E4%B8%AD%E6%96%87%E8%AF%84%E4%BB%B7%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90/" target="_blank">
           基于Bert的中文评价情感分析
         </a>
@@ -247,7 +310,7 @@
       <a class="index-excerpt" href="/2025/04/10/%E5%9F%BA%E4%BA%8EBert%E7%9A%84%E4%B8%AD%E6%96%87%E8%AF%84%E4%BB%B7%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90/" target="_blank">
         <div>
           
-          1. 模型训练 1.1 准备数据  ﻿﻿获取数据 ﻿﻿转换数据格式（制作数据集）  1234567891011121314151617181920212223242526from datasets import load_from_diskfrom torch.utils.data import Datasetclass TrainModelDataset(Dataset):    def __i
+          1. 模型训练 1.1 准备数据  ﻿﻿获取数据 ﻿﻿转换数据格式（制作数据集）  from datasets import load_from_disk from torch.utils.data import Dataset   class TrainModelDataset(Dataset):     def __init__(self, split):         # 从磁盘加载数据
         </div>
       </a>
 
@@ -310,7 +373,7 @@
       <a class="index-excerpt" href="/2025/04/05/HuggingFace%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_blank">
         <div>
           
-          1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： 1pip install transformer
+          1. Transformers 库使用 1.1 安装 transformers Hugging Face 提供了 transformers 库，用于加载和使用模型  基础环境：Anaconda,CUDA,cuDNN,pytorch 安装Anaconda 安装cuda和对应版本的cudnn  安装 pytorch：  安装 transformers： pip install transformers
         </div>
       </a>
 
@@ -373,7 +436,7 @@
       <a class="index-excerpt" href="/2025/03/09/LangChain4j%E2%80%94%E2%80%94RAG%E7%BB%84%E4%BB%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90/" target="_blank">
         <div>
           
-          RAG 组件：  使用 dmeo 12345678910111213141516171819202122ContentRetriever contentRetriever1 &#x3D; buildContentRetriever(embeddingStore1, embeddingModel);ContentRetriever contentRetriever2 &#x3D; buildContentRetriev
+          RAG 组件：  使用 dmeo ContentRetriever contentRetriever1 &#x3D; buildContentRetriever(embeddingStore1, embeddingModel); ContentRetriever contentRetriever2 &#x3D; buildContentRetriever(embeddingStore2, embeddingModel
         </div>
       </a>
 
@@ -436,7 +499,7 @@
       <a class="index-excerpt" href="/2025/03/08/LangChain4j%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8ERAG%E5%AE%9E%E7%8E%B0%E4%BC%81%E4%B8%9A%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8D%E7%B3%BB%E7%BB%9F/" target="_blank">
         <div>
           
-          1. 整理数据 首先，我们需要把数据整理成文档，可以是 txt、pdf、xlsx、markdown 等格式都可以。这里我们将美团外卖 - 常见问题网页中的问题和答案转成 txt 文件，【传送门】 2. 导入知识库 2.1 加载并解析文件 12DocumentParser documentParser &#x3D; new TextDocumentParser();Document document &#x3D; do
+          1. 整理数据 首先，我们需要把数据整理成文档，可以是 txt、pdf、xlsx、markdown 等格式都可以。这里我们将美团外卖 - 常见问题网页中的问题和答案转成 txt 文件，【传送门】 2. 导入知识库 2.1 加载并解析文件 DocumentParser documentParser &#x3D; new TextDocumentParser(); Document document &#x3D; doc
         </div>
       </a>
 
@@ -499,7 +562,7 @@
       <a class="index-excerpt" href="/2025/03/03/LangChain4j%E2%80%94%E2%80%94ChatMemory%E3%80%81Tools%E3%80%81Embedding/" target="_blank">
         <div>
           
-          1. ChatMemory ChatMemory 是一个接口，默认提供了两个实现类：  MessageWindowChatMemory TokenWindowChatMemory  1.1 使用 123456ChatLanguageModel model &#x3D; ZhipuChatModelUtil.getZhipuChatModel();ChatMemory chatMemory &#x3D; Message
+          1. ChatMemory ChatMemory 是一个接口，默认提供了两个实现类：  MessageWindowChatMemory TokenWindowChatMemory  1.1 使用 ChatLanguageModel model &#x3D; ZhipuChatModelUtil.getZhipuChatModel(); ChatMemory chatMemory &#x3D; MessageWindo
         </div>
       </a>
 
@@ -562,7 +625,7 @@
       <a class="index-excerpt" href="/2025/02/27/LangChain4j%E2%80%94%E2%80%94AiService/" target="_blank">
         <div>
           
-          Supercharge your Java application with the power of LLMs 官网：https:&#x2F;&#x2F;docs.langchain4j.dev&#x2F;  1. HelloWorld 依赖： 12345678910&lt;dependency&gt;    &lt;groupId&gt;dev.langchain4j&lt;&#x2F;groupId&gt;    &lt;arti
+          Supercharge your Java application with the power of LLMs 官网：https:&#x2F;&#x2F;docs.langchain4j.dev&#x2F;  1. HelloWorld 依赖： &lt;dependency&gt;     &lt;groupId&gt;dev.langchain4j&lt;&#x2F;groupId&gt;     &lt;artifactId&gt;langchain4j
         </div>
       </a>
 
@@ -625,7 +688,7 @@
       <a class="index-excerpt" href="/2024/09/24/LangChain%E2%80%94%E2%80%94%E5%AE%9E%E6%88%98%EF%BC%9A%E6%88%BF%E4%BA%A7%E9%94%80%E5%94%AE%E8%81%8A%E5%A4%A9%E6%9C%BA%E5%99%A8%E4%BA%BA/" target="_blank">
         <div>
           
-          整体架构  1. 构造数据 　　使用 GPT-4 构造销售话术数据 　　ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 　　使用 ChatGPT 构造销售数据的 Prompt 示例： 12345你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。每条销售话术以如
+          整体架构  1. 构造数据 　　使用 GPT-4 构造销售话术数据 　　ChatGPT 分享链接：https:&#x2F;&#x2F;chat.openai.com&#x2F;share&#x2F;f3e4b9b0-95fb-4c6a-a3c7-f901dd194c91 　　使用 ChatGPT 构造销售数据的 Prompt 示例： 你是中国顶级的房地产销售，现在培训职场新人，请给出100条实用的销售话术。  每条销售话术以如下格式
         </div>
       </a>
 
@@ -800,69 +863,6 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2024/09/07/LangChain%E2%80%94%E2%80%94Memory/" target="_blank">
-          LangChain——Memory
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2024/09/07/LangChain%E2%80%94%E2%80%94Memory/" target="_blank">
-        <div>
-          
-          记忆组件需要实现两个基本操作：读取和写入。 　　LangChain 的各类 chain 任务组件，如果你打开 Memory 功能，他会执行下面类似的逻辑  接收初始用户输入的时候，Chain 会尝试从记忆组件中查询相关的历史信息，然后把历史信息和用户的输入拼接到提示词中传给LLM。 在接收 LLM 返回内容的时候，会自动把结果存储到记忆组件，方便下次查询。   1. Memory 组件 1.1
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-09-07 10:25" pubdate>
-              2024-09-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
-            
-              <a href="/tags/LangChain/">#LangChain</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -983,13 +983,13 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://v1.hitokoto.cn/',
+          url: 'https://v1.jinrishici.com/all.json',
           headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = 'hitokoto'.split(',');
+              var keys = 'content'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -1007,7 +1007,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+              console.error('Failed to request https://v1.jinrishici.com/all.json:', error);
             }
             typing(text);
           }

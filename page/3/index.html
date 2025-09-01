@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -232,6 +232,69 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2024/09/07/LangChain%E2%80%94%E2%80%94Memory/" target="_blank">
+          LangChain——Memory
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2024/09/07/LangChain%E2%80%94%E2%80%94Memory/" target="_blank">
+        <div>
+          
+          记忆组件需要实现两个基本操作：读取和写入。 　　LangChain 的各类 chain 任务组件，如果你打开 Memory 功能，他会执行下面类似的逻辑  接收初始用户输入的时候，Chain 会尝试从记忆组件中查询相关的历史信息，然后把历史信息和用户的输入拼接到提示词中传给LLM。 在接收 LLM 返回内容的时候，会自动把结果存储到记忆组件，方便下次查询。   1. Memory 组件 1.1
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-09-07 10:25" pubdate>
+              2024-09-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+            
+              <a href="/tags/LangChain/">#LangChain</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -798,67 +861,6 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2023/10/31/Debug-%E7%AE%97%E6%B3%95/" target="_blank">
-          Debug 算法
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2023/10/31/Debug-%E7%AE%97%E6%B3%95/" target="_blank">
-        <div>
-          
-          1. 数组的最大连续子数组之和——kadane算法 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85188269 2. 另一棵树的子树 3. 买卖股票的最佳时机 4. 买卖股票的最佳时机 II 5. 买卖股票的最佳时机 III 6. 寻找峰值 7. 最小路径和 8. 最长递增子序列 9. 寻找明星 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;bvac&#x2F;p&#x2F;6382761.html
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2023-10-31 00:38" pubdate>
-              2023-10-31
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/interview/" class="category-chain-item">interview</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/interview/">#interview</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -979,13 +981,13 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://v1.hitokoto.cn/',
+          url: 'https://v1.jinrishici.com/all.json',
           headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = 'hitokoto'.split(',');
+              var keys = 'content'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -1003,7 +1005,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+              console.error('Failed to request https://v1.jinrishici.com/all.json:', error);
             }
             typing(text);
           }

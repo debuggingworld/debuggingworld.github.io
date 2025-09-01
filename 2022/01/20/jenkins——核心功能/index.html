@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.7k 字
+          3.3k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          12 分钟
+          11 分钟
         
       </span>
     
@@ -310,7 +312,7 @@ JAVA 系统的集成，也可以实现 PHP 等语言的集成发布。通过其 
 包进行安装。https://jenkins.io/download/</p></li>
 <li><p>启动：下载完成之后直接可通过 jar -jar 命令启动</p></li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">java -jar jenkins.war --httpPort=8080<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">java</span> <span class="token parameter variable">-jar</span> jenkins.war <span class="token parameter variable">--httpPort</span><span class="token operator">=</span><span class="token number">8080</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>也可以将其放至到 servlet
 容器（tomcat）中直接启动，无需过多的配置。</p>
 <ol start="3" type="1">
@@ -395,7 +397,11 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193106.png" srcset="
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305193334.png" srcset="/img/loading.gif" lazyload /></p>
 <p>自动部署的前提条件： 1.需要下载 Deploy to container 插件 2.设置Tomcat
 manager 用户和密码，以下配置加入至 Tomcat conf/tomcat-users.xml 中
-3.tomcat webapp 中必须保留 manager 项目 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;admin-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-gui&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">role</span> <span class="hljs-attr">rolename</span>=<span class="hljs-string">&quot;manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;manager&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;manager-gui,manager-script&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">user</span> <span class="hljs-attr">username</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">password</span>=<span class="hljs-string">&quot;admin&quot;</span> <span class="hljs-attr">roles</span>=<span class="hljs-string">&quot;admin-gui,manager-gui&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure> <a
+3.tomcat webapp 中必须保留 manager 项目 <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>role</span> <span class="token attr-name">rolename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>admin-gui<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>role</span> <span class="token attr-name">rolename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>manager-gui<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>role</span> <span class="token attr-name">rolename</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>manager-script<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user</span> <span class="token attr-name">username</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>manager<span class="token punctuation">"</span></span> <span class="token attr-name">password</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>manager<span class="token punctuation">"</span></span> <span class="token attr-name">roles</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>manager-gui,manager-script<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>user</span> <span class="token attr-name">username</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>admin<span class="token punctuation">"</span></span> <span class="token attr-name">password</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>admin<span class="token punctuation">"</span></span> <span class="token attr-name">roles</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>admin-gui,manager-gui<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <a
 target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33965305/article/details/93610207">远程无法管理
 tomcat 问题</a></p>
 <ol start="5" type="1">
@@ -403,7 +409,16 @@ tomcat 问题</a></p>
 </ol>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233105.png" srcset="/img/loading.gif" lazyload /></p>
-<p>配置 setting.xml 获取上传至 nexus 的权限： <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">server</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-release<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span>deployment<span class="hljs-tag">&lt;/<span class="hljs-name">username</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">password</span>&gt;</span>deployment123<span class="hljs-tag">&lt;/<span class="hljs-name">password</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">server</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>配置 setting.xml 获取上传至 nexus 的权限： <div class="code-wrapper"><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>server</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>nexus-snapshot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>username</span><span class="token punctuation">></span></span>deployment<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>username</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>password</span><span class="token punctuation">></span></span>deployment123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>password</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>server</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>server</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>nexus-release<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>username</span><span class="token punctuation">></span></span>deployment<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>username</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>password</span><span class="token punctuation">></span></span>deployment123<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>password</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>server</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 构建结果：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220305233742.png" srcset="/img/loading.gif" lazyload /></p>
@@ -422,7 +437,27 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306000043.png" srcset="
 上添加了一套强大的自动化工具，支持从简单的连续集成到全面的连续输送
 Pipeline 的用例。用户可以基于他实现更为复杂的建模场景。</p>
 <h4 id="pipeline-基础语法">3.2 pipeline 基础语法</h4>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;Build&#x27;) &#123; <br>            steps &#123; <br>                sh &#x27;make&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Test&#x27;)&#123;<br>            steps &#123;<br>                sh &#x27;make check&#x27;<br>                junit &#x27;reports<span class="hljs-comment">/**/</span>*.xml&#x27; <br>            &#125;<br>        &#125;<br>        stage(&#x27;Deploy&#x27;) &#123;<br>            steps &#123;<br>                sh &#x27;make publish&#x27;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json">pipeline <span class="token punctuation">&#123;</span>
+    agent any 
+    stages <span class="token punctuation">&#123;</span>
+        stage('Build') <span class="token punctuation">&#123;</span> 
+            steps <span class="token punctuation">&#123;</span> 
+                sh 'make' 
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        stage('Test')<span class="token punctuation">&#123;</span>
+            steps <span class="token punctuation">&#123;</span>
+                sh 'make check'
+                junit 'reports<span class="token comment">/**/</span>*.xml' 
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        stage('Deploy') <span class="token punctuation">&#123;</span>
+            steps <span class="token punctuation">&#123;</span>
+                sh 'make publish'
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <ul>
 <li>agent  表示 Jenkins 应该为 Pipeline
 的这一部分分配一个执行者和工作区。</li>
@@ -441,7 +476,29 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306004515.png" srcset="
 <h5 id="pipeline-script-方式">Pipeline script 方式</h5>
 <p>点击”流水线语法“查看语法帮助： <img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306005949.png" srcset="/img/loading.gif" lazyload /></p>
-<p>pipeline script： <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">pipeline &#123;<br>    agent any <br>    stages &#123;<br>        stage(&#x27;checkout&#x27;) &#123; <br>            steps &#123; <br>                echo &#x27;checkout&#x27; <br>                checkout([$class: &#x27;GitSCM&#x27;, branches: [[name: &#x27;*/master&#x27;]], extensions: [], userRemoteConfigs: [[credentialsId: &#x27;<span class="hljs-number">3</span>c819818-d272<span class="hljs-number">-4155</span><span class="hljs-number">-91</span>d5<span class="hljs-number">-3</span>d59158e2823&#x27;, url: &#x27;http:<span class="hljs-comment">//192.168.60.10:3000/root/hello-debuggingWorld.git&#x27;]]])</span><br>            &#125;<br>        &#125;<br>        stage(&#x27;build&#x27;)&#123;<br>            steps &#123;<br>                 echo &#x27;build&#x27;<br>                 sh &#x27;mvn clean install&#x27;<br>            &#125;<br>        &#125;<br>        stage(&#x27;save&#x27;) &#123;<br>            steps &#123;<br>               echo &#x27;save&#x27;<br>               archiveArtifacts artifacts: &#x27;target<span class="hljs-comment">/*.war&#x27;, followSymlinks: false</span><br><span class="hljs-comment">            &#125;</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br></code></pre></td></tr></table></figure> 构建结果：</p>
+<p>pipeline script： <div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json">pipeline <span class="token punctuation">&#123;</span>
+    agent any 
+    stages <span class="token punctuation">&#123;</span>
+        stage('checkout') <span class="token punctuation">&#123;</span> 
+            steps <span class="token punctuation">&#123;</span> 
+                echo 'checkout' 
+                checkout(<span class="token punctuation">[</span>$class<span class="token operator">:</span> 'GitSCM'<span class="token punctuation">,</span> branches<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>name<span class="token operator">:</span> '*/master'<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> extensions<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> userRemoteConfigs<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>credentialsId<span class="token operator">:</span> '3c819818-d272<span class="token number">-4155</span>-91d5-3d59158e2823'<span class="token punctuation">,</span> url<span class="token operator">:</span> 'http<span class="token operator">:</span><span class="token comment">//192.168.60.10:3000/root/hello-debuggingWorld.git']]])</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        stage('build')<span class="token punctuation">&#123;</span>
+            steps <span class="token punctuation">&#123;</span>
+                 echo 'build'
+                 sh 'mvn clean install'
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        stage('save') <span class="token punctuation">&#123;</span>
+            steps <span class="token punctuation">&#123;</span>
+               echo 'save'
+               archiveArtifacts artifacts<span class="token operator">:</span> 'target<span class="token comment">/*.war', followSymlinks: false
+            &#125;
+        &#125;
+    &#125;
+&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 构建结果：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306011723.png" srcset="/img/loading.gif" lazyload /></p>
 <h5 id="jenkinsfile-方式">Jenkinsfile 方式</h5>
@@ -794,6 +851,8 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220306012633.png" srcset="
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

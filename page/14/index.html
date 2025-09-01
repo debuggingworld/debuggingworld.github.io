@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -239,6 +239,69 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/" target="_blank">
+          java——java8新特性之Stream
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2021/12/01/java%E2%80%94%E2%80%94java8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BStream/" target="_blank">
+        <div>
+          
+          1. 定义 A sequence of elements supporting sequential and parallel aggregate operations . 1. Stream 是元素的集合，这点让 Stream 看起来用些类似 Iterator； 2. 可以支持顺序和并行的对原Stream进行汇聚的操作；  Java 8 中的 Stream 是对集合（Collection）对象功
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-01 20:43" pubdate>
+              2021-12-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java/" class="category-chain-item">Java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/java/">#java</a>
+            
+              <a href="/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">#java8新特性</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_blank">
           java——函数式编程
         </a>
@@ -247,7 +310,7 @@
       <a class="index-excerpt" href="/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_blank">
         <div>
           
-          1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getIn
+          1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 public interface TestInterface &amp;#123;     Integer age &#x3D; 18;     int getInt(
         </div>
       </a>
 
@@ -310,7 +373,7 @@
       <a class="index-excerpt" href="/2021/11/28/java%E2%80%94%E2%80%94jdk8%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8BLambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank">
         <div>
           
-          Lambda表达式 lambda 表达式本质上是一段匿名内部类，也可以是一段可以传递的代码 1. 语法 完整的 Lambda 表达式由三部分组成：参数列表、箭头、声明语句； 12 (Type1 param1, Type2 param2, ..., TypeN paramN) ‐&gt; &amp;#123; statment1;statment2; &#x2F;&#x2F;............. return statm
+          Lambda表达式 lambda 表达式本质上是一段匿名内部类，也可以是一段可以传递的代码 1. 语法 完整的 Lambda 表达式由三部分组成：参数列表、箭头、声明语句；  (Type1 param1, Type2 param2, ..., TypeN paramN) ‐&gt; &amp;#123; statment1; statment2; &#x2F;&#x2F;............. return statmentM
         </div>
       </a>
 
@@ -540,13 +603,13 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://v1.hitokoto.cn/',
+          url: 'https://v1.jinrishici.com/all.json',
           headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = 'hitokoto'.split(',');
+              var keys = 'content'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -564,7 +627,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+              console.error('Failed to request https://v1.jinrishici.com/all.json:', error);
             }
             typing(text);
           }

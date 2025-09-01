@@ -1,107 +1,141 @@
 /**
- * nnfx dark - a theme inspired by Netscape Navigator/Firefox
- *
- * @version 1.0.0
- * @author (c) 2020 Jim Mason <jmason@ibinx.com>
- * @license https://creativecommons.org/licenses/by-sa/4.0  CC BY-SA 4.0
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
  */
 
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #333;
-  color: #fff;
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
 }
 
-.xml .hljs-meta {
-  font-weight: bold;
-  font-style: italic;
-  color: #69f;
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
 }
 
-.hljs-comment,
-.hljs-quote {
-  font-style: italic;
-  color: #9c6;
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
 }
 
-.hljs-name,
-.hljs-keyword {
-  color: #a7a;
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
 }
 
-.hljs-name,
-.hljs-attr {
-  font-weight: bold;
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
 }
 
-.hljs-string {
-  font-weight: normal;
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
 }
 
-.hljs-variable,
-.hljs-template-variable {
-  color: #588;
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
 }
 
-.hljs-code,
-.hljs-string,
-.hljs-meta-string,
-.hljs-number,
-.hljs-regexp,
-.hljs-link {
-  color: #bce;
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
 }
 
-.hljs-title,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-built_in,
-.hljs-builtin-name {
-  color: #d40;
+.token.punctuation {
+	color: #999;
 }
 
-.hljs-section,
-.hljs-meta {
-  color: #a85;
+.token.namespace {
+	opacity: .7;
 }
 
-.hljs-class .hljs-title,
-.hljs-type {
-  color: #96c;
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
 }
 
-.hljs-function .hljs-title,
-.hljs-attr,
-.hljs-subst {
-  color: #fff;
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
 }
 
-.hljs-formula {
-  background-color: #eee;
-  font-style: italic;
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	/* This background color was intended by the author of this theme. */
+	background: hsla(0, 0%, 100%, .5);
 }
 
-.hljs-addition {
-  background-color: #797;
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
 }
 
-.hljs-deletion {
-  background-color: #c99;
+.token.function,
+.token.class-name {
+	color: #DD4A68;
 }
 
-.hljs-selector-id,
-.hljs-selector-class {
-  color: #964;
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
 }
 
-.hljs-doctag,
-.hljs-strong {
-  font-weight: bold;
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
 }
 
-.hljs-emphasis {
-  font-style: italic;
+.token.entity {
+	cursor: help;
 }
 

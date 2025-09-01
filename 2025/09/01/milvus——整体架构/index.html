@@ -1,0 +1,985 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 架构  Milvus 遵循数据平面和控制平面分解的原则，由四个主要层组成：访问层、协调器、工作节点、存储 1.1 访问层 访问层由一组无状态代理组成，是系统的前端层，也是用户的终端。它验证客户端请求并减少返回结果：  代理本身是无状态的。它使用 Nginx、Kubernetes Ingress、NodePort 和 LVS 等负载均衡组件提供统一的服务地址。 代理会对中间结果进行聚合和后处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="milvus——整体架构">
+<meta property="og:url" content="http://example.com/2025/09/01/milvus%E2%80%94%E2%80%94%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 架构  Milvus 遵循数据平面和控制平面分解的原则，由四个主要层组成：访问层、协调器、工作节点、存储 1.1 访问层 访问层由一组无状态代理组成，是系统的前端层，也是用户的终端。它验证客户端请求并减少返回结果：  代理本身是无状态的。它使用 Nginx、Kubernetes Ingress、NodePort 和 LVS 等负载均衡组件提供统一的服务地址。 代理会对中间结果进行聚合和后处理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829162110993.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829192528661.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829193831682.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829194241247.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829201151192.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829212652777.png">
+<meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829134232018.png">
+<meta property="article:published_time" content="2025-09-01T02:58:15.000Z">
+<meta property="article:modified_time" content="2025-09-01T02:59:57.966Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="milvus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829162110993.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>milvus——整体架构 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="milvus——整体架构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-01 10:58" pubdate>
+          2025年9月1日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">milvus——整体架构</h1>
+            
+            <div class="markdown-body">
+              
+              <h3 id="架构">1. 架构</h3>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829162110993.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
+<p>Milvus
+遵循数据平面和控制平面分解的原则，由四个主要层组成：访问层、协调器、工作节点、存储</p>
+<h4 id="访问层">1.1 访问层</h4>
+<p>访问层由一组无状态代理组成，是系统的前端层，也是用户的终端。它验证客户端请求并减少返回结果：</p>
+<ul>
+<li>代理本身是无状态的。它使用 Nginx、Kubernetes Ingress、NodePort 和
+LVS 等负载均衡组件提供统一的服务地址。</li>
+<li>代理会对中间结果进行聚合和后处理（跨分片），然后再将最终结果返回给客户端。</li>
+</ul>
+<h4 id="协调器">1.2 协调器</h4>
+<p>协调器是 Milvus
+的大脑。在任何时刻，整个集群都有一个协调器在工作，负责维护集群拓扑结构、调度所有任务类型并保证集群级一致性。</p>
+<p>协调器的主要任务：</p>
+<ul>
+<li><strong>DDL/DCL/TSO 管理</strong>：处理数据定义语言 (DDL)
+和数据控制语言 (DCL) 请求，如创建或删除
+Collections、分区或索引，以及管理timestamp Oracle (TSO)
+和时间刻度签发。</li>
+<li><strong>流服务管理</strong>：将 Write-Ahead Log (WAL) 和 Streaming
+Nodes 绑定，并为 Streaming Nodes 提供服务发现功能。</li>
+<li><strong>查询管理</strong>：管理查询节点的拓扑结构和负载平衡。</li>
+<li><strong>历史数据管理</strong>：将压缩和建立索引等离线任务分配给<strong>数据节点</strong>，并管理数据段和数据视图的拓扑结构。</li>
+</ul>
+<h4 id="工作节点">1.3 工作节点</h4>
+<p>由于存储和计算分离，工作节点是无状态的，是为了系统扩展和容灾。工作节点有三种类型：</p>
+<h5 id="流节点">流节点</h5>
+<p>　　基于预写日志存储（WAL）提供分片级别的一致性保证与故障恢复机制。同时，该节点还负责处理增量数据的查询请求并生成查询计划（分片内）。此外，它也承担着将增量数据转换为封存数据（segments）的关键职能。</p>
+<h5 id="查询节点">查询节点</h5>
+<p>　　查询节点从对象存储中加载历史数据，并提供历史数据查询。</p>
+<h5 id="数据节点">数据节点</h5>
+<p>　　数据节点负责离线处理历史数据，如压缩和建立索引。</p>
+<h4 id="存储">1.4 存储</h4>
+<p>负责数据的持久化。它包括元数据存储、日志代理和对象存储。</p>
+<h5 id="元数据存储">元数据存储</h5>
+<p>　　元数据存储用于管理元数据快照，例如 collection的 schema
+和消息消费位置。此类数据需保障高可用性、强一致性及事务支持。因此 Milvus
+选择 etcd 作为元数据存储方案，同时基于 etcd
+实现服务注册与健康检查功能。</p>
+<h5 id="对象存储">对象存储</h5>
+<p>　　对象存储负责保存日志快照文件、标量与向量数据的索引文件以及中间查询结果。Milvus
+默认采用 MinIO 作为对象存储，同时支持无缝对接 S3 存储。</p>
+<h5 id="wal-存储">WAL 存储</h5>
+<p>　　先写日志（WAL）存储是分布式系统中数据持久性和一致性的基础。在提交任何更改之前，首先要将其记录在日志中，以确保在发生故障时，可以准确恢复到之前的位置。</p>
+<p>　　常见的 WAL 实现包括 Kafka、Pulsar 和
+Woodpecker。与传统的基于磁盘的解决方案不同，Woodpecker
+采用云原生的零磁盘设计，直接写入对象存储。</p>
+<h3 id="数据操作">2. 数据操作</h3>
+<h4 id="数据插入">2.1 数据插入</h4>
+<p>　　在 Milvus
+中，您可以选择一个集合（collection）使用的分片（shard）数量——每个分片会映射到一个虚拟通道（vchannel）。Milvus
+会将每个虚拟通道分配到物理通道（pchannel），而每个物理通道会绑定到特定的流处理节点（Streaming
+Node）。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829192528661.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　代理在数据验证之后，会根据指定的分片路由规则，将写入的消息拆分成各个分片的数据包。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829193831682.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　然后将一个分片（vchannel）的写入数据发送到 pchannel
+对应的流节点。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829194241247.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　流节点为每个数据包分配 Timestamp
+Oracle(TSO），以此建立操作的全局顺序关系。在将有效载荷写入 WAL
+前，系统会先执行一致性检查。一旦数据被持久化提交至预写日志，即可保证零丢失——即使发生系统崩溃，流式处理节点也能通过重放预写日志完整恢复所有待处理操作。</p>
+<p>　　与此同时，流式处理节点还会异步地将已提交的 WAL
+条目切分为独立段（segment）。段分为两种类型：</p>
+<ul>
+<li>Growing segment：尚未持久化到对象存储的数据；</li>
+<li>Sealed
+segment：所有数据都已持久化到对象存储中，密封段的数据是不可变的。</li>
+</ul>
+<p>　　从增长数据段过渡到密封数据段的过程称为刷新。一旦流节点摄取并写入了该分段的所有可用
+WAL 条目，流节点就会触发刷新。</p>
+<h4 id="建立索引">2.2 建立索引</h4>
+<p>索引建立由数据节点执行。为了避免频繁为数据更新建立索引，Milvus 将
+Collections 进一步划分为多个分段，每个分段都有自己的索引。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829201151192.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　Milvus
+支持为每个向量字段、标量字段和主键字段构建索引。索引构建的输入和输出都与对象存储有关：数据节点将要建立索引的日志快照从段落（在对象存储中）加载到内存，反序列化相应的数据和元数据以建立索引，索引建立完成后序列化索引，并将其写回对象存储。</p>
+<p>　　索引构建主要涉及向量和矩阵操作，因此是计算和内存密集型操作。向量因其高维特性，无法用传统的树形索引高效地建立索引，需采用更适合该领域的聚类或图结构等更成熟的技术。无论其类型如何，建立索引都涉及大规模向量的大量迭代计算，如
+K均值聚类或图遍历。</p>
+<p>　　此外，Milvus
+还支持标量过滤与主键查询。为了提高查询效率，系统还内置布隆过滤器索引、哈希索引、树状索引、倒排索引等多种索引，并计划引入位图索引、粗糙索引等外部索引类型。</p>
+<h4 id="数据查询">2.3 数据查询</h4>
+<p>　　数据查询指的是在指定的 Collections 中搜索与目标向量最接近的 k
+个向量，或搜索与向量在指定距离范围内的<em>所有</em>向量。向量会连同其相应的主键和字段一起返回。</p>
+<p>　　Milvus 中的 Collections 分成多个分段；流节点加载 growing segments
+并维护实时数据，而查询节点则加载封存的分段。</p>
+<p>　　当收到 query/search 请求时，proxy
+会将请求广播给负责相关分片的所有流节点，以进行并发搜索。</p>
+<p>　　每个流节点生成一个查询计划，搜索其本地 growing
+data，同时调用查询节点检索历史结果，并聚合为分片级别的结果。</p>
+<p>　　最后，代理收集所有分片结果，将其合并为最终结果，并返回给客户端。</p>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829212652777.png" srcset="/img/loading.gif" lazyload style="zoom:30%;" /></p>
+<p>　　当流节点上的增长分段被刷新为密封分段时，或者当数据节点完成压缩时，协调器会启动移交操作，将增长数据转换为历史数据。然后，协调器会在所有查询节点上平均分配密封分段，平衡内存使用率、CPU
+开销和分段数，并释放冗余分段。</p>
+<h3 id="安装">３. 安装</h3>
+<p>支持三种部署方式：</p>
+<ul>
+<li>Milvus Lite：是一个 Python 库，可嵌入应用程序。</li>
+<li>Milvus Standalone：单机版。</li>
+<li>Milvus Distributed：分布式版本。</li>
+</ul>
+<p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20250829134232018.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+<p>分布式版本部署方式：</p>
+<h4 id="helm-方式">３.1 helm 方式</h4>
+<p>添加 Milvus Helm 资源库</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm repo <span class="token function">add</span> zilliztech https://zilliztech.github.io/milvus-helm/
+<span class="token comment"># 查看已添加的资源库</span>
+helm repo list
+<span class="token comment"># 查看所有可用版本</span>
+helm search repo zilliztech/milvus <span class="token parameter variable">--versions</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h5 id="在线安装">1. 在线安装</h5>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm <span class="token function">install</span> my-milvus zilliztech/milvus <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">image.all.tag</span><span class="token operator">=</span>v2.6.0 <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">pulsarv3.enabled</span><span class="token operator">=</span>false <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">woodpecker.enabled</span><span class="token operator">=</span>true <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">streaming.enabled</span><span class="token operator">=</span>true <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">indexNode.enabled</span><span class="token operator">=</span>false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>等同于：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm pull zilliztech/milvus <span class="token parameter variable">--version</span><span class="token operator">=</span><span class="token number">5.0</span>.0
+
+helm <span class="token function">install</span> my-milvus ./milvus-5.0.0.tgz <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">image.all.tag</span><span class="token operator">=</span>v2.6.0 <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">pulsarv3.enabled</span><span class="token operator">=</span>false <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">woodpecker.enabled</span><span class="token operator">=</span>true <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">streaming.enabled</span><span class="token operator">=</span>true <span class="token punctuation">\</span>
+  <span class="token parameter variable">--set</span> <span class="token assign-left variable">indexNode.enabled</span><span class="token operator">=</span>false
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p><strong>此命令的作用：</strong></p>
+<ul>
+<li>使用<strong>Woodpecker</strong>作为消息队列（建议使用，以减少维护工作）</li>
+<li>启用新的<strong>流节点</strong>组件以提高性能</li>
+<li>禁用传统的<strong>索引节点</strong>（其功能现在由数据节点处理）</li>
+<li>禁用 Pulsar，改用 Woodpecker</li>
+</ul>
+<blockquote>
+<p><strong>Milvus 2.6.x 中的架构变更：</strong></p>
+<ul>
+<li><strong>消息队列</strong>：现在推荐使用<strong>Woodpecker</strong>（与
+Pulsar 相比，减少了基础设施维护工作）</li>
+<li><strong>新组件</strong>：引入<strong>流节点</strong>并默认启用</li>
+<li><strong>合并组件</strong>：<strong>索引节点</strong>和<strong>数据节点</strong>合并为一个<strong>数据节点</strong></li>
+</ul>
+</blockquote>
+<p>更新Milvus 集群配置：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm upgrade my-milvus zilliztech/milvus <span class="token parameter variable">--namespace</span> my-namespace <span class="token parameter variable">-f</span> values.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<h5 id="离线安装">2. 离线安装</h5>
+<p>获取 Milvus 清单：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm template my-release zilliztech/milvus <span class="token operator">></span> milvus_manifest.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>自定义配置：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm template <span class="token parameter variable">-f</span> values.yaml my-release zilliztech/milvus <span class="token operator">></span> milvus_manifest.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>下载镜像：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">wget</span> https://raw.githubusercontent.com/milvus-io/milvus/master/deployments/offline/requirements.txt
+<span class="token function">wget</span> https://raw.githubusercontent.com/milvus-io/milvus/master/deployments/offline/save_image.py
+pip3 <span class="token function">install</span> <span class="token parameter variable">-r</span> requirements.txt
+python3 save_image.py <span class="token parameter variable">--manifest</span> milvus_manifest.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>加载镜像：</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token keyword">for</span> <span class="token for-or-select variable">image</span> <span class="token keyword">in</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">find</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-type</span> f <span class="token parameter variable">-name</span> <span class="token string">"*.tar.gz"</span><span class="token variable">)</span></span> <span class="token punctuation">;</span> <span class="token keyword">do</span> gunzip <span class="token parameter variable">-c</span> <span class="token variable">$image</span> <span class="token operator">|</span> <span class="token function">docker</span> load<span class="token punctuation">;</span> <span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<p>部署 Milvus:</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">kubectl apply <span class="token parameter variable">-f</span> milvus_manifest.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<h5 id="升级运行中的-milvus-群集">3. 升级运行中的 Milvus 群集</h5>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm repo update
+helm upgrade my-release zilliztech/milvus --reset-then-reuse-values<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+<h4 id="milvus-operator">３.2 Milvus Operator</h4>
+<ol type="1">
+<li><p>使用 Helm 安装 Milvus Operator</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">helm <span class="token function">install</span> milvus-operator <span class="token punctuation">\</span>
+  <span class="token parameter variable">-n</span> milvus-operator --create-namespace <span class="token punctuation">\</span>
+  <span class="token parameter variable">--wait</span> --wait-for-jobs <span class="token punctuation">\</span>
+  https://github.com/zilliztech/milvus-operator/releases/download/v1.3.0/milvus-operator-1.3.0.tgz<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
+<li><p>部署 Milvus 群集</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">kubectl apply <span class="token parameter variable">-f</span> https://raw.githubusercontent.com/zilliztech/milvus-operator/main/config/samples/milvus_cluster_woodpecker.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
+<li><p>查看集群状态</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">kubectl get milvus my-release <span class="token parameter variable">-o</span> yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
+<li><p>更新配置</p>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">kubectl patch milvus my-release <span class="token parameter variable">--type</span><span class="token operator">=</span><span class="token string">'merge'</span><span class="token punctuation">\</span>
+  <span class="token parameter variable">-p</span> <span class="token string">'&#123;"spec":&#123;"components":&#123;"disableMetric":false&#125;&#125;&#125;'</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></li>
+</ol>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/milvus/" class="category-chain-item">milvus</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/milvus/">#milvus</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>milvus——整体架构</div>
+      <div>http://example.com/2025/09/01/milvus——整体架构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月1日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AF%84%E6%B5%8B%E2%80%94%E2%80%94OpenCompass/" title="大模型评测——OpenCompass">
+                        <span class="hidden-mobile">大模型评测——OpenCompass</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -232,6 +232,67 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2025/09/01/milvus%E2%80%94%E2%80%94%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/" target="_blank">
+          milvus——整体架构
+        </a>
+      </h1>
+
+      <a class="index-excerpt" href="/2025/09/01/milvus%E2%80%94%E2%80%94%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/" target="_blank">
+        <div>
+          
+          1. 架构  Milvus 遵循数据平面和控制平面分解的原则，由四个主要层组成：访问层、协调器、工作节点、存储 1.1 访问层 访问层由一组无状态代理组成，是系统的前端层，也是用户的终端。它验证客户端请求并减少返回结果：  代理本身是无状态的。它使用 Nginx、Kubernetes Ingress、NodePort 和 LVS 等负载均衡组件提供统一的服务地址。 代理会对中间结果进行聚合和后处理
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-09-01 10:58" pubdate>
+              2025-09-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/milvus/" class="category-chain-item">milvus</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/milvus/">#milvus</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
   <div class="row mx-auto index-card">
     
@@ -562,7 +623,7 @@
       <a class="index-excerpt" href="/2025/05/22/xtuner%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/" target="_blank">
         <div>
           
-          中文文档 github 用户文档 1. 安装xtuner 12345678910conda create --name xtuner python&#x3D;3.10 -yconda activate xtuner# 源码安装git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.gitcd xtunerpip install -e &amp;#x27;.[deepspeed]&amp;#
+          中文文档 github 用户文档 1. 安装xtuner conda create --name xtuner python&#x3D;3.10 -y conda activate xtuner  # 源码安装 git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.git cd xtuner pip install -e &#39;.[deepspeed]&#39;  # 验证 xtun
         </div>
       </a>
 
@@ -688,7 +749,7 @@
       <a class="index-excerpt" href="/2025/05/01/LLamaFactory-%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/" target="_blank">
         <div>
           
-          github | 文档 1. 安装 123git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.gitcd LLaMA-Factorypip install -e . 可视化启动： 12# 一定要在 LLaMA-Factor 目录llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F;
+          github | 文档 1. 安装 git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.git cd LLaMA-Factory pip install -e . 可视化启动： # 一定要在 LLaMA-Factor 目录 llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F; 2.
         </div>
       </a>
 
@@ -751,7 +812,7 @@
       <a class="index-excerpt" href="/2025/04/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E7%A7%81%E6%9C%89%E5%8C%96%E9%83%A8%E7%BD%B2/" target="_blank">
         <div>
           
-          1. transformers 1.1模型下载 12from modelscope import snapshot_downloadsnapshot_download(model_id&#x3D;&quot;Qwen&#x2F;Qwen2.5-0.5B-Instruct&quot;,cache_dir&#x3D;&quot;&#x2F;root&#x2F;autodl-tmp&#x2F;models&quot;) 1.2 模型调用 123456789101
+          1. transformers 1.1模型下载 from modelscope import snapshot_download snapshot_download(model_id&#x3D;&quot;Qwen&#x2F;Qwen2.5-0.5B-Instruct&quot;,cache_dir&#x3D;&quot;&#x2F;root&#x2F;autodl-tmp&#x2F;models&quot;) 1.2 模型调用 # 使用transformer加载qwen模型 from tran
         </div>
       </a>
 
@@ -793,69 +854,6 @@
               <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
             
               <a href="/tags/%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2/">#模型部署</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2025/04/23/%E5%9F%BA%E4%BA%8EGPT2%E4%B8%AD%E6%96%87%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9A%E5%88%B6%E5%8C%96/" target="_blank">
-          基于GPT2中文生成模型定制化
-        </a>
-      </h1>
-
-      <a class="index-excerpt" href="/2025/04/23/%E5%9F%BA%E4%BA%8EGPT2%E4%B8%AD%E6%96%87%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9A%E5%88%B6%E5%8C%96/" target="_blank">
-        <div>
-          
-          1. 模型调用 1.1 模型配置 模型名：models--uer--gpt2-chinese-poem 配置信息： 1234567891011121314151617181920212223242526272829&amp;#123;  &quot;activation_function&quot;: &quot;gelu_new&quot;,  &quot;architectures&quot;: [
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-04-23 10:54" pubdate>
-              2025-04-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
-            
-              <a href="/tags/GPT/">#GPT</a>
             
           </div>
         
@@ -983,13 +981,13 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: 'https://v1.hitokoto.cn/',
+          url: 'https://v1.jinrishici.com/all.json',
           headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = 'hitokoto'.split(',');
+              var keys = 'content'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -1007,7 +1005,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+              console.error('Failed to request https://v1.jinrishici.com/all.json:', error);
             }
             typing(text);
           }

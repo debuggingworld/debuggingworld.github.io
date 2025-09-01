@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -63,6 +63,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -388,7 +390,8 @@ CPU 的大量中断负载。</p>
 <h4 id="传统数据传送机制">2.3 传统数据传送机制</h4>
 <p>比如读取文件，再用 socket 发送出去，实际经过四次 copy。</p>
 <p>伪码实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">buffer = File.read() <br>Socket.send(buffer)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java">buffer <span class="token operator">=</span> <span class="token class-name">File</span><span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token class-name">Socket</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <center>
 <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202310042117088.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" />
 </center>
@@ -558,7 +561,7 @@ i-node
 0
 开始的，所以在不同的进程中可以看到相同的文件描述符，这种情况下相同的文件描述符可能指向同一个实际文件，也可能指向不同的实际文件。</p>
 <h4 id="select">4.2 select</h4>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">select</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-C" data-language="C"><code class="language-C">int select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>　　select 函数监视的文件描述符分 3 类，分别是 writefds、readfds、和
 exceptfds。调用后 select 函数会阻塞，直到有描述副就绪（有数据
 可读、可写、或者有错误发生），或者超时（ timeout
@@ -570,7 +573,7 @@ exceptfds。调用后 select 函数会阻塞，直到有描述副就绪（有数
 上一般为
 1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制，但是这样也会造成效率的降低。</p>
 <h4 id="poll">4.3 poll</h4>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">poll</span> <span class="hljs-params">(struct pollfd *fds, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> nfds, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">poll</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>　　不同于 select 使用三个位图来表示三个 fdset 的方式，poll 使用一个
 pollfd 的指针实现。</p>
 <p>　　pollfd 结构包含了要监视的 event 和发生的 event，不再使用 select
@@ -581,7 +584,11 @@ pollfd 的指针实现。</p>
 <p>　　epoll 是在 2.6 内核中提出的，是之前的 select 和 poll
 的增强版本。相对于 select 和 poll 来说，可以看到 epoll
 做了更细致的分解，包含了三个方法，使用上更加灵活。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_create</span><span class="hljs-params">(<span class="hljs-keyword">int</span> size)</span>；</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_ctl</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd, <span class="hljs-keyword">int</span> op, <span class="hljs-keyword">int</span> fd, struct epoll_event *event)</span>；</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">epoll_wait</span><span class="hljs-params">(<span class="hljs-keyword">int</span> epfd, struct epoll_event * events, <span class="hljs-keyword">int</span> maxevents, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span>；
+
+<span class="token keyword">int</span> <span class="token function">epoll_ctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">int</span> op<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>event<span class="token punctuation">)</span>；
+
+<span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span> events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>　　① <strong>epoll_create()</strong>　创建一个 epoll 的句柄，size
 用来告诉内核这个监听的数目一共有多大，这个参数不同于 select()
 中的第一个参数，给出最大监听的 fd+1 的值，参数 size 并不是限制了 epoll
@@ -788,7 +795,18 @@ CPU。ksoftirqd 检测到有软中断请求到达，调用 poll
 <p>了解 epoll
 本质，要从操作系统进程调度的角度来看数据接收。阻塞是进程调度的关键一环，指的是进程在等待某事件（如接收到网络数据）发生之前的等待状态，recv、select
 和 epoll 都是阻塞方法。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//创建socket</span><br><span class="hljs-keyword">int</span> s = socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);   <br><span class="hljs-comment">//绑定</span><br>bind(s, ...)<br><span class="hljs-comment">//监听</span><br>listen(s, ...)<br><span class="hljs-comment">//接受客户端连接</span><br><span class="hljs-keyword">int</span> c = accept(s, ...)<br><span class="hljs-comment">//接收客户端数据</span><br>recv(c, ...);<br><span class="hljs-comment">//将数据打印出来</span><br><span class="hljs-built_in">printf</span>(...)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//创建socket</span>
+<span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>AF_INET<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+<span class="token comment">//绑定</span>
+<span class="token function">bind</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token comment">//监听</span>
+<span class="token function">listen</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token comment">//接受客户端连接</span>
+<span class="token keyword">int</span> c <span class="token operator">=</span> <span class="token function">accept</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token comment">//接收客户端数据</span>
+<span class="token function">recv</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//将数据打印出来</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>　　这是一段最基础的网络编程代码，先新建 socket 对象，依次调用
 bind、listen、accept，最后调用 recv 接收数据。recv
 是个阻塞方法，当程序运行到 recv
@@ -849,7 +867,15 @@ epoll 的本质。</p>
 都没有数据，select 会阻塞，直到有一个 socket 接收到数据，select
 返回，唤醒进程。用户可以遍历 fds，通过 FD_ISSET 判断具体哪个 socket
 收到数据，然后做出处理。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> fds[] =  存放需要监听的socket<br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    <span class="hljs-keyword">int</span> n = select(..., fds, ...)<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i &lt; fds.count; i++)&#123;<br>        <span class="hljs-keyword">if</span>(FD_ISSET(fds[i], ...))&#123;<br>            <span class="hljs-comment">//fds[i]的数据处理</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> fds<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span>  存放需要监听的socket
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> fds<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> fds<span class="token punctuation">.</span>count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">FD_ISSET</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//fds[i]的数据处理</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>　　select 的实现思路很直接。假如程序同时监视 sock1、sock2 和 sock3
 三个 socket，那么在调用 select 之后，操作系统把进程 A 分别加入这三个
 socket 的等待队列中。</p>
@@ -883,7 +909,14 @@ select 都需要这两步操作，然而大多数应用场景中，需要监视�
 <p>　　如下的代码中，先用 epoll_create 创建一个 epoll 对象 epfd，再通过
 epoll_ctl 将需要监视的 socket 添加到 epfd 中，最后调用 epoll_wait
 等待数据。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> epfd = epoll_create(...);<br>epoll_ctl(epfd, ...); <span class="hljs-comment">//将所有需要监听的socket添加到epfd中</span><br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    <span class="hljs-keyword">int</span> n = epoll_wait(...)<br>    <span class="hljs-keyword">for</span>(接收到数据的socket)&#123;<br>        <span class="hljs-comment">//处理</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> epfd <span class="token operator">=</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">epoll_ctl</span><span class="token punctuation">(</span>epfd<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//将所有需要监听的socket添加到epfd中</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>接收到数据的socket<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//处理</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>　　措施二：就绪列表</p>
 <p>　　select 低效的另一个原因在于程序不知道哪些 socket
 收到数据，只能一个个遍历。如果内核维护一个“就绪列表”，引用收到数据的
@@ -1294,6 +1327,8 @@ epoll_waitx 效率非常高，可以轻易地处理百万级别的并发连接�
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

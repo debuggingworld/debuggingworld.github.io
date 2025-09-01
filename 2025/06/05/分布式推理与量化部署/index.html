@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -48,6 +48,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -402,9 +404,12 @@ GPU 推理。</p>
 <p><a
 target="_blank" rel="noopener" href="https://vllm.hyper.ai/docs/inference-and-serving/distributed_serving_new">文档</a></p>
 <p>张量并行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">vllm serve facebook/opt-13b \<br>    --tensor-parallel-size 4<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vllm serve facebook/opt-13b <span class="token punctuation">\</span>
+    --tensor-parallel-size <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>张量并行+流水线并行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">vllm serve gpt2 \<br>    --tensor-parallel-size 4 \<br>    --pipeline-parallel-size 2<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vllm serve gpt2 <span class="token punctuation">\</span>
+    --tensor-parallel-size <span class="token number">4</span> <span class="token punctuation">\</span>
+    --pipeline-parallel-size <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="lmdeploy-分布式推理">3. LMDeploy 分布式推理</h3>
 <p><a
 target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iW4y1A77P/">教程地址</a></p>
@@ -454,7 +459,7 @@ Global Memory 读取时仍是 4bit），依旧使用的是 FP16 计算。
 <h5 id="多卡部署">1. 多卡部署</h5>
 <p><a
 target="_blank" rel="noopener" href="https://lmdeploy.readthedocs.io/zh-cn/latest/llm/api_server.html">文档</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">lmdeploy serve api_server Qwen/Qwen3-4B --server-port 23333 --model-name Qwen3-4B  --session-len 4096   --max-batch-size 32 --tp 2<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server Qwen/Qwen3-4B --server-port <span class="token number">23333</span> --model-name Qwen3-4B  --session-len <span class="token number">4096</span>   --max-batch-size <span class="token number">32</span> <span class="token parameter variable">--tp</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>　　api_server
 启动时的参数可以通过命令行<code>lmdeploy serve api_server -h</code>查看。
 比如，<code>--tp</code> 设置张量并行，<code>--session-len</code>
@@ -477,12 +482,12 @@ kv block 分别可以增加到 4 倍和 2 倍。这意味着，在相同的内�
 <li>推理高效，在 llama2-7b 上加入 int8/int4 kv 量化，RPS 相较于 fp16
 分别提升近 30% 和 40</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">lmdeploy serve api_server Qwen/Qwen3-4B --quant-policy 8<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server Qwen/Qwen3-4B --quant-policy <span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h5 id="turbomind">3. TurboMind</h5>
 <p>　　使用 TurboMind 引擎进行推理：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">lmdeploy serve api_server  /root/autodl-tmp/models/Qwen/Qwen3-4B-merged  --backend turbomind  --model-name qwen3_4b<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_server  /root/autodl-tmp/models/Qwen/Qwen3-4B-merged  <span class="token parameter variable">--backend</span> turbomind  --model-name qwen3_4b<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506101106920.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">lmdeploy serve api_client http://localhost:23333<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">lmdeploy serve api_client http://localhost:23333<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506101107413.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <blockquote>
 <p>lmdeploy 版本：0.8.0</p>
@@ -834,6 +839,8 @@ turbomind. Type: str</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

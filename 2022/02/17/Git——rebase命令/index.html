@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 应用场景  合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录 合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7">
+    <meta name="description" content="1. 应用场景  合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录 合并最近两次 commit: git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： pick 6935383 rename冲突 pick 23b1a51 debug  # Rebase eb7f366..23b1a51 onto eb7f366 (2 commands) #">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git——rebase命令">
 <meta property="og:url" content="http://example.com/2022/02/17/Git%E2%80%94%E2%80%94rebase%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 应用场景  合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录 合并最近两次 commit: 1git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： 1234567891011121314151617181920212223242526pick 6935383 rename冲突pick 23b1a51 debug# Rebase eb7">
+<meta property="og:description" content="1. 应用场景  合并多次提交记录 分支合并 对一个分支做『变基』操作  2. 合并多次提交记录 合并最近两次 commit: git rebase -i HEAD~2 执行命令后会自动进入 vi 编辑模式： pick 6935383 rename冲突 pick 23b1a51 debug  # Rebase eb7f366..23b1a51 onto eb7f366 (2 commands) #">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-17T14:56:22.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.782Z">
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.9k 字
+          6.3k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          22 分钟
+          20 分钟
         
       </span>
     
@@ -298,9 +300,34 @@
 </ul>
 <h3 id="合并多次提交记录">2. 合并多次提交记录</h3>
 <p>合并最近两次 commit:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git rebase -i HEAD~2<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> rebase <span class="token parameter variable">-i</span> HEAD~2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>执行命令后会自动进入 vi 编辑模式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash">pick 6935383 rename冲突<br>pick 23b1a51 debug<br><br><span class="hljs-comment"># Rebase eb7f366..23b1a51 onto eb7f366 (2 commands)</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Commands:</span><br><span class="hljs-comment"># p, pick &lt;commit&gt; = use commit</span><br><span class="hljs-comment"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span><br><span class="hljs-comment"># e, edit &lt;commit&gt; = use commit, but stop for amending</span><br><span class="hljs-comment"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span><br><span class="hljs-comment"># f, fixup &lt;commit&gt; = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="hljs-comment"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span><br><span class="hljs-comment"># b, break = stop here (continue rebase later with &#x27;git rebase --continue&#x27;)</span><br><span class="hljs-comment"># d, drop &lt;commit&gt; = remove commit</span><br><span class="hljs-comment"># l, label &lt;label&gt; = label current HEAD with a name</span><br><span class="hljs-comment"># t, reset &lt;label&gt; = reset HEAD to a label</span><br><span class="hljs-comment"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span><br><span class="hljs-comment"># .       create a merge commit using the original merge commit&#x27;s</span><br><span class="hljs-comment"># .       message (or the oneline, if no original merge commit was</span><br><span class="hljs-comment"># .       specified). Use -c &lt;commit&gt; to reword the commit message.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># These lines can be re-ordered; they are executed from top to bottom.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># However, if you remove everything, the rebase will be aborted.</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pick <span class="token number">6935383</span> rename冲突
+pick 23b1a51 debug
+
+<span class="token comment"># Rebase eb7f366..23b1a51 onto eb7f366 (2 commands)</span>
+<span class="token comment">#</span>
+<span class="token comment"># Commands:</span>
+<span class="token comment"># p, pick &lt;commit> = use commit</span>
+<span class="token comment"># r, reword &lt;commit> = use commit, but edit the commit message</span>
+<span class="token comment"># e, edit &lt;commit> = use commit, but stop for amending</span>
+<span class="token comment"># s, squash &lt;commit> = use commit, but meld into previous commit</span>
+<span class="token comment"># f, fixup &lt;commit> = like "squash", but discard this commit's log message</span>
+<span class="token comment"># x, exec &lt;command> = run command (the rest of the line) using shell</span>
+<span class="token comment"># b, break = stop here (continue rebase later with 'git rebase --continue')</span>
+<span class="token comment"># d, drop &lt;commit> = remove commit</span>
+<span class="token comment"># l, label &lt;label> = label current HEAD with a name</span>
+<span class="token comment"># t, reset &lt;label> = reset HEAD to a label</span>
+<span class="token comment"># m, merge [-C &lt;commit> | -c &lt;commit>] &lt;label> [# &lt;oneline>]</span>
+<span class="token comment"># .       create a merge commit using the original merge commit's</span>
+<span class="token comment"># .       message (or the oneline, if no original merge commit was</span>
+<span class="token comment"># .       specified). Use -c &lt;commit> to reword the commit message.</span>
+<span class="token comment">#</span>
+<span class="token comment"># These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="token comment">#</span>
+<span class="token comment"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="token comment">#</span>
+<span class="token comment"># However, if you remove everything, the rebase will be aborted.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <blockquote>
 <ul>
 <li>【注】</li>
@@ -314,9 +341,29 @@
 </ul>
 </blockquote>
 <p>修改提交纪录并保存退出。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">pick 6935383 rename冲突<br>s 23b1a51 debug<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pick <span class="token number">6935383</span> rename冲突
+s 23b1a51 debug<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>保存后到注释修改界面。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># This is a combination of 2 commits.</span><br><span class="hljs-comment"># This is the 1st commit message:</span><br><br>rename冲突<br><br><span class="hljs-comment"># This is the commit message #2:</span><br><br>debug<br><br><span class="hljs-comment"># Please enter the commit message for your changes. Lines starting</span><br><span class="hljs-comment"># with &#x27;#&#x27; will be ignored, and an empty message aborts the commit.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Date:      Tue Nov 24 22:56:02 2020 +0800</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># interactive rebase in progress; onto eb7f366</span><br><span class="hljs-comment"># Last commands done (2 commands done):</span><br><span class="hljs-comment">#    pick 6935383 rename冲突</span><br><span class="hljs-comment">#    squash 23b1a51 debug</span><br><span class="hljs-comment"># No commands remaining.</span><br><span class="hljs-comment"># You are currently rebasing branch &#x27;maseter&#x27; on &#x27;eb7f366&#x27;.</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># This is a combination of 2 commits.</span>
+<span class="token comment"># This is the 1st commit message:</span>
+
+rename冲突
+
+<span class="token comment"># This is the commit message #2:</span>
+
+debug
+
+<span class="token comment"># Please enter the commit message for your changes. Lines starting</span>
+<span class="token comment"># with '#' will be ignored, and an empty message aborts the commit.</span>
+<span class="token comment">#</span>
+<span class="token comment"># Date:      Tue Nov 24 22:56:02 2020 +0800</span>
+<span class="token comment">#</span>
+<span class="token comment"># interactive rebase in progress; onto eb7f366</span>
+<span class="token comment"># Last commands done (2 commands done):</span>
+<span class="token comment">#    pick 6935383 rename冲突</span>
+<span class="token comment">#    squash 23b1a51 debug</span>
+<span class="token comment"># No commands remaining.</span>
+<span class="token comment"># You are currently rebasing branch 'maseter' on 'eb7f366'.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>（非编辑状态输入dd删除一行）</p>
 <p>保存后即合并完成。</p>
 <blockquote>
@@ -325,7 +372,15 @@
 <p>如果这样做，可能出现push rejected。
 解决方式当然是先拉下远程的代码，进行冲突处理，再进行提交。</p>
 <p>2、git rebase -i 异常操作导致退出了vim编辑页面，会提示：
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"> $ git rebase -i head~2<br> error: could not apply 040bd4b... commit on issue-005<br> Resolve all conflicts manually, mark them as resolved with<br><span class="hljs-string">&quot;git add/rm &lt;conflicted_files&gt;&quot;</span>, <span class="hljs-keyword">then</span> run <span class="hljs-string">&quot;git rebase --continue&quot;</span>.<br>You can instead skip this commit: run <span class="hljs-string">&quot;git rebase --skip&quot;</span>.<br>To abort and get back to the state before <span class="hljs-string">&quot;git rebase&quot;</span>, run <span class="hljs-string">&quot;git rebase --abort&quot;</span>.<br>Could not apply 040bd4b... commit on issue-005<br>Auto-merging README.md<br>CONFLICT (content): Merge conflict <span class="hljs-keyword">in</span> README.md<br></code></pre></td></tr></table></figure> 使用 git rebase --edit-todo
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"> $ <span class="token function">git</span> rebase <span class="token parameter variable">-i</span> head~2
+ error: could not apply 040bd4b<span class="token punctuation">..</span>. commit on issue-005
+ Resolve all conflicts manually, mark them as resolved with
+<span class="token string">"git add/rm &lt;conflicted_files>"</span>, <span class="token keyword">then</span> run <span class="token string">"git rebase --continue"</span><span class="token builtin class-name">.</span>
+You can instead skip this commit: run <span class="token string">"git rebase --skip"</span><span class="token builtin class-name">.</span>
+To abort and get back to the state before <span class="token string">"git rebase"</span>, run <span class="token string">"git rebase --abort"</span><span class="token builtin class-name">.</span>
+Could not apply 040bd4b<span class="token punctuation">..</span>. commit on issue-005
+Auto-merging README.md
+CONFLICT <span class="token punctuation">(</span>content<span class="token punctuation">)</span>: Merge conflict <span class="token keyword">in</span> README.md<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 使用 git rebase --edit-todo
 会再次进入刚才编辑错误退出前的vim状态，这时候可以修改你的编辑。</p>
 <p>使用git rebase --abort  表明退出当前的合并请求(
 又回到原来的2个commit的状态)</p>
@@ -333,27 +388,129 @@
 <h3 id="变基">3. 变基</h3>
 <p><font color="red">使用场景：本地与远端同一分支提交历史不一致</font></p>
 <p>多个人在同一个分支上协作时，比如由我和A一同开发。我在修复了一个bug以后准备提交。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git commit -m <span class="hljs-string">&quot;debug the world&quot;</span><br>[master a40d43c] debug the world<br> 1 file changed, 0 insertions(+), 0 deletions(-)<br> create mode 100644 aa.txt<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git push origin master<br>To github.com:Zhangtao153/learngit.git<br> ! [rejected]        master -&gt; master (non-fast-forward)<br>error: failed to push some refs to <span class="hljs-string">&#x27;github.com:Zhangtao153/learngit.git&#x27;</span><br>hint: Updates were rejected because the tip of your current branch is behind<br>hint: its remote counterpart. Integrate the remote changes (e.g.<br>hint: <span class="hljs-string">&#x27;git pull ...&#x27;</span>) before pushing again.<br>hint: See the <span class="hljs-string">&#x27;Note about fast-forwards&#x27;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;git push --help&#x27;</span> <span class="hljs-keyword">for</span> details.<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"debug the world"</span>
+<span class="token punctuation">[</span>master a40d43c<span class="token punctuation">]</span> debug the world
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">0</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">0</span> deletions<span class="token punctuation">(</span>-<span class="token punctuation">)</span>
+ create mode <span class="token number">100644</span> aa.txt
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> push origin master
+To github.com:Zhangtao153/learngit.git
+ <span class="token operator">!</span> <span class="token punctuation">[</span>rejected<span class="token punctuation">]</span>        master -<span class="token operator">></span> master <span class="token punctuation">(</span>non-fast-forward<span class="token punctuation">)</span>
+error: failed to push some refs to <span class="token string">'github.com:Zhangtao153/learngit.git'</span>
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes <span class="token punctuation">(</span>e.g.
+hint: <span class="token string">'git pull ...'</span><span class="token punctuation">)</span> before pushing again.
+hint: See the <span class="token string">'Note about fast-forwards'</span> <span class="token keyword">in</span> <span class="token string">'git push --help'</span> <span class="token keyword">for</span> details.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>push失败了，说明A在我之前已经提交了，我本地master分支的提交历史已经落后远端了，需要先pull一下，与远端同步后才能push
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git pull<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> README.md | 3 ++-<br> 1 file changed, 2 insertions(+), 1 deletion(-)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   912bb85 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;master&#x27;</span> of github.com:Zhangtao153/learngit into master<br>|\<br>| * 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* | a40d43c debug the world<br>|/<br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> pull
+Merge made by the <span class="token string">'recursive'</span> strategy.
+ README.md <span class="token operator">|</span> <span class="token number">3</span> ++-
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">2</span> insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>, <span class="token number">1</span> deletion<span class="token punctuation">(</span>-<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> log <span class="token parameter variable">--oneline</span> <span class="token parameter variable">--graph</span>
+*   912bb85 <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span> Merge branch <span class="token string">'master'</span> of github.com:Zhangtao153/learngit into master
+<span class="token operator">|</span><span class="token punctuation">\</span>
+<span class="token operator">|</span> * 7ad4fd6 <span class="token punctuation">(</span>origin/master<span class="token punctuation">)</span> <span class="token function">add</span> a new <span class="token keyword">function</span>
+* <span class="token operator">|</span> a40d43c debug the world
+<span class="token operator">|</span>/
+* a8d2e0d 手动删除
+* 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
+* <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 竟然分叉了！由于我本地master的提交历史和远端的master分支的提交历史不一致，所以git为我进行了自动合并，然后生成了一个新的提交历史。</p>
-<p>这个时候就可以用 git rebase 解决分叉的问题。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git rebase<br>Successfully rebased and updated refs/heads/master.<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 4178b6e (HEAD -&gt; master) debug the world<br>* 7ad4fd6 (origin/master) add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
+<p>这个时候就可以用 git rebase 解决分叉的问题。 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> rebase
+Successfully rebased and updated refs/heads/master.
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> log <span class="token parameter variable">--oneline</span> <span class="token parameter variable">--graph</span>
+* 4178b6e <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span> debug the world
+* 7ad4fd6 <span class="token punctuation">(</span>origin/master<span class="token punctuation">)</span> <span class="token function">add</span> a new <span class="token keyword">function</span>
+* a8d2e0d 手动删除
+* 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
+* <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 然后再push，将本地修改同步到远端。</p>
 <p><font color="red">git pull --rebase </font> 和上面的效果一致。</p>
 <h3 id="合并分支">4. 合并分支</h3>
-<p>先创建一个分支用于解决bug <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ git checkout -b issues-001<br>Switched to a new branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br></code></pre></td></tr></table></figure> 接下解决bug，然后保存提交
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git add .<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git commit -m <span class="hljs-string">&quot;issues-001&quot;</span><br>[issues-001 7a55a26] issues-001<br> 1 file changed, 1 insertion(+)<br></code></pre></td></tr></table></figure> 先尝试通过 <font color="red">merge</font> 合并：
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Merge made by the <span class="hljs-string">&#x27;recursive&#x27;</span> strategy.<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>*   ae02ea0 (HEAD -&gt; master) Merge branch <span class="hljs-string">&#x27;issues-001&#x27;</span> into master<br>|\<br>| * 7a55a26 (issues-001) issues-001<br>* | d36d166 commit on master<br>|/<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
+<p>先创建一个分支用于解决bug <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">git</span> checkout <span class="token parameter variable">-b</span> issues-001
+Switched to a new branch <span class="token string">'issues-001'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div> 接下解决bug，然后保存提交
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span>
+$ <span class="token function">git</span> <span class="token function">add</span> <span class="token builtin class-name">.</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span>
+$ <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"issues-001"</span>
+<span class="token punctuation">[</span>issues-001 7a55a26<span class="token punctuation">]</span> issues-001
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">1</span> insertion<span class="token punctuation">(</span>+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> 先尝试通过 <font color="red">merge</font> 合并：
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span>
+$ <span class="token function">git</span> switch master
+Switched to branch <span class="token string">'master'</span>
+Your branch is ahead of <span class="token string">'origin/master'</span> by <span class="token number">1</span> commit.
+  <span class="token punctuation">(</span>use <span class="token string">"git push"</span> to publish your <span class="token builtin class-name">local</span> commits<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> merge issues-001
+Merge made by the <span class="token string">'recursive'</span> strategy.
+ aa.txt <span class="token operator">|</span> <span class="token number">1</span> +
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">1</span> insertion<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> log <span class="token parameter variable">--oneline</span> <span class="token parameter variable">--graph</span>
+*   ae02ea0 <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span> Merge branch <span class="token string">'issues-001'</span> into master
+<span class="token operator">|</span><span class="token punctuation">\</span>
+<span class="token operator">|</span> * 7a55a26 <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span> issues-001
+* <span class="token operator">|</span> d36d166 commit on master
+<span class="token operator">|</span>/
+* 4178b6e <span class="token punctuation">(</span>origin/master<span class="token punctuation">)</span> debug the world
+* 7ad4fd6 <span class="token function">add</span> a new <span class="token keyword">function</span>
+* a8d2e0d 手动删除
+* 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
+* <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 虽然合并成功，但是Master已经保存了合并历史，出现开叉了！</p>
 <p>通过 <font color="red">rebase</font> 合并分支</p>
-<p>先将代码回退到merge之前 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git reset --hard HEAD^<br>HEAD is now at d36d166 commit on master<br></code></pre></td></tr></table></figure>
+<p>先将代码回退到merge之前 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> reset <span class="token parameter variable">--hard</span> HEAD^
+HEAD is now at d36d166 commit on master<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 先切换回issues-001分支，在issues-001分支上执行: git rebase master
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git switch issues-001<br>Switched to branch <span class="hljs-string">&#x27;issues-001&#x27;</span><br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git rebase master<br>Successfully rebased and updated refs/heads/issues-001.<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> switch issues-001
+Switched to branch <span class="token string">'issues-001'</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span>
+$ <span class="token function">git</span> rebase master
+Successfully rebased and updated refs/heads/issues-001.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 【注】如果rebase出现冲突，先解决冲突，然后通过add添加，之前的rebase其实只是完成了一半，由于出现冲突而终止，冲突解决之后，可以通过
 <font color="red">git rebase —continue</font> 继续完成之前的 rebase
 操作。</p>
-<p>切换到主分支master，将issues-001分支上的提交合并过来。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (issues-001)<br>$ git switch master<br>Switched to branch <span class="hljs-string">&#x27;master&#x27;</span><br>Your branch is ahead of <span class="hljs-string">&#x27;origin/master&#x27;</span> by 1 commit.<br>  (use <span class="hljs-string">&quot;git push&quot;</span> to publish your <span class="hljs-built_in">local</span> commits)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git merge issues-001<br>Updating d36d166..43823d4<br>Fast-forward<br> aa.txt | 1 +<br> 1 file changed, 1 insertion(+)<br><br>Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git <span class="hljs-built_in">log</span> --oneline --graph<br>* 43823d4 (HEAD -&gt; master, issues-001) issues-001<br>* d36d166 commit on master<br>* 4178b6e (origin/master) debug the world<br>* 7ad4fd6 add a new <span class="hljs-keyword">function</span><br>* a8d2e0d 手动删除<br>* 1d243ca add <span class="hljs-built_in">test</span> file<br>* 8438389 wrote a readme file<br></code></pre></td></tr></table></figure>
-master是一条直线了。最后删除掉issues-001分支。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit (master)<br>$ git branch -d issues-001<br>Deleted branch issues-001 (was 43823d4).<br></code></pre></td></tr></table></figure></p>
+<p>切换到主分支master，将issues-001分支上的提交合并过来。 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>issues-001<span class="token punctuation">)</span>
+$ <span class="token function">git</span> switch master
+Switched to branch <span class="token string">'master'</span>
+Your branch is ahead of <span class="token string">'origin/master'</span> by <span class="token number">1</span> commit.
+  <span class="token punctuation">(</span>use <span class="token string">"git push"</span> to publish your <span class="token builtin class-name">local</span> commits<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> merge issues-001
+Updating d36d166<span class="token punctuation">..</span>43823d4
+Fast-forward
+ aa.txt <span class="token operator">|</span> <span class="token number">1</span> +
+ <span class="token number">1</span> <span class="token function">file</span> changed, <span class="token number">1</span> insertion<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
+
+Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> log <span class="token parameter variable">--oneline</span> <span class="token parameter variable">--graph</span>
+* 43823d4 <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master, issues-001<span class="token punctuation">)</span> issues-001
+* d36d166 commit on master
+* 4178b6e <span class="token punctuation">(</span>origin/master<span class="token punctuation">)</span> debug the world
+* 7ad4fd6 <span class="token function">add</span> a new <span class="token keyword">function</span>
+* a8d2e0d 手动删除
+* 1d243ca <span class="token function">add</span> <span class="token builtin class-name">test</span> <span class="token function">file</span>
+* <span class="token number">8438389</span> wrote a readme <span class="token function">file</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+master是一条直线了。最后删除掉issues-001分支。 <div class="code-wrapper"><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Administrator@WIN-DTNF3GRDH5R MINGW64 /g/learngit <span class="token punctuation">(</span>master<span class="token punctuation">)</span>
+$ <span class="token function">git</span> branch <span class="token parameter variable">-d</span> issues-001
+Deleted branch issues-001 <span class="token punctuation">(</span>was 43823d4<span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></p>
 
               
             </div>
@@ -697,6 +854,8 @@ master是一条直线了。最后删除掉issues-001分支。 <figure class="hig
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

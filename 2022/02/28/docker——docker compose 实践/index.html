@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="docker-compose.yml 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879services:  minio:    image: xxxx">
+    <meta name="description" content="docker-compose.yml services:   minio:     image: xxxx-registry.cn-beijing.cr.aliyuncs.com&#x2F;public&#x2F;minio&#x2F;minio:RELEASE.2025-03-12T18-04-18Z     command: server --console-address &quot;:9000&quot;  --address &quot;:900">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker——docker compose 实践">
 <meta property="og:url" content="http://example.com/2022/02/28/docker%E2%80%94%E2%80%94docker%20compose%20%E5%AE%9E%E8%B7%B5/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="docker-compose.yml 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879services:  minio:    image: xxxx">
+<meta property="og:description" content="docker-compose.yml services:   minio:     image: xxxx-registry.cn-beijing.cr.aliyuncs.com&#x2F;public&#x2F;minio&#x2F;minio:RELEASE.2025-03-12T18-04-18Z     command: server --console-address &quot;:9000&quot;  --address &quot;:900">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-28T12:03:04.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.789Z">
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3k 字
+          2.6k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          10 分钟
+          9 分钟
         
       </span>
     
@@ -291,9 +293,106 @@
             <div class="markdown-body">
               
               <p>docker-compose.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">minio:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/public/minio/minio:RELEASE.2025-03-12T18-04-18Z</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">server</span> <span class="hljs-string">--console-address</span> <span class="hljs-string">&quot;:9000&quot;</span>  <span class="hljs-string">--address</span> <span class="hljs-string">&quot;:9001&quot;</span> <span class="hljs-string">/data</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">debuggingworld_minio</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">minio</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9000:9000&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9001:9001&quot;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/minio/data:/data</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MINIO_ROOT_USER:</span> <span class="hljs-string">minioAdmin</span><br>      <span class="hljs-attr">MINIO_ROOT_PASSWORD:</span> <span class="hljs-string">minioAdmin</span><br>    <span class="hljs-attr">healthcheck:</span><br>      <span class="hljs-attr">test:</span> [ <span class="hljs-string">&quot;CMD&quot;</span>, <span class="hljs-string">&quot;mc&quot;</span>, <span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-string">&quot;local&quot;</span> ]<br>      <span class="hljs-attr">interval:</span> <span class="hljs-string">5s</span><br>      <span class="hljs-attr">timeout:</span> <span class="hljs-string">5s</span><br>      <span class="hljs-attr">retries:</span> <span class="hljs-number">5</span><br><br>  <span class="hljs-attr">mysql:</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/public/mysql:8.4.4</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">debuggingworld_mysql</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/mysql/data:/var/lib/mysql</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/mysql/conf.d:/etc/mysql/conf.d</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">admin123</span><br>      <span class="hljs-attr">TZ:</span> <span class="hljs-string">Asia/Shanghai</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;3306:3306&quot;</span><br><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/public/redis:7.4.2</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">debuggingworld_redis</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;6379&quot;</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/redis/data:/data</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/redis/redis.conf:/usr/local/etc/redis/redis.conf</span><br>    <span class="hljs-attr">command:</span> <span class="hljs-string">redis-server</span> <span class="hljs-string">/usr/local/etc/redis/redis.conf</span><br><br>  <span class="hljs-attr">roseFinch_backend:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/xxxx/rosefinch-backend:rosefinch-backend_master-202504231953-1ffbe0</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rosefinch_backend</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">ROSEFINCH_MYSQL_URL:</span> <span class="hljs-string">&quot;jdbc:mysql://debuggingworld_mysql:3306/user_center?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&quot;</span><br>      <span class="hljs-attr">ROSEFINCH_MYSQL_PASSWORD:</span> <span class="hljs-string">admin123</span><br>      <span class="hljs-attr">ROSEFINCH_MYSQL_USERNAME:</span> <span class="hljs-string">root</span><br>      <span class="hljs-attr">ROSEFINCH_REDIS_HOST:</span> <span class="hljs-string">debuggingworld_redis</span><br>      <span class="hljs-attr">ROSEFINCH_REDIS_PASSWORD:</span> <span class="hljs-string">admin123</span><br>      <span class="hljs-attr">ROSEFINCH_REDIS_PORT:</span> <span class="hljs-number">6379</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9991&quot;</span><br>    <span class="hljs-attr">command:</span> [ <span class="hljs-string">&quot;java&quot;</span>, <span class="hljs-string">&quot;-Xmx1800M&quot;</span>, <span class="hljs-string">&quot;-Xms1800M&quot;</span>, <span class="hljs-string">&quot;-jar&quot;</span>, <span class="hljs-string">&quot;/mnt/sz-service-admin-0.8.7-SNAPSHOT.jar&quot;</span>, <span class="hljs-string">&quot;--spring.profiles.active=delivered&quot;</span> ]<br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;mysql&quot;</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;redis&quot;</span><br><br>  <span class="hljs-attr">roseFinch_frontend:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/xxxx/rosefinch_frontend:privatization-202504301508-edaf67</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">rosefinch_frontend</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;80&quot;</span><br><br>  <span class="hljs-attr">nginx:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">xxxx-registry.cn-beijing.cr.aliyuncs.com/public/nginx:1.27.4</span><br>    <span class="hljs-attr">container_name:</span> <span class="hljs-string">debuggingworld_nginx</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">nginx</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">/data/middleware/nginx/nginx.conf:/etc/nginx/nginx.conf:ro</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;81:81&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">roseFinch_backend</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">roseFinch_frontend</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">minio</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/public/minio/minio<span class="token punctuation">:</span>RELEASE.2025<span class="token punctuation">-</span>03<span class="token punctuation">-</span>12T18<span class="token punctuation">-</span>04<span class="token punctuation">-</span>18Z
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> server <span class="token punctuation">-</span><span class="token punctuation">-</span>console<span class="token punctuation">-</span>address "<span class="token punctuation">:</span>9000"  <span class="token punctuation">-</span><span class="token punctuation">-</span>address "<span class="token punctuation">:</span>9001" /data
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> debuggingworld_minio
+    <span class="token key atrule">hostname</span><span class="token punctuation">:</span> minio
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"9000:9000"</span>
+      <span class="token punctuation">-</span> <span class="token string">"9001:9001"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /data/middleware/minio/data<span class="token punctuation">:</span>/data
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MINIO_ROOT_USER</span><span class="token punctuation">:</span> minioAdmin
+      <span class="token key atrule">MINIO_ROOT_PASSWORD</span><span class="token punctuation">:</span> minioAdmin
+    <span class="token key atrule">healthcheck</span><span class="token punctuation">:</span>
+      <span class="token key atrule">test</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> <span class="token string">"CMD"</span><span class="token punctuation">,</span> <span class="token string">"mc"</span><span class="token punctuation">,</span> <span class="token string">"ready"</span><span class="token punctuation">,</span> <span class="token string">"local"</span> <span class="token punctuation">]</span>
+      <span class="token key atrule">interval</span><span class="token punctuation">:</span> 5s
+      <span class="token key atrule">timeout</span><span class="token punctuation">:</span> 5s
+      <span class="token key atrule">retries</span><span class="token punctuation">:</span> <span class="token number">5</span>
+
+  <span class="token key atrule">mysql</span><span class="token punctuation">:</span>
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/public/mysql<span class="token punctuation">:</span>8.4.4
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> debuggingworld_mysql
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /data/middleware/mysql/data<span class="token punctuation">:</span>/var/lib/mysql
+      <span class="token punctuation">-</span> /data/middleware/mysql/conf.d<span class="token punctuation">:</span>/etc/mysql/conf.d
+      <span class="token punctuation">-</span> /data/middleware/mysql/docker<span class="token punctuation">-</span>entrypoint<span class="token punctuation">-</span>initdb.d<span class="token punctuation">:</span>/docker<span class="token punctuation">-</span>entrypoint<span class="token punctuation">-</span>initdb.d
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">MYSQL_ROOT_PASSWORD</span><span class="token punctuation">:</span> admin123
+      <span class="token key atrule">TZ</span><span class="token punctuation">:</span> Asia/Shanghai
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"3306:3306"</span>
+
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/public/redis<span class="token punctuation">:</span>7.4.2
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> debuggingworld_redis
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"6379"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /data/middleware/redis/data<span class="token punctuation">:</span>/data
+      <span class="token punctuation">-</span> /data/middleware/redis/redis.conf<span class="token punctuation">:</span>/usr/local/etc/redis/redis.conf
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> redis<span class="token punctuation">-</span>server /usr/local/etc/redis/redis.conf
+
+  <span class="token key atrule">roseFinch_backend</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/xxxx/rosefinch<span class="token punctuation">-</span>backend<span class="token punctuation">:</span>rosefinch<span class="token punctuation">-</span>backend_master<span class="token punctuation">-</span>202504231953<span class="token punctuation">-</span>1ffbe0
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> rosefinch_backend
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">ROSEFINCH_MYSQL_URL</span><span class="token punctuation">:</span> <span class="token string">"jdbc:mysql://debuggingworld_mysql:3306/user_center?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"</span>
+      <span class="token key atrule">ROSEFINCH_MYSQL_PASSWORD</span><span class="token punctuation">:</span> admin123
+      <span class="token key atrule">ROSEFINCH_MYSQL_USERNAME</span><span class="token punctuation">:</span> root
+      <span class="token key atrule">ROSEFINCH_REDIS_HOST</span><span class="token punctuation">:</span> debuggingworld_redis
+      <span class="token key atrule">ROSEFINCH_REDIS_PASSWORD</span><span class="token punctuation">:</span> admin123
+      <span class="token key atrule">ROSEFINCH_REDIS_PORT</span><span class="token punctuation">:</span> <span class="token number">6379</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"9991"</span>
+    <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> <span class="token string">"java"</span><span class="token punctuation">,</span> <span class="token string">"-Xmx1800M"</span><span class="token punctuation">,</span> <span class="token string">"-Xms1800M"</span><span class="token punctuation">,</span> <span class="token string">"-jar"</span><span class="token punctuation">,</span> <span class="token string">"/mnt/sz-service-admin-0.8.7-SNAPSHOT.jar"</span><span class="token punctuation">,</span> <span class="token string">"--spring.profiles.active=delivered"</span> <span class="token punctuation">]</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"mysql"</span>
+      <span class="token punctuation">-</span> <span class="token string">"redis"</span>
+
+  <span class="token key atrule">roseFinch_frontend</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/xxxx/rosefinch_frontend<span class="token punctuation">:</span>privatization<span class="token punctuation">-</span>202504301508<span class="token punctuation">-</span>edaf67
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> rosefinch_frontend
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"80"</span>
+
+  <span class="token key atrule">nginx</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> xxxx<span class="token punctuation">-</span>registry.cn<span class="token punctuation">-</span>beijing.cr.aliyuncs.com/public/nginx<span class="token punctuation">:</span>1.27.4
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> debuggingworld_nginx
+    <span class="token key atrule">hostname</span><span class="token punctuation">:</span> nginx
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /data/middleware/nginx/nginx.conf<span class="token punctuation">:</span>/etc/nginx/nginx.conf<span class="token punctuation">:</span>ro
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"81:81"</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> roseFinch_backend
+      <span class="token punctuation">-</span> roseFinch_frontend<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>nginx.conf:</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">events</span> &#123;&#125;<br><br><span class="hljs-section">http</span> &#123;<br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span> <span class="hljs-number">81</span>;<br>        <span class="hljs-attribute">server_name</span> localhost;<br><br>        <span class="hljs-attribute">location</span> / &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://rosefinch_frontend:80;<br>        &#125;<br><br>        <span class="hljs-attribute">location</span> /api/admin/ &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://rosefinch_backend:9991;<br>            <span class="hljs-attribute">proxy_set_header</span> Host syno-tag.modelbest.co; <span class="hljs-comment"># 动态域名</span><br>            <span class="hljs-attribute">proxy_set_header</span> X-Real-IP $remote_addr;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For $proxy_add_x_forwarded_for;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-Proto $scheme;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">events</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token directive"><span class="token keyword">http</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">&#123;</span>
+        <span class="token directive"><span class="token keyword">listen</span> <span class="token number">81</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">server_name</span> localhost</span><span class="token punctuation">;</span>
+
+        <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://rosefinch_frontend:80</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token directive"><span class="token keyword">location</span> /api/admin/</span> <span class="token punctuation">&#123;</span>
+            <span class="token directive"><span class="token keyword">proxy_pass</span> http://rosefinch_backend:9991</span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> Host syno-tag.modelbest.co</span><span class="token punctuation">;</span> <span class="token comment"># 动态域名</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Real-IP <span class="token variable">$remote_addr</span></span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span></span><span class="token punctuation">;</span>
+            <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Proto <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>
@@ -637,6 +736,8 @@
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

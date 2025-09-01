@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getIn">
+    <meta name="description" content="1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 public interface TestInterface &amp;#123;     Integer age &#x3D; 18;     int getInt(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java——函数式编程">
 <meta property="og:url" content="http://example.com/2021/11/30/java%E2%80%94%E2%80%94%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 1234public interface TestInterface &amp;#123;    Integer age &#x3D; 18;    int getIn">
+<meta property="og:description" content="1. 重新认识接口 1.1 java8之前 接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public abstract）和常量（public static final），并且接口中不允许定义实例变量。 public interface TestInterface &amp;#123;     Integer age &#x3D; 18;     int getInt(">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-30T15:34:42.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.789Z">
@@ -43,6 +43,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -237,7 +239,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.9k 字
+          2.8k 字
         
       </span>
     
@@ -249,7 +251,7 @@
         
         
           <!-- compatible with older versions-->
-          10 分钟
+          9 分钟
         
       </span>
     
@@ -296,11 +298,26 @@
 <p>接口的作用：定义该类型实例具有的功能，不关心如何进行这些工作。所以，接口定义中只有抽象方法（public
 abstract）和常量（public static
 final），并且接口中不允许定义实例变量。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TestInterface</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Integer</span> age <span class="token operator">=</span> <span class="token number">18</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token function">getInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="java8之后">1.2 java8之后</h4>
 <p>从JDK8开始，接口可以加入静态方法和默认方法
 默认方法允许接口方法定义默认实现，而所有子类都继承该方法及实现
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">TestInterface</span> </span>&#123;<br>    Integer age = <span class="hljs-number">18</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getInt</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printHello</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getString</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure> <strong>默认方法的优势</strong> 1.
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">TestInterface</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Integer</span> age <span class="token operator">=</span> <span class="token number">18</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> <span class="token function">getInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">default</span> <span class="token keyword">void</span> <span class="token function">getString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div> <strong>默认方法的优势</strong> 1.
 默认方法的主要优势是提供一种拓展接口的方法，而不破坏现有代码。增加新的方法，并且能保证对使用这个接口的老版本代码的兼容性。
 在JDK8以前，如果为一个现有接口增加一个新方法，则我们必须在所有实现类中添加该方法的实现，否则编译会出现异常。
 如果实现类比较多或者我们没有权限修改实现类源代码，这样可能就比较麻烦。
@@ -311,7 +328,10 @@ final），并且接口中不允许定义实例变量。</p>
 <p><strong>定义：</strong>
 &gt;如果一个接口定义唯一一个抽象方法，那么这个接口就成为函数式接口。</p>
 <p>java.lang.Runnable 就是一个函数式接口，因为它只有一个抽象方法。
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@FunctionalInterface</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Runnable</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <p>默认方法不是abstract的，所以一个函数式接口里可以定义任意多的默认方法。
 为了标明函数式接口Java8引入了一个新的注解： <span class="citation"
 data-cites="FunctionalInterface">@FunctionalInterface</span></p>
@@ -771,6 +791,8 @@ mapper 在以 value 作为输入时的输出值。</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

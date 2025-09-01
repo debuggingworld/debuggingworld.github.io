@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    1234567">
+    <meta name="description" content="1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    func ma">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——流程控制">
 <meta property="og:url" content="http://example.com/2021/12/29/Go%E2%80%94%E2%80%94%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    1234567">
+<meta property="og:description" content="1. 分支结构 1.1 if 分支 基本语法： if 条件表达式1 { 　逻辑代码1 } else if　条件表达式2 { 　逻辑代码2 } ....... else { 　逻辑代码n }   条件表达式左右的 () 可以不写，也建议不写。 if 和表达式中间，一定要有空格。 {} 是必须有的，即使逻辑代码只有一行。 else 和上一个代码块结束的 { 必须在同一行，不能换行    func ma">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-29T02:54:13.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.783Z">
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          2.8k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          9 分钟
         
       </span>
     
@@ -305,12 +307,44 @@
 </blockquote>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211229113906.png" srcset="/img/loading.gif" lazyload /></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> score = <span class="hljs-number">80</span><br>	<br>	<span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">90</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;A&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">80</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;B&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">70</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;C&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> score &gt;= <span class="hljs-number">60</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;D&quot;</span>)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;E&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> score <span class="token operator">=</span> <span class="token number">80</span>
+	
+	<span class="token keyword">if</span> score <span class="token operator">>=</span> <span class="token number">90</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> score <span class="token operator">>=</span> <span class="token number">80</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> score <span class="token operator">>=</span> <span class="token number">70</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> score <span class="token operator">>=</span> <span class="token number">60</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"D"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"E"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="switch-分支">1.2 switch 分支</h4>
 <p><strong>基本语法：</strong></p>
 <p>switch 表达式 { 　case 值1,值2,.….<strong>:</strong> 　　　语句块1
 　case 值3,值4,...<strong>:</strong> 　　　语句块2 　 .... 　default
-<strong>:</strong> 　　　 语句块 } <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> score <span class="hljs-keyword">int</span> = <span class="hljs-number">89</span><br><br>	<span class="hljs-keyword">switch</span> score / <span class="hljs-number">10</span> &#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">10</span>, <span class="hljs-number">9</span>:<br>		fmt.Println(<span class="hljs-string">&quot;A&quot;</span>)<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">8</span>:<br>		fmt.Println(<span class="hljs-string">&quot;B&quot;</span>)<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">7</span>:<br>		fmt.Println(<span class="hljs-string">&quot;C&quot;</span>)<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:<br>		fmt.Println(<span class="hljs-string">&quot;D&quot;</span>)<br>	<span class="hljs-keyword">default</span>:<br>		fmt.Println(<span class="hljs-string">&quot;E&quot;</span>)<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<strong>:</strong> 　　　 语句块 } <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> score <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">89</span>
+
+	<span class="token keyword">switch</span> score <span class="token operator">/</span> <span class="token number">10</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">case</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span>
+	<span class="token keyword">case</span> <span class="token number">8</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span>
+	<span class="token keyword">case</span> <span class="token number">7</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"C"</span><span class="token punctuation">)</span>
+	<span class="token keyword">case</span> <span class="token number">6</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"D"</span><span class="token punctuation">)</span>
+	<span class="token keyword">default</span><span class="token punctuation">:</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"E"</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <ol type="1">
 <li>switch 后是一个表达式（即:常量值、变量、一个有返回值的函数等）</li>
 <li>case 后面的值如果是常量值(字面量)，则要求不能重复</li>
@@ -329,7 +363,14 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211229123520.png" srcset="
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211229124313.png" srcset="/img/loading.gif" lazyload /></p></li>
 <li><p>switch 后也可以不带表达式，当做 if 分支来使用
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">var</span> score <span class="hljs-keyword">int</span> = <span class="hljs-number">69</span><br><br><span class="hljs-keyword">switch</span> &#123;<br><span class="hljs-keyword">case</span> score &gt;= <span class="hljs-number">60</span>:<br>	fmt.Println(<span class="hljs-string">&quot;及格&quot;</span>)<br><span class="hljs-keyword">case</span> score &lt; <span class="hljs-number">60</span>:<br>	fmt.Println(<span class="hljs-string">&quot;不及格&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure></p></li>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> score <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">69</span>
+
+<span class="token keyword">switch</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">case</span> score <span class="token operator">>=</span> <span class="token number">60</span><span class="token punctuation">:</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"及格"</span><span class="token punctuation">)</span>
+<span class="token keyword">case</span> score <span class="token operator">&lt;</span> <span class="token number">60</span><span class="token punctuation">:</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"不及格"</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p></li>
 <li><p>利用 fallthrough 关键字进行 switch
 穿透，继续执行下一个case</p></li>
 </ol>
@@ -346,13 +387,75 @@ byte，short，char，int 的包装类 &gt;从Java7开始，支持 String 类型
 ordinal 方法,该方法返回一个 int 类型的值。支持 String 是利用 String 的
 hash 值，本质上也是 switch-int 结构，并且通过 equals 方法来防止 hash
 冲突，用 switch-byte 结构精确匹配。)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">switch</span> (<span class="hljs-string">&quot;A&quot;</span>) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;A&quot;</span> :<br>                System.out.println(<span class="hljs-string">&quot;A&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;B&quot;</span> :<br>                System.out.println(<span class="hljs-string">&quot;B&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>反编译结果： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Test</span><span class="hljs-params">()</span> </span>&#123;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] var0)</span> </span>&#123;<br>        String var1 = <span class="hljs-string">&quot;A&quot;</span>;<br>        <span class="hljs-keyword">byte</span> var2 = -<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">switch</span>(var1.hashCode()) &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">65</span>:<br>            <span class="hljs-keyword">if</span> (var1.equals(<span class="hljs-string">&quot;A&quot;</span>)) &#123;<br>                var2 = <span class="hljs-number">0</span>;<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">66</span>:<br>            <span class="hljs-keyword">if</span> (var1.equals(<span class="hljs-string">&quot;B&quot;</span>)) &#123;<br>                var2 = <span class="hljs-number">1</span>;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">switch</span>(var2) &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>            System.out.println(<span class="hljs-string">&quot;A&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>            System.out.println(<span class="hljs-string">&quot;B&quot;</span>);<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">case</span> <span class="token string">"A"</span> <span class="token operator">:</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token string">"B"</span> <span class="token operator">:</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>反编译结果： <div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> var0<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">String</span> var1 <span class="token operator">=</span> <span class="token string">"A"</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span> var2 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span><span class="token punctuation">(</span>var1<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> <span class="token number">65</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>var1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                var2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">66</span><span class="token operator">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>var1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                var2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">switch</span><span class="token punctuation">(</span>var2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"B"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <h3 id="循环结构">2. 循环结构</h3>
 <p>Go 语言中只有 for 循环。</p>
 <h4 id="基本格式">2.1 基本格式</h4>
 <p>for init; condition; post { } for condition { } for { }</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> sum <span class="hljs-keyword">int</span> = <span class="hljs-number">0</span><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++ &#123;<br>		sum += i<br>	&#125;<br><br>	index := <span class="hljs-number">5</span><br>	<span class="hljs-keyword">for</span> index &gt; <span class="hljs-number">0</span> &#123;<br>		fmt.Println(index)<br>		index--<br>	&#125;<br><br>	index = <span class="hljs-number">5</span><br>	<span class="hljs-keyword">for</span> &#123;<br>		<span class="hljs-keyword">if</span> index &lt; <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-keyword">break</span><br>		&#125;<br>		fmt.Println(index)<br>		index--<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> sum <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">0</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		sum <span class="token operator">+=</span> i
+	<span class="token punctuation">&#125;</span>
+
+	index <span class="token operator">:=</span> <span class="token number">5</span>
+	<span class="token keyword">for</span> index <span class="token operator">></span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span>
+		index<span class="token operator">--</span>
+	<span class="token punctuation">&#125;</span>
+
+	index <span class="token operator">=</span> <span class="token number">5</span>
+	<span class="token keyword">for</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> index <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">break</span>
+		<span class="token punctuation">&#125;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span>
+		index<span class="token operator">--</span>
+	<span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="循环控制关键字">2.2 循环控制关键字</h4>
 <table>
 <thead>
@@ -379,16 +482,48 @@ style="text-align: center;">跳过当前循环的剩余语句，然后继续进�
 </tbody>
 </table>
 <p>以上关键字均支持标签。 （语法和 java 相同）</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>label:<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++ &#123;<br>		<span class="hljs-keyword">for</span> j := <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">3</span>; j++ &#123;<br>			<span class="hljs-keyword">if</span> j == <span class="hljs-number">2</span> &#123;<br>				<span class="hljs-keyword">continue</span> label<br>			&#125;<br>			fmt.Printf(<span class="hljs-string">&quot;%d --- %d \n&quot;</span>, i, j)<br>		&#125;<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+label<span class="token punctuation">:</span>
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">for</span> j <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> j<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">if</span> j <span class="token operator">==</span> <span class="token number">2</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">continue</span> label
+			<span class="token punctuation">&#125;</span>
+			fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%d --- %d \n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> j<span class="token punctuation">)</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="for-range">2.4 for range</h4>
 <p>for range 可以遍历数组、切片、字符串、map 及通道，for range
 语法上类似于其它 java 中的 foreach 语句，一般形式为：</p>
 <p>for key, val := range coll { 　　... }</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	strings := []<span class="hljs-keyword">string</span>&#123;<span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-string">&quot;world&quot;</span>&#125;<br>	<span class="hljs-keyword">for</span> i, s := <span class="hljs-keyword">range</span> strings &#123;<br>		fmt.Println(i, s)<br>	&#125;<br><br>	<span class="hljs-keyword">var</span> str <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;hello 张三&quot;</span><br>	<span class="hljs-keyword">for</span> i, value := <span class="hljs-keyword">range</span> str &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%d &lt;====&gt; %c \n&quot;</span>, i, value)<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	strings <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">&#123;</span><span class="token string">"hello"</span><span class="token punctuation">,</span> <span class="token string">"world"</span><span class="token punctuation">&#125;</span>
+	<span class="token keyword">for</span> i<span class="token punctuation">,</span> s <span class="token operator">:=</span> <span class="token keyword">range</span> strings <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">var</span> str <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">"hello 张三"</span>
+	<span class="token keyword">for</span> i<span class="token punctuation">,</span> value <span class="token operator">:=</span> <span class="token keyword">range</span> str <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%d &lt;====> %c \n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>执行结果：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211229181327.png" srcset="/img/loading.gif" lazyload /></p>
-<p>字符串遍历的另一种方式： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	str := <span class="hljs-string">&quot;hello 张三&quot;</span><br>	r := []<span class="hljs-keyword">rune</span>(str)<br><br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">len</span>(r); i++ &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%c &quot;</span>, r[i])<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>字符串遍历的另一种方式： <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	str <span class="token operator">:=</span> <span class="token string">"hello 张三"</span>
+	r <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token function">rune</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span>
+
+	<span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">len</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%c "</span><span class="token punctuation">,</span> r<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 
               
             </div>
@@ -732,6 +867,8 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211229181327.png" srcset="
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

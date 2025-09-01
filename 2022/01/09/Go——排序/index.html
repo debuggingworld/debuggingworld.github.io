@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 使用 sort.Interface 接口进行排序 sort.Interface 接口的定义： 12345678910type Interface interface &amp;#123;	&#x2F;&#x2F; Len 集合中元素的数量	Len() int	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前	Less(i, j int) bool	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素	Sw">
+    <meta name="description" content="1. 使用 sort.Interface 接口进行排序 sort.Interface 接口的定义： type Interface interface &amp;#123; 	&#x2F;&#x2F; Len 集合中元素的数量 	Len() int  	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前 	Less(i, j int) bool  	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素 	Swap(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——排序">
 <meta property="og:url" content="http://example.com/2022/01/09/Go%E2%80%94%E2%80%94%E6%8E%92%E5%BA%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 使用 sort.Interface 接口进行排序 sort.Interface 接口的定义： 12345678910type Interface interface &amp;#123;	&#x2F;&#x2F; Len 集合中元素的数量	Len() int	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前	Less(i, j int) bool	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素	Sw">
+<meta property="og:description" content="1. 使用 sort.Interface 接口进行排序 sort.Interface 接口的定义： type Interface interface &amp;#123; 	&#x2F;&#x2F; Len 集合中元素的数量 	Len() int  	&#x2F;&#x2F; Less 索引为 i 的元素是否必须排在索引为 j 的元素之前 	Less(i, j int) bool  	&#x2F;&#x2F; Swap 交换索引为 i 和 j 的元素 	Swap(">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-09T08:43:52.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.783Z">
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          2.7k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          9 分钟
         
       </span>
     
@@ -293,19 +295,160 @@
               <h3 id="使用-sort.interface-接口进行排序">1. 使用 sort.Interface
 接口进行排序</h3>
 <p>sort.Interface 接口的定义：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Interface <span class="hljs-keyword">interface</span> &#123;<br>	<span class="hljs-comment">// Len 集合中元素的数量</span><br>	Len() <span class="hljs-keyword">int</span><br><br>	<span class="hljs-comment">// Less 索引为 i 的元素是否必须排在索引为 j 的元素之前</span><br>	Less(i, j <span class="hljs-keyword">int</span>) <span class="hljs-keyword">bool</span><br><br>	<span class="hljs-comment">// Swap 交换索引为 i 和 j 的元素</span><br>	Swap(i, j <span class="hljs-keyword">int</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> Interface <span class="token keyword">interface</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">// Len 集合中元素的数量</span>
+	<span class="token function">Len</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span>
+
+	<span class="token comment">// Less 索引为 i 的元素是否必须排在索引为 j 的元素之前</span>
+	<span class="token function">Less</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span>
+
+	<span class="token comment">// Swap 交换索引为 i 和 j 的元素</span>
+	<span class="token function">Swap</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>示例：</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> MyStringList []<span class="hljs-keyword">string</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m MyStringList)</span> <span class="hljs-title">Len</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(m)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m MyStringList)</span> <span class="hljs-title">Less</span><span class="hljs-params">(i, j <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>	<span class="hljs-keyword">return</span> m[i] &lt; m[j]<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m MyStringList)</span> <span class="hljs-title">Swap</span><span class="hljs-params">(i, j <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	m[i], m[j] = m[j], m[i]<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-comment">// 准备一个内容被打乱顺序的字符串切片</span><br>	names := MyStringList&#123;<br>		<span class="hljs-string">&quot;zhangsan&quot;</span>,<br>		<span class="hljs-string">&quot;lisi&quot;</span>,<br>		<span class="hljs-string">&quot;wamgwu&quot;</span>,<br>		<span class="hljs-string">&quot;zhaoliu&quot;</span>,<br>	&#125;<br><br>	<span class="hljs-comment">// 使用sort包进行排序</span><br>	sort.Sort(names)<br><br>	<span class="hljs-comment">// 遍历打印结果</span><br>	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> names &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%s\n&quot;</span>, v)<br>	&#125;<br>	<span class="hljs-comment">/* 执行结果：</span><br><span class="hljs-comment">	lisi</span><br><span class="hljs-comment">	wamgwu</span><br><span class="hljs-comment">	zhangsan</span><br><span class="hljs-comment">	zhaoliu</span><br><span class="hljs-comment">	*/</span><br><br>	sort.Sort(sort.Reverse(names))<br><br>	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> names &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%s\n&quot;</span>, v)<br>	&#125;<br>	<span class="hljs-comment">/* 执行结果：</span><br><span class="hljs-comment">	zhaoliu</span><br><span class="hljs-comment">	zhangsan</span><br><span class="hljs-comment">	wamgwu</span><br><span class="hljs-comment">	lisi</span><br><span class="hljs-comment">	*/</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> MyStringList <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m MyStringList<span class="token punctuation">)</span> <span class="token function">Len</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m MyStringList<span class="token punctuation">)</span> <span class="token function">Less</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> m<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> m<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>m MyStringList<span class="token punctuation">)</span> <span class="token function">Swap</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	m<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> m<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> m<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">// 准备一个内容被打乱顺序的字符串切片</span>
+	names <span class="token operator">:=</span> MyStringList<span class="token punctuation">&#123;</span>
+		<span class="token string">"zhangsan"</span><span class="token punctuation">,</span>
+		<span class="token string">"lisi"</span><span class="token punctuation">,</span>
+		<span class="token string">"wamgwu"</span><span class="token punctuation">,</span>
+		<span class="token string">"zhaoliu"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 使用sort包进行排序</span>
+	sort<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>names<span class="token punctuation">)</span>
+
+	<span class="token comment">// 遍历打印结果</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> names <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">/* 执行结果：
+	lisi
+	wamgwu
+	zhangsan
+	zhaoliu
+	*/</span>
+
+	sort<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>sort<span class="token punctuation">.</span><span class="token function">Reverse</span><span class="token punctuation">(</span>names<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> names <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">/* 执行结果：
+	zhaoliu
+	zhangsan
+	wamgwu
+	lisi
+	*/</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="常见类型的便捷排序">2. 常见类型的便捷排序</h3>
 <p>sort 包内建的类型排序接口一览：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220109172924.png" srcset="/img/loading.gif" lazyload /></p>
 <p>int32、int64、float32、bool 类型并没有由 sort 包实现</p>
-<p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-comment">// 准备一个内容被打乱顺序的字符串切片</span><br>	names := sort.StringSlice&#123;<br>		<span class="hljs-string">&quot;zhangsan&quot;</span>,<br>		<span class="hljs-string">&quot;lisi&quot;</span>,<br>		<span class="hljs-string">&quot;wamgwu&quot;</span>,<br>		<span class="hljs-string">&quot;zhaoliu&quot;</span>,<br>	&#125;<br><br>	<span class="hljs-comment">// 使用sort包进行排序</span><br>	sort.Sort(names)<br><br><br>	names2 := []<span class="hljs-keyword">string</span>&#123;<br>		<span class="hljs-string">&quot;zhangsan&quot;</span>,<br>		<span class="hljs-string">&quot;lisi&quot;</span>,<br>		<span class="hljs-string">&quot;wamgwu&quot;</span>,<br>		<span class="hljs-string">&quot;zhaoliu&quot;</span>,<br>	&#125;<br><br>	sort.Strings(names2)<br>	<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p><div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">// 准备一个内容被打乱顺序的字符串切片</span>
+	names <span class="token operator">:=</span> sort<span class="token punctuation">.</span>StringSlice<span class="token punctuation">&#123;</span>
+		<span class="token string">"zhangsan"</span><span class="token punctuation">,</span>
+		<span class="token string">"lisi"</span><span class="token punctuation">,</span>
+		<span class="token string">"wamgwu"</span><span class="token punctuation">,</span>
+		<span class="token string">"zhaoliu"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 使用sort包进行排序</span>
+	sort<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>names<span class="token punctuation">)</span>
+
+
+	names2 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">&#123;</span>
+		<span class="token string">"zhangsan"</span><span class="token punctuation">,</span>
+		<span class="token string">"lisi"</span><span class="token punctuation">,</span>
+		<span class="token string">"wamgwu"</span><span class="token punctuation">,</span>
+		<span class="token string">"zhaoliu"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	sort<span class="token punctuation">.</span><span class="token function">Strings</span><span class="token punctuation">(</span>names2<span class="token punctuation">)</span>
+	
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <h3 id="对结构体数据进行排序">3. 对结构体数据进行排序</h3>
 <h4 id="实现-sort.interface-进行结构体排序">3.1 实现 sort.Interface
 进行结构体排序</h4>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// HeroKind 声明英雄的分类</span><br><span class="hljs-keyword">type</span> HeroKind <span class="hljs-keyword">int</span><br><br><span class="hljs-comment">// 定义HeroKind常量, 类似于枚举</span><br><span class="hljs-keyword">const</span> (<br>	None HeroKind = <span class="hljs-literal">iota</span><br>	Tank<br>	Assassin<br>	Mage<br>)<br><br><span class="hljs-keyword">type</span> Hero <span class="hljs-keyword">struct</span> &#123;<br>	Name <span class="hljs-keyword">string</span>  <span class="hljs-comment">// 英雄的名字</span><br>	Kind HeroKind  <span class="hljs-comment">// 英雄的种类</span><br>&#125;<br><br><br><span class="hljs-keyword">type</span> Heroes []*Hero<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s Heroes)</span> <span class="hljs-title">Len</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(s)<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s Heroes)</span> <span class="hljs-title">Less</span><span class="hljs-params">(i, j <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br><br>	<span class="hljs-comment">// 如果英雄的分类不一致时, 优先对分类进行排序</span><br>	<span class="hljs-keyword">if</span> s[i].Kind != s[j].Kind &#123;<br>		<span class="hljs-keyword">return</span> s[i].Kind &lt; s[j].Kind<br>	&#125;<br><br>	<span class="hljs-comment">// 默认按英雄名字字符升序排列</span><br>	<span class="hljs-keyword">return</span> s[i].Name &lt; s[j].Name<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s Heroes)</span> <span class="hljs-title">Swap</span><span class="hljs-params">(i, j <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	s[i], s[j] = s[j], s[i]<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-comment">// 准备英雄列表</span><br>	heroes := Heroes&#123;<br>		&amp;Hero&#123;<span class="hljs-string">&quot;吕布&quot;</span>, Tank&#125;,<br>		&amp;Hero&#123;<span class="hljs-string">&quot;李白&quot;</span>, Assassin&#125;,<br>		&amp;Hero&#123;<span class="hljs-string">&quot;妲己&quot;</span>, Mage&#125;,<br>		&amp;Hero&#123;<span class="hljs-string">&quot;貂蝉&quot;</span>, Assassin&#125;,<br>		&amp;Hero&#123;<span class="hljs-string">&quot;关羽&quot;</span>, Tank&#125;,<br>		&amp;Hero&#123;<span class="hljs-string">&quot;诸葛亮&quot;</span>, Mage&#125;,<br>	&#125;<br><br>	<span class="hljs-comment">// 使用sort包进行排序</span><br>	sort.Sort(heroes)<br><br>	<span class="hljs-comment">// 遍历英雄列表打印排序结果</span><br>	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> heroes &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%+v\n&quot;</span>, v)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// HeroKind 声明英雄的分类</span>
+<span class="token keyword">type</span> HeroKind <span class="token builtin">int</span>
+
+<span class="token comment">// 定义HeroKind常量, 类似于枚举</span>
+<span class="token keyword">const</span> <span class="token punctuation">(</span>
+	None HeroKind <span class="token operator">=</span> <span class="token boolean">iota</span>
+	Tank
+	Assassin
+	Mage
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> Hero <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	Name <span class="token builtin">string</span>  <span class="token comment">// 英雄的名字</span>
+	Kind HeroKind  <span class="token comment">// 英雄的种类</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">type</span> Heroes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Hero
+
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s Heroes<span class="token punctuation">)</span> <span class="token function">Len</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> <span class="token function">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s Heroes<span class="token punctuation">)</span> <span class="token function">Less</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">// 如果英雄的分类不一致时, 优先对分类进行排序</span>
+	<span class="token keyword">if</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">!=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">&lt;</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 默认按英雄名字字符升序排列</span>
+	<span class="token keyword">return</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Name <span class="token operator">&lt;</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Name
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>s Heroes<span class="token punctuation">)</span> <span class="token function">Swap</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">// 准备英雄列表</span>
+	heroes <span class="token operator">:=</span> Heroes<span class="token punctuation">&#123;</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"吕布"</span><span class="token punctuation">,</span> Tank<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"李白"</span><span class="token punctuation">,</span> Assassin<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"妲己"</span><span class="token punctuation">,</span> Mage<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"貂蝉"</span><span class="token punctuation">,</span> Assassin<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"关羽"</span><span class="token punctuation">,</span> Tank<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token operator">&amp;</span>Hero<span class="token punctuation">&#123;</span><span class="token string">"诸葛亮"</span><span class="token punctuation">,</span> Mage<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token comment">// 使用sort包进行排序</span>
+	sort<span class="token punctuation">.</span><span class="token function">Sort</span><span class="token punctuation">(</span>heroes<span class="token punctuation">)</span>
+
+	<span class="token comment">// 遍历英雄列表打印排序结果</span>
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> heroes <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%+v\n"</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>执行结果：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220109174536.png" srcset="/img/loading.gif" lazyload /></p>
@@ -315,9 +458,50 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20220109174536.png" srcset="
 函数进行更为简便的排序方法。sort.Slice()
 函数只要求传入需要排序的数据，以及一个排序时对元素的回调函数，类型为
 func(i,j int)bool，sort.Slice() 函数的定义如下：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Slice</span><span class="hljs-params">(x <span class="hljs-keyword">interface</span>&#123;&#125;, less <span class="hljs-keyword">func</span>(i, j <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span>)</span> &#123;<br>	rv := reflectValueOf(x)<br>	swap := reflectSwapper(x)<br>	length := rv.Len()<br>	quickSort_func(lessSwap&#123;less, swap&#125;, <span class="hljs-number">0</span>, length, maxDepth(length))<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">Slice</span><span class="token punctuation">(</span>x <span class="token keyword">interface</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> less <span class="token keyword">func</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	rv <span class="token operator">:=</span> <span class="token function">reflectValueOf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+	swap <span class="token operator">:=</span> <span class="token function">reflectSwapper</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+	length <span class="token operator">:=</span> rv<span class="token punctuation">.</span><span class="token function">Len</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token function">quickSort_func</span><span class="token punctuation">(</span>lessSwap<span class="token punctuation">&#123;</span>less<span class="token punctuation">,</span> swap<span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> length<span class="token punctuation">,</span> <span class="token function">maxDepth</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>使用示例：</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> HeroKind <span class="hljs-keyword">int</span><br><br><span class="hljs-keyword">const</span> (<br>	None = <span class="hljs-literal">iota</span><br>	Tank<br>	Assassin<br>	Mage<br>)<br><br><span class="hljs-keyword">type</span> Hero <span class="hljs-keyword">struct</span> &#123;<br>	Name <span class="hljs-keyword">string</span><br>	Kind HeroKind<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	heroes := []*Hero&#123;<br>		&#123;<span class="hljs-string">&quot;吕布&quot;</span>, Tank&#125;,<br>		&#123;<span class="hljs-string">&quot;李白&quot;</span>, Assassin&#125;,<br>		&#123;<span class="hljs-string">&quot;妲己&quot;</span>, Mage&#125;,<br>		&#123;<span class="hljs-string">&quot;貂蝉&quot;</span>, Assassin&#125;,<br>		&#123;<span class="hljs-string">&quot;关羽&quot;</span>, Tank&#125;,<br>		&#123;<span class="hljs-string">&quot;诸葛亮&quot;</span>, Mage&#125;,<br>	&#125;<br><br>	sort.Slice(heroes, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i, j <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">bool</span></span> &#123;<br>		<span class="hljs-keyword">if</span> heroes[i].Kind != heroes[j].Kind &#123;<br>			<span class="hljs-keyword">return</span> heroes[i].Kind &lt; heroes[j].Kind<br>		&#125;<br><br>		<span class="hljs-keyword">return</span> heroes[i].Name &lt; heroes[j].Name<br>	&#125;)<br><br>	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> heroes &#123;<br>		fmt.Printf(<span class="hljs-string">&quot;%+v\n&quot;</span>, v)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> HeroKind <span class="token builtin">int</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">(</span>
+	None <span class="token operator">=</span> <span class="token boolean">iota</span>
+	Tank
+	Assassin
+	Mage
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> Hero <span class="token keyword">struct</span> <span class="token punctuation">&#123;</span>
+	Name <span class="token builtin">string</span>
+	Kind HeroKind
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	heroes <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">*</span>Hero<span class="token punctuation">&#123;</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"吕布"</span><span class="token punctuation">,</span> Tank<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"李白"</span><span class="token punctuation">,</span> Assassin<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"妲己"</span><span class="token punctuation">,</span> Mage<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"貂蝉"</span><span class="token punctuation">,</span> Assassin<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"关羽"</span><span class="token punctuation">,</span> Tank<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#123;</span><span class="token string">"诸葛亮"</span><span class="token punctuation">,</span> Mage<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
+
+	sort<span class="token punctuation">.</span><span class="token function">Slice</span><span class="token punctuation">(</span>heroes<span class="token punctuation">,</span> <span class="token keyword">func</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> heroes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">!=</span> heroes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token punctuation">&#123;</span>
+			<span class="token keyword">return</span> heroes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind <span class="token operator">&lt;</span> heroes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Kind
+		<span class="token punctuation">&#125;</span>
+
+		<span class="token keyword">return</span> heroes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Name <span class="token operator">&lt;</span> heroes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>Name
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+	<span class="token keyword">for</span> <span class="token boolean">_</span><span class="token punctuation">,</span> v <span class="token operator">:=</span> <span class="token keyword">range</span> heroes <span class="token punctuation">&#123;</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"%+v\n"</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
               
             </div>
@@ -661,6 +845,8 @@ func(i,j int)bool，sort.Slice() 函数的定义如下：</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -59,6 +59,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -253,7 +255,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          4.2k 字
+          3.8k 字
         
       </span>
     
@@ -265,7 +267,7 @@
         
         
           <!-- compatible with older versions-->
-          14 分钟
+          12 分钟
         
       </span>
     
@@ -347,18 +349,28 @@ PPL）：衡量模型对候选答案的预测能力，适用于选择题评估�
 <li><p>多模态类：MMBench（图像理解）、SEED-Bench（多模态问答）。</p></li>
 </ul>
 <h4 id="安装">2.1 安装</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone https://github.com/open-compass/opencompass opencompass<br>cd opencompass<br>pip install -e .<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> clone https://github.com/open-compass/opencompass opencompass
+<span class="token builtin class-name">cd</span> opencompass
+pip <span class="token function">install</span> <span class="token parameter variable">-e</span> <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>【注】python=3.10</p>
 <h4 id="数据集准备">2.2 数据集准备</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://github.com/open-compass/opencompass/releases/download/0.2.2.rc1/OpenCompassData-core-20240207.zip<br>unzip OpenCompassData-core-20240207.zip<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">wget</span> https://github.com/open-compass/opencompass/releases/download/0.2.2.rc1/OpenCompassData-core-20240207.zip
+<span class="token function">unzip</span> OpenCompassData-core-20240207.zip<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <h4 id="命令行自定义hf模型评测">2.3 命令行（自定义HF模型）评测</h4>
 <p>　　对于 HuggingFace
 模型，用户可以通过命令行直接设置模型参数，无需额外的配置文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">python run.py \<br>    --datasets demo_gsm8k_chat_gen demo_math_chat_gen \<br>    --hf-type chat \<br>    --hf-path /root/autodl-tmp/models/Qwen/Qwen3-4B \<br>    --batch-size  16<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">python run.py <span class="token punctuation">\</span>
+    <span class="token parameter variable">--datasets</span> demo_gsm8k_chat_gen demo_math_chat_gen <span class="token punctuation">\</span>
+    --hf-type chat <span class="token punctuation">\</span>
+    --hf-path /root/autodl-tmp/models/Qwen/Qwen3-4B <span class="token punctuation">\</span>
+    --batch-size  <span class="token number">16</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <blockquote>
 <p>模型和数据集的配置文件预存于 <code>configs/models</code> 和
 <code>configs/datasets</code> 中。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 查看所有数据集和模型</span><br>python tools/list_configs.py<br><span class="hljs-meta">#</span><span class="bash"> 指定条件过滤</span><br>python tools/list_configs.py llama mmlu<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 查看所有数据集和模型</span>
+python tools/list_configs.py
+<span class="token comment"># 指定条件过滤</span>
+python tools/list_configs.py llama mmlu<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 </blockquote>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506151533133.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <blockquote>
@@ -380,16 +392,29 @@ hf_qwen2_5_7b_instruct：</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506151635771.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <p>　　用户可以使用 <code>--models</code> 和 <code>--datasets</code>
 结合想测试的模型和数据集。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">python run.py \<br>    --models hf_qwen2_5_7b_instruct \<br>    --datasets demo_gsm8k_chat_gen demo_math_chat_gen \<br>    --debug<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">python run.py <span class="token punctuation">\</span>
+    <span class="token parameter variable">--models</span> hf_qwen2_5_7b_instruct <span class="token punctuation">\</span>
+    <span class="token parameter variable">--datasets</span> demo_gsm8k_chat_gen demo_math_chat_gen <span class="token punctuation">\</span>
+    <span class="token parameter variable">--debug</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="配置文件评测">2.5 配置文件评测</h4>
 <p>　　除了通过命令行配置实验外，OpenCompass
 还允许用户在配置文件中编写实验的完整配置，并通过 <code>run.py</code>
 直接运行它。配置文件是以 Python 格式组织的，并且必须包括
 <code>datasets</code> 和 <code>models</code> 字段。</p>
 <p>　　添加配置文件 configs/eval_chat_demo.py ：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> mmengine.config <span class="hljs-keyword">import</span> read_base<br><br><span class="hljs-keyword">with</span> read_base():<br>    <span class="hljs-keyword">from</span> .datasets.demo.demo_gsm8k_chat_gen <span class="hljs-keyword">import</span> gsm8k_datasets<br>    <span class="hljs-keyword">from</span> .datasets.demo.demo_math_chat_gen <span class="hljs-keyword">import</span> math_datasets<br>    <span class="hljs-keyword">from</span> .models.qwen2_5.hf_qwen2_5_7b_instruct <span class="hljs-keyword">import</span> models <span class="hljs-keyword">as</span> hf_qwen2_5_7b_instruct<br>    <span class="hljs-keyword">from</span> .models.qwen.hf_qwen2_1_5b_instruct <span class="hljs-keyword">import</span> models <span class="hljs-keyword">as</span> hf_qwen2_1_5b_instruct_models<br>    <span class="hljs-keyword">from</span> .models.hf_internlm.hf_internlm2_chat_1_8b <span class="hljs-keyword">import</span> models <span class="hljs-keyword">as</span> hf_internlm2_chat_1_8b_models<br><br>datasets = gsm8k_datasets + math_datasets<br>models = hf_qwen2_5_7b_instruct<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> mmengine<span class="token punctuation">.</span>config <span class="token keyword">import</span> read_base
+
+<span class="token keyword">with</span> read_base<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">from</span> <span class="token punctuation">.</span>datasets<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>demo_gsm8k_chat_gen <span class="token keyword">import</span> gsm8k_datasets
+    <span class="token keyword">from</span> <span class="token punctuation">.</span>datasets<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>demo_math_chat_gen <span class="token keyword">import</span> math_datasets
+    <span class="token keyword">from</span> <span class="token punctuation">.</span>models<span class="token punctuation">.</span>qwen2_5<span class="token punctuation">.</span>hf_qwen2_5_7b_instruct <span class="token keyword">import</span> models <span class="token keyword">as</span> hf_qwen2_5_7b_instruct
+    <span class="token keyword">from</span> <span class="token punctuation">.</span>models<span class="token punctuation">.</span>qwen<span class="token punctuation">.</span>hf_qwen2_1_5b_instruct <span class="token keyword">import</span> models <span class="token keyword">as</span> hf_qwen2_1_5b_instruct_models
+    <span class="token keyword">from</span> <span class="token punctuation">.</span>models<span class="token punctuation">.</span>hf_internlm<span class="token punctuation">.</span>hf_internlm2_chat_1_8b <span class="token keyword">import</span> models <span class="token keyword">as</span> hf_internlm2_chat_1_8b_models
+
+datasets <span class="token operator">=</span> gsm8k_datasets <span class="token operator">+</span> math_datasets
+models <span class="token operator">=</span> hf_qwen2_5_7b_instruct<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>　　执行评测任务：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python run.py opencompass/configs/eval_chat_demo.py --debug<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">python run.py opencompass/configs/eval_chat_demo.py <span class="token parameter variable">--debug</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h4 id="评测加速">2.6 评测加速</h4>
 <p>　　在 OpenCompass 评测过程中，默认使用 Huggingface 的 transformers
 库进行推理，这是一个非常通用的方案，但在某些情况下，我们可能需要更高效的推理方法来加速这一过程，比如借助
@@ -397,21 +422,56 @@ VLLM 或 LMDeploy。</p>
 <h5 id="评测时使用-vllm-或-lmdeploy">1. 评测时使用 VLLM 或 LMDeploy</h5>
 <p>　　以 LMDeploy 为例：</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506151700521.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">python run.py \<br>    --models lmdeploy_qwen3_0_6b \<br>    --datasets demo_gsm8k_chat_gen demo_math_chat_gen<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python">python run<span class="token punctuation">.</span>py \
+    <span class="token operator">-</span><span class="token operator">-</span>models lmdeploy_qwen3_0_6b \
+    <span class="token operator">-</span><span class="token operator">-</span>datasets demo_gsm8k_chat_gen demo_math_chat_gen<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202506151711681.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <h5 id="api加速评测">2. API加速评测</h5>
 <p>修改配置文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> opencompass.models <span class="hljs-keyword">import</span> OpenAISDK<br><br>api_meta_template = <span class="hljs-built_in">dict</span>(<br>    <span class="hljs-built_in">round</span>=[<br>        <span class="hljs-built_in">dict</span>(role=<span class="hljs-string">&#x27;HUMAN&#x27;</span>, api_role=<span class="hljs-string">&#x27;HUMAN&#x27;</span>),<br>        <span class="hljs-built_in">dict</span>(role=<span class="hljs-string">&#x27;BOT&#x27;</span>, api_role=<span class="hljs-string">&#x27;BOT&#x27;</span>, generate=<span class="hljs-literal">True</span>),<br>    ],<br>    reserved_roles=[<span class="hljs-built_in">dict</span>(role=<span class="hljs-string">&#x27;SYSTEM&#x27;</span>, api_role=<span class="hljs-string">&#x27;SYSTEM&#x27;</span>)],<br>)<br><br>models = [<br>    <span class="hljs-built_in">dict</span>(<br>        abbr=<span class="hljs-string">&#x27;qwen_3_0.6b_thinking-turbomind&#x27;</span>,<br>        <span class="hljs-comment"># path=&#x27;Qwen/Qwen3-0.6B&#x27;,</span><br>        <span class="hljs-built_in">type</span>=OpenAISDK,<br>        key=<span class="hljs-string">&#x27;EMPTY&#x27;</span>, <span class="hljs-comment"># API key</span><br>        openai_api_base=<span class="hljs-string">&#x27;http://0.0.0.0:23333/v1&#x27;</span>, <span class="hljs-comment"># 服务地址</span><br>        path=<span class="hljs-string">&#x27;Qwen3-4&#x27;</span>, <span class="hljs-comment"># 请求服务时的 model name</span><br>        tokenizer_path=<span class="hljs-string">&#x27;/root/autodl-tmp/models/Qwen/Qwen3-4B&#x27;</span>, <span class="hljs-comment"># 分词器路径</span><br>        rpm_verbose=<span class="hljs-literal">True</span>, <span class="hljs-comment"># 是否打印请求速率</span><br>        meta_template=api_meta_template, <span class="hljs-comment"># 服务请求模板</span><br>        query_per_second=<span class="hljs-number">1</span>, <span class="hljs-comment"># 服务请求速率</span><br>        max_seq_len=<span class="hljs-number">32768</span>,<br>        max_out_len=<span class="hljs-number">32000</span>,<br>        temperature=<span class="hljs-number">0.01</span>, <span class="hljs-comment"># 生成温度</span><br>        batch_size=<span class="hljs-number">8</span>, <span class="hljs-comment"># 批处理大小</span><br>        retry=<span class="hljs-number">3</span>, <span class="hljs-comment"># 重试次数</span><br>    ),<br>]<br></code></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">python run.py     --models lmdeploy_qwen3_0_6b     --datasets demo_gsm8k_chat_gen demo_math_chat_gen --debug<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> opencompass<span class="token punctuation">.</span>models <span class="token keyword">import</span> OpenAISDK
+
+api_meta_template <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span>
+    <span class="token builtin">round</span><span class="token operator">=</span><span class="token punctuation">[</span>
+        <span class="token builtin">dict</span><span class="token punctuation">(</span>role<span class="token operator">=</span><span class="token string">'HUMAN'</span><span class="token punctuation">,</span> api_role<span class="token operator">=</span><span class="token string">'HUMAN'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token builtin">dict</span><span class="token punctuation">(</span>role<span class="token operator">=</span><span class="token string">'BOT'</span><span class="token punctuation">,</span> api_role<span class="token operator">=</span><span class="token string">'BOT'</span><span class="token punctuation">,</span> generate<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    reserved_roles<span class="token operator">=</span><span class="token punctuation">[</span><span class="token builtin">dict</span><span class="token punctuation">(</span>role<span class="token operator">=</span><span class="token string">'SYSTEM'</span><span class="token punctuation">,</span> api_role<span class="token operator">=</span><span class="token string">'SYSTEM'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span>
+
+models <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token builtin">dict</span><span class="token punctuation">(</span>
+        abbr<span class="token operator">=</span><span class="token string">'qwen_3_0.6b_thinking-turbomind'</span><span class="token punctuation">,</span>
+        <span class="token comment"># path='Qwen/Qwen3-0.6B',</span>
+        <span class="token builtin">type</span><span class="token operator">=</span>OpenAISDK<span class="token punctuation">,</span>
+        key<span class="token operator">=</span><span class="token string">'EMPTY'</span><span class="token punctuation">,</span> <span class="token comment"># API key</span>
+        openai_api_base<span class="token operator">=</span><span class="token string">'http://0.0.0.0:23333/v1'</span><span class="token punctuation">,</span> <span class="token comment"># 服务地址</span>
+        path<span class="token operator">=</span><span class="token string">'Qwen3-4'</span><span class="token punctuation">,</span> <span class="token comment"># 请求服务时的 model name</span>
+        tokenizer_path<span class="token operator">=</span><span class="token string">'/root/autodl-tmp/models/Qwen/Qwen3-4B'</span><span class="token punctuation">,</span> <span class="token comment"># 分词器路径</span>
+        rpm_verbose<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token comment"># 是否打印请求速率</span>
+        meta_template<span class="token operator">=</span>api_meta_template<span class="token punctuation">,</span> <span class="token comment"># 服务请求模板</span>
+        query_per_second<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token comment"># 服务请求速率</span>
+        max_seq_len<span class="token operator">=</span><span class="token number">32768</span><span class="token punctuation">,</span>
+        max_out_len<span class="token operator">=</span><span class="token number">32000</span><span class="token punctuation">,</span>
+        temperature<span class="token operator">=</span><span class="token number">0.01</span><span class="token punctuation">,</span> <span class="token comment"># 生成温度</span>
+        batch_size<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token comment"># 批处理大小</span>
+        retry<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token comment"># 重试次数</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">python run.py     <span class="token parameter variable">--models</span> lmdeploy_qwen3_0_6b     <span class="token parameter variable">--datasets</span> demo_gsm8k_chat_gen demo_math_chat_gen <span class="token parameter variable">--debug</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h4 id="自定义数据集评测">2.7 自定义数据集评测</h4>
 <p><a
 target="_blank" rel="noopener" href="https://doc.opencompass.org.cn/zh_CN/latest/advanced_guides/custom_dataset.html">文档</a></p>
 <ol type="1">
 <li><p>添加自定义评测集</p>
 <p>opencompass/datasets/my_dataset.jsonl</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<span class="hljs-attr">&quot;question&quot;</span>: <span class="hljs-string">&quot;752+361+181+933+235+986=&quot;</span>, <span class="hljs-attr">&quot;answer&quot;</span>: <span class="hljs-string">&quot;3448&quot;</span>&#125;<br>&#123;<span class="hljs-attr">&quot;question&quot;</span>: <span class="hljs-string">&quot;712+165+223+711=&quot;</span>, <span class="hljs-attr">&quot;answer&quot;</span>: <span class="hljs-string">&quot;1811&quot;</span>&#125;<br>&#123;<span class="hljs-attr">&quot;question&quot;</span>: <span class="hljs-string">&quot;921+975+888+539=&quot;</span>, <span class="hljs-attr">&quot;answer&quot;</span>: <span class="hljs-string">&quot;3323&quot;</span>&#125;<br>&#123;<span class="hljs-attr">&quot;question&quot;</span>: <span class="hljs-string">&quot;752+321+388+643+568+982+468+397=&quot;</span>, <span class="hljs-attr">&quot;answer&quot;</span>: <span class="hljs-string">&quot;4519&quot;</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span><span class="token property">"question"</span><span class="token operator">:</span> <span class="token string">"752+361+181+933+235+986="</span><span class="token punctuation">,</span> <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token string">"3448"</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token property">"question"</span><span class="token operator">:</span> <span class="token string">"712+165+223+711="</span><span class="token punctuation">,</span> <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token string">"1811"</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token property">"question"</span><span class="token operator">:</span> <span class="token string">"921+975+888+539="</span><span class="token punctuation">,</span> <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token string">"3323"</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token property">"question"</span><span class="token operator">:</span> <span class="token string">"752+321+388+643+568+982+468+397="</span><span class="token punctuation">,</span> <span class="token property">"answer"</span><span class="token operator">:</span> <span class="token string">"4519"</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>执行评测</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">python run.py \<br>    --hf-path /root/autodl-tmp/models/Qwen/Qwen3-4B \<br>    --custom-dataset-path /root/autodl-tmp/opencompass/opencompass/datasets/my_dataset.jsonl  --debug<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">python run.py <span class="token punctuation">\</span>
+    --hf-path /root/autodl-tmp/models/Qwen/Qwen3-4B <span class="token punctuation">\</span>
+    --custom-dataset-path /root/autodl-tmp/opencompass/opencompass/datasets/my_dataset.jsonl  <span class="token parameter variable">--debug</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></li>
 </ol>
 
               
@@ -501,6 +561,12 @@ target="_blank" rel="noopener" href="https://doc.opencompass.org.cn/zh_CN/latest
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/09/01/milvus%E2%80%94%E2%80%94%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84/" title="milvus——整体架构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">milvus——整体架构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
@@ -752,6 +818,8 @@ target="_blank" rel="noopener" href="https://doc.opencompass.org.cn/zh_CN/latest
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

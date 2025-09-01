@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="github | 文档 1. 安装 123git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.gitcd LLaMA-Factorypip install -e . 可视化启动： 12# 一定要在 LLaMA-Factor 目录llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F;">
+    <meta name="description" content="github | 文档 1. 安装 git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.git cd LLaMA-Factory pip install -e . 可视化启动： # 一定要在 LLaMA-Factor 目录 llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F; 2.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微调大模型——LLamA-Factory">
 <meta property="og:url" content="http://example.com/2025/05/01/LLamaFactory-%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="github | 文档 1. 安装 123git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.gitcd LLaMA-Factorypip install -e . 可视化启动： 12# 一定要在 LLaMA-Factor 目录llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F;">
+<meta property="og:description" content="github | 文档 1. 安装 git clone --depth 1 https:&#x2F;&#x2F;github.com&#x2F;hiyouga&#x2F;LLaMA-Factory.git cd LLaMA-Factory pip install -e . 可视化启动： # 一定要在 LLaMA-Factor 目录 llamafactory-cli webui ui地址：http:&#x2F;&#x2F;127.0.0.1:7860&#x2F; 2.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505011743318.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505021622686.png">
@@ -69,6 +69,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -263,7 +265,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          7.5k 字
+          6.6k 字
         
       </span>
     
@@ -275,7 +277,7 @@
         
         
           <!-- compatible with older versions-->
-          24 分钟
+          21 分钟
         
       </span>
     
@@ -322,9 +324,12 @@ target="_blank" rel="noopener" href="https://github.com/hiyouga/LLaMA-Factory/bl
 | <a
 target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/index.html">文档</a></p>
 <h3 id="安装">1. 安装</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone --depth 1 https://github.com/hiyouga/LLaMA-Factory.git<br>cd LLaMA-Factory<br>pip install -e .<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> clone <span class="token parameter variable">--depth</span> <span class="token number">1</span> https://github.com/hiyouga/LLaMA-Factory.git
+<span class="token builtin class-name">cd</span> LLaMA-Factory
+pip <span class="token function">install</span> <span class="token parameter variable">-e</span> <span class="token builtin class-name">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>可视化启动：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 一定要在 LLaMA-Factor 目录</span><br>llamafactory-cli webui<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 一定要在 LLaMA-Factor 目录</span>
+llamafactory-cli webui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>ui地址：http://127.0.0.1:7860/</p>
 <h3 id="lora微调">2. lora微调</h3>
 <h4 id="数据集准备">2.1 数据集准备</h4>
@@ -336,13 +341,46 @@ target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/l
 target="_blank" rel="noopener" href="https://llamafactory.readthedocs.io/zh-cn/latest/getting_started/data_preparation.html">LLamA-Factory
 数据处理</a></p>
 <p>微调数据格式：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json">[<br>  &#123;<br>    <span class="hljs-attr">&quot;instruction&quot;</span>: <span class="hljs-string">&quot;人类指令（必填）&quot;</span>,<br>    <span class="hljs-attr">&quot;input&quot;</span>: <span class="hljs-string">&quot;人类输入（选填）&quot;</span>,<br>    <span class="hljs-attr">&quot;output&quot;</span>: <span class="hljs-string">&quot;模型回答（必填）&quot;</span>,<br>    <span class="hljs-attr">&quot;system&quot;</span>: <span class="hljs-string">&quot;系统提示词（选填）&quot;</span>,<br>    <span class="hljs-attr">&quot;history&quot;</span>: [<br>      [<span class="hljs-string">&quot;第一轮指令（选填）&quot;</span>, <span class="hljs-string">&quot;第一轮回答（选填）&quot;</span>],<br>      [<span class="hljs-string">&quot;第二轮指令（选填）&quot;</span>, <span class="hljs-string">&quot;第二轮回答（选填）&quot;</span>]<br>    ]<br>  &#125;<br>]<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">[</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token property">"instruction"</span><span class="token operator">:</span> <span class="token string">"人类指令（必填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"input"</span><span class="token operator">:</span> <span class="token string">"人类输入（选填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"output"</span><span class="token operator">:</span> <span class="token string">"模型回答（必填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"system"</span><span class="token operator">:</span> <span class="token string">"系统提示词（选填）"</span><span class="token punctuation">,</span>
+    <span class="token property">"history"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">[</span><span class="token string">"第一轮指令（选填）"</span><span class="token punctuation">,</span> <span class="token string">"第一轮回答（选填）"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span><span class="token string">"第二轮指令（选填）"</span><span class="token punctuation">,</span> <span class="token string">"第二轮回答（选填）"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h6 id="a.-数据采集">a. 数据采集</h6>
 <p><a
 target="_blank" rel="noopener" href="https://modelscope.cn/datasets/w10442005/ruozhiba_qa">弱智吧问答数据</a></p>
 <h6 id="b.-数据转换">b. 数据转换</h6>
 <p>转换脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><br>input_file = <span class="hljs-string">&quot;./ruozhiba_qaswift.json&quot;</span><br>output_file = <span class="hljs-string">&quot;./ruozhiba_qaswift_train.json&quot;</span><br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(input_file, <span class="hljs-string">&quot;r&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    data = json.load(f)<br><br><span class="hljs-comment"># 转换后的数据</span><br>converted_data = []<br><br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> data:<br>    converted_item = &#123;<br>        <span class="hljs-string">&quot;instruction&quot;</span>: item[<span class="hljs-string">&quot;query&quot;</span>],<br>        <span class="hljs-string">&quot;input&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>        <span class="hljs-string">&quot;output&quot;</span>: item[<span class="hljs-string">&quot;response&quot;</span>]<br>    &#125;<br>    converted_data.append(converted_item)<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(output_file, <span class="hljs-string">&quot;w&quot;</span>, encoding=<span class="hljs-string">&quot;utf-8&quot;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(converted_data, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">4</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;转换完成，数据已保存为 <span class="hljs-subst">&#123;output_file&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+
+input_file <span class="token operator">=</span> <span class="token string">"./ruozhiba_qaswift.json"</span>
+output_file <span class="token operator">=</span> <span class="token string">"./ruozhiba_qaswift_train.json"</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    data <span class="token operator">=</span> json<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+
+<span class="token comment"># 转换后的数据</span>
+converted_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> item <span class="token keyword">in</span> data<span class="token punctuation">:</span>
+    converted_item <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"instruction"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"query"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token string">"input"</span><span class="token punctuation">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+        <span class="token string">"output"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"response"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    converted_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>converted_item<span class="token punctuation">)</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output_file<span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>converted_data<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ensure_ascii<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"转换完成，数据已保存为 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>output_file<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>转换后数据集：</p>
 <p><a
 target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505012248327.json">ruozhiba_qaswift_train.json</a></p>
@@ -373,7 +411,7 @@ target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052121145.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <p><strong>根据显存占用调整批处理大小：</strong></p>
 <p>参看显存占用：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nvitop<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvitop<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505052052332.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <h4 id="进度监控">2.2 进度监控</h4>
 <ol type="1">
@@ -386,7 +424,16 @@ target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.
 <h5 id="evaluate-测试">1. Evaluate 测试</h5>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061126179.png" srcset="/img/loading.gif" lazyload style="zoom:40%;" /></p>
 <p>测试结果：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;predict_bleu-4&quot;</span>: <span class="hljs-number">88.92755507246376</span>,<br>    <span class="hljs-attr">&quot;predict_model_preparation_time&quot;</span>: <span class="hljs-number">0.0053</span>,<br>    <span class="hljs-attr">&quot;predict_rouge-1&quot;</span>: <span class="hljs-number">93.41544807813484</span>,<br>    <span class="hljs-attr">&quot;predict_rouge-2&quot;</span>: <span class="hljs-number">90.64988815374922</span>,<br>    <span class="hljs-attr">&quot;predict_rouge-l&quot;</span>: <span class="hljs-number">92.30600718336484</span>,<br>    <span class="hljs-attr">&quot;predict_runtime&quot;</span>: <span class="hljs-number">247.6047</span>,<br>    <span class="hljs-attr">&quot;predict_samples_per_second&quot;</span>: <span class="hljs-number">6.409</span>,<br>    <span class="hljs-attr">&quot;predict_steps_per_second&quot;</span>: <span class="hljs-number">0.129</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token property">"predict_bleu-4"</span><span class="token operator">:</span> <span class="token number">88.92755507246376</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_model_preparation_time"</span><span class="token operator">:</span> <span class="token number">0.0053</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-1"</span><span class="token operator">:</span> <span class="token number">93.41544807813484</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-2"</span><span class="token operator">:</span> <span class="token number">90.64988815374922</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_rouge-l"</span><span class="token operator">:</span> <span class="token number">92.30600718336484</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_runtime"</span><span class="token operator">:</span> <span class="token number">247.6047</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_samples_per_second"</span><span class="token operator">:</span> <span class="token number">6.409</span><span class="token punctuation">,</span>
+    <span class="token property">"predict_steps_per_second"</span><span class="token operator">:</span> <span class="token number">0.129</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h5 id="chat测试">2. chat测试</h5>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505061124641.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <h3 id="qlora微调">3. QLoRA微调</h3>
@@ -438,9 +485,14 @@ Library，同时对于不同编程语言支持程度也高。</li>
 <h4 id="格式转换">5.2 格式转换</h4>
 <ol type="1">
 <li><p>获取 llama.cpp</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone https://github.com/ggerganov/llama.cpp.git<br>pip install -r llama.cpp/requirements.txt<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">git</span> clone https://github.com/ggerganov/llama.cpp.git
+pip <span class="token function">install</span> <span class="token parameter variable">-r</span> llama.cpp/requirements.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></li>
 <li><p>执行转换</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 不量化</span><br>python llama.cpp/convert_hf_to_gguf.py ./models/Qwen/Qwen3-4B-merged --outtype f16  --verbose --outfile Qwen3-4B-merged-gguf.gguf<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 量化</span><br>python llama.cpp/convert_hf_to_gguf.py ./models/Qwen/Qwen3-4B-merged/  --outtype q8_0 --verbose --outfile  ./models/Qwen/Qwen3-4B-merged-q8_0-gguf.gguf<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 不量化</span>
+python llama.cpp/convert_hf_to_gguf.py ./models/Qwen/Qwen3-4B-merged <span class="token parameter variable">--outtype</span> f16  <span class="token parameter variable">--verbose</span> <span class="token parameter variable">--outfile</span> Qwen3-4B-merged-gguf.gguf
+
+<span class="token comment"># 量化</span>
+python llama.cpp/convert_hf_to_gguf.py ./models/Qwen/Qwen3-4B-merged/  <span class="token parameter variable">--outtype</span> q8_0 <span class="token parameter variable">--verbose</span> <span class="token parameter variable">--outfile</span>  ./models/Qwen/Qwen3-4B-merged-q8_0-gguf.gguf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <blockquote>
 <p>--outtype 是输出类型：</p>
 <p>q2_k：特定张量（Tensor）采用较高的精度设置，而其他的则保持基础级别。</p>
@@ -459,14 +511,77 @@ q8_0：这些提供了最高的精度，但是因为高资源消耗和慢速度�
 <ol type="1">
 <li><p>创建 ModelFile</p>
 <p>创建名为“ModelFile”的meta文件，内容如下</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">GGUF文件路径</span><br>FROM /root/autodl-tmp/models/Qwen/Qwen3-4B-merged-q8_0-gguf.gguf<br><br>PARAMETER temperature 0.6<br>PARAMETER top_p 0.95<br>PARAMETER top_k 20<br>PARAMETER repeat_penalty 1<br>TEMPLATE &quot;&quot;&quot;&#123;&#123;- if .Messages &#125;&#125;<br>&#123;&#123;- if or .System .Tools &#125;&#125;&lt;|im_start|&gt;system<br>&#123;&#123;- if .System &#125;&#125;<br>&#123;&#123; .System &#125;&#125;<br>&#123;&#123;- end &#125;&#125;<br>&#123;&#123;- if .Tools &#125;&#125;<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> Tools</span><br><br>You may call one or more functions to assist with the user query.<br><br>You are provided with function signatures within &lt;tools&gt;&lt;/tools&gt; XML tags:<br>&lt;tools&gt;<br>&#123;&#123;- range .Tools &#125;&#125;<br>&#123;&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: &#123;&#123; .Function &#125;&#125;&#125;<br>&#123;&#123;- end &#125;&#125;<br>&lt;/tools&gt;<br><br>For each function call, return a json object with function name and arguments within &lt;tool_call&gt;&lt;/tool_call&gt; XML tags:<br>&lt;tool_call&gt;<br>&#123;&quot;name&quot;: &lt;function-name&gt;, &quot;arguments&quot;: &lt;args-json-object&gt;&#125;<br>&lt;/tool_call&gt;<br>&#123;&#123;- end &#125;&#125;&lt;|im_end|&gt;<br>&#123;&#123; end &#125;&#125;<br>&#123;&#123;- range $i, $_ := .Messages &#125;&#125;<br>&#123;&#123;- $last := eq (len (slice $.Messages $i)) 1 -&#125;&#125;<br>&#123;&#123;- if eq .Role &quot;user&quot; &#125;&#125;&lt;|im_start|&gt;user<br>&#123;&#123; .Content &#125;&#125;&lt;|im_end|&gt;<br>&#123;&#123; else if eq .Role &quot;assistant&quot; &#125;&#125;&lt;|im_start|&gt;assistant<br>&#123;&#123; if .Content &#125;&#125;&#123;&#123; .Content &#125;&#125;<br>&#123;&#123;- else if .ToolCalls &#125;&#125;&lt;tool_call&gt;<br>&#123;&#123; range .ToolCalls &#125;&#125;&#123;&quot;name&quot;: &quot;&#123;&#123; .Function.Name &#125;&#125;&quot;, &quot;arguments&quot;: &#123;&#123; .Function.Arguments &#125;&#125;&#125;<br>&#123;&#123; end &#125;&#125;&lt;/tool_call&gt;<br>&#123;&#123;- end &#125;&#125;&#123;&#123; if not $last &#125;&#125;&lt;|im_end|&gt;<br>&#123;&#123; end &#125;&#125;<br>&#123;&#123;- else if eq .Role &quot;tool&quot; &#125;&#125;&lt;|im_start|&gt;user<br>&lt;tool_response&gt;<br>&#123;&#123; .Content &#125;&#125;<br>&lt;/tool_response&gt;&lt;|im_end|&gt;<br>&#123;&#123; end &#125;&#125;<br>&#123;&#123;- if and (ne .Role &quot;assistant&quot;) $last &#125;&#125;&lt;|im_start|&gt;assistant<br>&#123;&#123; end &#125;&#125;<br>&#123;&#123;- end &#125;&#125;<br>&#123;&#123;- else &#125;&#125;<br>&#123;&#123;- if .System &#125;&#125;&lt;|im_start|&gt;system<br>&#123;&#123; .System &#125;&#125;&lt;|im_end|&gt;<br>&#123;&#123; end &#125;&#125;&#123;&#123; if .Prompt &#125;&#125;&lt;|im_start|&gt;user<br>&#123;&#123; .Prompt &#125;&#125;&lt;|im_end|&gt;<br>&#123;&#123; end &#125;&#125;&lt;|im_start|&gt;assistant<br>&#123;&#123; end &#125;&#125;&#123;&#123; .Response &#125;&#125;&#123;&#123; if .Response &#125;&#125;&lt;|im_end|&gt;&#123;&#123; end &#125;&#125;&quot;&quot;&quot;<br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">set</span> the system message</span><br>SYSTEM &quot;&quot;&quot;<br>You are a helpful assistant.<br>&quot;&quot;&quot;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#GGUF文件路径</span>
+FROM /root/autodl-tmp/models/Qwen/Qwen3-4B-merged-q8_0-gguf.gguf
+
+PARAMETER temperature <span class="token number">0.6</span>
+PARAMETER top_p <span class="token number">0.95</span>
+PARAMETER top_k <span class="token number">20</span>
+PARAMETER repeat_penalty <span class="token number">1</span>
+TEMPLATE <span class="token string">""</span>"<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> .Messages <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> or .System .Tools <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>system
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> .System <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .System <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> .Tools <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment"># Tools</span>
+
+You may call one or <span class="token function">more</span> functions to assist with the user query.
+
+You are provided with <span class="token keyword">function</span> signatures within <span class="token operator">&lt;</span>tools<span class="token operator">></span><span class="token operator">&lt;</span>/tools<span class="token operator">></span> XML tags:
+<span class="token operator">&lt;</span>tools<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- range .Tools <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token string">"type"</span><span class="token builtin class-name">:</span> <span class="token string">"function"</span>, <span class="token string">"function"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Function <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span>/tools<span class="token operator">></span>
+
+For each <span class="token keyword">function</span> call, <span class="token builtin class-name">return</span> a json object with <span class="token keyword">function</span> name and arguments within <span class="token operator">&lt;</span>tool_call<span class="token operator">></span><span class="token operator">&lt;</span>/tool_call<span class="token operator">></span> XML tags:
+<span class="token operator">&lt;</span>tool_call<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token operator">&lt;</span>function-name<span class="token operator">></span>, <span class="token string">"arguments"</span><span class="token builtin class-name">:</span> <span class="token operator">&lt;</span>args-json-object<span class="token operator">></span><span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span>/tool_call<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- range <span class="token variable">$i</span>, <span class="token variable">$_</span> :<span class="token operator">=</span> .Messages <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token variable">$last</span> :<span class="token operator">=</span> eq <span class="token punctuation">(</span>len <span class="token punctuation">(</span>slice $.Messages <span class="token variable">$i</span><span class="token punctuation">))</span> <span class="token number">1</span> -<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> eq .Role <span class="token string">"user"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>user
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Content <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> eq .Role <span class="token string">"assistant"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>assistant
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token keyword">if</span> .Content <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Content <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">else</span> <span class="token keyword">if</span> .ToolCalls <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span>tool_call<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> range .ToolCalls <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token string">"name"</span><span class="token builtin class-name">:</span> <span class="token string">"&#123;&#123; .Function.Name &#125;&#125;"</span>, <span class="token string">"arguments"</span><span class="token builtin class-name">:</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Function.Arguments <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span>/tool_call<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token keyword">if</span> not <span class="token variable">$last</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">else</span> <span class="token keyword">if</span> eq .Role <span class="token string">"tool"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>user
+<span class="token operator">&lt;</span>tool_response<span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Content <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span>/tool_response<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> and <span class="token punctuation">(</span>ne .Role <span class="token string">"assistant"</span><span class="token punctuation">)</span> <span class="token variable">$last</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>assistant
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">else</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>- <span class="token keyword">if</span> .System <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>system
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .System <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token keyword">if</span> .Prompt <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>user
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Prompt <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span>
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_start<span class="token operator">|</span><span class="token operator">></span>assistant
+<span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> .Response <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> <span class="token keyword">if</span> .Response <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">|</span>im_end<span class="token operator">|</span><span class="token operator">></span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> end <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token string">""</span>"
+<span class="token comment"># set the system message</span>
+SYSTEM <span class="token string">""</span>"
+You are a helpful assistant.
+<span class="token string">""</span>"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>模型参数参考 <a target="_blank" rel="noopener" href="https://ollama.com/library/qwen3:4b">ollama
 官网</a>，或者根据 hf 模型中 chat_template 进行转换。</p></li>
 <li><p>创建自定义模型</p>
 <p>使用 ollama create 命令创建自定义模型</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 启动服务</span><br>ollama serve<br><span class="hljs-meta">#</span><span class="bash"> 创建模型</span><br>ollama create  Qwen3-4B-merged-q8  --file ModelFile<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 启动服务</span>
+ollama serve
+<span class="token comment"># 创建模型</span>
+ollama create  Qwen3-4B-merged-q8  <span class="token parameter variable">--file</span> ModelFile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>运行模型</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ollama run Qwen3-4B-merged-q8<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">ollama run Qwen3-4B-merged-q8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 </ol></li>
 </ol></li>
 </ol>
@@ -483,14 +598,38 @@ LLamaFactory微调效果与Vllm部署效果不一致</h3>
 <h4 id="模板对齐">6.2 模板对齐</h4>
 <p>vllm 部署时指定 LLamaFactory 微调时的模板即可。</p>
 <p>vllm 可以指定自定义对话模板：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vllm serve &lt;model&gt; --chat-template ./path-to-chat-template.jinja<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vllm serve <span class="token operator">&lt;</span>model<span class="token operator">></span> --chat-template ./path-to-chat-template.jinja<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>vllm 需要 jinja 格式模板，LLamaFactory
 提供了转换方法，但是是私有方法。</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505101033512.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>有公有调用方法但是需要 tokenizer 对象：</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505101056872.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>转换脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-comment"># 将项目根目录添加到 Python 路径</span><br>root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))<br>sys.path.append(root_dir)<br><br><span class="hljs-keyword">from</span> llamafactory.data.template <span class="hljs-keyword">import</span> TEMPLATES<br><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br><br><span class="hljs-comment"># 1. 初始化分词器（任意支持的分词器均可）</span><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&quot;/root/autodl-tmp/models/Qwen/Qwen3-4B&quot;</span>)<br><br><span class="hljs-comment"># 2. 获取模板对象</span><br>template_name = <span class="hljs-string">&quot;qwen3&quot;</span>  <span class="hljs-comment"># 替换为你需要查看的模板名称</span><br>template = TEMPLATES[template_name]<br><br><span class="hljs-comment"># 3. 修复分词器的 Jinja 模板</span><br>template.fix_jinja_template(tokenizer)<br><br><span class="hljs-comment"># 4. 直接输出模板的 Jinja 格式</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">40</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Template [<span class="hljs-subst">&#123;template_name&#125;</span>] 的 Jinja 格式:&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">40</span>)<br><span class="hljs-built_in">print</span>(tokenizer.chat_template)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> sys
+<span class="token keyword">import</span> os
+
+<span class="token comment"># 将项目根目录添加到 Python 路径</span>
+root_dir <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>dirname<span class="token punctuation">(</span>os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>abspath<span class="token punctuation">(</span>__file__<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+sys<span class="token punctuation">.</span>path<span class="token punctuation">.</span>append<span class="token punctuation">(</span>root_dir<span class="token punctuation">)</span>
+
+<span class="token keyword">from</span> llamafactory<span class="token punctuation">.</span>data<span class="token punctuation">.</span>template <span class="token keyword">import</span> TEMPLATES
+<span class="token keyword">from</span> transformers <span class="token keyword">import</span> AutoTokenizer
+
+<span class="token comment"># 1. 初始化分词器（任意支持的分词器均可）</span>
+tokenizer <span class="token operator">=</span> AutoTokenizer<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span><span class="token string">"/root/autodl-tmp/models/Qwen/Qwen3-4B"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 2. 获取模板对象</span>
+template_name <span class="token operator">=</span> <span class="token string">"qwen3"</span>  <span class="token comment"># 替换为你需要查看的模板名称</span>
+template <span class="token operator">=</span> TEMPLATES<span class="token punctuation">[</span>template_name<span class="token punctuation">]</span>
+
+<span class="token comment"># 3. 修复分词器的 Jinja 模板</span>
+template<span class="token punctuation">.</span>fix_jinja_template<span class="token punctuation">(</span>tokenizer<span class="token punctuation">)</span>
+
+<span class="token comment"># 4. 直接输出模板的 Jinja 格式</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"="</span> <span class="token operator">*</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Template [</span><span class="token interpolation"><span class="token punctuation">&#123;</span>template_name<span class="token punctuation">&#125;</span></span><span class="token string">] 的 Jinja 格式:"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"="</span> <span class="token operator">*</span> <span class="token number">40</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>tokenizer<span class="token punctuation">.</span>chat_template<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505101057957.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>放在统计目录即可。</p>
 
@@ -838,6 +977,8 @@ LLamaFactory微调效果与Vllm部署效果不一致</h3>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

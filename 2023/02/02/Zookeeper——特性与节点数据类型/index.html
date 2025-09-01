@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          9.2k 字
+          9.1k 字
         
       </span>
     
@@ -358,16 +360,22 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302022327914.png" srcset=
 运行环境：jdk8</p>
 <p><strong>1）修改配置文件</strong></p>
 <p>解压安装包后进入 conf 目录，复制 zoo_sample.cfg，修改为 zoo.cfg</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cp zoo_sample.cfg  zoo.cfg <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">cp</span> zoo_sample.cfg  zoo.cfg <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>修改 zoo.cfg 配置文件，将 dataDir=/tmp/zookeeper 修改为指定的 data
 目录</p>
 <p>zoo.cfg中参数含义：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302022258432.png" srcset="/img/loading.gif" lazyload /></p>
 <p><strong>2）启动 zookeeper server</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 默认加载配置路径conf/zoo.cfg</span><br>bin/zkServer.sh start conf/zoo.cfg<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 查看zookeeper状态</span><br>bin/zkServer.sh status<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 默认加载配置路径conf/zoo.cfg</span>
+bin/zkServer.sh start conf/zoo.cfg
+
+<span class="token comment"># 查看zookeeper状态</span>
+bin/zkServer.sh status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>3）启动 zookeeper client 连接 Zookeeper server</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/zkCli.sh<br><span class="hljs-meta">#</span><span class="bash"> 连接远程的zookeeper server</span><br>bin/zkCli.sh -server ip:port<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">bin/zkCli.sh
+<span class="token comment"># 连接远程的zookeeper server</span>
+bin/zkCli.sh <span class="token parameter variable">-server</span> ip:port<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="客户端命令行操作">2.3 客户端命令行操作</h4>
 <p>输入命令 help 查看 zookeeper 支持的所有命令：</p>
 <p><img
@@ -452,7 +460,19 @@ Znode。不同于文件系统，每个节点都可以保存数据，每一个 ZN
 1MB 的数据，每个 ZNode
 都可以通过其路径唯一标识，每个节点都有一个版本(version)，版本从 0
 开始计数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataTree</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ConcurrentHashMap&lt;String, DataNode&gt; nodes = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;String, DataNode&gt;();<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> WatchManager dataWatches = <span class="hljs-keyword">new</span> WatchManager();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> WatchManager childWatches = <span class="hljs-keyword">new</span> WatchManager();<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataNode</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Record</span> </span>&#123;<br>    <span class="hljs-keyword">byte</span> data[];<br>    Long acl;<br>    <span class="hljs-keyword">public</span> StatPersisted stat;<br>    <span class="hljs-keyword">private</span> Set&lt;String&gt; children = <span class="hljs-keyword">null</span>;<br> &#125;   <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataTree</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">DataNode</span><span class="token punctuation">></span></span> nodes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">DataNode</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">WatchManager</span> dataWatches <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WatchManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">WatchManager</span> childWatches <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WatchManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataNode</span> <span class="token keyword">implements</span> <span class="token class-name">Record</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">byte</span> data<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token class-name">Long</span> acl<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">StatPersisted</span> stat<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> children <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+ <span class="token punctuation">&#125;</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="节点分类">3.1 节点分类</h4>
 <p>一个 znode 可以使持久性的，也可以是临时性的： 1.
 持久节点(PERSISTENT): 在创建之后即使发生 ZooKeeper 集群宕机或者 client
@@ -476,7 +496,16 @@ Znode。不同于文件系统，每个节点都可以保存数据，每一个 ZN
 <li>TTL 节点: 带过期时间节点，默认禁用，需要在 zoo.cfg 中添加
 extendedTypesEnabled=true 开启。 注意：ttl 不能用于临时节点</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs she">#创建持久节点<br>create /servers  xxx<br>#创建临时节点<br>create -e /servers/host  xxx<br>#创建临时有序节点<br>create -e -s /servers/host  xxx<br>#创建容器节点<br>create -c /container xxx<br># 创建ttl节点<br>create -t 10 /ttl<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">#创建持久节点
+create &#x2F;servers  xxx
+#创建临时节点
+create -e &#x2F;servers&#x2F;host  xxx
+#创建临时有序节点
+create -e -s &#x2F;servers&#x2F;host  xxx
+#创建容器节点
+create -c &#x2F;container xxx
+# 创建ttl节点
+create -t 10 &#x2F;ttl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="节点状态信息">3.2 节点状态信息</h4>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302052322192.png" srcset="/img/loading.gif" lazyload /></p>
@@ -563,11 +592,15 @@ closed 状态, 此时 session 结束。</p></li>
 </tr>
 </tbody>
 </table>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">监听节点数据的变化</span><br>get -w path <br>stat -w path<br><span class="hljs-meta">#</span><span class="bash">监听子节点增减的变化</span> <br>ls -w path <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#监听节点数据的变化</span>
+get <span class="token parameter variable">-w</span> path 
+<span class="token function">stat</span> <span class="token parameter variable">-w</span> path
+<span class="token comment">#监听子节点增减的变化 </span>
+<span class="token function">ls</span> <span class="token parameter variable">-w</span> path <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><font color="red"> <strong>永久性 Watch：</strong> </font></p>
 <p>在被触发之后，仍然保留，可以继续监听 ZNode 上的变更，是 Zookeeper
 3.6.0 版本新增的功能</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">addWatch [-m mode] path              <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">addWatch <span class="token punctuation">[</span>-m mode<span class="token punctuation">]</span> path              <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>addWatch 的作用是针对指定节点添加事件监听，支持两种模式</p>
 <ul>
 <li>PERSISTENT，持久化订阅，针对当前节点的修改和删除事件，以及当前节点的子节点的删除和新增事件。</li>
@@ -579,9 +612,34 @@ closed 状态, 此时 session 结束。</p></li>
 <p>设计一个 master-worker 的组成员管理系统，要求系统中只能有一个 master
 , master 能实时获取系统中 worker 的情况。</p>
 <p>保证组里面只有一个 master 的设计思路：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">master1</span><br>create -e /master &quot;m1:2223&quot;  <br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">master2</span><br>create -e /master &quot;m2:2223&quot;   # /master已经存在，创建失败<br>Node already exists: /master<br><span class="hljs-meta">#</span><span class="bash">监听/master节点</span><br>stat -w /master<br><span class="hljs-meta">#</span><span class="bash">当master2收到/master节点删除通知后可以再次发起创建节点操作</span><br>create -e /master &quot;m2:2223&quot;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#master1</span>
+create <span class="token parameter variable">-e</span> /master <span class="token string">"m1:2223"</span>  
+
+<span class="token comment">#master2</span>
+create <span class="token parameter variable">-e</span> /master <span class="token string">"m2:2223"</span>   <span class="token comment"># /master已经存在，创建失败</span>
+Node already exists: /master
+<span class="token comment">#监听/master节点</span>
+<span class="token function">stat</span> <span class="token parameter variable">-w</span> /master
+<span class="token comment">#当master2收到/master节点删除通知后可以再次发起创建节点操作</span>
+create <span class="token parameter variable">-e</span> /master <span class="token string">"m2:2223"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>master 监控 worker 状态的设计思路：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">master服务</span><br>create /workers<br><span class="hljs-meta">#</span><span class="bash">让master服务监控/workers下的子节点,监控是一次性的</span><br>ls -w /workers<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">worker1</span><br>create -e /workers/w1 &quot;w1:2224&quot; #创建子节点，master服务会收到子节点变化通知<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">master服务</span><br>ls -w /workers<br><span class="hljs-meta">#</span><span class="bash">worker2</span><br>create -e /workers/w2 &quot;w2:2224&quot;  #创建子节点，master服务会收到子节点变化通知<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash">master服务</span><br>ls -w /workers<br><span class="hljs-meta">#</span><span class="bash">worker2</span><br>quit  #worker2退出，master服务会收到子节点变化通知<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment">#master服务</span>
+create /workers
+<span class="token comment">#让master服务监控/workers下的子节点,监控是一次性的</span>
+<span class="token function">ls</span> <span class="token parameter variable">-w</span> /workers
+
+<span class="token comment">#worker1</span>
+create <span class="token parameter variable">-e</span> /workers/w1 <span class="token string">"w1:2224"</span> <span class="token comment">#创建子节点，master服务会收到子节点变化通知</span>
+
+<span class="token comment">#master服务</span>
+<span class="token function">ls</span> <span class="token parameter variable">-w</span> /workers
+<span class="token comment">#worker2</span>
+create <span class="token parameter variable">-e</span> /workers/w2 <span class="token string">"w2:2224"</span>  <span class="token comment">#创建子节点，master服务会收到子节点变化通知</span>
+
+<span class="token comment">#master服务</span>
+<span class="token function">ls</span> <span class="token parameter variable">-w</span> /workers
+<span class="token comment">#worker2</span>
+quit  <span class="token comment">#worker2退出，master服务会收到子节点变化通知</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h5 id="条件更新">2. 条件更新</h5>
 <p>设想用 znode /c 实现一个 counter，使用 set 命令来实现自增 1
 操作。条件更新场景∶ 1. 客户端 1 把 /c 更新到版本 1，实现 /c 的自增
@@ -793,25 +851,27 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082045093.png" srcset=
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082048851.png" srcset="/img/loading.gif" lazyload /></p>
 <p>创建用户：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">addauth digest debug:12345<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">addauth digest debug:12345<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h5 id="digest-授权模式">4. digest 授权模式</h5>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082112881.png" srcset="/img/loading.gif" lazyload /></p>
 <p>加密：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs she">echo -n user:12345 | openssl dgst -binary -sha1 | openssl base64<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">echo -n user:12345 | openssl dgst -binary -sha1 | openssl base64<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202302082114350.png" srcset="/img/loading.gif" lazyload /></p>
 <p>auth 与 digest
 的区别就是，前者使用明文密码进行登录，后者使用密文密码进行登录。</p>
 <h5 id="ip-授权模式">5. IP 授权模式</h5>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">setAcl /node-ip ip:192.168.109.128:cdwra<br>create /node-ip  data  ip:192.168.109.128:cdwra<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">setAcl /node-ip ip:192.168.109.128:cdwra
+create /node-ip  data  ip:192.168.109.128:cdwra<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>多个指定 IP 可以通过逗号分隔， 如 setAcl /node-ip
 ip:IP1:rw,ip:IP2:a</p>
 <h5 id="super-超级管理员模式">6. Super 超级管理员模式</h5>
 <p>这是一种特殊的 Digest 模式， 在 Super 模式下超级管理员用户可以对
 Zookeeper 上的节点进行任何的操作。</p>
 <p>需要在启动脚本上通过添加 JVM 参数开启：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs she">DigestAuthenticationProvider中定义<br>-Dzookeeper.DigestAuthenticationProvider.superDigest=admin:&lt;base64encoded(SHA1(123456))<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-she" data-language="she"><code class="language-she">DigestAuthenticationProvider中定义
+-Dzookeeper.DigestAuthenticationProvider.superDigest&#x3D;admin:&lt;base64encoded(SHA1(123456))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 
               
             </div>
@@ -1155,6 +1215,8 @@ Zookeeper 上的节点进行任何的操作。</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

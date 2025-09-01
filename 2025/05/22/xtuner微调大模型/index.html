@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="中文文档 github 用户文档 1. 安装xtuner 12345678910conda create --name xtuner python&#x3D;3.10 -yconda activate xtuner# 源码安装git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.gitcd xtunerpip install -e &amp;#x27;.[deepspeed]&amp;#">
+    <meta name="description" content="中文文档 github 用户文档 1. 安装xtuner conda create --name xtuner python&#x3D;3.10 -y conda activate xtuner  # 源码安装 git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.git cd xtuner pip install -e &#39;.[deepspeed]&#39;  # 验证 xtun">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微调大模型——xtuner">
 <meta property="og:url" content="http://example.com/2025/05/22/xtuner%E5%BE%AE%E8%B0%83%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="中文文档 github 用户文档 1. 安装xtuner 12345678910conda create --name xtuner python&#x3D;3.10 -yconda activate xtuner# 源码安装git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.gitcd xtunerpip install -e &amp;#x27;.[deepspeed]&amp;#">
+<meta property="og:description" content="中文文档 github 用户文档 1. 安装xtuner conda create --name xtuner python&#x3D;3.10 -y conda activate xtuner  # 源码安装 git clone https:&#x2F;&#x2F;github.com&#x2F;InternLM&#x2F;xtuner.git cd xtuner pip install -e &#39;.[deepspeed]&#39;  # 验证 xtun">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281423653.png">
 <meta property="og:image" content="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281424812.png">
@@ -48,6 +48,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -242,7 +244,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.3k 字
+          3k 字
         
       </span>
     
@@ -254,7 +256,7 @@
         
         
           <!-- compatible with older versions-->
-          11 分钟
+          10 分钟
         
       </span>
     
@@ -302,7 +304,16 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
 target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/tree/main/docs/zh_cn/user_guides">github
 用户文档</a></p>
 <h3 id="安装xtuner">1. 安装xtuner</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">conda create --name xtuner python=3.10 -y<br>conda activate xtuner<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 源码安装</span><br>git clone https://github.com/InternLM/xtuner.git<br>cd xtuner<br>pip install -e &#x27;.[deepspeed]&#x27;<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 验证</span><br>xtuner list-cfg<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">conda create <span class="token parameter variable">--name</span> xtuner <span class="token assign-left variable">python</span><span class="token operator">=</span><span class="token number">3.10</span> <span class="token parameter variable">-y</span>
+conda activate xtuner
+
+<span class="token comment"># 源码安装</span>
+<span class="token function">git</span> clone https://github.com/InternLM/xtuner.git
+<span class="token builtin class-name">cd</span> xtuner
+pip <span class="token function">install</span> <span class="token parameter variable">-e</span> <span class="token string">'.[deepspeed]'</span>
+
+<span class="token comment"># 验证</span>
+xtuner list-cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="微调">2. 微调</h3>
 <p><a
 target="_blank" rel="noopener" href="https://github.com/InternLM/xtuner/blob/main/docs/zh_cn/user_guides/single_turn_conversation.md">单轮对话
@@ -315,7 +326,31 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
 target="_blank" rel="noopener" href="https://modelscope.cn/datasets/w10442005/ruozhiba_qa">弱智吧问答数据</a></p>
 <h5 id="b.-数据转换">b. 数据转换</h5>
 <p>转换脚本：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><br><span class="hljs-comment"># 源数据文件路径</span><br>source_file = <span class="hljs-string">&#x27;data/ruozhiba_qaswift.json&#x27;</span><br><span class="hljs-comment"># 目标数据文件路径</span><br>target_file = <span class="hljs-string">&#x27;data/target_data.json&#x27;</span><br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(source_file, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    source_data = json.load(f)<br><br>target_data = []<br><span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> source_data:<br>    conversation = &#123;<br>        <span class="hljs-string">&quot;conversation&quot;</span>: [<br>            &#123;<br>                <span class="hljs-string">&quot;input&quot;</span>: item[<span class="hljs-string">&quot;query&quot;</span>],<br>                <span class="hljs-string">&quot;output&quot;</span>: item[<span class="hljs-string">&quot;response&quot;</span>]<br>            &#125;<br>        ]<br>    &#125;<br>    target_data.append(conversation)<br><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(target_file, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(target_data, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">4</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;数据已成功转换并保存到 <span class="hljs-subst">&#123;target_file&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+
+<span class="token comment"># 源数据文件路径</span>
+source_file <span class="token operator">=</span> <span class="token string">'data/ruozhiba_qaswift.json'</span>
+<span class="token comment"># 目标数据文件路径</span>
+target_file <span class="token operator">=</span> <span class="token string">'data/target_data.json'</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>source_file<span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    source_data <span class="token operator">=</span> json<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+
+target_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> item <span class="token keyword">in</span> source_data<span class="token punctuation">:</span>
+    conversation <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"conversation"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">&#123;</span>
+                <span class="token string">"input"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"query"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                <span class="token string">"output"</span><span class="token punctuation">:</span> item<span class="token punctuation">[</span><span class="token string">"response"</span><span class="token punctuation">]</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">]</span>
+    <span class="token punctuation">&#125;</span>
+    target_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>conversation<span class="token punctuation">)</span>
+
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>target_file<span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    json<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>target_data<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ensure_ascii<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> indent<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"数据已成功转换并保存到 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>target_file<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>转换后数据集：</p>
 <p><a
 target="_blank" rel="noopener" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281415328.json">target_data_1.json</a></p>
@@ -348,10 +383,43 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
 的训练，此时如果引入未学习过的特殊 token（如对话模版中的
 <code>&lt;|im_start|&gt;</code>），则会影响模型的训练。</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">### PART 1中</span><br><span class="hljs-comment">#微调模型存放的位置</span><br>pretrained_model_name_or_path = <span class="hljs-string">&quot;/root/autodl-tmp/models/Qwen/Qwen3-4B&quot;</span><br><span class="hljs-comment">#微调数据存放的位置</span><br>data_files = <span class="hljs-string">&#x27;/root/autodl-tmp/xtuner/dataset/target_data.json&#x27;</span><br><br><span class="hljs-comment"># 最大文本长度</span><br>max_length = <span class="hljs-number">512</span><br><span class="hljs-comment"># 批次大小</span><br>batch_size = <span class="hljs-number">10</span><br><span class="hljs-comment">#最大训练轮数</span><br>max_epochs = <span class="hljs-number">1000</span><br><span class="hljs-comment"># Save</span><br>save_steps = <span class="hljs-number">200</span><br>save_total_limit = <span class="hljs-number">2</span><br>evaluation_freq = <span class="hljs-number">200</span><br><span class="hljs-comment">#验证数据</span><br>evaluation_inputs = [<br><span class="hljs-string">&#x27;只剩一个心脏了还能活吗？&#x27;</span>, <span class="hljs-string">&#x27;爸爸再婚，我是不是就有了个新娘？&#x27;</span>,<br><span class="hljs-string">&#x27;樟脑丸是我吃过最难吃的硬糖有奇怪的味道怎么还有人买&#x27;</span>,<span class="hljs-string">&#x27;马上要上游泳课了，昨天洗的泳裤还没干，怎么办&#x27;</span>,<br><span class="hljs-string">&#x27;我只出生了一次，为什么每年都要庆生&#x27;</span><br>]<br><span class="hljs-comment">### PART 2中</span><br><span class="hljs-comment"># 指定量化位数</span><br>load_in_4bit=<span class="hljs-literal">True</span>,<br>load_in_8bit=<span class="hljs-literal">False</span>,<br><span class="hljs-comment"># 指定秩的大小</span><br>r=<span class="hljs-number">64</span>,<br>lora_alpha=<span class="hljs-number">128</span>,<br><br><span class="hljs-comment"># PART 3中</span><br>dataset=<span class="hljs-built_in">dict</span>(<span class="hljs-built_in">type</span>=load_dataset, path=<span class="hljs-string">&quot;json&quot;</span>,data_files=data_files)<br>dataset_map_fn=<span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">### PART 1中</span>
+<span class="token comment">#微调模型存放的位置</span>
+pretrained_model_name_or_path <span class="token operator">=</span> <span class="token string">"/root/autodl-tmp/models/Qwen/Qwen3-4B"</span>
+<span class="token comment">#微调数据存放的位置</span>
+data_files <span class="token operator">=</span> <span class="token string">'/root/autodl-tmp/xtuner/dataset/target_data.json'</span>
+
+<span class="token comment"># 最大文本长度</span>
+max_length <span class="token operator">=</span> <span class="token number">512</span>
+<span class="token comment"># 批次大小</span>
+batch_size <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token comment">#最大训练轮数</span>
+max_epochs <span class="token operator">=</span> <span class="token number">1000</span>
+<span class="token comment"># Save</span>
+save_steps <span class="token operator">=</span> <span class="token number">200</span>
+save_total_limit <span class="token operator">=</span> <span class="token number">2</span>
+evaluation_freq <span class="token operator">=</span> <span class="token number">200</span>
+<span class="token comment">#验证数据</span>
+evaluation_inputs <span class="token operator">=</span> <span class="token punctuation">[</span>
+<span class="token string">'只剩一个心脏了还能活吗？'</span><span class="token punctuation">,</span> <span class="token string">'爸爸再婚，我是不是就有了个新娘？'</span><span class="token punctuation">,</span>
+<span class="token string">'樟脑丸是我吃过最难吃的硬糖有奇怪的味道怎么还有人买'</span><span class="token punctuation">,</span><span class="token string">'马上要上游泳课了，昨天洗的泳裤还没干，怎么办'</span><span class="token punctuation">,</span>
+<span class="token string">'我只出生了一次，为什么每年都要庆生'</span>
+<span class="token punctuation">]</span>
+<span class="token comment">### PART 2中</span>
+<span class="token comment"># 指定量化位数</span>
+load_in_4bit<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+load_in_8bit<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>
+<span class="token comment"># 指定秩的大小</span>
+r<span class="token operator">=</span><span class="token number">64</span><span class="token punctuation">,</span>
+lora_alpha<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span>
+
+<span class="token comment"># PART 3中</span>
+dataset<span class="token operator">=</span><span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span>load_dataset<span class="token punctuation">,</span> path<span class="token operator">=</span><span class="token string">"json"</span><span class="token punctuation">,</span>data_files<span class="token operator">=</span>data_files<span class="token punctuation">)</span>
+dataset_map_fn<span class="token operator">=</span><span class="token boolean">None</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="启动微调">2.3 启动微调</h4>
 <p>在完成上述操作后，便可以使用下面的指令启动微调任务了。</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 单机单卡</span><br><span class="hljs-attribute">xtuner</span> train  ./qwen<span class="hljs-number">1</span>_<span class="hljs-number">5</span>_<span class="hljs-number">4</span>b_chat_qlora_alpaca_e<span class="hljs-number">3</span>.py <br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none"># 单机单卡
+xtuner train  .&#x2F;qwen1_5_4b_chat_qlora_alpaca_e3.py <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>开始训练：</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505281423653.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <p>在训练开始前，可以看到模型的输出如下所示：</p>
@@ -365,20 +433,30 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
 <code>.pth</code> 文件转换为 HuggingFace
 格式，并合并入原始的语言模型权重中。</p>
 <h4 id="模型转换">3.1 模型转换</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 命令格式：</span><br>xtuner convert pth_to_hf $&#123;FINETUNE_CFG&#125; $&#123;PTH_PATH&#125; $&#123;SAVE_PATH&#125;<br><span class="hljs-meta">#</span><span class="bash"> 例如：</span><br>xtuner convert pth_to_hf qwen1_5_4b_chat_qlora_alpaca_e3.py ./work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800.pth  work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 命令格式：</span>
+xtuner convert pth_to_hf <span class="token variable">$&#123;FINETUNE_CFG&#125;</span> <span class="token variable">$&#123;PTH_PATH&#125;</span> <span class="token variable">$&#123;SAVE_PATH&#125;</span>
+<span class="token comment"># 例如：</span>
+xtuner convert pth_to_hf qwen1_5_4b_chat_qlora_alpaca_e3.py ./work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800.pth  work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h4 id="lora-合并">3.2 LoRA 合并</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 命令格式：</span><br>xtuner convert merge $&#123;LLM&#125; $&#123;LLM_ADAPTER&#125; $&#123;SAVE_PATH&#125;<br><span class="hljs-meta">#</span><span class="bash"> 例如：</span><br>xtuner convert merge /root/autodl-tmp/models/Qwen/Qwen3-4B work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf/  /root/autodl-tmp/models/Qwen/Qwen3-4B_xtuner_merged --max-shard-size 4GB<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># 命令格式：</span>
+xtuner convert merge <span class="token variable">$&#123;LLM&#125;</span> <span class="token variable">$&#123;LLM_ADAPTER&#125;</span> <span class="token variable">$&#123;SAVE_PATH&#125;</span>
+<span class="token comment"># 例如：</span>
+xtuner convert merge /root/autodl-tmp/models/Qwen/Qwen3-4B work_dirs/qwen1_5_4b_chat_qlora_alpaca_e3/iter_800_hf/  /root/autodl-tmp/models/Qwen/Qwen3-4B_xtuner_merged --max-shard-size 4GB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="可视化训练过程">4. 可视化训练过程</h3>
 <p><a
 target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/training/visualization.html">文档</a></p>
 <p>WandB：</p>
 <ol type="1">
 <li><p>使用 WandB 前需安装依赖库 <code>wandb</code> 并登录至 wandb。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> pip install wandb</span><br><span class="hljs-meta">$</span><span class="bash"> wandb login</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ pip <span class="token function">install</span> wandb
+$ wandb login<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
 <p>获取token: https://wandb.ai/authorize</p></li>
 <li><p>设置 config 中的 <code>visualizer</code> 字段，并将
 <code>vis_backends</code> 设置为 WandbVisBackend：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-built_in">set</span> visualizer</span><br>+ from mmengine.visualization import Visualizer, WandbVisBackend<br>- visualizer = None<br>+ visualizer = dict(type=Visualizer, vis_backends=[dict(type=WandbVisBackend)])<br></code></pre></td></tr></table></figure></li>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token comment"># set visualizer</span>
++ from mmengine.visualization <span class="token function">import</span> Visualizer, WandbVisBackend
+- visualizer <span class="token operator">=</span> None
++ visualizer <span class="token operator">=</span> dict<span class="token punctuation">(</span>type<span class="token operator">=</span>Visualizer, <span class="token assign-left variable">vis_backends</span><span class="token operator">=</span><span class="token punctuation">[</span>dict<span class="token punctuation">(</span>type<span class="token operator">=</span>WandbVisBackend<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>启动实验后，可在 wandb 网页端 <code>https://wandb.ai</code>
 上查看可视化结果：</p></li>
 </ol>
@@ -728,6 +806,8 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

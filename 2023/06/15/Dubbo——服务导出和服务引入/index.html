@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          10k 字
+          9.4k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          32 分钟
+          30 分钟
         
       </span>
     
@@ -341,14 +343,19 @@ data-cites="DubboService">@DubboService</span> 中进行定义，比如，一个
 Dubbo 服务肯定是属于某个应用的，而一个应用下可以有多个 Dubbo
 服务，所以我们可以在应用级别定义一些通用的配置，比如协议。</p>
 <p>我们在 application.yml 中定义：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>  <span class="hljs-attr">protocol:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">20880</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dubbo</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>application
+  <span class="token key atrule">protocol</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> tri
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">20880</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>表示当前应用下所有的 Dubbo 服务都支持通过 tri
 协议进行访问，并且访问端口为
 20880，所以在进行<strong>某个服务</strong>的服务导出时，就需要将应用中的这些配置信息合并到当前服务的配置信息中。</p>
 <h4 id="服务注册">1.2 服务注册</h4>
 <p>当确定好了最终的服务配置后，Dubbo
 就会根据这些配置信息生成对应的<strong>服务 URL</strong>，比如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">tri://192.168.110.140:50051/com.debuggingWorld.mall.service.OrderService?anyhost=true&amp;application=order-application<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;com.debuggingWorld.mall.service.OrderService?anyhost&#x3D;true&amp;application&#x3D;order-application<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>这个 URL 就表示了一个 Dubbo 服务，服务消费者只要能获得到这个服务
 URL，就知道了关于这个 Dubbo
 服务的全部信息，包括服务名、支持的协议、ip、port、各种配置。</p>
@@ -370,13 +377,21 @@ URL，并重新注册到中心。</p>
 <h4 id="应用级注册">1.3 应用级注册</h4>
 <p>在 Dubbo3.0 之前，Dubbo
 是接口级注册，服务注册就是把接口名以及服务配置信息注册到注册中心中，注册中心存储的数据格式大概为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">接口名1：tri://192.168.110.140:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.140:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.140:50051/接口名3?application=应用名<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名1?application&#x3D;应用名
+接口名2：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名2?application&#x3D;应用名
+接口名3：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名3?application&#x3D;应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>key 是接口名，value 就是服务
 URL，上面的内容就表示现在有一个应用，该应用下有 3 个接口，应用实例部署在
 192.168.110.140，此时，如果给该应用增加一个实例，实例 ip 为
 192.168.110.141，那么新的实例也需要进行服务注册，会向注册中心新增 3
 条数据：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">接口名1：tri://192.168.110.140:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.140:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.140:50051/接口名3?application=应用名<br><br>接口名1：tri://192.168.110.141:50051/接口名1?application=应用名<br>接口名2：tri://192.168.110.141:50051/接口名2?application=应用名<br>接口名3：tri://192.168.110.141:50051/接口名3?application=应用名<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名1?application&#x3D;应用名
+接口名2：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名2?application&#x3D;应用名
+接口名3：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名3?application&#x3D;应用名
+
+接口名1：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名1?application&#x3D;应用名
+接口名2：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名2?application&#x3D;应用名
+接口名3：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名3?application&#x3D;应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>可以发现，如果一个应用中有 3 个 Dubbo
 服务，那么每增加一个实例，就会向注册中心增加 3
 条记录，那如果一个应用中有 10 个 Dubbo
@@ -467,14 +482,48 @@ service-discovery-registry:// 时，会利用 ServiceDiscoveryRegistry
 <p>例如：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306300014867.png" srcset="/img/loading.gif" lazyload /></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>	<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>	<span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;192.168.110.140:50051&quot;</span>,<br>	<span class="hljs-attr">&quot;address&quot;</span>: <span class="hljs-string">&quot;192.168.110.140&quot;</span>,<br>	<span class="hljs-attr">&quot;port&quot;</span>: <span class="hljs-number">50051</span>,<br>	<span class="hljs-attr">&quot;sslPort&quot;</span>: <span class="hljs-literal">null</span>,<br>	<span class="hljs-attr">&quot;payload&quot;</span>: &#123;<br>		<span class="hljs-attr">&quot;@class&quot;</span>: <span class="hljs-string">&quot;org.apache.dubbo.registry.zookeeper.ZookeeperInstance&quot;</span>,<br>		<span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;192.168.110.140:50051&quot;</span>,<br>		<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>		<span class="hljs-attr">&quot;metadata&quot;</span>: &#123;<br>			<span class="hljs-attr">&quot;dubbo.endpoints&quot;</span>: <span class="hljs-string">&quot;[&#123;\&quot;port\&quot;:50051,\&quot;protocol\&quot;:\&quot;tri\&quot;&#125;]&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata-service.url-params&quot;</span>: <span class="hljs-string">&quot;&#123;\&quot;connections\&quot;:\&quot;1\&quot;,\&quot;version\&quot;:\&quot;1.0.0\&quot;,\&quot;dubbo\&quot;:\&quot;2.0.2\&quot;,\&quot;release\&quot;:\&quot;3.1.9\&quot;,\&quot;side\&quot;:\&quot;provider\&quot;,\&quot;ipv6\&quot;:\&quot;2408:8270:1038:5f20:0:0:0:e7d9\&quot;,\&quot;port\&quot;:\&quot;50052\&quot;,\&quot;protocol\&quot;:\&quot;tri\&quot;&#125;&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata.revision&quot;</span>: <span class="hljs-string">&quot;0b944e47ab5cd306cd6ffa9ba20633b4&quot;</span>,<br>			<span class="hljs-attr">&quot;dubbo.metadata.storage-type&quot;</span>: <span class="hljs-string">&quot;local&quot;</span>,<br>			<span class="hljs-attr">&quot;ipv6&quot;</span>: <span class="hljs-string">&quot;2408:8270:1038:5f20:0:0:0:e7d9&quot;</span>,<br>			<span class="hljs-attr">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;1687276820990&quot;</span><br>		&#125;<br>	&#125;,<br>	<span class="hljs-attr">&quot;registrationTimeUTC&quot;</span>: <span class="hljs-number">1687276823174</span>,<br>	<span class="hljs-attr">&quot;serviceType&quot;</span>: <span class="hljs-string">&quot;DYNAMIC&quot;</span>,<br>	<span class="hljs-attr">&quot;uriSpec&quot;</span>: <span class="hljs-literal">null</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+	<span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"order-application"</span><span class="token punctuation">,</span>
+	<span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"192.168.110.140:50051"</span><span class="token punctuation">,</span>
+	<span class="token property">"address"</span><span class="token operator">:</span> <span class="token string">"192.168.110.140"</span><span class="token punctuation">,</span>
+	<span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">50051</span><span class="token punctuation">,</span>
+	<span class="token property">"sslPort"</span><span class="token operator">:</span> <span class="token null keyword">null</span><span class="token punctuation">,</span>
+	<span class="token property">"payload"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+		<span class="token property">"@class"</span><span class="token operator">:</span> <span class="token string">"org.apache.dubbo.registry.zookeeper.ZookeeperInstance"</span><span class="token punctuation">,</span>
+		<span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"192.168.110.140:50051"</span><span class="token punctuation">,</span>
+		<span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"order-application"</span><span class="token punctuation">,</span>
+		<span class="token property">"metadata"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+			<span class="token property">"dubbo.endpoints"</span><span class="token operator">:</span> <span class="token string">"[&#123;\"port\":50051,\"protocol\":\"tri\"&#125;]"</span><span class="token punctuation">,</span>
+			<span class="token property">"dubbo.metadata-service.url-params"</span><span class="token operator">:</span> <span class="token string">"&#123;\"connections\":\"1\",\"version\":\"1.0.0\",\"dubbo\":\"2.0.2\",\"release\":\"3.1.9\",\"side\":\"provider\",\"ipv6\":\"2408:8270:1038:5f20:0:0:0:e7d9\",\"port\":\"50052\",\"protocol\":\"tri\"&#125;"</span><span class="token punctuation">,</span>
+			<span class="token property">"dubbo.metadata.revision"</span><span class="token operator">:</span> <span class="token string">"0b944e47ab5cd306cd6ffa9ba20633b4"</span><span class="token punctuation">,</span>
+			<span class="token property">"dubbo.metadata.storage-type"</span><span class="token operator">:</span> <span class="token string">"local"</span><span class="token punctuation">,</span>
+			<span class="token property">"ipv6"</span><span class="token operator">:</span> <span class="token string">"2408:8270:1038:5f20:0:0:0:e7d9"</span><span class="token punctuation">,</span>
+			<span class="token property">"timestamp"</span><span class="token operator">:</span> <span class="token string">"1687276820990"</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token property">"registrationTimeUTC"</span><span class="token operator">:</span> <span class="token number">1687276823174</span><span class="token punctuation">,</span>
+	<span class="token property">"serviceType"</span><span class="token operator">:</span> <span class="token string">"DYNAMIC"</span><span class="token punctuation">,</span>
+	<span class="token property">"uriSpec"</span><span class="token operator">:</span> <span class="token null keyword">null</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>一个实例上可能支持多个协议以及多个端口，<strong>那如何确定实例的 ip
 和端口呢？</strong></p>
 <p>答案是：获取 MetadataInfo 对象中保存的所有服务URL，优先取 dubbo
 协议对应 ip 和 port，没有 dubbo 协议则所有服务 URL 中的第一个 URL 的 ip
 和 port。</p>
 <p>另外一个协议一般只会对应一个端口，但是如果就是对应了多个，比如：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>  <span class="hljs-attr">protocols:</span><br>    <span class="hljs-attr">p1:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">20881</span><br>    <span class="hljs-attr">p2:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">dubbo</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">20882</span><br>    <span class="hljs-attr">p3:</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>      <span class="hljs-attr">port:</span> <span class="hljs-number">50051</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dubbo</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>application
+  <span class="token key atrule">protocols</span><span class="token punctuation">:</span>
+    <span class="token key atrule">p1</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> dubbo
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">20881</span>
+    <span class="token key atrule">p2</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> dubbo
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">20882</span>
+    <span class="token key atrule">p3</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> tri
+      <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">50051</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>如果是这样，最终存入 endpoint
 中的会保证一个协议只对应一个端口，另外那个将被忽略，最终服务消费者在进行服务引入时将会用到这个
 endpoint 信息。</p>
@@ -486,7 +535,10 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292103819.png" srcset=
 和实例 port，而 ip 和 port 这个节点中的内容就是实例的一些基本信息。</p>
 <p>另外，可以配置 dubbo.metadata.storage-type，默认是
 local，可以通过配置改为 remote：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>    <span class="hljs-attr">metadata-type:</span> <span class="hljs-string">remote</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dubbo</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>application
+    <span class="token key atrule">metadata-type</span><span class="token punctuation">:</span> remote<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>这个配置其实跟应用元数据服务（MetadataService 服务，用于返回
 metadata）有关系：</p>
 <ol type="1">
@@ -503,14 +555,50 @@ MetadataInfo 存入元数据中心，比如：</p>
 <p><img
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202306292122160.png" srcset="/img/loading.gif" lazyload /></p>
 <p>节点内容为：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>	<span class="hljs-attr">&quot;app&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>	<span class="hljs-attr">&quot;revision&quot;</span>: <span class="hljs-string">&quot;3ea21c46ac0131239cf39512bc691907&quot;</span>,<br>	<span class="hljs-attr">&quot;services&quot;</span>: &#123;<br>		<span class="hljs-attr">&quot;com.debuggingWorld.mall.service.OrderService:tri&quot;</span>: &#123;<br>			<span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>			<span class="hljs-attr">&quot;params&quot;</span>: &#123;<br>				<span class="hljs-attr">&quot;side&quot;</span>: <span class="hljs-string">&quot;provider&quot;</span>,<br>				<span class="hljs-attr">&quot;release&quot;</span>: <span class="hljs-string">&quot;3.1.9&quot;</span>,<br>				<span class="hljs-attr">&quot;methods&quot;</span>: <span class="hljs-string">&quot;getOrderByUserId&quot;</span>,<br>				<span class="hljs-attr">&quot;deprecated&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;dubbo&quot;</span>: <span class="hljs-string">&quot;2.0.2&quot;</span>,<br>				<span class="hljs-attr">&quot;interface&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>				<span class="hljs-attr">&quot;service-name-mapping&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br>				<span class="hljs-attr">&quot;generic&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;metadata-type&quot;</span>: <span class="hljs-string">&quot;remote&quot;</span>,<br>				<span class="hljs-attr">&quot;application&quot;</span>: <span class="hljs-string">&quot;order-application&quot;</span>,<br>				<span class="hljs-attr">&quot;background&quot;</span>: <span class="hljs-string">&quot;false&quot;</span>,<br>				<span class="hljs-attr">&quot;dynamic&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br>				<span class="hljs-attr">&quot;anyhost&quot;</span>: <span class="hljs-string">&quot;true&quot;</span><br>			&#125;,<br>			<span class="hljs-attr">&quot;path&quot;</span>: <span class="hljs-string">&quot;com.debuggingWorld.mall.service.OrderService&quot;</span>,<br>			<span class="hljs-attr">&quot;port&quot;</span>: <span class="hljs-number">50051</span>,<br>			<span class="hljs-attr">&quot;protocol&quot;</span>: <span class="hljs-string">&quot;tri&quot;</span><br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+	<span class="token property">"app"</span><span class="token operator">:</span> <span class="token string">"order-application"</span><span class="token punctuation">,</span>
+	<span class="token property">"revision"</span><span class="token operator">:</span> <span class="token string">"3ea21c46ac0131239cf39512bc691907"</span><span class="token punctuation">,</span>
+	<span class="token property">"services"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+		<span class="token property">"com.debuggingWorld.mall.service.OrderService:tri"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+			<span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"com.debuggingWorld.mall.service.OrderService"</span><span class="token punctuation">,</span>
+			<span class="token property">"params"</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+				<span class="token property">"side"</span><span class="token operator">:</span> <span class="token string">"provider"</span><span class="token punctuation">,</span>
+				<span class="token property">"release"</span><span class="token operator">:</span> <span class="token string">"3.1.9"</span><span class="token punctuation">,</span>
+				<span class="token property">"methods"</span><span class="token operator">:</span> <span class="token string">"getOrderByUserId"</span><span class="token punctuation">,</span>
+				<span class="token property">"deprecated"</span><span class="token operator">:</span> <span class="token string">"false"</span><span class="token punctuation">,</span>
+				<span class="token property">"dubbo"</span><span class="token operator">:</span> <span class="token string">"2.0.2"</span><span class="token punctuation">,</span>
+				<span class="token property">"interface"</span><span class="token operator">:</span> <span class="token string">"com.debuggingWorld.mall.service.OrderService"</span><span class="token punctuation">,</span>
+				<span class="token property">"service-name-mapping"</span><span class="token operator">:</span> <span class="token string">"true"</span><span class="token punctuation">,</span>
+				<span class="token property">"generic"</span><span class="token operator">:</span> <span class="token string">"false"</span><span class="token punctuation">,</span>
+				<span class="token property">"metadata-type"</span><span class="token operator">:</span> <span class="token string">"remote"</span><span class="token punctuation">,</span>
+				<span class="token property">"application"</span><span class="token operator">:</span> <span class="token string">"order-application"</span><span class="token punctuation">,</span>
+				<span class="token property">"background"</span><span class="token operator">:</span> <span class="token string">"false"</span><span class="token punctuation">,</span>
+				<span class="token property">"dynamic"</span><span class="token operator">:</span> <span class="token string">"true"</span><span class="token punctuation">,</span>
+				<span class="token property">"anyhost"</span><span class="token operator">:</span> <span class="token string">"true"</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"com.debuggingWorld.mall.service.OrderService"</span><span class="token punctuation">,</span>
+			<span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">50051</span><span class="token punctuation">,</span>
+			<span class="token property">"protocol"</span><span class="token operator">:</span> <span class="token string">"tri"</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>这里面就记录了当前实例上提供了哪些服务以及对应的协议，注意并没有保存对应的端口，所以后面服务消费者得利用实例信息中的
 endpoint，因为 endpoint中记录了协议对应的端口。</p>
 <p>其实元数据中心和元数据服务提供的功能是一样的，都可以用来获取某个实例的
 MetadataInfo，上面中的 UUID
 表示实例编号，只不过元数据中心是<strong>集中</strong>式的，元数据服务式<strong>分散</strong>在各个提供者实例中的，如果整个微服务集群压力不大，那么效果差不多，如果微服务集群压力大，那么元数据中心的压力就大，此时单个元数据服务就更适合，所以默认也是采用的元数据服务。</p>
 <p>注册中心和元数据中心也可以分别设置：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dubbo:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-application</span><br>    <span class="hljs-attr">metadata-type:</span> <span class="hljs-string">remote</span><br>    <span class="hljs-attr">register-mode:</span> <span class="hljs-string">instance</span><br>  <span class="hljs-attr">protocol:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tri</span><br>  <span class="hljs-attr">registry:</span><br>    <span class="hljs-attr">address:</span> <span class="hljs-string">zookeeper://127.0.0.1:2181</span><br>  <span class="hljs-attr">metadata-report:</span><br>    <span class="hljs-attr">address:</span> <span class="hljs-string">zookeeper://127.0.0.1:2182</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">dubbo</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> order<span class="token punctuation">-</span>application
+    <span class="token key atrule">metadata-type</span><span class="token punctuation">:</span> remote
+    <span class="token key atrule">register-mode</span><span class="token punctuation">:</span> instance
+  <span class="token key atrule">protocol</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> tri
+  <span class="token key atrule">registry</span><span class="token punctuation">:</span>
+    <span class="token key atrule">address</span><span class="token punctuation">:</span> zookeeper<span class="token punctuation">:</span>//127.0.0.1<span class="token punctuation">:</span><span class="token number">2181</span>
+  <span class="token key atrule">metadata-report</span><span class="token punctuation">:</span>
+    <span class="token key atrule">address</span><span class="token punctuation">:</span> zookeeper<span class="token punctuation">:</span>//127.0.0.1<span class="token punctuation">:</span><span class="token number">2182</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>至此，应用级服务注册的原理就分析完了，总结一下：</p>
 <ol type="1">
 <li>在导出某个 Dubbo 服务URL时，会把服务 URL 存入 MetadataInfo 中</li>
@@ -883,6 +971,8 @@ Tomcat，这块在服务调用的时候再来分析。</p>
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

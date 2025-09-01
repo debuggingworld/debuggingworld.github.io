@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -16,12 +16,12 @@
   <meta name="author" content="debuggingWorld">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1">
+    <meta name="description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- func main() &amp;#123;  	&#x2F;&#x2F;+加号： 	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接 	var n1 int &#x3D; +10 	fmt.Println(n1) 	var n2 int &#x3D; 4 + 7 	fmt.Println(n2) 	var s1 string &#x3D; &quot;abc&quot; + &quot;def&quot; 	fmt.Prin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Go——运算符">
 <meta property="og:url" content="http://example.com/2021/12/28/Go%E2%80%94%E2%80%94%E8%BF%90%E7%AE%97%E7%AC%A6/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- 12345678910111213141516171819202122232425func main() &amp;#123;	&#x2F;&#x2F;+加号：	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接	var n1 int &#x3D; +10	fmt.Println(n1)	var n2 int &#x3D; 4 + 7	fmt.Println(n2)	var s1">
+<meta property="og:description" content="1. 算术运算符 算术运算符包括： + ，-，*，&#x2F;，%，++，-- func main() &amp;#123;  	&#x2F;&#x2F;+加号： 	&#x2F;&#x2F;1.正数 2.相加操作  3.字符串拼接 	var n1 int &#x3D; +10 	fmt.Println(n1) 	var n2 int &#x3D; 4 + 7 	fmt.Println(n2) 	var s1 string &#x3D; &quot;abc&quot; + &quot;def&quot; 	fmt.Prin">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-28T14:34:55.000Z">
 <meta property="article:modified_time" content="2025-09-01T02:21:27.783Z">
@@ -42,6 +42,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          880 字
+          800 字
         
       </span>
     
@@ -294,10 +296,39 @@
 src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png" srcset="/img/loading.gif" lazyload /></p>
 <h3 id="算术运算符">1. 算术运算符</h3>
 <p>算术运算符包括： + ，-，*，/，%，++，--</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-comment">//+加号：</span><br>	<span class="hljs-comment">//1.正数 2.相加操作  3.字符串拼接</span><br>	<span class="hljs-keyword">var</span> n1 <span class="hljs-keyword">int</span> = +<span class="hljs-number">10</span><br>	fmt.Println(n1)<br>	<span class="hljs-keyword">var</span> n2 <span class="hljs-keyword">int</span> = <span class="hljs-number">4</span> + <span class="hljs-number">7</span><br>	fmt.Println(n2)<br>	<span class="hljs-keyword">var</span> s1 <span class="hljs-keyword">string</span> = <span class="hljs-string">&quot;abc&quot;</span> + <span class="hljs-string">&quot;def&quot;</span><br>	fmt.Println(s1)<br><br>	<span class="hljs-comment">// /除号：</span><br>	fmt.Println(<span class="hljs-number">10</span> / <span class="hljs-number">3</span>)   <span class="hljs-comment">//两个int类型数据运算，结果一定为整数类型</span><br>	fmt.Println(<span class="hljs-number">10.0</span> / <span class="hljs-number">3</span>) <span class="hljs-comment">//浮点类型参与运算，结果为浮点类型</span><br><br>	<span class="hljs-comment">// % 取模</span><br>	fmt.Println(<span class="hljs-number">10</span> % <span class="hljs-number">-3</span>) <span class="hljs-comment">// 1</span><br>	<span class="hljs-comment">//++自增操作：</span><br>	<span class="hljs-keyword">var</span> a <span class="hljs-keyword">int</span> = <span class="hljs-number">10</span><br>	a++<br>	a--<br>	<span class="hljs-comment">//++ 自增 加1操作，--自减，减1操作</span><br>	<span class="hljs-comment">// 只能单独使用，不能参与到运算中去</span><br>	<span class="hljs-comment">// ++，--只能在变量的后面</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">//+加号：</span>
+	<span class="token comment">//1.正数 2.相加操作  3.字符串拼接</span>
+	<span class="token keyword">var</span> n1 <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token operator">+</span><span class="token number">10</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>n1<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> n2 <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">7</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>n2<span class="token punctuation">)</span>
+	<span class="token keyword">var</span> s1 <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">"abc"</span> <span class="token operator">+</span> <span class="token string">"def"</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>s1<span class="token punctuation">)</span>
+
+	<span class="token comment">// /除号：</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token number">10</span> <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span>   <span class="token comment">//两个int类型数据运算，结果一定为整数类型</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token number">10.0</span> <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">//浮点类型参与运算，结果为浮点类型</span>
+
+	<span class="token comment">// % 取模</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token number">10</span> <span class="token operator">%</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// 1</span>
+	<span class="token comment">//++自增操作：</span>
+	<span class="token keyword">var</span> a <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">10</span>
+	a<span class="token operator">++</span>
+	a<span class="token operator">--</span>
+	<span class="token comment">//++ 自增 加1操作，--自减，减1操作</span>
+	<span class="token comment">// 只能单独使用，不能参与到运算中去</span>
+	<span class="token comment">// ++，--只能在变量的后面</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="赋值运算符">2. 赋值运算符</h3>
 <p>赋值运算符包括=,+=，-=，*=，/=,%=</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> num1 <span class="hljs-keyword">int</span> = (<span class="hljs-number">10</span> + <span class="hljs-number">20</span>) % <span class="hljs-number">3</span><br>	num1 += <span class="hljs-number">20</span><br>	fmt.Println(num1) <span class="hljs-comment">// 20</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> num1 <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">10</span> <span class="token operator">+</span> <span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">3</span>
+	num1 <span class="token operator">+=</span> <span class="token number">20</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>num1<span class="token punctuation">)</span> <span class="token comment">// 20</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3 id="关系运算符">3. 关系运算符</h3>
 <p>关系运算符包括：==、!=、&gt;、&lt;、&gt; =、&lt;=</p>
 <h3 id="逻辑运算符">4. 逻辑运算符</h3>
@@ -334,7 +365,17 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228223837.png" srcset="
 </tr>
 </tbody>
 </table>
-<p>【注】没有无符号右移 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>	<span class="hljs-keyword">var</span> c <span class="hljs-keyword">int8</span> = <span class="hljs-number">127</span><br>	fmt.Println(c &lt;&lt; <span class="hljs-number">1</span>) <span class="hljs-comment">// -2</span><br>	<br>	<span class="hljs-comment">// 01111111			// 127</span><br>	<span class="hljs-comment">// 11111110			// 补码</span><br>	<span class="hljs-comment">// 10000001			// 反码</span><br>	<span class="hljs-comment">// 10000010			// 原码</span><br><br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>【注】没有无符号右移 <div class="code-wrapper"><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token keyword">var</span> c <span class="token builtin">int8</span> <span class="token operator">=</span> <span class="token number">127</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>c <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">// -2</span>
+	
+	<span class="token comment">// 01111111			// 127</span>
+	<span class="token comment">// 11111110			// 补码</span>
+	<span class="token comment">// 10000001			// 反码</span>
+	<span class="token comment">// 10000010			// 原码</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
 <h3 id="其他运算符">6. 其他运算符</h3>
 <p>&amp; ：返回变量的存储地址 * ：返回针变量对应的值</p>
 <h3 id="运算符优先级">7. 运算符优先级</h3>
@@ -683,6 +724,8 @@ src="https://debugging.oss-cn-hangzhou.aliyuncs.com/20211228232536.png" srcset="
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -49,6 +49,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -374,17 +376,17 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
 <ol type="1">
 <li>不开启 DeepSpeed</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">NPROC_PER_NODE=2 xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token assign-left variable">NPROC_PER_NODE</span><span class="token operator">=</span><span class="token number">2</span> xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301933524.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <ol start="2" type="1">
 <li>开启 DeepSpeed ZeRO-2</li>
 </ol>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">NPROC_PER_NODE</span>=<span class="hljs-number">2</span> xtuner train  ./qwen<span class="hljs-number">1</span>_<span class="hljs-number">5</span>_<span class="hljs-number">4</span>b_chat_qlora_alpaca_e<span class="hljs-number">3</span>.py --deepspeed deepspeed_zero<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">NPROC_PER_NODE&#x3D;2 xtuner train  .&#x2F;qwen1_5_4b_chat_qlora_alpaca_e3.py --deepspeed deepspeed_zero2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202505301929314.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
 <ol start="3" type="1">
 <li>DeepSpeed ZeRO-3 + CPU Offloading</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">NPROC_PER_NODE=2 xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py --deepspeed deepspeed_zero3_offload<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token assign-left variable">NPROC_PER_NODE</span><span class="token operator">=</span><span class="token number">2</span> xtuner train  ./qwen1_5_4b_chat_qlora_alpaca_e3.py <span class="token parameter variable">--deepspeed</span> deepspeed_zero3_offload<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 
               
             </div>
@@ -730,6 +732,8 @@ target="_blank" rel="noopener" href="https://xtuner.readthedocs.io/zh-cn/latest/
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {

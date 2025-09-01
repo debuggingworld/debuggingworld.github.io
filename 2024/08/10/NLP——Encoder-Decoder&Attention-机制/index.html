@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -56,6 +56,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -451,7 +453,13 @@ target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMT
 <p>　　假设 Decoder 中的隐藏状态为 <code>[5, 0, 1]</code>，分别与
 Encoder
 中的每个隐藏状态做点积，得到第二个隐藏状态的分值最高，说明下一个要解码的元素将受到当前这种隐藏状态的严重影响。</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs inform7">decoder_hidden = <span class="hljs-comment">[10, 5, 10]</span><br>encoder_hidden score<br>---------------------<br>     <span class="hljs-comment">[0, 1, 1]</span>     15 (= 10×0 + 5×1 + 10×1, the dot product)<br>     <span class="hljs-comment">[5, 0, 1]</span>     60<br>     <span class="hljs-comment">[1, 1, 0]</span>     15<br>     <span class="hljs-comment">[0, 5, 1]</span>     35<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">decoder_hidden &#x3D; [10, 5, 10]
+encoder_hidden score
+---------------------
+     [0, 1, 1]     15 (&#x3D; 10×0 + 5×1 + 10×1, the dot product)
+     [5, 0, 1]     60
+     [1, 1, 0]     15
+     [0, 5, 1]     35<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>Step 2：将所有得分送入 softmax 层</strong></p>
 <p>　　该部分实质上就是对得到的所有分值进行归一化，这样
 <code>softmax</code> 之后得到的所有分数相加为
@@ -461,14 +469,24 @@ Encoder
 层后，可以得到一组新的隐藏层状态分数，其计算方法即为公式 <span
 class="math inline">\(a_{ij}=\frac{exp(e_{ij})}{∑^{T_x}_{k=1}exp(e_{ik})}\)</span>。注意，此处得到的分值应该是浮点数，但是由于无限接近于
 0 和 1，所以做了近似。</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">encoder_hidden score score^</span><br><span class="hljs-section">-----------------------------</span><br><span class="hljs-code">     [0, 1, 1]     15       0</span><br><span class="hljs-code">     [5, 0, 1]     60       1</span><br><span class="hljs-code">     [1, 1, 0]     15       0</span><br><span class="hljs-code">     [0, 5, 1]     35       0</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">encoder_hidden score score^
+-----------------------------
+     [0, 1, 1]     15       0
+     [5, 0, 1]     60       1
+     [1, 1, 0]     15       0
+     [0, 5, 1]     35       0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>Step 3：用每个 Encoder 的隐藏状态乘以 softmax
 之后的得分</strong></p>
 <p>　　通过将每个编码器的隐藏状态与其 softmax
 之后的分数(标量)相乘，我们得到 对齐向量
 或标注向量。这正是对齐产生的机制</p>
 <p><img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/202408110045703.gif" srcset="/img/loading.gif" lazyload style="zoom:80%;" /></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css">encoder score score^ alignment<br> ---------------------------------<br> <span class="hljs-selector-attr">[0, 1, 1]</span>   <span class="hljs-number">15</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br> <span class="hljs-selector-attr">[5, 0, 1]</span>   <span class="hljs-number">60</span>     <span class="hljs-number">1</span>   <span class="hljs-selector-attr">[5, 0, 1]</span><br> <span class="hljs-selector-attr">[1, 1, 0]</span>   <span class="hljs-number">15</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br> <span class="hljs-selector-attr">[0, 5, 1]</span>   <span class="hljs-number">35</span>     <span class="hljs-number">0</span>   <span class="hljs-selector-attr">[0, 0, 0]</span><br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">encoder score score^ alignment
+ ---------------------------------
+ [0, 1, 1]   15     0   [0, 0, 0]
+ [5, 0, 1]   60     1   [5, 0, 1]
+ [1, 1, 0]   15     0   [0, 0, 0]
+ [0, 5, 1]   35     0   [0, 0, 0]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><strong>Step 4：将所有对齐的向量进行累加</strong></p>
 <p>　　对对齐向量进行求和，生成 <em>上下文向量</em>
 。上下文向量是前一步的对齐向量的聚合信息。</p>
@@ -846,6 +864,8 @@ Attention 机制作为一种思想，并不是只能依附在 Encoder-Decoder
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script>
   (function() {
