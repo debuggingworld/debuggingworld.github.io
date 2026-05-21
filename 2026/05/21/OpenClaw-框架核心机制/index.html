@@ -1,0 +1,1606 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="OpenClaw 框架核心机制  基于 OpenClaw 官方源码文档整理，涵盖 Agent Loop、Gateway、Queue 三大核心机制及其关联概念。   一、OpenClaw 框架概述 Q1: OpenClaw 是什么？它与 Clawdbot 是什么关系？ 答： OpenClaw 是一个开源的个人 AI 助手框架（GitHub 37万+ Star），你可以在自己的设备上运行它，通过已有的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenClaw 框架核心机制">
+<meta property="og:url" content="http://example.com/2026/05/21/OpenClaw-%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="OpenClaw 框架核心机制  基于 OpenClaw 官方源码文档整理，涵盖 Agent Loop、Gateway、Queue 三大核心机制及其关联概念。   一、OpenClaw 框架概述 Q1: OpenClaw 是什么？它与 Clawdbot 是什么关系？ 答： OpenClaw 是一个开源的个人 AI 助手框架（GitHub 37万+ Star），你可以在自己的设备上运行它，通过已有的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-21T13:27:12.000Z">
+<meta property="article:modified_time" content="2026-05-21T13:29:38.326Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="Agent">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>OpenClaw 框架核心机制 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OpenClaw 框架核心机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-05-21 21:27" pubdate>
+          2026年5月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OpenClaw 框架核心机制</h1>
+            
+            <div class="markdown-body">
+              
+              <h1 id="openclaw-框架核心机制">OpenClaw 框架核心机制</h1>
+<blockquote>
+<p>基于 OpenClaw 官方源码文档整理，涵盖 Agent Loop、Gateway、Queue
+三大核心机制及其关联概念。</p>
+</blockquote>
+<hr />
+<h2 id="一openclaw-框架概述">一、OpenClaw 框架概述</h2>
+<h3 id="q1-openclaw-是什么它与-clawdbot-是什么关系">Q1: OpenClaw
+是什么？它与 Clawdbot 是什么关系？</h3>
+<p><strong>答：</strong> OpenClaw 是一个开源的个人 AI 助手框架（GitHub
+37万+
+Star），你可以在自己的设备上运行它，通过已有的消息渠道（WhatsApp、Telegram、Slack、Discord、飞书、微信等
+20+ 渠道）与它交互。它起源于 Clawdbot，后经 Moltbot 阶段演变为
+OpenClaw。核心定位是：<strong>个人 AI 助手 + 多渠道消息接入 +
+技能/工具扩展 + 本地私有部署</strong>。</p>
+<p>技术栈：TypeScript 编写，支持多种 LLM Provider（OpenAI、Anthropic
+等），支持 MCP 协议作为 Server 和 Runtime 集成面。</p>
+<h3 id="q2-openclaw-的整体架构由哪几个核心模块组成">Q2: OpenClaw
+的整体架构由哪几个核心模块组成？</h3>
+<p><strong>答：</strong> 三个核心模块：</p>
+<table>
+
+<thead>
+<tr>
+<th>模块</th>
+<th>职责</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gateway</strong></td>
+<td>WebSocket 网关，统一管理所有消息渠道的接入、鉴权、事件分发</td>
+<td>类似 API Gateway + 消息中间件</td>
+</tr>
+<tr>
+<td><strong>Agent Loop</strong></td>
+<td>单次 Agent 执行的完整生命周期：消息摄入 → 上下文组装 → 模型推理 →
+工具执行 → 流式回复 → 持久化</td>
+<td>类似 LangGraph 的节点执行循环</td>
+</tr>
+<tr>
+<td><strong>Queue</strong></td>
+<td>命令队列，序列化 Agent 运行、控制并发、处理消息竞态</td>
+<td>类似 Celery 的任务队列，但进程内实现</td>
+</tr>
+</tbody>
+</table>
+<p>三者关系：消息从渠道进入 → Gateway 接收并路由 → 进入 Queue 排队 →
+Agent Loop 执行 → 结果通过 Gateway 流式推送回渠道。</p>
+<hr />
+<h2 id="二agent-loop-agent-执行循环">二、Agent Loop — Agent
+执行循环</h2>
+<h3 id="q3-详细描述-openclaw-agent-loop-的执行流程">Q3: 详细描述
+OpenClaw Agent Loop 的执行流程。</h3>
+<p><strong>答：</strong> Agent Loop 是一个完整的、序列化的单次 Agent
+运行周期，流程如下：</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">1. 消息摄入（Intake）
+   - Gateway RPC 接收 &#96;agent&#96; &#x2F; &#96;agent.wait&#96; 请求
+   - 校验参数、解析 session（sessionKey&#x2F;sessionId）
+   - 持久化 session 元数据
+   - 立即返回 &#96;&#123; runId, acceptedAt &#125;&#96;
+
+2. 上下文组装（Context Assembly）
+   - 解析 workspace、创建沙箱环境
+   - 加载 Skills 快照，注入环境和 Prompt
+   - 解析并注入 Bootstrap&#x2F;Context 文件（AGENTS.md、SOUL.md、USER.md 等）
+   - 构建 System Prompt（基础 Prompt + Skills Prompt + Bootstrap Context + 运行时覆盖）
+
+3. 模型推理（Model Inference）
+   - 解析模型 + thinking&#x2F;verbose&#x2F;trace 默认配置
+   - 调用 &#96;runEmbeddedPiAgent&#96;（pi-agent-core 运行时）
+   - 订阅 pi 事件，流式输出 assistant&#x2F;tool 增量
+
+4. 工具执行（Tool Execution）
+   - 模型返回 tool_call → 执行对应工具
+   - 工具事件以 &#96;stream: &quot;tool&quot;&#96; 流式推送
+   - 工具结果经过大小&#x2F;图片清洗后记录和推送
+
+5. 流式回复（Streaming Replies）
+   - Assistant 增量以 &#96;stream: &quot;assistant&quot;&#96; 推送
+   - 块级流式支持部分回复
+   - 推理过程可单独流式
+
+6. 持久化（Persistence）
+   - Session 写锁保护下的 transcript 写入
+   - 最终 payload 组装：assistant 文本 + inline tool 摘要 + 错误文本
+   - 过滤 &#96;NO_REPLY&#96; 静默标记，去重 messaging tool<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<h3 id="q4-agent-loop-如何保证同一-session-不会被并发执行">Q4: Agent
+Loop 如何保证同一 Session 不会被并发执行？</h3>
+<p><strong>答：</strong> 通过<strong>两层队列序列化</strong>：</p>
+<ol type="1">
+<li><strong>Session Lane</strong>：以 <code>session:&lt;key&gt;</code>
+为 lane 标识，保证同一 session 同一时间只有一个活跃的 Agent 运行</li>
+<li><strong>Global Lane</strong>：每个 session 运行再进入全局 lane（默认
+<code>main</code>），通过 <code>agents.defaults.maxConcurrent</code>
+控制整体并行度</li>
+</ol>
+<p>如果新的消息到达时已有运行在进行，会根据 Queue
+Mode（steer/followup/collect/interrupt）决定处理策略。</p>
+<h3 id="q5-agent-loop-有哪些-hook-点可以拦截分别用在什么场景">Q5: Agent
+Loop 有哪些 Hook 点可以拦截？分别用在什么场景？</h3>
+<p><strong>答：</strong> 分两类 Hook 系统：</p>
+<p><strong>内部 Hook（Gateway Hooks）：</strong> -
+<code>agent:bootstrap</code>：构建 bootstrap
+文件时触发，可增删上下文文件</p>
+<p><strong>Plugin Hooks（Agent + Gateway 生命周期）：</strong></p>
+<table>
+
+<thead>
+<tr>
+<th>Hook</th>
+<th>触发时机</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>before_model_resolve</code></td>
+<td>Session 创建前，无 messages</td>
+<td>动态覆盖 provider/model</td>
+</tr>
+<tr>
+<td><code>before_prompt_build</code></td>
+<td>Session 加载后，有 messages</td>
+<td>注入 prependContext、systemPrompt</td>
+</tr>
+<tr>
+<td><code>before_agent_reply</code></td>
+<td>inline actions 后、LLM 调用前</td>
+<td>拦截并返回合成回复</td>
+</tr>
+<tr>
+<td><code>before_tool_call</code> / <code>after_tool_call</code></td>
+<td>工具调用前后</td>
+<td>拦截/修改工具参数和结果</td>
+</tr>
+<tr>
+<td><code>agent_end</code></td>
+<td>Agent 运行结束后</td>
+<td>审计、日志、后处理</td>
+</tr>
+<tr>
+<td><code>before_compaction</code> / <code>after_compaction</code></td>
+<td>Compaction 前后</td>
+<td>观察或标注压缩周期</td>
+</tr>
+<tr>
+<td><code>message_received</code> / <code>message_sending</code> /
+<code>message_sent</code></td>
+<td>消息流转各阶段</td>
+<td>消息过滤、转换</td>
+</tr>
+<tr>
+<td><code>session_start</code> / <code>session_end</code></td>
+<td>Session 生命周期</td>
+<td>资源初始化/清理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="q6-agent-loop-超时机制是怎样的有哪些提前终止的场景">Q6: Agent
+Loop 超时机制是怎样的？有哪些提前终止的场景？</h3>
+<p><strong>答：</strong> 多层超时保护：</p>
+<ul>
+<li><strong>Agent
+运行超时</strong>：<code>agents.defaults.timeoutSeconds</code>，默认
+172800s（48h），在 <code>runEmbeddedPiAgent</code> 中用 abort timer
+强制执行</li>
+<li><strong>Model 空闲超时</strong>：当模型请求无响应 chunk 时触发，默认
+120s，可通过 <code>models.providers.&lt;id&gt;.timeoutSeconds</code>
+调整</li>
+<li><strong>agent.wait 超时</strong>：仅等待（不终止 Agent），默认
+30s</li>
+<li><strong>Cron 运行超时</strong>：独立的
+<code>timeoutSeconds</code>，由调度器管理</li>
+</ul>
+<p>提前终止场景： 1. Agent timeout（abort） 2.
+AbortSignal（用户主动取消） 3. Gateway 断连或 RPC 超时 4. Codex
+app-server 无 progress 被适配器中断 5. Session 诊断为 stuck 状态后释放
+lane</p>
+<h3 id="q7-说说你对-agent-loop-中-compaction上下文压缩的理解">Q7:
+说说你对 Agent Loop 中 Compaction（上下文压缩）的理解。</h3>
+<p><strong>答：</strong> 长对话中，上下文会超出模型窗口限制，Compaction
+是 OpenClaw 的自动压缩机制：</p>
+<ul>
+<li>自动触发 <code>compaction</code> 流事件</li>
+<li>压缩后可能触发 retry，此时内存缓冲区和 tool summary
+会重置以避免重复输出</li>
+<li>Compaction 前后有 <code>before_compaction</code> /
+<code>after_compaction</code> Hook 可观察</li>
+<li>压缩后通过 <code>postCompactionMaxChars</code> 控制 AGENTS.md
+摘要注入大小</li>
+</ul>
+<p>这与 LangGraph 中的 <code>messages</code> reducer
+思路类似——状态在增长过程中需要有策略地进行摘要，以保持在模型的上下文窗口内。</p>
+<hr />
+<h2 id="三gateway-网关架构">三、Gateway — 网关架构</h2>
+<h3 id="q8-openclaw-gateway-的架构是怎样的">Q8: OpenClaw Gateway
+的架构是怎样的？</h3>
+<p><strong>答：</strong> Gateway 是一个长驻的 WebSocket
+守护进程，是整个系统的控制平面：</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">┌──────────────────────────────────────────────┐
+│                  Gateway (Daemon)             │
+│  ┌─────────┐  ┌──────────┐  ┌─────────────┐ │
+│  │WS Server │  │Auth&#x2F;Auth │  │Agent Router │ │
+│  │:18789    │  │Pairing   │  │Session Mgr  │ │
+│  └────┬─────┘  └────┬─────┘  └──────┬──────┘ │
+│       │              │               │        │
+│  ┌────▼──────────────▼───────────────▼──────┐ │
+│  │         Channel Adapters                 │ │
+│  │  WhatsApp | Telegram | Slack | Discord   │ │
+│  │  Signal | iMessage | Feishu | WeChat... │ │
+│  └──────────────────────────────────────────┘ │
+└──────────────────────────────────────────────┘
+        ▲                    ▲
+   ┌────┘                    └────┐
+   │ Clients                     │ Nodes
+   │ (macOS app &#x2F; CLI &#x2F; Web)     │ (iOS&#x2F;Android&#x2F;headless)
+   │ role: default               │ role: node<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>核心职责： 1. <strong>消息渠道统一接入</strong>：一个 Gateway
+管理所有消息渠道 2. <strong>WebSocket 协议</strong>：客户端和节点都通过
+WS 连接 3. <strong>鉴权与配对</strong>：shared-secret auth +
+设备配对审批 4.
+<strong>事件分发</strong>：<code>agent</code>、<code>chat</code>、<code>presence</code>、<code>health</code>、<code>heartbeat</code>、<code>cron</code>
+等事件 5. <strong>Canvas
+托管</strong>：<code>/__openclaw__/canvas/</code> 提供 Agent 可编辑的
+HTML/CSS/JS 画布</p>
+<h3 id="q9-gateway-的-wire-protocol-是什么样的">Q9: Gateway 的 Wire
+Protocol 是什么样的？</h3>
+<p><strong>答：</strong> 基于 WebSocket 的文本帧 JSON 协议：</p>
+<ul>
+<li><strong>首帧必须为 <code>connect</code></strong>，非 JSON 或非
+connect 首帧直接硬关闭</li>
+<li>握手后：
+<ul>
+<li>Request: <code>&#123;type:"req", id, method, params&#125;</code> → Response:
+<code>&#123;type:"res", id, ok, payload|error&#125;</code></li>
+<li>Event:
+<code>&#123;type:"event", event, payload, seq?, stateVersion?&#125;</code></li>
+</ul></li>
+<li><strong>鉴权</strong>：<code>connect.params.auth.token</code> 或
+<code>connect.params.auth.password</code></li>
+<li><strong>幂等性</strong>：副作用方法（<code>send</code>、<code>agent</code>）要求
+idempotency key，服务端维护短期去重缓存</li>
+<li><strong>设备身份</strong>：所有客户端在 connect
+时携带设备身份，新设备需要配对审批</li>
+<li><strong>事件不回放</strong>：客户端在断连后需主动刷新</li>
+</ul>
+<h3 id="q10-gateway-如何处理远程访问和安全性">Q10: Gateway
+如何处理远程访问和安全性？</h3>
+<p><strong>答：</strong> 多层安全模型：</p>
+<ol type="1">
+<li><strong>本地默认绑定</strong>：默认
+<code>127.0.0.1:18789</code>，不暴露外部</li>
+<li><strong>远程访问方式</strong>：
+<ul>
+<li>推荐：Tailscale 或 VPN</li>
+<li>备选：SSH 隧道
+<code>ssh -N -L 18789:127.0.0.1:18789 user@host</code></li>
+</ul></li>
+<li><strong>鉴权模式</strong>：
+<ul>
+<li><code>shared-secret</code>：token/password 认证</li>
+<li><code>trusted-proxy</code>：非 loopback 连接通过请求头鉴权</li>
+<li><code>tailscale</code>：基于 Tailscale 身份</li>
+<li><code>none</code>：仅限私有 ingress，禁用共享密钥</li>
+</ul></li>
+<li><strong>设备配对</strong>：非本地连接必须显式配对审批；本地 loopback
+可自动审批</li>
+<li><strong>TLS</strong>：远程场景可启用 TLS + 可选 pinning</li>
+</ol>
+<h3 id="q11-gateway-中的-node-角色和-client-角色有什么区别">Q11: Gateway
+中的 Node 角色和 Client 角色有什么区别？</h3>
+<p><strong>答：</strong></p>
+<table>
+
+<thead>
+<tr>
+<th>特性</th>
+<th>Client（操作者）</th>
+<th>Node（设备节点）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>角色</td>
+<td><code>role: default</code></td>
+<td><code>role: node</code></td>
+</tr>
+<tr>
+<td>代表</td>
+<td>macOS App、CLI、Web UI</td>
+<td>iOS/Android/macOS/headless 设备</td>
+</tr>
+<tr>
+<td>功能</td>
+<td>发送请求、订阅事件</td>
+<td>提供设备能力（canvas、camera、screen、location）</td>
+</tr>
+<tr>
+<td>连接</td>
+<td>标准 WS 握手</td>
+<td>带设备 ID + caps/commands/permissions</td>
+</tr>
+<tr>
+<td>典型请求</td>
+<td><code>health</code>、<code>status</code>、<code>send</code>、<code>agent</code></td>
+<td><code>canvas.*</code>、<code>camera.*</code>、<code>screen.record</code>、<code>location.get</code></td>
+</tr>
+</tbody>
+</table>
+<p>Node 本质上是将物理设备的能力暴露给 Agent
+使用（如拍照、录屏、获取位置），这使得 Agent 可以操作真实设备。</p>
+<hr />
+<h2 id="四queue-命令队列">四、Queue — 命令队列</h2>
+<h3 id="q12-为什么-openclaw-需要命令队列直接处理消息不行吗">Q12: 为什么
+OpenClaw 需要命令队列？直接处理消息不行吗？</h3>
+<p><strong>答：</strong> 不行，原因有三：</p>
+<ol type="1">
+<li><strong>LLM 调用昂贵</strong>：每次 Agent 运行都涉及 LLM API
+调用，并发运行会导致资源浪费和上游 rate limit</li>
+<li><strong>Session 竞态</strong>：多个消息同时修改同一 session 的
+transcript，会导致数据不一致</li>
+<li><strong>共享资源冲突</strong>：session 文件、日志、CLI stdin
+等共享资源需要序列化访问</li>
+</ol>
+<p>OpenClaw 的方案是：<strong>进程内 lane-aware FIFO
+队列</strong>，无外部依赖（无 Redis/RabbitMQ），纯 TypeScript + Promises
+实现。</p>
+<h3 id="q13-queue-的四种模式分别是什么适用什么场景">Q13: Queue
+的四种模式分别是什么？适用什么场景？</h3>
+<p><strong>答：</strong></p>
+<table>
+
+<thead>
+<tr>
+<th>模式</th>
+<th>行为</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>steer</strong>（默认）</td>
+<td>将消息注入当前活跃的 Agent 运行中（当前 tool call 执行完后、下一次
+LLM 调用前注入）</td>
+<td>多轮对话，用户想纠正/补充 Agent 正在执行的任务</td>
+</tr>
+<tr>
+<td><strong>followup</strong></td>
+<td>不注入，排队等当前运行结束后再启动新的 Agent turn</td>
+<td>需要完整独立处理每条消息的场景</td>
+</tr>
+<tr>
+<td><strong>collect</strong></td>
+<td>不注入，将排队消息合并为一个 followup turn（静默窗口后触发）</td>
+<td>高频消息场景，避免重复触发 Agent</td>
+</tr>
+<tr>
+<td><strong>interrupt</strong></td>
+<td>中止当前运行，用最新消息重新启动</td>
+<td>紧急场景，用户想完全改变方向</td>
+</tr>
+</tbody>
+</table>
+<p>配置示例： <div class="code-wrapper"><pre class="line-numbers language-json5" data-language="json5"><code class="language-json5"><span class="token punctuation">&#123;</span>
+  <span class="token property unquoted">messages</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token property unquoted">queue</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token property unquoted">mode</span><span class="token operator">:</span> <span class="token string">"steer"</span><span class="token punctuation">,</span>
+      <span class="token property unquoted">debounceMs</span><span class="token operator">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+      <span class="token property unquoted">cap</span><span class="token operator">:</span> <span class="token number">20</span><span class="token punctuation">,</span>
+      <span class="token property unquoted">drop</span><span class="token operator">:</span> <span class="token string">"summarize"</span><span class="token punctuation">,</span>
+      <span class="token property unquoted">byChannel</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span> <span class="token property unquoted">discord</span><span class="token operator">:</span> <span class="token string">"collect"</span> <span class="token punctuation">&#125;</span>  <span class="token comment">// Discord 频道用 collect 模式</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></p>
+<h3 id="q14-queue-的-drop-策略有哪些什么时候会触发">Q14: Queue 的
+<code>drop</code> 策略有哪些？什么时候会触发？</h3>
+<p><strong>答：</strong> 当队列中消息数超过 <code>cap</code>（默认
+20）时触发丢弃策略：</p>
+<table>
+
+<thead>
+<tr>
+<th>策略</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>summarize</code>（默认）</td>
+<td>丢弃最老的消息，但保留压缩摘要，注入为合成的 followup prompt</td>
+</tr>
+<tr>
+<td><code>old</code></td>
+<td>直接丢弃最老的消息，不保留摘要</td>
+</tr>
+<tr>
+<td><code>new</code></td>
+<td>拒绝最新消息</td>
+</tr>
+</tbody>
+</table>
+<p><code>summarize</code>
+是最推荐的方式——既控制了队列长度，又没有丢失用户意图。</p>
+<h3
+id="q15-queue-的-lane-机制是怎样的如何保证不同优先级的任务不互相阻塞">Q15:
+Queue 的 Lane 机制是怎样的？如何保证不同优先级的任务不互相阻塞？</h3>
+<p><strong>答：</strong> OpenClaw 使用多 Lane 架构：</p>
+<ul>
+<li><strong>main lane</strong>：处理所有入站消息和主 heartbeat，受
+<code>agents.defaults.maxConcurrent</code> 控制</li>
+<li><strong>cron lane</strong> / <strong>cron-nested lane</strong>：Cron
+触发的 Agent 运行使用独立 lane，不阻塞入站消息</li>
+<li><strong>nested lane</strong>：子 Agent 运行使用独立 lane</li>
+<li><strong>subagent lane</strong>：子 Agent 并发度更高（默认 8 vs main
+的 4）</li>
+</ul>
+<p>关键设计：<strong>Cron
+等后台任务不会阻塞用户实时消息</strong>。这是企业级场景的核心需求——定时任务不能影响用户对话体验。</p>
+<hr />
+<h2 id="五关联概念与综合题">五、关联概念与综合题</h2>
+<h3 id="q16-openclaw-的-multi-agent-路由是怎么实现的">Q16: OpenClaw 的
+Multi-Agent 路由是怎么实现的？</h3>
+<p><strong>答：</strong> 通过 <strong>Agent + Binding</strong>
+机制：</p>
+<ol type="1">
+<li><strong>Agent</strong>：一个完整的隔离 Persona，拥有独立的
+workspace、state directory、session store、auth profiles
+<ul>
+<li>默认单 Agent 模式（<code>agentId: "main"</code>）</li>
+<li>多 Agent 模式下每个 Agent 完全隔离，workspace 独立</li>
+</ul></li>
+<li><strong>Binding</strong>：将渠道账号（如一个 WhatsApp
+号码）映射到特定 Agent</li>
+<li><strong>路由</strong>：入站消息根据 Binding 路由到对应的 Agent</li>
+</ol>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">WhatsApp(工作号) → Binding → Agent(工作助手)
+WhatsApp(个人号) → Binding → Agent(个人助手)
+Discord(bot1)    → Binding → Agent(工作助手)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<p>这实现了<strong>一个 Gateway 进程内运行多个完全隔离的 AI
+助手</strong>。</p>
+<h3 id="q17-openclaw-中的-skills-是什么与-mcp-tools-有什么关系">Q17:
+OpenClaw 中的 Skills 是什么？与 MCP Tools 有什么关系？</h3>
+<p><strong>答：</strong></p>
+<ul>
+<li><strong>Skills</strong>：OpenClaw 的技能单元，通过
+<code>SOUL.md</code> 定义、通过 ClawHub（技能市场）分发
+<ul>
+<li>每个 Agent 可配置 <code>skills</code> 白名单</li>
+<li>支持默认 skills + per-agent 覆盖</li>
+<li>Skills Prompt 受 <code>skills.limits.maxSkillsPromptChars</code>
+限制</li>
+</ul></li>
+<li><strong>MCP Support</strong>：OpenClaw 同时支持 MCP 作为 Server 和
+Runtime 集成面
+<ul>
+<li>MCP Server 可以作为 Bundle-style Plugin 注册</li>
+<li>OpenClaw 的工具体系 &gt; MCP 工具，还有原生 tools、ACP 等</li>
+</ul></li>
+</ul>
+<p>关系：MCP Tools 是 Skills 的一种实现方式，但不是唯一方式。OpenClaw
+更推荐优先用 Bundle-style Plugin + MCP Server 表达能力，而非 Code
+Plugin。</p>
+<h3 id="q18-openclaw-的-agent-runtime-有哪些如何选择">Q18: OpenClaw 的
+Agent Runtime 有哪些？如何选择？</h3>
+<p><strong>答：</strong> 两类运行时：</p>
+<table>
+
+<thead>
+<tr>
+<th>运行时</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PI</strong></td>
+<td>内嵌运行时</td>
+<td>OpenClaw 自带的模型循环，完全控制整个 Loop</td>
+</tr>
+<tr>
+<td><strong>Codex</strong></td>
+<td>内嵌运行时（Plugin）</td>
+<td>通过 Codex app-server 执行，Codex 拥有模型循环</td>
+</tr>
+<tr>
+<td><strong>claude-cli</strong></td>
+<td>CLI 后端</td>
+<td>运行 Claude Code CLI 进程</td>
+</tr>
+<tr>
+<td><strong>ACP</strong></td>
+<td>外部运行时</td>
+<td>通过 ACP/acpx 控制平面运行外部 Harness</td>
+</tr>
+</tbody>
+</table>
+<p>选择依据： - 需要 OpenClaw 完全控制模型循环、支持所有 Plugin Hook →
+选 PI - 用 ChatGPT/Codex 订阅 → 选 Codex - 用 Claude Code / Gemini CLI /
+Cursor 等外部工具 → 选 ACP - Provider 和 Model 也可配置 per-model
+runtime policy</p>
+<h3
+id="q19-如果让你设计一个基于-openclaw-的企业审批-agent你会怎么设计">Q19:
+如果让你设计一个基于 OpenClaw 的企业审批 Agent，你会怎么设计？</h3>
+<p><strong>答：</strong> 综合运用三大核心机制：</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">用户在飞书发消息 &quot;帮我请假3天&quot;
+        │
+        ▼
+┌─── Gateway ────────────────────────────┐
+│ 1. 飞书渠道适配器接收消息               │
+│ 2. 根据 Binding 路由到&quot;审批助手&quot; Agent  │
+│ 3. 鉴权：验证用户身份和权限             │
+└───────────┬───────────────────────────┘
+            │
+            ▼
+┌─── Queue ─────────────────────────────┐
+│ 4. steer 模式：注入当前运行            │
+│ 5. 或 followup 模式：排队等待          │
+│ 6. cron lane：定时审批提醒不阻塞对话   │
+└───────────┬───────────────────────────┘
+            │
+            ▼
+┌─── Agent Loop ────────────────────────┐
+│ 7. 上下文组装：加载用户信息、审批规则   │
+│ 8. 模型推理：判断审批类型和层级         │
+│ 9. 工具执行：                          │
+│    - MCP Tool: query_leave_balance()   │
+│    - MCP Tool: submit_approval()       │
+│    - MCP Tool: notify_approver()       │
+│ 10. 如果需要人工确认 → interrupt 机制   │
+│ 11. 流式回复审批进度                    │
+│ 12. 持久化审批记录                      │
+└───────────────────────────────────────┘<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>关键设计决策： - <strong>Queue 选 steer
+模式</strong>：用户可以追加"改成5天"来纠正 - <strong>MCP Server 封装 OA
+系统</strong>：工具描述要清晰（"查询指定员工的剩余年假天数"），LLM
+才能准确调用 - <strong>before_tool_call
+Hook</strong>：审批提交前可以做权限校验 -
+<strong>Multi-Agent</strong>：不同部门可以有独立的审批 Agent + Binding -
+<strong>Cron</strong>：超时未审批时自动发提醒</p>
+<h3 id="q20-openclaw-的-session-写锁是怎么工作的为什么需要它">Q20:
+OpenClaw 的 Session 写锁是怎么工作的？为什么需要它？</h3>
+<p><strong>答：</strong></p>
+<ul>
+<li><strong>为什么需要</strong>：多个地方可能同时写入同一个 session 的
+transcript（Agent
+运行、Compaction、外部工具回调），不加锁会导致数据损坏</li>
+<li><strong>怎么工作</strong>：
+<ul>
+<li>基于文件的进程级写锁</li>
+<li>默认非重入（<code>allowReentrant: true</code> 需显式开启）</li>
+<li>获取超时 <code>session.writeLock.acquireTimeoutMs</code>，默认
+60000ms</li>
+<li>任何后续的 transcript 重写、compaction、截断都必须获取同一把锁</li>
+</ul></li>
+<li><strong>设计意图</strong>：即使有代码绕过进程内队列直接写文件，也能通过文件锁捕获。这是防御性编程——不信任所有写入者都会走正常路径。</li>
+</ul>
+<hr />
+<h2 id="六对比与深度题">六、对比与深度题</h2>
+<h3
+id="q21-openclaw-的-agent-loop-与-langgraph-的-graph-执行有什么异同">Q21:
+OpenClaw 的 Agent Loop 与 LangGraph 的 Graph 执行有什么异同？</h3>
+<p><strong>答：</strong></p>
+<table>
+
+<thead>
+<tr>
+<th>维度</th>
+<th>OpenClaw Agent Loop</th>
+<th>LangGraph Graph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行模型</td>
+<td>单次序列化运行（intake → inference → tool → reply → persist）</td>
+<td>多节点有向图，条件边控制流转</td>
+</tr>
+<tr>
+<td>状态管理</td>
+<td>Session transcript + workspace 文件</td>
+<td>TypedDict + Annotated reducer</td>
+</tr>
+<tr>
+<td>并发控制</td>
+<td>Lane-aware FIFO 队列，per-session 序列化</td>
+<td>无内置队列，需自行实现</td>
+</tr>
+<tr>
+<td>工具调用</td>
+<td>模型原生 tool_call + MCP</td>
+<td><span class="citation" data-cites="tool">@tool</span> /
+StructuredTool</td>
+</tr>
+<tr>
+<td>中断恢复</td>
+<td>Compaction + retry</td>
+<td>interrupt + human-in-the-loop</td>
+</tr>
+<tr>
+<td>Hook 机制</td>
+<td>完整生命周期 Hook（10+ 个）</td>
+<td>Callback 系统</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心区别</strong>：OpenClaw 的 Loop
+更像一个"请求-响应"的增强循环（类似 ReAct），而 LangGraph
+是一个通用状态机。OpenClaw
+在工程化上更强（队列、锁、超时、流式），LangGraph
+在编排灵活性上更强。</p>
+<h3
+id="q22-openclaw-的-queue-与传统消息队列rabbitmqkafka有什么区别为什么不用外部队列">Q22:
+OpenClaw 的 Queue
+与传统消息队列（RabbitMQ/Kafka）有什么区别？为什么不用外部队列？</h3>
+<p><strong>答：</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>OpenClaw Queue</th>
+<th>RabbitMQ/Kafka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现方式</td>
+<td>进程内 TypeScript + Promises</td>
+<td>外部服务</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>无（进程重启丢失）</td>
+<td>持久化</td>
+</tr>
+<tr>
+<td>语义</td>
+<td>Lane-aware FIFO</td>
+<td>多种交换模式</td>
+</tr>
+<tr>
+<td>延迟</td>
+<td>微秒级</td>
+<td>毫秒级</td>
+</tr>
+<tr>
+<td>运维</td>
+<td>零依赖</td>
+<td>需要维护</td>
+</tr>
+</tbody>
+</table>
+<p>为什么不用外部队列： 1.
+<strong>个人助手场景</strong>：单用户/少量用户，不需要分布式队列的吞吐
+2. <strong>延迟敏感</strong>：消息回复需要低延迟，进程内队列最快 3.
+<strong>简化部署</strong>：OpenClaw
+的设计目标是"在自己的设备上运行"，不引入外部依赖 4. <strong>Lane
+语义特殊</strong>：per-session 序列化 + steer 注入，传统队列不支持</p>
+<p>如果要做企业级多租户部署，可能需要引入外部队列做跨进程/跨节点的协调。</p>
+<h3 id="q23-openclaw-如何处理-agent-在长时间运行中的卡住问题">Q23:
+OpenClaw 如何处理 Agent 在长时间运行中的"卡住"问题？</h3>
+<p><strong>答：</strong> 多层诊断和恢复机制：</p>
+<ol type="1">
+<li><p><strong>Session 诊断</strong>（需开启 diagnostics）：</p>
+<ul>
+<li><code>diagnostics.stuckSessionWarnMs</code>：检测长时间 processing
+的 session</li>
+<li>分类：<code>long_running</code>（活跃但慢）→
+<code>stalled</code>（有活跃工作但无近期 progress）→
+<code>stuck</code>（无活跃工作的过期 session）</li>
+<li>只有 <code>stuck</code> 状态才会释放 session lane</li>
+<li><code>stalled</code> 的内嵌运行在
+<code>stuckSessionAbortMs</code>（至少 5 分钟且 3x warning 阈值）后才
+abort-drain</li>
+</ul></li>
+<li><p><strong>Codex 无 progress 中断</strong>：如果 Codex app-server
+接受了一个 turn 但停止发 progress，适配器会中断它</p></li>
+<li><p><strong>Model idle timeout</strong>：模型请求长时间无响应 chunk
+会自动 abort</p></li>
+<li><p><strong>诊断退避</strong>：重复的 <code>stuck</code> 诊断在
+session 不变时会退避，避免日志刷屏</p></li>
+</ol>
+<p>这套机制确保了 Agent 不会因为各种异常而永久阻塞 Queue。</p>
+<h3
+id="q24-说说-openclaw-的-plugin-体系设计bundle-style-plugin-和-code-plugin-怎么选">Q24:
+说说 OpenClaw 的 Plugin 体系设计。Bundle-style Plugin 和 Code Plugin
+怎么选？</h3>
+<p><strong>答：</strong></p>
+<table>
+
+<thead>
+<tr>
+<th>类型</th>
+<th>适合场景</th>
+<th>安全边界</th>
+<th>接口大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bundle-style</strong></td>
+<td>封装 Skills、MCP Server、配置</td>
+<td>小，更稳定</td>
+<td>窄</td>
+</tr>
+<tr>
+<td><strong>Code Plugin</strong></td>
+<td>需要运行时 Hook、Provider、Channel、Tools</td>
+<td>大，需信任</td>
+<td>宽</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型原则</strong>： - 能用 Bundle-style 就用
+Bundle-style（更安全、更稳定） - 需要 runtime
+hooks、providers、channels、tools 等 in-process 扩展点才用 Code Plugin -
+插件优先以 npm 包分发，核心不加插件除非有充分理由 - 插件发现和安全审查在
+ClawHub（clawhub.ai）</p>
+<h3
+id="q25-从企业级-agent-开发者的角度看openclaw-框架的优缺点是什么">Q25:
+从企业级 Agent 开发者的角度看，OpenClaw 框架的优缺点是什么？</h3>
+<p><strong>答：</strong></p>
+<p><strong>优点：</strong> 1. <strong>多渠道原生支持</strong>：20+
+渠道开箱即用，飞书/微信/企业微信等国内渠道有社区支持 2.
+<strong>工程化成熟度高</strong>：队列、锁、超时、诊断、流式——生产级考量齐全
+3. <strong>MCP 原生支持</strong>：既是 MCP Server 又能集成外部 MCP
+Server 4. <strong>Multi-Agent 隔离</strong>：单进程内多 Agent
+完全隔离，适合多租户 5. <strong>Plugin 体系灵活</strong>：Bundle-style +
+Code Plugin 分层，安全边界清晰 6. <strong>TypeScript
+全栈</strong>：前后端统一语言，二次开发门槛低</p>
+<p><strong>缺点/局限：</strong> 1. <strong>TypeScript
+生态</strong>：Python 开发者有一定学习成本（岗位要求精通 Python + 熟悉
+TypeScript） 2. <strong>Queue
+不持久化</strong>：进程重启会丢失排队中的任务，企业级需要补充方案 3.
+<strong>单 Gateway 架构</strong>：一个 Gateway 绑定一个 Baileys
+session，水平扩展需额外设计 4.
+<strong>个人助手定位</strong>：核心设计面向个人场景，企业级多租户需二次开发
+5. <strong>Plugin 生态早期</strong>：虽然 ClawHub 已上线，但企业级
+Skills 的丰富度和成熟度尚在发展</p>
+<hr />
+<h2 id="七速记卡片">七、速记卡片</h2>
+<table>
+
+<thead>
+<tr>
+<th>概念</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Loop</td>
+<td>消息→上下文→推理→工具→回复→持久化的序列化单次运行</td>
+</tr>
+<tr>
+<td>Gateway</td>
+<td>WebSocket 守护进程，统一管理渠道、鉴权、事件分发</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>进程内 Lane-aware FIFO
+队列，四种模式（steer/followup/collect/interrupt）</td>
+</tr>
+<tr>
+<td>Session Lane</td>
+<td>保证同一 session 同时只有一个 Agent 运行</td>
+</tr>
+<tr>
+<td>Steer</td>
+<td>将新消息注入当前活跃运行的排队模式</td>
+</tr>
+<tr>
+<td>Compaction</td>
+<td>长对话自动压缩上下文，压缩后可能 retry</td>
+</tr>
+<tr>
+<td>Multi-Agent</td>
+<td>单 Gateway 内多个完全隔离的 Agent Persona</td>
+</tr>
+<tr>
+<td>Binding</td>
+<td>渠道账号到 Agent 的路由映射</td>
+</tr>
+<tr>
+<td>PI Runtime</td>
+<td>OpenClaw 自带的内嵌模型循环运行时</td>
+</tr>
+<tr>
+<td>Codex Runtime</td>
+<td>通过 Codex app-server 执行的运行时</td>
+</tr>
+<tr>
+<td>Bundle-style Plugin</td>
+<td>安全、窄接口的插件方式，优先选用</td>
+</tr>
+<tr>
+<td>Code Plugin</td>
+<td>需要运行时 Hook 的重量级插件方式</td>
+</tr>
+<tr>
+<td>ClawHub</td>
+<td>OpenClaw 的技能市场和插件发现平台</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Agent/" class="category-chain-item">Agent</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Agent/">#Agent</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OpenClaw 框架核心机制</div>
+      <div>http://example.com/2026/05/21/OpenClaw-框架核心机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年5月21日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/05/21/AI-Agent-%E9%97%AE%E7%AD%94%E6%B1%87%E6%80%BB/" title="AI Agent 问答汇总">
+                        <span class="hidden-mobile">AI Agent 问答汇总</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
