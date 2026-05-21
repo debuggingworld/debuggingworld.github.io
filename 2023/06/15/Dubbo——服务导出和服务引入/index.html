@@ -238,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          9.4k 字
+          9.2k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          30 分钟
+          29 分钟
         
       </span>
     
@@ -355,7 +355,7 @@ Dubbo 服务肯定是属于某个应用的，而一个应用下可以有多个 D
 <h4 id="服务注册">1.2 服务注册</h4>
 <p>当确定好了最终的服务配置后，Dubbo
 就会根据这些配置信息生成对应的<strong>服务 URL</strong>，比如：</p>
-<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;com.debuggingWorld.mall.service.OrderService?anyhost&#x3D;true&amp;application&#x3D;order-application<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tri://192.168.110.140:50051/com.debuggingWorld.mall.service.OrderService?anyhost<span class="token operator">=</span>true<span class="token operator">&amp;</span><span class="token assign-left variable">application</span><span class="token operator">=</span>order-application<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>这个 URL 就表示了一个 Dubbo 服务，服务消费者只要能获得到这个服务
 URL，就知道了关于这个 Dubbo
 服务的全部信息，包括服务名、支持的协议、ip、port、各种配置。</p>
@@ -377,21 +377,21 @@ URL，并重新注册到中心。</p>
 <h4 id="应用级注册">1.3 应用级注册</h4>
 <p>在 Dubbo3.0 之前，Dubbo
 是接口级注册，服务注册就是把接口名以及服务配置信息注册到注册中心中，注册中心存储的数据格式大概为：</p>
-<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名1?application&#x3D;应用名
-接口名2：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名2?application&#x3D;应用名
-接口名3：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名3?application&#x3D;应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri://192.168.110.140:50051/接口名1?application<span class="token operator">=</span>应用名
+接口名2：tri://192.168.110.140:50051/接口名2?application<span class="token operator">=</span>应用名
+接口名3：tri://192.168.110.140:50051/接口名3?application<span class="token operator">=</span>应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>key 是接口名，value 就是服务
 URL，上面的内容就表示现在有一个应用，该应用下有 3 个接口，应用实例部署在
 192.168.110.140，此时，如果给该应用增加一个实例，实例 ip 为
 192.168.110.141，那么新的实例也需要进行服务注册，会向注册中心新增 3
 条数据：</p>
-<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名1?application&#x3D;应用名
-接口名2：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名2?application&#x3D;应用名
-接口名3：tri:&#x2F;&#x2F;192.168.110.140:50051&#x2F;接口名3?application&#x3D;应用名
+<div class="code-wrapper"><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">接口名1：tri://192.168.110.140:50051/接口名1?application<span class="token operator">=</span>应用名
+接口名2：tri://192.168.110.140:50051/接口名2?application<span class="token operator">=</span>应用名
+接口名3：tri://192.168.110.140:50051/接口名3?application<span class="token operator">=</span>应用名
 
-接口名1：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名1?application&#x3D;应用名
-接口名2：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名2?application&#x3D;应用名
-接口名3：tri:&#x2F;&#x2F;192.168.110.141:50051&#x2F;接口名3?application&#x3D;应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+接口名1：tri://192.168.110.141:50051/接口名1?application<span class="token operator">=</span>应用名
+接口名2：tri://192.168.110.141:50051/接口名2?application<span class="token operator">=</span>应用名
+接口名3：tri://192.168.110.141:50051/接口名3?application<span class="token operator">=</span>应用名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>可以发现，如果一个应用中有 3 个 Dubbo
 服务，那么每增加一个实例，就会向注册中心增加 3
 条记录，那如果一个应用中有 10 个 Dubbo
