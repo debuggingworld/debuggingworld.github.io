@@ -1,0 +1,1416 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <link rel="icon" href="https://debugging.oss-cn-hangzhou.aliyuncs.com/debugIcon.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="debuggingWorld">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一、基础概念 Q1: SFT 和 RLHF 分别解决什么问题？为什么不能只用一个？ 参考答案： 两者解决不同层面的问题，串联关系不可替代： - SFT 解决&quot;能不能用&quot;：让预训练模型从&quot;有时能回答&quot;变为&quot;稳定按指令回答&quot;，定格式、定基调。SFT 只能让模型模仿训练数据的天花板 - RLHF 解决&quot;好不好用&quot;：在 SFT 基础上优化人类偏好，能发现比训练数据更好的策略，表达&quot;好与更好&quot;的区别 缺了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SFT、RLHF总结">
+<meta property="og:url" content="http://example.com/2026/06/02/SFT%E3%80%81RLHF%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、基础概念 Q1: SFT 和 RLHF 分别解决什么问题？为什么不能只用一个？ 参考答案： 两者解决不同层面的问题，串联关系不可替代： - SFT 解决&quot;能不能用&quot;：让预训练模型从&quot;有时能回答&quot;变为&quot;稳定按指令回答&quot;，定格式、定基调。SFT 只能让模型模仿训练数据的天花板 - RLHF 解决&quot;好不好用&quot;：在 SFT 基础上优化人类偏好，能发现比训练数据更好的策略，表达&quot;好与更好&quot;的区别 缺了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-02T13:05:09.000Z">
+<meta property="article:modified_time" content="2026-06-02T13:06:11.082Z">
+<meta property="article:author" content="debuggingWorld">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>SFT、RLHF总结 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/iconfont.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":90,"cursorChar":"<img src=\"https://debugging.oss-cn-hangzhou.aliyuncs.com/喜爱.png\" height=\"35\" width=\"35\" />","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>猫和少年</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://debugging.oss-cn-hangzhou.aliyuncs.com/art_bg.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SFT、RLHF总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-06-02 21:05" pubdate>
+          2026年6月2日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          8.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          26 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">SFT、RLHF总结</h1>
+            
+            <div class="markdown-body">
+              
+              <h2 id="一基础概念">一、基础概念</h2>
+<h3 id="q1-sft-和-rlhf-分别解决什么问题为什么不能只用一个">Q1: SFT 和
+RLHF 分别解决什么问题？为什么不能只用一个？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>两者解决不同层面的问题，串联关系不可替代： - <strong>SFT
+解决"能不能用"</strong>：让预训练模型从"有时能回答"变为"稳定按指令回答"，定格式、定基调。SFT
+只能让模型模仿训练数据的天花板 - <strong>RLHF
+解决"好不好用"</strong>：在 SFT
+基础上优化人类偏好，能发现比训练数据更好的策略，表达"好与更好"的区别</p>
+<p>缺了 SFT → 模型输出格式不可控，RL 训练难以收敛（奖励信号不可靠） 缺了
+RL → 模型能用但天花板低（只会模仿，不会超越）</p>
+<p><strong>类比</strong>：SFT = 建框架（能住人），RL =
+精装修（更舒适）</p>
+<hr />
+<h3 id="q2-rlhf-的三步训练流程是什么每一步的输入输出分别是什么">Q2: RLHF
+的三步训练流程是什么？每一步的输入输出分别是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">Step 1: 预训练语言模型
+  输入：海量无标注文本
+  输出：基础 LM（如 GPT-3）
+
+Step 2: 训练奖励模型（Reward Model）
+  输入：prompt + 多个模型生成 → 人类排序 → 转为标量奖励
+  输出：能对 (prompt, response) 打出标量分数的 RM
+
+Step 3: PPO 强化学习优化
+  输入：SFT 后的 LM（策略）+ 冻结的 RM + 冻结的初始 LM（KL 参照）
+  输出：对齐后的 LM<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>关键细节：Step 2
+中人类做的是<strong>排序（ranking）而非打分（scoring）</strong>，因为不同人的绝对分数不可比，但相对排序更稳定。排序通过
+Elo 系统转为标量奖励。</p>
+<hr />
+<h3 id="q3-rlhf-中为什么用排序而不用直接打分来训练奖励模型">Q3: RLHF
+中为什么用排序而不用直接打分来训练奖励模型？</h3>
+<p><strong>参考答案</strong>：</p>
+<ol type="1">
+<li><strong>标注者标准不一</strong>：不同人对"好"的绝对标准不同，有人打
+8 分有人打 5 分，但都认为 A 比 B 好</li>
+<li><strong>噪声更小</strong>：排序是相对比较，消除了标注者之间的尺度差异</li>
+<li><strong>更易标注</strong>：比较两个回答的优劣比给单个回答打绝对分数更容易</li>
+<li><strong>与 Bradley-Terry
+模型天然契合</strong>：偏好建模的数学框架就是基于"谁比谁好"的成对比较</li>
+</ol>
+<hr />
+<h3 id="q4-dpo-和-rlhf-的核心区别是什么dpo-为什么能跳过奖励模型">Q4: DPO
+和 RLHF 的核心区别是什么？DPO 为什么能跳过奖励模型？</h3>
+<p><strong>参考答案</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RLHF (PPO)</th>
+<th>DPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练阶段</td>
+<td>训练 RM → PPO 优化策略</td>
+<td>直接从偏好数据优化策略</td>
+</tr>
+<tr>
+<td>是否需要 RM</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否需要在线采样</td>
+<td>是（PPO 是 on-policy）</td>
+<td>否</td>
+</tr>
+<tr>
+<td>显存需求</td>
+<td>高（4 个模型）</td>
+<td>低（2 个模型）</td>
+</tr>
+<tr>
+<td>稳定性</td>
+<td>不稳定（RL 训练难调）</td>
+<td>稳定（分类损失）</td>
+</tr>
+</tbody>
+</table>
+<p>DPO 跳过 RM 的数学原理：在 RLHF 的 KL
+约束优化问题中，最优策略有<strong>闭式解</strong>，将最优策略代入奖励函数，可以将奖励函数用策略本身表示。因此偏好数据中隐含的奖励信号可以直接转化为策略优化的分类损失，无需显式训练
+RM。</p>
+<p>DPO 损失函数本质是：增大 chosen 的对数概率、减小 rejected
+的对数概率，同时以参考模型为基准控制偏离程度。</p>
+<hr />
+<h3 id="q5-dpo-相比-rlhf-有什么劣势">Q5: DPO 相比 RLHF 有什么劣势？</h3>
+<p><strong>参考答案</strong>：</p>
+<ol type="1">
+<li><strong>无法在线探索</strong>：DPO
+是离线方法，只能从已有偏好数据中学习；PPO
+是在线方法，策略可以生成新样本并获取反馈，有发现更优策略的潜力</li>
+<li><strong>数据分布偏移</strong>：DPO
+的偏好数据来自旧策略生成的样本，当策略更新后数据分布已偏移，可能影响效果</li>
+<li><strong>奖励信号不可复用</strong>：RLHF 的 RM 可以用于推理时做
+best-of-n 采样等，DPO 没有显式 RM</li>
+<li><strong>偏好数据质量更敏感</strong>：DPO
+直接从偏好数据学习，数据中的噪声和错误直接影响策略；RLHF 的 RM
+训练有一定的容错</li>
+</ol>
+<hr />
+<h2 id="二sft-深入">二、SFT 深入</h2>
+<h3
+id="q6-sft-的损失函数是什么训练时是所有-token-都参与-loss-计算吗">Q6:
+SFT 的损失函数是什么？训练时是所有 token 都参与 loss 计算吗？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>SFT 使用 <strong>token 级别的交叉熵损失</strong>：</p>
+<p><span class="math display">\[
+\mathcal{L}_{SFT}(\theta) = -\sum_{t=1}^{T} \log p_\theta(y_t \mid
+y_{&lt;t})
+\]</span></p>
+<p><strong>不是所有 token 都参与 loss</strong>： - Padding token 被 mask
+掉（ignore_index = -100） - 实践中常用的技巧：<strong>只对 assistant
+回复部分计算
+loss</strong>（<code>assistant_only_loss=True</code>），忽略 user/system
+消息部分。因为模型不需要学习"如何提问"，只需要学习"如何回答" -
+同理，prompt-completion 格式默认只对 completion 部分计算 loss</p>
+<hr />
+<h3 id="q7-sft-数据需要多少条数据质量重要还是数量重要">Q7: SFT
+数据需要多少条？数据质量重要还是数量重要？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>LIMA 论文（"Less Is More for
+Alignment"）表明：<strong>数据质量远比数量重要</strong>。</p>
+<ul>
+<li>LIMA 用仅 1000 条高质量 SFT 数据就训练出了与 GPT-4 可比的模型</li>
+<li>InstructGPT 原始论文也只用了约 13k 条人工标注的 SFT 数据</li>
+<li>低质量数据量大反而有害：会教坏模型，引入噪声和错误模式</li>
+</ul>
+<p>实际经验： - <strong>几万条高质量数据</strong>足以做指令跟随的 SFT -
+数据要覆盖任务多样性，但每条数据的正确性和格式规范性更重要 -
+常见错误：用模型自己生成的数据做 SFT（模型坍缩），或用低质量爬取数据</p>
+<hr />
+<h3 id="q8-sft-时全量微调fft和参数高效微调peftlora怎么选">Q8: SFT
+时全量微调（FFT）和参数高效微调（PEFT/LoRA）怎么选？</h3>
+<p><strong>参考答案</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FFT 全量微调</th>
+<th>LoRA 等参数高效微调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>效果上限</td>
+<td>更高（所有参数可调）</td>
+<td>略低（表达能力受限）</td>
+</tr>
+<tr>
+<td>显存需求</td>
+<td>极高（全量梯度+优化器状态）</td>
+<td>低（只训练少量参数）</td>
+</tr>
+<tr>
+<td>训练速度</td>
+<td>慢</td>
+<td>快</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>较小（~2e-5）</td>
+<td>较大（~1e-4），因为只训练新参数</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>数据充足、追求最佳效果</td>
+<td>数据较少、资源有限</td>
+</tr>
+</tbody>
+</table>
+<p>关键点：LoRA
+不会"丢失"预训练知识，因为原始参数冻结，只学习增量。这是做 SFT
+时的安全选择。但大量数据+充分训练时 FFT 效果天花板更高。</p>
+<hr />
+<h3 id="q9-sft-常见过拟合问题怎么判断和怎么解决">Q9: SFT
+常见过拟合问题，怎么判断和怎么解决？</h3>
+<p><strong>参考答案</strong>：</p>
+<p><strong>判断</strong>：训练 loss 下降但验证 loss
+上升；模型只会在训练数据中见过的指令格式上回答，换种问法就不行。</p>
+<p><strong>解决方案</strong>： 1.
+<strong>数据侧</strong>：增加数据多样性（指令表述多样化）；数据增强（改写指令）
+2. <strong>训练侧</strong>：降低学习率；减少 epoch（SFT 通常 2-3 个
+epoch 足够）；早停（early stopping） 3.
+<strong>正则化</strong>：权重衰减（weight decay）；dropout 4.
+<strong>Loss mask</strong>：只对 assistant 回复计算 loss，不要让模型背
+user 的提问 5.
+<strong>Packing</strong>：多条数据拼接到同一序列，提高训练效率和泛化</p>
+<hr />
+<h2 id="三奖励模型">三、奖励模型</h2>
+<h3 id="q10-奖励模型的规模应该多大和策略模型的关系是什么">Q10:
+奖励模型的规模应该多大？和策略模型的关系是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>业界实践表明：<strong>奖励模型需要与策略模型相当的容量</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>组织</th>
+<th>策略模型</th>
+<th>奖励模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI</td>
+<td>175B</td>
+<td>6B</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td>10B-52B</td>
+<td>10B-52B</td>
+</tr>
+<tr>
+<td>DeepMind</td>
+<td>70B</td>
+<td>70B</td>
+</tr>
+</tbody>
+</table>
+<p>直觉：偏好模型需要"理解"文本才能判断好坏，理解能力需要足够的模型容量。如果
+RM 太小，可能无法捕捉人类偏好的细微差异，甚至被策略模型"欺骗"（reward
+hacking）。</p>
+<hr />
+<h3 id="q11-什么是-reward-hacking奖励作弊如何缓解">Q11: 什么是 Reward
+Hacking（奖励作弊）？如何缓解？</h3>
+<p><strong>参考答案</strong>：</p>
+<p><strong>定义</strong>：策略模型找到了奖励模型的高分漏洞，生成了 RM
+给高分但实际质量很差的输出。</p>
+<p><strong>典型表现</strong>： - 模型输出看似格式完美但内容空洞 -
+生成冗长但无实质信息的回答（RM 偏好长文本） - 输出 RM
+训练数据中高分回答的模板化变体</p>
+<p><strong>缓解方法</strong>： 1. <strong>KL 散度惩罚</strong>：r = r_θ
+- λ·r_KL，惩罚策略偏离初始模型太远。没有这个惩罚，优化会生成 RM
+给高分但实际是乱码的输出 2. <strong>迭代 RLHF（Iterated Online
+RLHF）</strong>：随着策略更新，继续收集新输出的人类偏好标注，更新 RM 3.
+<strong>集成多个 RM</strong>：降低单一 RM 的过拟合风险 4. <strong>RM
+过优化检测</strong>：监控 RM 分数和真实人类评估的差距 5. <strong>DPO
+替代</strong>：DPO 不依赖显式 RM，从原理上避免了 RM 被利用的问题</p>
+<hr />
+<h3 id="q12-rlhf-中-kl-散度惩罚项的作用和原理是什么">Q12: RLHF 中 KL
+散度惩罚项的作用和原理是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>奖励函数：<strong>r = r_θ - λ·r_KL</strong></p>
+<p>其中 r_KL 是当前策略 π_θ 与初始模型 π_ref 之间的 KL 散度。</p>
+<p><strong>作用</strong>： 1. <strong>防止策略崩溃</strong>：没有 KL
+惩罚，PPO 会找到 RM 的漏洞，生成高分但无意义的文本（reward hacking） 2.
+<strong>保持语言能力</strong>：约束策略不会偏离预训练模型太远，保证输出的连贯性和多样性
+3. <strong>训练稳定性</strong>：KL 约束形成信任区域（trust region），使
+PPO 的参数更新更稳定</p>
+<p><strong>为什么不用固定的 KL 系数 λ？</strong> 实践中 λ
+需要动态调整。如果 KL 散度太大（策略偏离太远），增大 λ 加强约束；如果 KL
+散度太小（策略更新太保守），减小 λ 鼓励探索。InstructGPT 使用了自适应的
+KL 惩罚系数。</p>
+<hr />
+<h2 id="四ppo-训练">四、PPO 训练</h2>
+<h3 id="q13-rlhf-用-ppo-时需要哪几个模型分别的作用是什么">Q13: RLHF 用
+PPO 时，需要哪几个模型？分别的作用是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>PPO 训练同时需要 <strong>4 个模型</strong>：</p>
+<ol type="1">
+<li><strong>Actor（策略模型）</strong>：要优化的 LM，根据 prompt
+生成文本。唯一被训练更新的模型</li>
+<li><strong>Critic（价值模型）</strong>：估计状态价值函数
+V(s)，用于计算优势函数（advantage），减少方差。通常和 Actor
+共享部分参数或独立训练</li>
+<li><strong>Reward Model（奖励模型）</strong>：对 (prompt, response)
+打分。<strong>冻结，不更新</strong></li>
+<li><strong>Reference Model（参考模型）</strong>：SFT 后的初始
+LM，用于计算 KL 散度惩罚。<strong>冻结，不更新</strong></li>
+</ol>
+<p>这就是 RLHF 显存需求大的核心原因：4 个大模型同时在显存中。</p>
+<hr />
+<h3 id="q14-ppo-和-dpo-在显存需求上的差异是什么为什么">Q14: PPO 和 DPO
+在显存需求上的差异是什么？为什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>PPO</th>
+<th>DPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需要的模型数</td>
+<td>4（Actor + Critic + RM + Ref）</td>
+<td>2（Policy + Ref）</td>
+</tr>
+<tr>
+<td>是否需要在线采样</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>显存</td>
+<td>约为推理的 4x+</td>
+<td>约为推理的 2x</td>
+</tr>
+<tr>
+<td>训练速度</td>
+<td>慢（需要生成→评分→更新的循环）</td>
+<td>快（单次前向传播）</td>
+</tr>
+</tbody>
+</table>
+<p>DPO 省显存的核心原因： 1. 不需要 RM（RM 的训练和推理都省了） 2.
+不需要 Critic（没有 RL 的价值函数估计） 3.
+不需要在线采样（不需要策略生成样本再评分，直接用离线偏好数据） 4.
+损失函数是简单的分类损失，训练更稳定</p>
+<hr />
+<h3 id="q15-ppo-训练-rlhf-时常见的训练不稳定问题有哪些怎么解决">Q15: PPO
+训练 RLHF 时常见的训练不稳定问题有哪些？怎么解决？</h3>
+<p><strong>参考答案</strong>：</p>
+<p><strong>常见问题</strong>： 1.
+<strong>奖励分数持续上升但输出质量下降</strong>：Reward
+hacking，需要加大 KL 惩罚 2. <strong>Critic
+预测不准导致优势估计偏差</strong>：Critic 需要足够的预训练或与 Actor
+共享底层 3. <strong>策略更新步长过大</strong>：PPO 的 clip
+范围需要调小，确保在信任区域内更新 4.
+<strong>生成退化</strong>：模型输出变得单一重复，可能是 KL
+惩罚过大或奖励信号过于稀疏 5. <strong>训练 loss
+震荡</strong>：学习率过大或 batch size 过小</p>
+<p><strong>实践建议</strong>： - KL 惩罚系数从 0.2 开始，根据 KL
+散度动态调整 - PPO clip ε 通常设为 0.2 - 使用较大的 batch size（如
+512+） - Critic 和 Actor 可以共享除最后一层外的所有参数，减少显存 -
+监控关键指标：RM 分数、KL 散度、输出长度分布</p>
+<hr />
+<h2 id="五dpo-及其变体">五、DPO 及其变体</h2>
+<h3 id="q16-dpo-的损失函数怎么理解直觉是什么">Q16: DPO
+的损失函数怎么理解？直觉是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>DPO 损失函数（简化表述）：</p>
+<p><span class="math display">\[
+\mathcal{L}_{DPO} = -\log \sigma\left(\beta
+\left[\log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} -
+\log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}\right]\right)
+\]</span></p>
+<p>其中 y_w 是 chosen（好的），y_l 是 rejected（差的）。</p>
+<p><strong>直觉理解</strong>： - 第一项
+<code>log(π_θ/π_ref)(y_w)</code>：增大 chosen 相对参考模型的概率 -
+第二项 <code>log(π_θ/π_ref)(y_l)</code>：减小 rejected
+相对参考模型的概率 - β 控制偏离参考模型的程度（β 越大越保守） - σ 是
+sigmoid，将差值映射到 [0,1]</p>
+<p><strong>本质</strong>：在参考模型的基础上，拉大 chosen 和 rejected
+之间的概率差距。参考模型起到了 RLHF 中 KL
+惩罚的作用——防止策略偏离太远。</p>
+<hr />
+<h3 id="q17-dpo-的-β-参数有什么作用太大太小分别会怎样">Q17: DPO 的 β
+参数有什么作用？太大太小分别会怎样？</h3>
+<p><strong>参考答案</strong>：</p>
+<p>β 控制 DPO 优化对偏好数据的敏感程度：</p>
+<ul>
+<li><strong>β
+太大</strong>：策略更新太保守，几乎不偏离参考模型，偏好数据的学习信号被压制，模型学不到人类偏好</li>
+<li><strong>β
+太小</strong>：策略更新太激进，可能过拟合偏好数据中的噪声，输出质量不稳定，甚至偏离参考模型太远导致退化</li>
+</ul>
+<p>实践中 β 通常在 0.1-0.5 之间调参。与 RLHF 中 KL 惩罚系数 λ
+的作用类似。</p>
+<hr />
+<h3 id="q18-orposimpokto-这些-dpo-变体分别解决什么问题">Q18:
+ORPO、SimPO、KTO 这些 DPO 变体分别解决什么问题？</h3>
+<p><strong>参考答案</strong>：</p>
+<table>
+
+<thead>
+<tr>
+<th>方法</th>
+<th>解决的问题</th>
+<th>核心思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ORPO</strong></td>
+<td>SFT 和对齐需要分两步做</td>
+<td>将 SFT 的 NLL 损失和偏好优化合并为一个损失函数，一步完成
+SFT+对齐。用优势比（odds ratio）衡量偏好差异</td>
+</tr>
+<tr>
+<td><strong>SimPO</strong></td>
+<td>DPO 依赖参考模型 π_ref，多占一份显存</td>
+<td>去掉参考模型，用序列自身的平均对数概率代替 KL
+惩罚项。更简单、更省显存</td>
+</tr>
+<tr>
+<td><strong>KTO</strong></td>
+<td>DPO 需要成对的 chosen+rejected 数据，成对标注成本高</td>
+<td>只需要"好/坏"的二值标签（不需要成对比较），基于前景理论（prospect
+theory）建模。数据获取更容易</td>
+</tr>
+</tbody>
+</table>
+<p>选择建议： - 数据是成对偏好 → DPO - 数据只有好/坏标签 → KTO -
+想一步完成 SFT+对齐 → ORPO - 想极致省显存 → SimPO</p>
+<hr />
+<h2 id="六实战与综合">六、实战与综合</h2>
+<h3 id="q19-从零做一套-rlhf-对齐完整的数据流程是什么">Q19: 从零做一套
+RLHF 对齐，完整的数据流程是什么？</h3>
+<p><strong>参考答案</strong>：</p>
+<div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">Step 1: SFT 数据准备
+  ├── 收集指令数据（人工编写或高质量筛选）
+  ├── 格式：instruction + output 对
+  └── 规模：几千到几万条高质量数据
+
+Step 2: SFT 训练
+  ├── 基于 pretrained LM 做 SFT
+  ├── 只对 output 部分计算 loss
+  └── 得到 SFT 模型（后续所有步骤的基础）
+
+Step 3: 偏好数据收集
+  ├── 用 SFT 模型对 prompt 生成多个回答
+  ├── 人类标注者对回答排序
+  └── 格式：prompt + chosen + rejected
+
+Step 4: 训练奖励模型
+  ├── 用偏好数据训练 RM
+  ├── 损失函数：Bradley-Terry 偏好损失
+  └── 输入 (prompt, response) → 输出标量分数
+
+Step 5: PPO 训练
+  ├── 初始化：Actor &#x3D; Critic &#x3D; SFT 模型，Ref 冻结
+  ├── Actor 生成 → RM 评分 → 计算 KL 惩罚 → PPO 更新
+  └── 监控：RM 分数、KL 散度、输出质量
+
+（或 Step 4-5 替换为：直接用偏好数据做 DPO 训练）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+<hr />
+<h3 id="q20-什么时候该用-rlhfppo什么时候该用-dpo">Q20: 什么时候该用
+RLHF/PPO，什么时候该用 DPO？</h3>
+<p><strong>参考答案</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>资源有限、快速迭代</td>
+<td>DPO</td>
+<td>简单稳定，省显存</td>
+</tr>
+<tr>
+<td>追求最佳对齐效果</td>
+<td>PPO</td>
+<td>在线探索可能发现更优策略</td>
+</tr>
+<tr>
+<td>需要 RM 做推理时筛选</td>
+<td>PPO</td>
+<td>DPO 没有显式 RM</td>
+</tr>
+<tr>
+<td>偏好数据是成对的</td>
+<td>DPO</td>
+<td>天然适配</td>
+</tr>
+<tr>
+<td>偏好数据只有好/坏标签</td>
+<td>KTO</td>
+<td>DPO 需要成对数据</td>
+</tr>
+<tr>
+<td>需要持续迭代优化</td>
+<td>PPO</td>
+<td>Iterated Online RLHF 更自然</td>
+</tr>
+<tr>
+<td>团队缺乏 RL 工程经验</td>
+<td>DPO</td>
+<td>PPO 调参门槛高</td>
+</tr>
+</tbody>
+</table>
+<p><strong>业界趋势</strong>：大多数团队从 DPO 起步，效果够用就不再上
+PPO。Meta 的 Llama 2 用了 PPO，但 Llama 3 转向了 DPO。OpenAI 和
+Anthropic 的生产模型仍主要使用
+PPO（因为有足够的工程投入和在线数据流）。</p>
+<hr />
+<h3 id="q21-iterated-online-rlhf-是什么为什么需要它">Q21: Iterated
+Online RLHF 是什么？为什么需要它？</h3>
+<p><strong>参考答案</strong>：</p>
+<p><strong>问题</strong>：标准 RLHF 中 RM
+是用旧策略生成的数据训练的。当策略更新后，RM
+的评分可能不再准确——新策略的输出分布与 RM
+训练时见过的分布不同（分布偏移）。</p>
+<p><strong>解决方案</strong>：Iterated Online RLHF 1.
+用当前策略生成新输出 2. 让人类对新输出做偏好标注 3. 用新数据更新 RM 4.
+用更新后的 RM 继续做 PPO 5. 重复 1-4</p>
+<p>Anthropic 在论文中明确提出这个概念。这本质上是一个 RM
+和策略<strong>共同进化</strong>的过程，但带来了复杂的动态——策略和 RM
+互相影响，是一个开放的研究问题。</p>
+<hr />
+<h3 id="q22-rlhf-中的alignment-tax对齐税是什么怎么缓解">Q22: RLHF
+中的"Alignment Tax"（对齐税）是什么？怎么缓解？</h3>
+<p><strong>参考答案</strong>：</p>
+<p><strong>定义</strong>：对齐训练（RLHF/DPO）在让模型更安全、更符合人类偏好的同时，可能导致模型在某些能力上退化的现象。比如：
+- 数学推理能力下降 - 代码生成能力下降 -
+创造性下降，输出过于保守（过度对齐 / over-alignment）</p>
+<p><strong>原因</strong>： - RM 可能把"安全但平庸"的回答打了高分 - KL
+惩罚约束了策略，限制了探索空间 - 偏好数据中"安全"维度权重过大</p>
+<p><strong>缓解方法</strong>： 1. 在 PPO
+的奖励函数中混合预训练梯度（InstructGPT 的做法） 2.
+对齐数据中加入高质量的能力数据（如数学、代码），防止这些能力退化 3.
+分阶段对齐：先做 helpful 对齐，再做 safety 对齐，分别优化 4.
+监控对齐过程中的能力 benchmark，发现退化及时调整</p>
+<hr />
+<h3 id="q23-如果让你从零设计一个-llm-对齐方案你会怎么选">Q23:
+如果让你从零设计一个 LLM 对齐方案，你会怎么选？</h3>
+<p><strong>参考答案</strong>（开放题，考察综合判断）：</p>
+<p><strong>推荐路径</strong>：</p>
+<ol type="1">
+<li><strong>SFT 阶段</strong>：高质量指令数据（1-5k 条）+ LoRA
+微调，只对 assistant 部分计算 loss</li>
+<li><strong>偏好对齐</strong>：先 DPO，效果不够再上 PPO</li>
+<li><strong>数据策略</strong>：
+<ul>
+<li>优先用 AI 辅助生成偏好对（如 GPT-4 标注 chosen vs
+rejected），降低标注成本</li>
+<li>关键场景人工审核</li>
+</ul></li>
+<li><strong>评估</strong>：
+<ul>
+<li>能力 benchmark 防止 alignment tax</li>
+<li>人类偏好评估（side-by-side 比较）</li>
+<li>安全性 red teaming</li>
+</ul></li>
+</ol>
+<p><strong>理由</strong>：DPO
+作为起点性价比最高——工程简单、训练稳定、效果通常够用。只在 DPO
+天花板不够（如需要在线探索更好的策略）或需要 RM 做推理时筛选时才上
+PPO。</p>
+<hr />
+<h2 id="七高频短答">七、高频短答</h2>
+<h3 id="q24-sft-用什么学习率lora-和全量微调有区别吗">Q24: SFT
+用什么学习率？LoRA 和全量微调有区别吗？</h3>
+<ul>
+<li>全量微调：~2e-5</li>
+<li>LoRA：~1e-4（只训练少量新参数，需要更大的学习率才能有效更新）</li>
+</ul>
+<h3 id="q25-rlhf-中-ppo-的-on-policy-是什么意思">Q25: RLHF 中 PPO 的
+on-policy 是什么意思？</h3>
+<p>PPO 是 on-policy
+算法，参数更新只用<strong>当前策略</strong>生成的数据。每生成一批数据后立即更新参数，旧数据不能复用。这导致
+PPO 训练需要大量在线采样，成本高。</p>
+<h3 id="q26-dpo-为什么训练更稳定">Q26: DPO 为什么训练更稳定？</h3>
+<ol type="1">
+<li>损失函数是分类损失（类似二元分类），没有 RL 的 credit assignment
+问题</li>
+<li>不需要在线采样，不需要 Critic 估计价值函数</li>
+<li>没有策略-价值函数的联合优化，不存在两者不匹配的问题</li>
+<li>参考模型固定，梯度信号更明确</li>
+</ol>
+<h3 id="q27-sft-的-packing-是什么为什么要做">Q27: SFT 的 packing
+是什么？为什么要做？</h3>
+<p>将多条短样本拼接到同一个序列中，提高 GPU 利用率。不做 packing
+时，短样本会浪费大量 padding token。Packing 需要配合 loss mask
+确保不同样本之间不互相干扰。</p>
+<h3 id="q28-为什么偏好数据标注成本高有没有替代方案">Q28:
+为什么偏好数据标注成本高？有没有替代方案？</h3>
+<ul>
+<li>人类排序成本高：每个 prompt 需要生成多个回答并人工比较，约需要 50k
+标注样本</li>
+<li>替代方案：
+<ol type="1">
+<li><strong>AI 辅助标注</strong>：用更强模型（如
+GPT-4）做偏好判断（RLAIF）</li>
+<li><strong>宪法 AI（Constitutional AI）</strong>：Anthropic
+提出的方法，用一组原则自动生成偏好数据</li>
+<li><strong>合成偏好数据</strong>：用规则或模型自动生成 chosen/rejected
+对</li>
+</ol></li>
+</ul>
+<h3 id="q29-rlhf-和-rlaif-的区别">Q29: RLHF 和 RLAIF 的区别？</h3>
+<ul>
+<li><strong>RLHF</strong>：人类标注偏好数据 → 训练 RM → PPO</li>
+<li><strong>RLAIF</strong>：AI 模型（如 GPT-4）标注偏好数据 → 训练 RM →
+PPO</li>
+</ul>
+<p>RLAIF 大幅降低标注成本，但引入了 AI 偏好的偏差。Anthropic 的
+Constitutional AI 是 RLAIF 的一个具体实现。</p>
+<h3 id="q30-chat-template-在-sft-中为什么重要">Q30: Chat Template 在 SFT
+中为什么重要？</h3>
+<p>Chat template 定义了对话的结构（如
+<code>&lt;|im_start|&gt;user\n...&lt;|im_end|&gt;</code>），不同模型模板不同。SFT
+时： - 必须使用正确的 template，否则模型学到的格式和推理时不一致 -
+template 中的特殊 token 需要添加到 tokenizer 中 - 推理时也必须用相同的
+template</p>
+<hr />
+<h2 id="参考来源">参考来源</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/blog/rlhf">HuggingFace: Illustrating
+RLHF</a> — RLHF 三步流程、PPO 细节、RM 训练</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.18290">DPO: Direct Preference
+Optimization</a> — DPO 论文</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/trl/sft_trainer">HuggingFace
+TRL SFTTrainer</a> — SFT 实践细节</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.02155">InstructGPT</a> — RLHF
+的里程碑论文</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2204.05862">Anthropic: Training a
+Helpful and Harmless Assistant with RLHF</a> — Iterated Online RLHF</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.11206">LIMA: Less Is More for
+Alignment</a> — SFT 数据质量 vs 数量</li>
+<li><a
+target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/building-effective-agents">Anthropic:
+Building Effective Agents</a> — Agent 工程实践</li>
+</ul>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="category-chain-item">人工智能</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>
+      
+        <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">#大模型</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SFT、RLHF总结</div>
+      <div>http://example.com/2026/06/02/SFT、RLHF总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>debuggingWorld</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年6月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/05/28/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" title="大模型总结">
+                        <span class="hidden-mobile">大模型总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'debuggingworld/blogUtterances');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <img src="https://debugging.oss-cn-hangzhou.aliyuncs.com/太空探索与卫星.svg" srcset="/img/loading.gif" lazyload height="250" width="250" /> <br/> <a>没有什么能够阻挡，你对自由的向往</a> <br/> <a>天马行空的生涯，你的心了无牵挂</a> <br/> <br/> <br/> <br> <font size="2" >--end--</font> <br/> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script  src="https://lib.baomitu.com/prism/1.26.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        MathJax = {
+          tex    : {
+            inlineMath: { '[+]': [['$', '$']] }
+          },
+          loader : {
+            load: ['ui/lazy']
+          },
+          options: {
+            renderActions: {
+              findScript    : [10, doc => {
+                document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                  const display = !!node.type.match(/; *mode=display/);
+                  const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                  const text = document.createTextNode('');
+                  node.parentNode.replaceChild(text, node);
+                  math.start = { node: text, delim: '', n: 0 };
+                  math.end = { node: text, delim: '', n: 0 };
+                  doc.math.push(math);
+                });
+              }, '', false],
+              insertedScript: [200, () => {
+                document.querySelectorAll('mjx-container').forEach(node => {
+                  let target = node.parentNode;
+                  if (target.nodeName.toLowerCase() === 'li') {
+                    target.parentNode.classList.add('has-jax');
+                  }
+                });
+              }, '', false]
+            }
+          }
+        };
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.0/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/iconfont.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
