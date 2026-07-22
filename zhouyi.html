@@ -335,7 +335,6 @@
     body.modal-open { overflow: hidden; }
     @media (min-width: 560px) {
       .app { padding-left: 24px; padding-right: 24px; }
-      .actions { grid-template-columns: 1fr 1fr; }
       .quiz-card { padding: 32px; }
       .trigram-picker { grid-template-columns: repeat(8, 1fr); }
       .matrix { grid-template-columns: 42px repeat(8, minmax(55px, 1fr)); gap: 5px; }
@@ -371,7 +370,6 @@
         <div class="hexagram" id="quizHex" aria-label="待猜的六爻卦象"></div>
         <div class="actions">
           <button class="btn btn-primary" id="revealBtn" type="button">揭晓答案</button>
-          <button class="btn btn-secondary" id="nextBtn" type="button">换一卦</button>
         </div>
         <div class="answer" id="quizAnswer" hidden></div>
       </div>
@@ -586,6 +584,7 @@
     let selectedUpper = "坤";
     let selectedLower = "艮";
     let lastFocused = null;
+    let sheetTouchStart = null;
 
     function lineHtml(value) {
       return `<div class="yao ${value ? "yang" : "yin"}" aria-hidden="true"><i></i>${value ? "" : "<i></i>"}</div>`;
@@ -638,15 +637,13 @@
       document.getElementById("quizHex").innerHTML = hexagramHtml(item);
       document.getElementById("quizAnswer").hidden = true;
       document.getElementById("quizAnswer").innerHTML = detailText(item);
-      document.getElementById("revealBtn").disabled = false;
       document.getElementById("revealBtn").textContent = "揭晓答案";
     }
 
     function revealQuiz() {
       const answer = document.getElementById("quizAnswer");
       answer.hidden = false;
-      document.getElementById("revealBtn").disabled = true;
-      document.getElementById("revealBtn").textContent = `答案：${currentQuiz.name}`;
+      document.getElementById("revealBtn").textContent = "换一卦";
     }
 
     function pickerHtml(position, selected) {
@@ -729,6 +726,7 @@
         </div>`;
       const modal = document.getElementById("modal");
       modal.hidden = false;
+      modal.querySelector(".sheet").scrollTop = 0;
       document.body.classList.add("modal-open");
       modal.querySelector(".close").focus();
     }
@@ -746,8 +744,11 @@
       document.querySelectorAll(".panel").forEach(panel => panel.hidden = panel.id !== tab.dataset.panel);
     });
 
-    document.getElementById("revealBtn").addEventListener("click", revealQuiz);
-    document.getElementById("nextBtn").addEventListener("click", newQuiz);
+    document.getElementById("revealBtn").addEventListener("click", () => {
+      const answer = document.getElementById("quizAnswer");
+      if (answer.hidden) revealQuiz();
+      else newQuiz();
+    });
     document.querySelector(".lookup-card").addEventListener("click", event => {
       const button = event.target.closest(".trigram");
       if (!button) return;
@@ -766,6 +767,23 @@
     document.getElementById("modal").addEventListener("click", event => {
       if (event.target === event.currentTarget || event.target.closest(".close")) closeDetail();
     });
+    const sheet = document.querySelector(".sheet");
+    sheet.addEventListener("touchstart", event => {
+      const touch = event.touches[0];
+      const atTop = sheet.scrollTop <= 2;
+      sheetTouchStart = atTop ? { x: touch.clientX, y: touch.clientY } : null;
+    }, { passive: true });
+    sheet.addEventListener("touchend", event => {
+      if (!sheetTouchStart) return;
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - sheetTouchStart.x;
+      const deltaY = touch.clientY - sheetTouchStart.y;
+      sheetTouchStart = null;
+      if (deltaY > 70 && Math.abs(deltaY) > Math.abs(deltaX) * 1.2) closeDetail();
+    }, { passive: true });
+    sheet.addEventListener("touchcancel", () => {
+      sheetTouchStart = null;
+    }, { passive: true });
     document.addEventListener("keydown", event => {
       if (event.key === "Escape" && !document.getElementById("modal").hidden) closeDetail();
     });
