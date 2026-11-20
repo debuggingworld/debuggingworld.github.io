@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#e8eef2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>小六壬 · 此刻起卦</title>
+  <script>
+    window.__lunarReady = (function () {
+      if (window.Solar) return Promise.resolve();
+      const urls = [
+        "js/lunar.js",
+        "/js/lunar.js",
+        "https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.js",
+        "https://unpkg.com/lunar-javascript@1.6.12/lunar.js"
+      ];
+      return new Promise((resolve, reject) => {
+        let i = 0;
+        const tryNext = () => {
+          if (i >= urls.length) {
+            reject(new Error("干支库加载失败"));
+            return;
+          }
+          const s = document.createElement("script");
+          s.src = urls[i++];
+          s.onload = () => (window.Solar ? resolve() : tryNext());
+          s.onerror = tryNext;
+          document.head.appendChild(s);
+        };
+        tryNext();
+      });
+    })();
+  </script>
+  <style>
+    :root {
+      --ink: #18222c;
+      --muted: #66747f;
+      --paper: #e8eef2;
+      --card: rgba(255, 255, 255, .88);
+      --line: rgba(24, 34, 44, .12);
+      --accent: #1f6f78;
+      --accent-soft: #d7ecee;
+      --warm: #8a4b2f;
+      --shadow: 0 18px 48px rgba(24, 34, 44, .10);
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+        "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      background:
+        radial-gradient(circle at 90% -5%, rgba(31, 111, 120, .16), transparent 28rem),
+        radial-gradient(circle at 0% 70%, rgba(138, 75, 47, .08), transparent 24rem),
+        linear-gradient(180deg, #f4f7f9 0%, var(--paper) 48%, #e3eaee 100%);
+    }
+    button { font: inherit; -webkit-tap-highlight-color: transparent; }
+    button:focus-visible {
+      outline: 3px solid rgba(31, 111, 120, .28);
+      outline-offset: 2px;
+    }
+    .app {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: calc(22px + env(safe-area-inset-top)) 16px
+        calc(36px + env(safe-area-inset-bottom));
+    }
+    header { padding: 10px 4px 18px; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+    h1 {
+      margin: 0;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: clamp(30px, 9vw, 44px);
+      font-weight: 600;
+      letter-spacing: .06em;
+      line-height: 1.15;
+    }
+    .subtitle { margin: 10px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .card {
+      border: 1px solid rgba(24, 34, 44, .08);
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .clock-card { padding: 22px 20px; margin-bottom: 14px; }
+    .clock-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+    }
+    .clock-time {
+      margin: 8px 0 0;
+      font-variant-numeric: tabular-nums;
+      font-size: clamp(28px, 8vw, 36px);
+      font-weight: 700;
+      letter-spacing: .02em;
+      line-height: 1.2;
+    }
+    .clock-date {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .ganzhi {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .ganzhi-item {
+      padding: 12px 6px;
+      border-radius: 16px;
+      text-align: center;
+      background: linear-gradient(180deg, #f7fafb, #eef4f6);
+      border: 1px solid var(--line);
+    }
+    .ganzhi-item strong {
+      display: block;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+    .ganzhi-item span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .08em;
+    }
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+    }
+    .step-index {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-size: 13px;
+      font-weight: 750;
+    }
+    .step-meta { min-width: 0; }
+    .step-title { font-size: 13px; color: var(--muted); font-weight: 650; }
+    .step-value {
+      margin-top: 2px;
+      font-size: 16px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .step-palace {
+      font-family: "Songti SC", "STSong", serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      color: var(--accent);
+    }
+    .result-card {
+      padding: 28px 22px 22px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .result-card::before {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto 50%;
+      width: 280px;
+      height: 280px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(31,111,120,.16), transparent 68%);
+      pointer-events: none;
+    }
+    .result-kicker {
+      position: relative;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+    }
+    .result-name {
+      position: relative;
+      margin: 10px 0 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(42px, 14vw, 56px);
+      font-weight: 600;
+      letter-spacing: .18em;
+      line-height: 1.1;
+    }
+    .result-tag {
+      position: relative;
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .result-meta {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+    }
+    .verse {
+      position: relative;
+      margin-top: 22px;
+      padding: 18px 16px;
+      border-radius: 18px;
+      text-align: center;
+      background: rgba(247, 250, 251, .92);
+      border: 1px solid var(--line);
+    }
+    .verse-label {
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .14em;
+    }
+    .verse p {
+      margin: 0;
+      font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+      font-size: 16px;
+      line-height: 2.05;
+      letter-spacing: .04em;
+      white-space: pre-line;
+      text-align: center;
+    }
+    .wheel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .wheel-item {
+      position: relative;
+      min-height: 44px;
+      padding: 12px 8px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      background: rgba(255,255,255,.55);
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .wheel-item.cast {
+      color: var(--accent);
+      border-color: rgba(31, 111, 120, .45);
+      background: var(--accent-soft);
+      box-shadow: inset 0 0 0 1px rgba(31, 111, 120, .12);
+    }
+    .wheel-item.cast::after {
+      content: "卦";
+      position: absolute;
+      top: -6px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--accent);
+      font-size: 10px;
+      font-weight: 750;
+      line-height: 18px;
+      text-align: center;
+      letter-spacing: 0;
+    }
+    .wheel-item.active {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 0 8px 20px rgba(24, 34, 44, .18);
+    }
+    .wheel-item.active.cast {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .wheel-item.active.cast::after {
+      background: #fff;
+      color: var(--ink);
+    }
+    .actions { margin-top: 16px; display: grid; gap: 10px; }
+    .btn {
+      min-height: 52px;
+      border: 0;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 750;
+      letter-spacing: .06em;
+    }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #1f6f78, #245a72);
+      box-shadow: 0 10px 24px rgba(31, 111, 120, .28);
+    }
+    .btn-primary:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+    .hint {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .loading {
+      opacity: .55;
+      pointer-events: none;
+    }
+    .pulse {
+      animation: pulse .55s ease;
+    }
+    @keyframes pulse {
+      from { opacity: .4; transform: translateY(4px); }
+      to { opacity: 1; transform: none; }
+    }
+    @media (min-width: 560px) {
+      .app { padding-left: 24px; padding-right: 24px; }
+      .clock-card, .result-card { padding: 28px; }
+      .ganzhi { gap: 10px; }
+      .wheel { grid-template-columns: repeat(6, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">时辰起卦</p>
+      <h1>小六壬</h1>
+      <p class="subtitle">以农历月、日、时顺数六宫，得此刻所落之宫与断辞。</p>
+    </header>
+
+    <section class="card clock-card" id="clockCard">
+      <div class="clock-label" id="clockLabel">当前时间</div>
+      <div class="clock-time" id="clockTime">--:--:--</div>
+      <div class="clock-date" id="clockDate">加载中…</div>
+      <div class="ganzhi" id="ganzhiBox" aria-label="四柱干支">
+        <div class="ganzhi-item"><strong id="yearGZ">—</strong><span>年柱</span></div>
+        <div class="ganzhi-item"><strong id="monthGZ">—</strong><span>月柱</span></div>
+        <div class="ganzhi-item"><strong id="dayGZ">—</strong><span>日柱</span></div>
+        <div class="ganzhi-item"><strong id="hourGZ">—</strong><span>时柱</span></div>
+      </div>
+      <div class="actions" style="margin-top:18px">
+        <button class="btn btn-primary" id="castBtn" type="button">起卦</button>
+      </div>
+    </section>
+
+    <div id="castPanel" hidden>
+      <section class="steps" id="stepsBox" aria-label="起卦步骤">
+        <div class="step">
+          <div class="step-index">月</div>
+          <div class="step-meta">
+            <div class="step-title">农历月起宫</div>
+            <div class="step-value" id="monthStep">—</div>
+          </div>
+          <div class="step-palace" id="monthPalace">—</div>
+        </div>
+        <div class="step">
+          <div class="step-index">日</div>
+          <div class="step-meta">
+            <div class="step-title">农历日起宫</div>
+            <div class="step-value" id="dayStep">—</div>
+          </div>
+          <div class="step-palace" id="dayPalace">—</div>
+        </div>
+        <div class="step">
+          <div class="step-index">时</div>
+          <div class="step-meta">
+            <div class="step-title">时辰起宫</div>
+            <div class="step-value" id="hourStep">—</div>
+          </div>
+          <div class="step-palace" id="hourPalace">—</div>
+        </div>
+      </section>
+
+      <section class="card result-card" id="resultCard">
+        <div class="result-kicker" id="resultKicker">最终得宫</div>
+        <h2 class="result-name" id="resultName">—</h2>
+        <div class="result-meta">
+          <div class="result-tag" id="resultTag">—</div>
+        </div>
+        <div class="wheel" id="wheel" aria-label="六宫"></div>
+        <div class="verse">
+          <div class="verse-label" id="verseLabel">卦辞</div>
+          <p id="resultVerse">—</p>
+        </div>
+        <p class="hint">起卦法：正月起大安顺数至当月 → 再顺数至当日 → 再顺数至当时辰。</p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const PALACES = ["大安", "留连", "速喜", "赤口", "小吉", "空亡"];
+    const VERSES = {
+      "大安": "大安事事昌，求谋在东方。\n失物去不远，宅舍保安康。\n行人身未动，病者主无妨。\n将军回田野，仔细与推详。",
+      "留连": "留连事难成，求谋日不明。\n官事只宜缓，去者未回程。\n失物南方见，急讨方趁心。\n更须防口舌，人口且平平。",
+      "速喜": "速喜喜来临，求财向南行。\n失物申午见，官事有贵人。\n行人立刻至，病者自安宁。\n田宅六畜吉，行人有信音。",
+      "赤口": "赤口主口舌，官非切要防。\n失物急去寻，行人有惊慌。\n鸡犬多作怪，病者出西方。\n更须防诅咒，恐怕染瘟癀。",
+      "小吉": "小吉最吉昌，路上好商量。\n阴人来报喜，失物在坤方。\n行人立便至，交关真是强。\n凡事皆和合，病者祷上苍。",
+      "空亡": "空亡事不长，阴人多乘张。\n求财无利益，行人有灾殃。\n失物寻不见，病者主重丧。\n公事有阻滞，家宅保安康。"
+    };
+    const ZHI = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+    const MONTH_CN = ["正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "冬", "腊"];
+
+    let lunarReady = null;
+    let clockTimer = null;
+    let frozen = false;
+    let lastGanZhiKey = "";
+    let castPalace = "";
+    let viewPalace = "";
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function toChineseNum(n) {
+      const digits = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+      n = Math.floor(Number(n));
+      if (!Number.isFinite(n) || n < 0) return String(n);
+      if (n < 10) return digits[n];
+      if (n === 10) return "十";
+      if (n < 20) return `十${digits[n % 10]}`;
+      if (n < 100) {
+        const tens = Math.floor(n / 10);
+        const ones = n % 10;
+        return `${digits[tens]}十${ones ? digits[ones] : ""}`;
+      }
+      return String(n);
+    }
+
+    function palaceAt(index) {
+      return PALACES[((index % 6) + 6) % 6];
+    }
+
+    function loadLunar() {
+      if (window.Solar) return Promise.resolve();
+      if (lunarReady) return lunarReady;
+      lunarReady = window.__lunarReady || Promise.reject(new Error("干支库加载失败"));
+      return lunarReady;
+    }
+
+    function formatClock(now) {
+      return `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    }
+
+    function formatDate(now) {
+      const week = ["日", "一", "二", "三", "四", "五", "六"][now.getDay()];
+      return `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 星期${week}`;
+    }
+
+    function readPillars(now) {
+      const solar = Solar.fromYmdHms(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        now.getDate(),
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds()
+      );
+      const lunar = solar.getLunar();
+      return {
+        solar,
+        lunar,
+        yearGZ: lunar.getYearInGanZhi(),
+        monthGZ: lunar.getMonthInGanZhi(),
+        dayGZ: lunar.getDayInGanZhi(),
+        hourGZ: lunar.getTimeInGanZhi()
+      };
+    }
+
+    function cast(now) {
+      const pillars = readPillars(now);
+      const lunar = pillars.lunar;
+      const lunarMonth = Math.abs(lunar.getMonth());
+      const lunarDay = lunar.getDay();
+      const zhiIndex = typeof lunar.getTimeZhiIndex === "function"
+        ? lunar.getTimeZhiIndex()
+        : ZHI.indexOf(String(pillars.hourGZ).slice(-1));
+      const hourNum = zhiIndex + 1;
+      const monthPalaceIndex = (lunarMonth - 1) % 6;
+      const dayPalaceIndex = (monthPalaceIndex + lunarDay - 1) % 6;
+      const hourPalaceIndex = (dayPalaceIndex + hourNum - 1) % 6;
+      const leap = lunarMonth !== lunar.getMonth() ? "闰" : "";
+      const monthName = `${leap}${MONTH_CN[lunarMonth - 1] || lunarMonth}月`;
+      const hourName = `${ZHI[zhiIndex]}时`;
+
+      return {
+        yearGZ: pillars.yearGZ,
+        monthGZ: pillars.monthGZ,
+        dayGZ: pillars.dayGZ,
+        hourGZ: pillars.hourGZ,
+        lunarMonth, lunarDay, hourNum, monthName, hourName,
+        monthPalace: palaceAt(monthPalaceIndex),
+        dayPalace: palaceAt(dayPalaceIndex),
+        hourPalace: palaceAt(hourPalaceIndex),
+        result: palaceAt(hourPalaceIndex)
+      };
+    }
+
+    function renderWheel() {
+      document.getElementById("wheel").innerHTML = PALACES.map(name => {
+        const classes = [
+          "wheel-item",
+          name === viewPalace ? "active" : "",
+          name === castPalace ? "cast" : ""
+        ].filter(Boolean).join(" ");
+        return `<button class="${classes}" type="button" data-palace="${name}" aria-pressed="${name === viewPalace}">${name}</button>`;
+      }).join("");
+    }
+
+    function showPalace(name) {
+      viewPalace = name;
+      const isCast = name === castPalace;
+      document.getElementById("resultKicker").textContent = isCast ? "最终得宫" : "查阅宫位";
+      document.getElementById("resultName").textContent = name;
+      document.getElementById("verseLabel").textContent = isCast ? "卦辞" : `卦辞 · ${name}`;
+      document.getElementById("resultVerse").textContent = VERSES[name] || "—";
+      renderWheel();
+    }
+
+    function renderClock(now) {
+      document.getElementById("clockTime").textContent = formatClock(now);
+      document.getElementById("clockDate").textContent = formatDate(now);
+    }
+
+    function renderGanZhi(data) {
+      document.getElementById("yearGZ").textContent = data.yearGZ;
+      document.getElementById("monthGZ").textContent = data.monthGZ;
+      document.getElementById("dayGZ").textContent = data.dayGZ;
+      document.getElementById("hourGZ").textContent = data.hourGZ;
+    }
+
+    function renderResult(data) {
+      document.getElementById("monthStep").textContent = `农历${data.monthName} · 从大安起`;
+      document.getElementById("dayStep").textContent = `农历${toChineseNum(data.lunarDay)}日 · 从${data.monthPalace}起`;
+      document.getElementById("hourStep").textContent = `${data.hourName}（第${toChineseNum(data.hourNum)}辰）· 从${data.dayPalace}起`;
+      document.getElementById("monthPalace").textContent = data.monthPalace;
+      document.getElementById("dayPalace").textContent = data.dayPalace;
+      document.getElementById("hourPalace").textContent = data.hourPalace;
+      document.getElementById("resultTag").textContent =
+        `${data.yearGZ}年 ${data.monthGZ}月 ${data.dayGZ}日 ${data.hourGZ}时`;
+      castPalace = data.result;
+      showPalace(data.result);
+
+      const resultCard = document.getElementById("resultCard");
+      resultCard.classList.remove("pulse");
+      void resultCard.offsetWidth;
+      resultCard.classList.add("pulse");
+    }
+
+    function stopClock() {
+      if (clockTimer) {
+        clearInterval(clockTimer);
+        clockTimer = null;
+      }
+      frozen = true;
+      document.getElementById("clockLabel").textContent = "起卦时间";
+    }
+
+    function startClock() {
+      frozen = false;
+      castPalace = "";
+      viewPalace = "";
+      document.getElementById("clockLabel").textContent = "当前时间";
+      document.getElementById("castPanel").hidden = true;
+      document.getElementById("castBtn").textContent = "起卦";
+      tickClock();
+      if (clockTimer) clearInterval(clockTimer);
+      clockTimer = setInterval(tickClock, 1000);
+    }
+
+    async function tickClock() {
+      if (frozen) return;
+      const now = new Date();
+      renderClock(now);
+      if (!window.Solar) return;
+      const key = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`;
+      if (key === lastGanZhiKey) return;
+      lastGanZhiKey = key;
+      try {
+        renderGanZhi(readPillars(now));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function castNow() {
+      const btn = document.getElementById("castBtn");
+      btn.disabled = true;
+      btn.textContent = "起卦中…";
+      try {
+        await loadLunar();
+        const now = new Date();
+        const data = cast(now);
+        stopClock();
+        renderClock(now);
+        renderGanZhi(data);
+        renderResult(data);
+        document.getElementById("castPanel").hidden = false;
+        btn.textContent = "重新起卦";
+      } catch (err) {
+        document.getElementById("castPanel").hidden = false;
+        document.getElementById("resultVerse").textContent = "干支库加载失败，请检查网络后重试。";
+        console.error(err);
+        btn.textContent = "起卦";
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById("castBtn").addEventListener("click", async () => {
+      if (frozen) {
+        startClock();
+        await loadLunar().catch(() => {});
+        return;
+      }
+      await castNow();
+    });
+
+    document.getElementById("wheel").addEventListener("click", event => {
+      const btn = event.target.closest("[data-palace]");
+      if (!btn || !castPalace) return;
+      showPalace(btn.dataset.palace);
+    });
+
+    renderWheel();
+    startClock();
+    if (window.Solar) {
+      tickClock();
+    } else {
+      loadLunar().then(() => tickClock()).catch(err => {
+        document.getElementById("clockDate").textContent = "干支库加载失败，仍可稍后重试起卦";
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
